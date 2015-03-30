@@ -200,6 +200,7 @@
             android:text="猜你喜欢"
             android:textColor="@color/black"
             android:textSize="16sp"
+            
             android:textStyle="bold" />
 
     </LinearLayout>
