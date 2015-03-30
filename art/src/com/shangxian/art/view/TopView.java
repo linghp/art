@@ -27,8 +27,8 @@ public class TopView extends RelativeLayout {
 	
 	private Activity mActivity; // 当前activity
 	private View mRootView;
-	private ImageView btn_back;
-	private Button btn_left, btn_right;
+	private Button btn_back;
+	private ImageView btn_left, btn_right;
 	private TextView tv_title;
 	private RelativeLayout rl_title;
 
@@ -52,15 +52,15 @@ public class TopView extends RelativeLayout {
 		if(Global.mInflater!=null){
 		mRootView = Global.mInflater.inflate(R.layout.layout_top, null);
 		tv_title = (TextView) mRootView.findViewById(R.id.tv_title);
-		btn_back = (ImageView) mRootView.findViewById(R.id.btn_back);
-		btn_left = (Button) mRootView.findViewById(R.id.btn_left);
-		btn_right = (Button) mRootView.findViewById(R.id.btn_right);
+		//btn_back = (ImageView) mRootView.findViewById(R.id.btn_back);
+		btn_left = (ImageView) mRootView.findViewById(R.id.btn_left);
+		btn_right = (ImageView) mRootView.findViewById(R.id.btn_right);
 		rl_title = (RelativeLayout) mRootView.findViewById(R.id.rl_title);
 		
-		hideLefttBtn();
-		hideRightBtn();
-		hideBackBtn();
-		btn_back.setOnClickListener(mListener);
+//		hideLefttBtn();
+//		hideRightBtn();
+//		hideBackBtn();
+		//btn_back.setOnClickListener(mListener);
 		
 		addView(mRootView, Global.PARAM_MP_WC);
 		
@@ -110,7 +110,7 @@ public class TopView extends RelativeLayout {
 	 * 隐藏返回按钮
 	 */
 	public void hideBackBtn(){
-		btn_back.setVisibility(View.GONE);
+		//btn_back.setVisibility(View.GONE);
 	}
 	
 	/**
@@ -145,7 +145,7 @@ public class TopView extends RelativeLayout {
 	 * @param name
 	 */
 	public void setRightBtnText(String name){
-		btn_right.setText(name);
+	//	btn_right.setText(name);
 	}
 	
 	/**
@@ -186,9 +186,9 @@ public class TopView extends RelativeLayout {
 	 * 获取右按钮实例
 	 * @return
 	 */
-	public Button getRightBtn(){
-		return btn_right;
-	}
+//	public Button getRightBtn(){
+//		return btn_right;
+//	}
 	
 	
 	//////////////////
@@ -208,7 +208,7 @@ public class TopView extends RelativeLayout {
 	 * @param name
 	 */
 	public void setLeftBtnText(String name){
-		btn_left.setText(name);
+		//btn_left.setText(name);
 	}
 	
 	/**
@@ -237,9 +237,9 @@ public class TopView extends RelativeLayout {
 	 * 获取左按钮实例
 	 * @return
 	 */
-	public Button getLeftBtn(){
-		return btn_left;
-	}
+//	public Button getLeftBtn(){
+//		return btn_left;
+//	}
 	
 	//////////////////
 	// 标题操作方法实现  //

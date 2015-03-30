@@ -1,11 +1,12 @@
 package com.shangxian.art;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MineActivity extends ActionBarActivity {
+import com.shangxian.art.base.BaseActivity;
+
+public class MineActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

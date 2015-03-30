@@ -47,7 +47,7 @@
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name=".Classification"
+            android:name=".ClassificationActivity"
             android:label="@string/title_activity_classification" >
         </activity>
         <activity

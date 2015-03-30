@@ -9,5 +9,9 @@
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
+    
+    <string name="hotel_reservation">酒店预订</string>
+    
+    <string name="pay">充值</string>
 
 </resources>

@@ -13,9 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -26,6 +24,7 @@ import com.ab.util.AbToastUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.shangxian.art.adapter.HomeGridAdp;
+import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.GoodBean;
 import com.shangxian.art.bean.HomeData;
 import com.shangxian.art.cache.Imageloader_homePager;
@@ -34,9 +33,9 @@ import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
 
-public class HomeActivity extends AbActivity implements OnHeaderRefreshListener{
+public class HomeActivity extends BaseActivity implements OnHeaderRefreshListener{
 
-	//private TopView topView;
+	private TopView topView;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mGridView = null;
 	private TagViewPager viewPager = null;
@@ -66,10 +65,11 @@ public class HomeActivity extends AbActivity implements OnHeaderRefreshListener{
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(10000);
 
-		// topView = (TopView) findViewById(R.id.top_title);
-		// topView.setActivity(this);
-		// topView.setTitle("首页");
-
+		 topView = (TopView) findViewById(R.id.top_title);
+		 if(topView!=null){
+		 topView.setActivity(this);
+		 topView.setTitle("首页");
+		 }
 		// 获取ListView对象
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);

@@ -53,7 +53,7 @@ public class MainActivity extends TabActivity {
 		fourth = tabhost.newTabSpec("4");
 		fifth = tabhost.newTabSpec("5");
 
-		first.setIndicator(createContent("主页", R.drawable.first_tab));
+		first.setIndicator(createContent("首页", R.drawable.first_tab));
 		second.setIndicator(createContent("分类", R.drawable.second_tab));
 		third.setIndicator(createContent("购物车", R.drawable.third_tab));
 		fourth.setIndicator(createContent("附近", R.drawable.fourth_tab));
@@ -62,7 +62,7 @@ public class MainActivity extends TabActivity {
 		// 绑定显示的页面
 		// first.setContent(R.id.ll_first);
 		first.setContent(new Intent(this, HomeActivity.class));
-		second.setContent(new Intent(this, Classification.class));
+		second.setContent(new Intent(this, ClassificationActivity.class));
 		third.setContent(new Intent(this,ShoppingcartActivity.class));
 		fourth.setContent(new Intent(this, NearlyActivity.class));
 		fifth.setContent(new Intent(this, MineActivity.class));
@@ -94,7 +94,7 @@ public class MainActivity extends TabActivity {
 	private void tabChanged(String tabId) {
 		// 当前选中项
 		if (tabId.equals("1")) {
-			tabhost.setCurrentTabByTag("主页");
+			tabhost.setCurrentTabByTag("首页");
 		} else if (tabId.equals("2")) {
 			tabhost.setCurrentTabByTag("分类");
 		} else if (tabId.equals("3")) {
