@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <com.shangxian.art.view.TagViewPager
+        
         android:id="@+id/mTagViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
