@@ -66,6 +66,10 @@
             android:name=".ClassifyCommodityActivity"
             android:label="@string/title_activity_classification" >
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_classification" >
+        </activity>
     </application>
 
 </manifest>
