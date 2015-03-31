@@ -1,120 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="default_text">#ff454545</color>
     <color name="white">#ffffff</color>
     <color name="blue">#1BA947</color>
     <color name="black">#000000</color>
     <color name="bg_gray">#F2F2F2</color>
-    <color name="gray">#880000</color>
-
+    <color name="gray">#DFE0E0</color>
+    	
     <!-- red -->
-
     <color name="red300">#f36c60</color>
     <color name="red500">#e51c23</color>
     <color name="red700">#d01714</color>
-
     <!-- pink -->
-
     <color name="pink300">#f06292</color>
     <color name="pink500">#e91e63</color>
     <color name="pink700">#d01714</color>
-
     <!-- purple 紫色 -->
-
     <color name="purple300">#ba68c8</color>
     <color name="purple500">#9c27b0</color>
     <color name="purple700">#7b1fa2</color>
-
     <!-- deep pruple 深紫色 -->
-
     <color name="deeppurple300">#9575cd</color>
     <color name="deeppurple500">#673ab7</color>
     <color name="deeppurple700">#512da8</color>
-
     <!-- indigo 靛蓝 -->
-
     <color name="indigo300">#7986cb</color>
     <color name="indigo500">#3f51b5</color>
     <color name="indigo700">#303f9f</color>
-
     <!-- blue -->
-
     <color name="blue300">#91a7ff</color>
     <color name="blue500">#5677fc</color>
     <color name="blue700">#455ede</color>
-
     <!-- light blue -->
-
     <color name="lightblue300">#4fc3f7</color>
     <color name="lightblue500">#03a9f4</color>
     <color name="lightblue700">#0288d1</color>
-
     <!-- cyan 蓝绿色 -->
-
     <color name="cyan300">#4dd0e1</color>
     <color name="cyan500">#00b4d4</color>
     <color name="cyan700">#0097a7</color>
-
     <!-- teal 青色 -->
-
     <color name="teal300">#4db6ac</color>
     <color name="teal500">#009688</color>
     <color name="teal700">#00796b</color>
     <color name="teal1">#de009688</color>
     <color name="teal2">#8a009688</color>
     <color name="teal3">#42009688</color>
-
     <!-- green 绿色 -->
-
     <color name="green300">#42bd41</color>
     <color name="green500">#259b24</color>
     <color name="green1">#de259b24</color>
     <color name="green2">#8a259b24</color>
     <color name="green700">#0a7e07</color>
     <color name="green3">#42259b24</color>
-
     <!-- light grean -->
-
     <color name="lightgrenn300">#aed581</color>
     <color name="lightgrenn500">#8bc34a</color>
     <color name="lightgrenn700">#689f38</color>
-
     <!-- lime -->
-
     <color name="lime300">#aed581</color>
     <color name="lime500">#cddc39</color>
     <color name="lime700">#afb42b</color>
-
     <!-- yellow -->
-
     <color name="yellow300">#fff176</color>
     <color name="yellow500">#ffeb3b</color>
     <color name="yellow700">#fbc02d</color>
     <color name="yellow100">#fff9c4</color>
     <color name="yellow1">#defff176</color>
     <color name="yellow2">#8afff176</color>
-
     <!-- amber 琥珀色 -->
-
     <color name="amber300">#ffd54f</color>
     <color name="amber500">#ffc107</color>
     <color name="amber700">#ffa000</color>
-
     <!-- orange -->
-
     <color name="orange300">#ffb74d</color>
     <color name="orange500">#ff9800</color>
     <color name="orange700">#f57c00</color>
-
     <!-- deeporange -->
-
     <color name="deeporange300">#ff8a65</color>
     <color name="deeporange500">#ff5722</color>
     <color name="deeporange700">#e64a19</color>
-
     <!-- grey -->
-
     <color name="grey100">#f5f5f5</color>
     <color name="grey200">#e5e5e5</color>
     <color name="grey300">#e0e0e0</color>
@@ -123,171 +89,83 @@
     <color name="grey1">#de9e9e9e</color>
     <color name="grey2">#8a9e9e9e</color>
     <color name="grey3">#8a9e9e9e</color>
-
     <!-- blue grey -->
-
     <color name="bluegrey300">#90a4ae</color>
     <color name="bluegrey500">#607d8b</color>
     <color name="bluegrey700">#455a64</color>
 
     <!-- 项目颜色 -->
-
     <color name="main_col100">#a3e9a4</color>
     <color name="main_col100_3">#42a3e9a4</color>
     <color name="main_col100_2">#8aa3e9a4</color>
     <color name="main_col100_1">#dea3e9a4</color>
+
     <color name="main_col200">#72d572</color>
     <color name="main_col200_3">#4272d572</color>
     <color name="main_col200_2">#8a72d572</color>
     <color name="main_col200_1">#de72d572</color>
+
     <color name="main_col300">#42bd41</color>
     <color name="main_col300_3">#4242bd41</color>
     <color name="main_col300_2">#8a42bd41</color>
     <color name="main_col300_1">#de42bd41</color>
+
     <color name="main_col400">#2baf2b</color>
     <color name="main_col400_3">#422baf2b</color>
     <color name="main_col400_2">#8a2baf2b</color>
     <color name="main_col400_1">#de2baf2b</color>
+
     <color name="main_col500">#259b24</color>
     <color name="main_col500_1">#de259b24</color>
     <color name="main_col500_2">#8a259b24</color>
     <color name="main_col500_3">#42259b24</color>
+
     <color name="main_col600">#0a8f08</color>
     <color name="main_col600_1">#de0a8f08</color>
     <color name="main_col600_2">#8a0a8f08</color>
     <color name="main_col600_3">#420a8f08</color>
+
     <color name="main_col700">#0a7e07</color>
     <color name="main_col700_1">#de0a7e07</color>
     <color name="main_col700_2">#8a0a7e07</color>
     <color name="main_col700_3">#420a7e07</color>
 
     <!-- 文本颜色 -->
+    <color name="txt_context3">#4278909c</color><!-- 次一级文本(白色底) -->
+    <color name="txt_context2">#8a78909c</color><!-- 文本内容(白色底) -->
+    <color name="txt_context1">#de263238</color><!-- 标题(白色底) -->
+    <color name="txt_white3">#42e6e6e6</color><!-- 次一级白色文本(彩色底) -->
+    <color name="txt_white2">#8af3f3f3</color><!-- 白色文本(彩色底) -->
+    <color name="txt_white1">#defafafa</color><!-- 白色标题(彩色底) -->
+    <color name="txt_white">#fff</color><!-- 白色 -->
 
-    <color name="txt_context3">#4278909c</color>
+    <color name="txt_black3">#429e9e9e</color><!-- 黑色文本(彩色底) -->
+    <color name="txt_black2">#8a616161</color><!-- 黑色文本(彩色底) -->
+    <color name="txt_black1">#de212121</color><!-- 黑色文本(彩色底) -->
+    <color name="txt_black">#111</color><!-- 黑色 -->
 
-    <!-- 次一级文本(白色底) -->
-
-    <color name="txt_context2">#8a78909c</color>
-
-    <!-- 文本内容(白色底) -->
-
-    <color name="txt_context1">#de263238</color>
-
-    <!-- 标题(白色底) -->
-
-    <color name="txt_white3">#42e6e6e6</color>
-
-    <!-- 次一级白色文本(彩色底) -->
-
-    <color name="txt_white2">#8af3f3f3</color>
-
-    <!-- 白色文本(彩色底) -->
-
-    <color name="txt_white1">#defafafa</color>
-
-    <!-- 白色标题(彩色底) -->
-
-    <color name="txt_white">#fff</color>
-
-    <!-- 白色 -->
-
-    <color name="txt_black3">#429e9e9e</color>
-
-    <!-- 黑色文本(彩色底) -->
-
-    <color name="txt_black2">#8a616161</color>
-
-    <!-- 黑色文本(彩色底) -->
-
-    <color name="txt_black1">#de212121</color>
-
-    <!-- 黑色文本(彩色底) -->
-
-    <color name="txt_black">#111</color>
-
-    <!-- 黑色 -->
-
-    <color name="txt_grey">#9e9e9e</color>
-
-    <!-- 灰色 -->
-
-    <color name="txt_brown">#795548</color>
-
-    <!-- 土黄色 -->
-
-    <color name="txt_deep_orange">#ff5722</color>
-
-    <!-- 暗橙色 -->
-
-    <color name="txt_orange">#ff5722</color>
-
-    <!-- 橙色 -->
-
-    <color name="txt_amber">#ffc107</color>
-
-    <!-- 暗黄色 -->
-
-    <color name="txt_yellow">#ffeb3b</color>
-
-    <!-- 黄色 -->
-
-    <color name="txt_lime">#cddc39</color>
-
-    <!-- 黄绿色 -->
-
-    <color name="txt_light_green">#8bc34a</color>
-
-    <!-- 亮绿色 -->
-
-    <color name="txt_green">#259b24</color>
-
-    <!-- 绿色 -->
-
-    <color name="txt_red">#e51c23</color>
-
-    <!-- 红色 -->
-
+    <color name="txt_grey">#9e9e9e</color><!-- 灰色 -->
+    <color name="txt_brown">#795548</color><!-- 土黄色 -->
+    <color name="txt_deep_orange">#ff5722</color><!-- 暗橙色 -->
+    <color name="txt_orange">#ff5722</color><!-- 橙色 -->
+    <color name="txt_amber">#ffc107</color><!-- 暗黄色 -->
+    <color name="txt_yellow">#ffeb3b</color><!-- 黄色 -->
+    <color name="txt_lime">#cddc39</color><!-- 黄绿色 -->
+    <color name="txt_light_green">#8bc34a</color><!-- 亮绿色 -->
+    <color name="txt_green">#259b24</color><!-- 绿色 -->
+    <color name="txt_red">#e51c23</color><!-- 红色 -->
 
     <!-- 透明色 -->
-
-    <color name="transparent">#00000000</color>
-
-    <!-- 透明 -->
-
-    <color name="transparentblack1">#8a000000</color>
-
-    <!-- 黑色透明 -->
-
-    <color name="transparentblack2">#65000000</color>
-
-    <!-- 黑色透明 -->
-
-    <color name="transparentblack3">#42000000</color>
-
-    <!-- 黑色透明 -->
-
-    <color name="transparentblack4">#20000000</color>
-
-    <!-- 黑色透明 -->
-
-    <color name="transparentwhite1">#8affffff</color>
-
-    <!-- 白色透明 -->
-
-    <color name="transparentwhite2">#65ffffff</color>
-
-    <!-- 白色透明 -->
-
-    <color name="transparentwhite3">#42ffffff</color>
-
-    <!-- 白色透明 -->
-
-    <color name="transparentwhite4">#20ffffff</color>
-
-    <!-- 白色透明 -->
-
+    <color name="transparent">#00000000</color><!--透明 -->
+    <color name="transparentblack1">#8a000000</color><!--黑色透明 -->
+    <color name="transparentblack2">#65000000</color><!--黑色透明 -->
+    <color name="transparentblack3">#42000000</color><!--黑色透明 -->
+    <color name="transparentblack4">#20000000</color><!--黑色透明 -->
+    <color name="transparentwhite1">#8affffff</color><!--白色透明 -->
+    <color name="transparentwhite2">#65ffffff</color><!--白色透明 -->
+    <color name="transparentwhite3">#42ffffff</color><!--白色透明 -->
+    <color name="transparentwhite4">#20ffffff</color><!--白色透明 -->
     <color name="transparentlime">#428bc34a</color>
     <color name="primary">#009688</color>
     <color name="primaryDark">#00796b</color>
-
 </resources>
