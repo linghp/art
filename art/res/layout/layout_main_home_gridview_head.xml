@@ -5,16 +5,16 @@
     android:orientation="vertical" >
 
     <com.shangxian.art.view.TagViewPager
-        
         android:id="@+id/mTagViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal"     android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="3dp" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -27,12 +27,12 @@
                 android:id="@+id/btn_check"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_check" />
+                android:background="@drawable/hotel_reservation" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="@string/hotel_reservation" />
         </LinearLayout>
 
@@ -47,12 +47,12 @@
                 android:id="@+id/btn_shop"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_shop" />
+                android:background="@drawable/pay" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="@string/pay" />
         </LinearLayout>
 
@@ -67,12 +67,12 @@
                 android:id="@+id/btn_recorder"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_record" />
+                android:background="@drawable/leading_agricultural_coin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="领农币" />
         </LinearLayout>
 
@@ -87,20 +87,23 @@
                 android:id="@+id/btn_sign"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_sign" />
+                android:background="@drawable/theme_pavilion" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="主题馆" />
         </LinearLayout>
     </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal" android:layout_marginTop="0.5dp"    android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="3dp" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -113,13 +116,13 @@
                 android:id="@+id/btn_check1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_check" />
+                android:background="@drawable/food" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="积分查询" />
+                android:layout_marginTop="2dp"
+                android:text="美食" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,13 +136,13 @@
                 android:id="@+id/btn_shop1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_shop" />
+                android:background="@drawable/have_bettergoods" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="积分商城" />
+                android:layout_marginTop="2dp"
+                android:text="有好货" />
         </LinearLayout>
 
         <LinearLayout
@@ -153,13 +156,13 @@
                 android:id="@+id/btn_recorder1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_record" />
+                android:background="@drawable/my_attention" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="兑换记录" />
+                android:layout_marginTop="2dp"
+                android:text="我的关注" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,37 +176,48 @@
                 android:id="@+id/btn_sign1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/icon_home_sign" />
+                android:background="@drawable/more" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="赚恩宝" />
+                android:layout_marginTop="2dp"
+                android:text="更多" />
         </LinearLayout>
     </LinearLayout>
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/bg_gray" />
 
     <LinearLayout
+        android:id="@+id/ll_mainhomehead_add"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="32dp"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
+            android:background="@color/bg_gray"
             android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="猜你喜欢"
-            android:textColor="@color/black"
             android:textSize="16sp"
-            
             android:textStyle="bold" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -40,6 +40,7 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 	private ListView mGridView = null;
 	private TagViewPager viewPager = null;
 	private View headView = null;
+	private LinearLayout ll_mainhomehead_add;
 	//private MarqueeText tv_tips = null;
 	//private TextView tv_more = null;
 	private Button btn_check, btn_shop, btn_recorder, btn_sign;
@@ -48,8 +49,10 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 
 	/** 首页轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
+	/** 动态添加图地址 */
+	private List<String> addimgList = new ArrayList<String>();
 	/** 首页广告数据 */
-	private List<String> tipsList = new ArrayList<String>();
+	//private List<String> tipsList = new ArrayList<String>();
 	/** 首页热门礼品 */
 	private List<GoodBean> goods = new ArrayList<GoodBean>();
 	/** 首页数据集合 */
@@ -88,7 +91,10 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 
 		adp = new HomeGridAdp();
 		mGridView.setAdapter(adp);
-
+		addimgList.add("http://img2.imgtn.bdimg.com/it/u=932381865,934729565&fm=15&gp=0.jpg");
+		addimgList.add("http://img5.imgtn.bdimg.com/it/u=141668162,894419841&fm=15&gp=0.jpg");
+		addimgList.add("http://img1.imgtn.bdimg.com/it/u=3294451140,1176711197&fm=21&gp=0.jpg");
+		addimgList.add("http://img5.imgtn.bdimg.com/it/u=2254149823,2917968794&fm=21&gp=0.jpg");
 		// 第一次加载数据
 		refreshTask();
 	}
@@ -137,27 +143,27 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 //				tv_tips.setText(bean.getPname());
 
 				imgList.clear();
-				tipsList.clear();
+				//tipsList.clear();
 				goods.clear();
 
 				ArrayList<String> imgs = new ArrayList<String>();
-				imgs.add("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
-				imgs.add("http://h.hiphotos.baidu.com/image/pic/item/3801213fb80e7bec1b0718942d2eb9389a506be1.jpg");
-				imgs.add("http://f.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b50ba735b238435e5dde7116e37.jpg");
-				imgs.add("http://f.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b50ba735b238435e5dde7116e37.jpg");
-				ArrayList<String> tips = new ArrayList<String>();
-				tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
+				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
+				imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
+				imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
+				//ArrayList<String> tips = new ArrayList<String>();
+				//tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
 				ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
 				for (int i = 0; i < 3; i++) {
 					GoodBean good = new GoodBean();
-					good.setContent("中国测试产品:" + i);
-					good.setPrice(1000 + i + "");
+					//good.setContent("中国测试产品:" + i);
+					//good.setPrice(1000 + i + "");
 					good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
 					goodlist.add(good);
 				}
 
 				mDatas.setImgList(imgs);
-				mDatas.setTipsList(tips);
+				//mDatas.setTipsList(tips);
 				mDatas.setGoods(goodlist);
 
 				if (mDatas != null) {
@@ -183,14 +189,14 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 						viewPager.setVisibility(View.GONE);
 					}
 
-					if (mDatas.getTipsList() != null
-							&& mDatas.getTipsList().size() > 0) {
-						tipsList.addAll(mDatas.getTipsList());
+//					if (mDatas.getTipsList() != null
+//							&& mDatas.getTipsList().size() > 0) {
+//						tipsList.addAll(mDatas.getTipsList());
 //						tv_tips.setVisibility(View.VISIBLE);
 //						tv_tips.setText(tipsList.get(0));
-					} else {
+//					} else {
 //						tv_tips.setVisibility(View.GONE);
-					}
+//					}
 
 					if (mDatas.getGoods() != null
 							&& mDatas.getGoods().size() > 0) {
@@ -198,15 +204,40 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 						adp.updateData(goods);
 					}
 				}
+				
+				addlayout();
 			}
 		});
 	}
 
+	private void addlayout() {
+		View view1= LayoutInflater.from(this).inflate(
+				R.layout.layout_main_home_item1, null);
+		View view2= LayoutInflater.from(this).inflate(
+				R.layout.layout_main_home_item2, null);
+		ll_mainhomehead_add.removeAllViews();
+		ll_mainhomehead_add.addView(view1);
+		ll_mainhomehead_add.addView(view2);
+		Imageloader_homePager.displayImage(
+				addimgList.get(0), (ImageView)view1.findViewById(R.id.iv_01),
+				new Handler(), null);
+		Imageloader_homePager.displayImage(
+				addimgList.get(1), (ImageView)view2.findViewById(R.id.iv_01),
+				new Handler(), null);
+		Imageloader_homePager.displayImage(
+				addimgList.get(2), (ImageView)view2.findViewById(R.id.iv_02),
+				new Handler(), null);
+		Imageloader_homePager.displayImage(
+				addimgList.get(3), (ImageView)view2.findViewById(R.id.iv_03),
+				new Handler(), null);
+	}
+	
 	/** 初始化头部VIEW */
 	private void initHeadView() {
 		headView = LayoutInflater.from(this).inflate(
 				R.layout.layout_main_home_gridview_head, null);
 		viewPager = (TagViewPager) headView.findViewById(R.id.mTagViewPager);
+		ll_mainhomehead_add=(LinearLayout) headView.findViewById(R.id.ll_mainhomehead_add);
 		initTagViewPager();
 		//tv_tips = (MarqueeText) headView.findViewById(R.id.tv_tips);
 		//tv_more = (TextView) headView.findViewById(R.id.tv_more);

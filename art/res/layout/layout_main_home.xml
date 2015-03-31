@@ -17,7 +17,7 @@
             android:scrollbars="none"
             android:divider="@null"
             android:dividerHeight="10dp"
-            android:background="@color/white" />
+             />
     </com.ab.view.pullview.AbPullToRefreshView>
 
 </LinearLayout>
