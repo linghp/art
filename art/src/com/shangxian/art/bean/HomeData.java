@@ -10,12 +10,9 @@ import com.ab.model.AbResult;
  *
  */
 public class HomeData extends AbResult{
-
 	private ArrayList<String> imgList;
 	private ArrayList<String> tipsList;
 	private ArrayList<GoodBean> goods;
-	
-	
 	
 	public ArrayList<String> getImgList() {
 		return imgList;
@@ -35,6 +32,4 @@ public class HomeData extends AbResult{
 	public void setGoods(ArrayList<GoodBean> goods) {
 		this.goods = goods;
 	}
-	
-	
 }

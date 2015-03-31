@@ -34,7 +34,6 @@ import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
 
 public class HomeActivity extends BaseActivity implements OnHeaderRefreshListener{
-
 	private TopView topView;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mGridView = null;
