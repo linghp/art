@@ -38,8 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginTop="6dp" >
+                android:orientation="horizontal" >
 
                 <ImageView
                     android:layout_width="28dp"
@@ -63,6 +62,7 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
+            
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.3dp"
@@ -72,8 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginBottom="6dp" >
+                android:orientation="horizontal" >
 
                 <ImageView
                     android:layout_width="28dp"

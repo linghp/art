@@ -1,17 +1,15 @@
 package com.shangxian.art;
 
-import com.shangxian.art.base.BaseActivity;
-
-import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.shangxian.art.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
 
@@ -60,7 +58,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		} else if (v == tv_find) {
 			Toast.makeText(this, "忘记密码", Toast.LENGTH_SHORT).show();	
 		} else if (v == tv_regist){
-			Toast.makeText(this, "注册", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "注册", Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
+			startActivity(intent);
 		}
 	}
 
