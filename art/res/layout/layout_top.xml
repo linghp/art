@@ -16,7 +16,7 @@
 
     <com.shangxian.art.view.MyLinearlayout
         android:id="@+id/ll_center"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/btn_right"
@@ -27,8 +27,9 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/title_txt_size"
             android:visibility="gone" />
 
         <EditText

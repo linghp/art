@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -34,8 +35,6 @@ import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
 
 public class HomeActivity extends BaseActivity implements OnHeaderRefreshListener,OnClickListener{
-
-	private TopView topView;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mGridView = null;
 	private TagViewPager viewPager = null;
@@ -68,11 +67,6 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(10000);
 
-		topView = MainActivity.getTopView();
-		topView.setActivity(this);
-		topView.setLeftBtnListener(this);
-		topView.setRightBtnListener(this);
-		topView.setCenterListener(this);
 		// 获取ListView对象
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
@@ -103,9 +97,16 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 	protected void onResume() {
 		super.onResume();
 
-//		topView = MainActivity.getTopView();
-//		topView.setTitle("首页");
-//		topView.hideRightBtn();
+		topView = MainActivity.getTopView();
+		topView.setActivity(this);
+		topView.showLeftBtn();
+		topView.showRightBtn();
+		topView.showCenterSearch();
+		topView.hideTitle();
+		MainActivity activity=(MainActivity)getParent();
+		topView.setLeftBtnListener(activity);
+		topView.setRightBtnListener(activity);
+		topView.setCenterListener(activity);
 	}
 
 	private void refreshTask() {
@@ -325,19 +326,9 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_left:
-			myToast("扫描");
-			break;
-		case R.id.btn_right:
-			myToast("定位");
-			break;
-		case R.id.ll_center:
-			myToast("搜索");
-			break;
-
-		default:
-			break;
-		}
+		// TODO Auto-generated method stub
+		
 	}
+
+
 }

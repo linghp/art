@@ -18,9 +18,9 @@ import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.TopView;
 
 public class ClassificationActivity extends BaseActivity {
-
 	private ListView list;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
@@ -55,6 +55,22 @@ public class ClassificationActivity extends BaseActivity {
 		
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		topView = MainActivity.getTopView();
+		//HomeActivity homeActivity=(HomeActivity) ((MainActivity)getParent()).getLocalActivityManager().getActivity("首页");
+		topView.setActivity(this);
+		topView.showLeftBtn();
+		topView.showRightBtn();
+		topView.showCenterSearch();
+		topView.hideTitle();
+		MainActivity activity=(MainActivity)getParent();
+		topView.setLeftBtnListener(activity);
+		topView.setRightBtnListener(activity);
+		topView.setCenterListener(activity);
+	}
 	//事件监听
 	private void listener(){
 		list.setOnItemClickListener(new OnItemClickListener() {

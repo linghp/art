@@ -27,7 +27,7 @@ public class TopView extends RelativeLayout {
 	
 	private Activity mActivity; // 当前activity
 	private View mRootView;
-	private View ll_center;
+	private View ll_center,et_search;
 	private Button btn_back;
 	private ImageView btn_left, btn_right;
 	private TextView tv_title;
@@ -56,6 +56,7 @@ public class TopView extends RelativeLayout {
 		//btn_back = (ImageView) mRootView.findViewById(R.id.btn_back);
 		btn_left = (ImageView) mRootView.findViewById(R.id.btn_left);
 		ll_center = mRootView.findViewById(R.id.ll_center);
+		et_search = mRootView.findViewById(R.id.et_search);
 		btn_right = (ImageView) mRootView.findViewById(R.id.btn_right);
 		rl_title = (RelativeLayout) mRootView.findViewById(R.id.rl_title);
 		
@@ -204,6 +205,24 @@ public class TopView extends RelativeLayout {
 	public void setCenterListener(OnClickListener listener){
 		ll_center.setOnClickListener(listener);
 	}
+
+	public void showCenterSearch(){
+		et_search.setVisibility(View.VISIBLE);
+	}
+	
+
+	public void hideCenterSearch(){
+		et_search.setVisibility(View.GONE);
+	}
+	public void showTitle(){
+		tv_title.setVisibility(View.VISIBLE);
+	}
+	
+	
+	public void hideTitle(){
+		tv_title.setVisibility(View.GONE);
+	}
+	
 	/**
 	 * 左按钮点击事件
 	 * @param listener
@@ -238,7 +257,7 @@ public class TopView extends RelativeLayout {
 	/**
 	 * 隐藏左按钮
 	 */
-	public void hideLefttBtn(){
+	public void hideLeftBtn(){
 		btn_left.setVisibility(View.GONE);
 	}
 	
