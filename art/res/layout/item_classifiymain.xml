@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="特价美食"
             android:textSize="@dimen/list_title_size"
-            android:textColor="#000000"
+            android:textColor="@color/txt_black"
             />
         <TextView 
             android:id="@+id/item_classifiymain_summary"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="特价美食,干果/仙贝"
             android:textSize="@dimen/list_summary_size"
-            android:textColor="#000000"
+            android:textColor="@color/txt_black2"
             />
     </LinearLayout>
     <ImageView 
