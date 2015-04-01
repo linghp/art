@@ -1,8 +1,11 @@
 package com.shangxian.art;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.shangxian.art.base.BaseActivity;
 
@@ -12,6 +15,13 @@ public class MineActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mine);
+		findViewById(R.id.mine).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MineActivity.this, LoginActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
