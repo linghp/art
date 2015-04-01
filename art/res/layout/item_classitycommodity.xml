@@ -15,13 +15,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="5dp">
-        <TextView 
+
+        <TextView
             android:id="@+id/item_commodity_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新鲜菠萝\葡萄\香蕉\苹果果篮特价出售"
-            android:textSize="@dimen/list_title_size"
-            android:textColor="@color/txt_black"/>
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+
         <TextView 
             android:id="@+id/item_commodity_summary"
             android:layout_width="wrap_content"
