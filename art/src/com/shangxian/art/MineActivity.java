@@ -14,7 +14,7 @@ public class MineActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_mine);
+		setContentView(R.layout.layout_main_mine);
 		findViewById(R.id.mine).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
