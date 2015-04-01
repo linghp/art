@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/classitycommodity_linear"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/txt_white2"
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
+        <TextView
+            android:id="@+id/classitycommodity_saixuan" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/screening"
+            android:text="筛选"
+            android:textSize="@dimen/list_min_size"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/classitycommodity_xiaoliang" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/salesvolume"
+            android:text="销量"
+            android:textSize="@dimen/list_min_size"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/classitycommodity_jiage" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/price"
+            android:text="价格"
+            android:textSize="@dimen/list_min_size"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/classitycommodity_xinpin" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/newproduct"
+            android:text="新品"
+            android:textSize="@dimen/list_min_size"
+            android:gravity="center"/>
+        
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/classitycommodity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/classitycommodity_linear"
+        android:layout_below="@id/top_title"
+        android:scrollbars="none" >
+    </ListView>
+
+</RelativeLayout>
