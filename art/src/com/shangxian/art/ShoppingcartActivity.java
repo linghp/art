@@ -32,4 +32,17 @@ public class ShoppingcartActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		topView = MainActivity.getTopView();
+		topView.setActivity(this);
+		topView.hideLeftBtn();
+		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.setCenterListener(null);
+		topView.setTitle("购物车");
+		topView.showTitle();
+	}
 }

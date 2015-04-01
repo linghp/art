@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -22,7 +23,7 @@ import com.shangxian.art.constant.Global;
 import com.shangxian.art.view.TopView;
 
 @SuppressWarnings("deprecation")
-public class MainActivity extends TabActivity {
+public class MainActivity extends TabActivity implements OnClickListener{
 	
 	private static TopView topView;
 
@@ -42,8 +43,8 @@ public class MainActivity extends TabActivity {
 	}
 
 	private void init() {
-//		topView = (TopView) findViewById(R.id.top_title);
-//		topView.setActivity(this);
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
 		
 		tabhost = this.getTabHost();
 
@@ -166,5 +167,27 @@ public class MainActivity extends TabActivity {
 		} else {
 			finish();
 		}
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_left:
+			myToast("扫描");
+			break;
+		case R.id.btn_right:
+			myToast("定位");
+			break;
+		case R.id.ll_center:
+			myToast("搜索");
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	protected void myToast(String str) {
+		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 	}
 }
