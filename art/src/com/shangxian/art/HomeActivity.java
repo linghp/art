@@ -33,7 +33,7 @@ import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
 
-public class HomeActivity extends BaseActivity implements OnHeaderRefreshListener{
+public class HomeActivity extends BaseActivity implements OnHeaderRefreshListener,OnClickListener{
 
 	private TopView topView;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
@@ -68,11 +68,11 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(10000);
 
-		 topView = (TopView) findViewById(R.id.top_title);
-		 if(topView!=null){
-		 topView.setActivity(this);
-		 topView.setTitle("首页");
-		 }
+		topView = MainActivity.getTopView();
+		topView.setActivity(this);
+		topView.setLeftBtnListener(this);
+		topView.setRightBtnListener(this);
+		topView.setCenterListener(this);
 		// 获取ListView对象
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
@@ -136,8 +136,8 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 
 			@Override
 			public void onSuccess(int statusCode, String content) {
-				AbToastUtil.showToast(HomeActivity.this, content);
-				AbLogUtil.e(HomeActivity.this, content);
+				//AbToastUtil.showToast(HomeActivity.this, content);
+				AbLogUtil.i(HomeActivity.this, content);
 //				TestBean bean = (TestBean) AbJsonUtil.fromJson(content,
 //						TestBean.class);
 //				tv_tips.setText(bean.getPname());
@@ -321,5 +321,23 @@ public class HomeActivity extends BaseActivity implements OnHeaderRefreshListene
 			}
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_left:
+			myToast("扫描");
+			break;
+		case R.id.btn_right:
+			myToast("定位");
+			break;
+		case R.id.ll_center:
+			myToast("搜索");
+			break;
+
+		default:
+			break;
+		}
 	}
 }

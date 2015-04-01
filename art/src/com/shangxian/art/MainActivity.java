@@ -42,8 +42,8 @@ public class MainActivity extends TabActivity {
 	}
 
 	private void init() {
-//		topView = (TopView) findViewById(R.id.top_title);
-//		topView.setActivity(this);
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
 		
 		tabhost = this.getTabHost();
 

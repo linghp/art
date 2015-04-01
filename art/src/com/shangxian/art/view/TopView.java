@@ -27,6 +27,7 @@ public class TopView extends RelativeLayout {
 	
 	private Activity mActivity; // 当前activity
 	private View mRootView;
+	private View ll_center;
 	private Button btn_back;
 	private ImageView btn_left, btn_right;
 	private TextView tv_title;
@@ -54,6 +55,7 @@ public class TopView extends RelativeLayout {
 		tv_title = (TextView) mRootView.findViewById(R.id.tv_title);
 		//btn_back = (ImageView) mRootView.findViewById(R.id.btn_back);
 		btn_left = (ImageView) mRootView.findViewById(R.id.btn_left);
+		ll_center = mRootView.findViewById(R.id.ll_center);
 		btn_right = (ImageView) mRootView.findViewById(R.id.btn_right);
 		rl_title = (RelativeLayout) mRootView.findViewById(R.id.rl_title);
 		
@@ -195,6 +197,13 @@ public class TopView extends RelativeLayout {
 	// 左按钮操作方法实现  //
 	//////////////////
 	
+	/**
+	 * 中间点击事件
+	 * @param listener
+	 */
+	public void setCenterListener(OnClickListener listener){
+		ll_center.setOnClickListener(listener);
+	}
 	/**
 	 * 左按钮点击事件
 	 * @param listener
