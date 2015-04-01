@@ -14,35 +14,44 @@
         android:scaleType="fitCenter"
         android:src="@drawable/qr_code" />
 
-    <TextView
-        android:id="@+id/tv_title"
+    <com.shangxian.art.view.MyLinearlayout
+        android:id="@+id/ll_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/btn_right"
         android:layout_toRightOf="@id/btn_left"
-        android:background="@drawable/searchbox_bg"
-        android:drawableLeft="@drawable/search_button"
-        android:drawablePadding="10dp"
-        android:paddingLeft="10dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="搜索商家/分类"
-        android:singleLine="true"
-        android:textColorHint="@color/white"
-         >
-    </EditText>
+        android:clickable="true" android:focusable="true">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_txt_size"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/searchbox_bg"
+            android:drawableLeft="@drawable/search_button"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="搜索商家/分类"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:editable="false"
+            android:clickable="false"
+            android:textColorHint="@color/txt_white2" >
+        </EditText>
+    </com.shangxian.art.view.MyLinearlayout>
 
     <ImageView
         android:id="@+id/btn_right"

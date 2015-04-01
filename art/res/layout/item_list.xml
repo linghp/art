@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:padding="8dip" >
+
+    <RelativeLayout
+        android:id="@+id/itemsImage"
+        android:layout_width="140dip"
+        android:layout_height="120dip"
+        android:layout_centerVertical="true"
+        android:gravity="center" >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/itemsIcon"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/itemsImage"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/itemsTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="农夫果园水果专卖店"
+            android:textColor="@color/black"
+            android:textSize="@dimen/list_title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemsText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="农夫果园水果专卖店，专卖各种水果，欢迎来选购"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/items_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/distance"
+            android:gravity="right"
+            android:text="距离我：50m"
+            android:textColor="@color/black"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+
+</RelativeLayout>
