@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white2" >
+    <!-- 配送类别维护 -->
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout 
+        android:id="@+id/dispatch_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/txt_white"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="快递(免邮)"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextlevel" />
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/dispatch_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dispatch_linear1"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="货到付款"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextlevel" />
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/dispatch_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dispatch_linear2"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="限时快递"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextlevel" />
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/dispatch_linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dispatch_linear3"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="礼品快递"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextlevel" />
+    </LinearLayout>
+</RelativeLayout>
