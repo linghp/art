@@ -21,5 +21,9 @@
     
     <!-- 按钮  样式1 -->
     <dimen name="button_txt_size">20sp</dimen><!-- 普通按钮大小 -->
+    
+    
+    
+    <dimen name="home_itemmargin">16dp</dimen><!-- 主界面每个单元的之间的margin -->
 
 </resources>
