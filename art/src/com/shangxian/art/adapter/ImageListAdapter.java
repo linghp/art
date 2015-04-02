@@ -6,6 +6,7 @@ package com.shangxian.art.adapter;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,10 @@ import android.widget.Toast;
 
 import com.ab.image.AbImageLoader;
 import com.ab.util.AbViewHolder;
+import com.shangxian.art.LocationActivity;
+import com.shangxian.art.NearlyActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.utils.CommonUtil;
 
 /**
  * © 2012 amsoft.cn
@@ -98,10 +102,10 @@ public class ImageListAdapter extends BaseAdapter{
           TextView itemsText = AbViewHolder.get(convertView, mTo[2]);
           TextView items_bottom = AbViewHolder.get(convertView, mTo[3]);
           items_bottom.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mContext, "location", 0).show();
+				//Toast.makeText(mContext, "location", 0).show();
+				CommonUtil.gotoActivity((Activity)mContext, LocationActivity.class, false);
 			}
 		});
 		  //获取该行的数据

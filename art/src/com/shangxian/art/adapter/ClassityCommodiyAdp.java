@@ -14,12 +14,13 @@ import android.widget.TextView;
 
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassificationModel;
+import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.constant.Global;
 
-public class ClassificationAdp extends EntityAdapter<ClassificationModel>{
+public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 
-	public ClassificationAdp(Activity mAc, int layoutId,
-			List<ClassificationModel> dates) {
+	public ClassityCommodiyAdp(Activity mAc, int layoutId,
+			List<ClassityCommdityModel> dates) {
 		super(mAc, layoutId, dates);
 		// TODO Auto-generated constructor stub
 	}
@@ -30,23 +31,24 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel>{
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = LayoutInflater.from(mAc).inflate(
-					R.layout.item_classifiymain, null);
-			holder.title = (TextView) convertView.findViewById(R.id.item_classifiymain_title);
-			holder.summary = (TextView) convertView.findViewById(R.id.item_classifiymain_summary);
-			holder.img = (ImageView) convertView.findViewById(R.id.item_classifiymain_img);
-			
+					R.layout.item_classitycommodity, null);
+			holder.title = (TextView) convertView.findViewById(R.id.item_commodity_title);
+			holder.summary = (TextView) convertView.findViewById(R.id.item_commodity_summary);
+			holder.img = (ImageView) convertView.findViewById(R.id.item_commodity_img);
+			holder.price = (TextView) convertView.findViewById(R.id.item_commodity_price);
+			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.title.setText(dates.get(position).getTitle());
 		holder.summary.setText(dates.get(position).getSummary());
-		
+		holder.price.setText(dates.get(position).getPrice());
 		
 		return convertView;
 	}
 	public static class ViewHolder{
-		TextView title,summary;
-		ImageView img;
+		TextView title,summary,price;
+		ImageView img,shop;
 	}
 }

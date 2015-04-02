@@ -27,6 +27,7 @@ import com.shangxian.art.adapter.ImageListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 public class NearlyActivity extends BaseActivity implements
@@ -91,6 +92,8 @@ public class NearlyActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				
+				
 			}
 		});
 
@@ -117,7 +120,6 @@ public class NearlyActivity extends BaseActivity implements
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView view) {
 		refreshTask();
-
 	}
 
 	public void refreshTask() {

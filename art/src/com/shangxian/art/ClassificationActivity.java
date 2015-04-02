@@ -80,7 +80,7 @@ public class ClassificationActivity extends BaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 //				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
-				CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, true);
+				CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
 			}
 		});
 	}

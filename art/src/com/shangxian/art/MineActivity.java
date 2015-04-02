@@ -84,6 +84,7 @@ public class MineActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

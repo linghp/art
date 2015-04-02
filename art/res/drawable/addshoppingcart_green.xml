@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <!-- 商品详情  添加购物车  按钮背景  圆角  -->
+    <solid android:color="@color/green1" />    
+    <corners android:topLeftRadius="15dp"   
+                android:topRightRadius="15dp"    
+                android:bottomRightRadius="15dp"   
+                android:bottomLeftRadius="15dp"/>
+
+</shape>
