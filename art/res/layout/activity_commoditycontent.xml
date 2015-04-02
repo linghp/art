@@ -55,13 +55,14 @@
                 android:id="@+id/commoditycontent_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 android:src="@drawable/login_img_bg" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@color/txt_white" >
+                android:background="@color/txt_white"
+                android:padding="10dp" >
 
                 <ImageView
                     android:id="@+id/commoditycontent_next1"
@@ -75,11 +76,11 @@
                     android:id="@+id/commoditycontent_jieshao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
                     android:layout_toLeftOf="@id/commoditycontent_next1"
                     android:text="新鲜菠萝/葡萄/香蕉/苹果果篮出售 特价出售赶快抢购"
                     android:textColor="@color/txt_black"
-                    android:textSize="@dimen/list_summary_size"
-                    android:layout_marginRight="40dp" />
+                    android:textSize="@dimen/list_summary_size" />
 
                 <TextView
                     android:id="@+id/commoditycontent_jiage"
@@ -91,19 +92,22 @@
                     android:textColor="@color/red500"
                     android:textSize="@dimen/list_summary_size" />
             </RelativeLayout>
-            <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/txt_white"
                 android:layout_marginTop="1dp"
-                android:padding="10dp">
+                android:background="@color/txt_white"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="规格:"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_summary_size" />
+
                 <TextView
                     android:id="@+id/commoditycontent_guige"
                     android:layout_width="wrap_content"
@@ -112,14 +116,95 @@
                     android:text="组合装500g   1件"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_summary_size" />
+
                 <ImageView
                     android:id="@+id/commoditycontent_next2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/nextlevel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/txt_white"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商品评价"
+                    android:textColor="@color/txt_black"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <View 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <!-- <com.shangxian.art.view.StarRatingView
+                    android:id="@+id/commoditycontent_starRating"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp">
+                </com.shangxian.art.view.StarRatingView> -->
                 
-                
+
+                <ImageView
+                    android:id="@+id/commoditycontent_next3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/nextlevel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/txt_white"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <ImageView
+                    android:id="@+id/commoditycontent_dianpuimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/alipaypayment" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新鲜果水果专卖店"
+                        android:textColor="@color/txt_black"
+                        android:textSize="@dimen/list_summary_size" />
+
+                    <TextView
+                        android:id="@+id/commoditycontent_dianpujianjie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新品到店"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="@dimen/list_min_size" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/commoditycontent_next4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/nextlevel" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
