@@ -42,48 +42,64 @@
                     android:textSize="@dimen/list_title_size" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/ll_loginafter"
+            <LinearLayout
+                android:id="@+id/ll_loginafter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" android:visibility="gone">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
                     android:background="@drawable/bg_login"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                     >
+                    android:orientation="vertical" >
 
-                    <com.shangxian.art.view.CustomShapeImageView
-                        android:id="@+id/user_head"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/defaultloginheader"
-                        app:shape="circle" />
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="34dp"
-                        android:layout_toRightOf="@id/user_head"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/next_level" />
-
-                    <TextView
-                        android:id="@+id/user_code"
+                    <ImageView android:id="@+id/iv_settingbutton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/user_head"
-                        android:layout_centerHorizontal="true"
+                        android:layout_above="@+id/user_head"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="5dp"
-                        android:text="XXXXXX"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-                </RelativeLayout>
+                        android:onClick="doClick"
+                        android:src="@drawable/settingbuttonimage" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" >
+
+                        <com.shangxian.art.view.CustomShapeImageView
+                            android:id="@+id/user_head"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/defaultloginheader"
+                            app:shape="circle" />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="34dp"
+                            android:layout_toRightOf="@id/user_head"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/next_level" />
+
+                        <TextView
+                            android:id="@+id/tv_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/user_head"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="XXXXXX"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

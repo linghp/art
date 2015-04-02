@@ -62,5 +62,6 @@
         android:layout_marginRight="20dp"
         android:scaleType="fitCenter"
         android:src="@drawable/map" />
-
+    
+    
 </RelativeLayout>

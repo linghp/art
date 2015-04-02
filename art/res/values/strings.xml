@@ -12,5 +12,7 @@
     <string name="hotel_reservation">酒店预订</string>
     <string name="pay">充值</string>
     <string name="title_activity_regist">RegistActivity</string>
-	<string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
+    <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
+    <string name="title_activity_account_security">账户与安全</string>
+
 </resources>
