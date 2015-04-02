@@ -22,8 +22,16 @@
             android:background="@color/txt_white"
             android:gravity="center"
             android:orientation="horizontal" >
-
+            
             <TextView
+                android:id="@+id/regt_tv_ti1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 输入手机号"
+                android:textColor="@color/col_b1toma500"
+                android:textSize="16sp" />
+
+            <!-- <TextView
                 android:id="@+id/regt_tv_ti1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="3 设置密码"
                 android:textColor="@color/col_b1toma500"
-                android:textSize="16sp" />
+                android:textSize="16sp" /> -->
         </LinearLayout>
 
         <FrameLayout
@@ -74,8 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#e9e9e9"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
                 <EditText
                     android:id="@+id/rege_et_phone"
@@ -92,7 +99,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/regt_tv_toyan"
+                    android:id="@+id/regt_tv_getyan"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginLeft="16dp"
@@ -148,19 +155,19 @@
                     android:id="@+id/regt_tv_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:layout_marginLeft="16dp"
-					android:layout_marginRight="16dp"
-					android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
                     android:text="验证码短信已发送到150***6981" />
-                
+
                 <EditText
-                    android:id="@+id/rege_"
+                    android:id="@+id/rege_et_yan"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/regist_et_bg_sel"
-                    android:hint="请输入手机号"
+                    android:hint="请输入验证码"
                     android:inputType="phone"
                     android:paddingLeft="15dp"
                     android:singleLine="true"
@@ -169,7 +176,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/logt_tv_getyan"
+                    android:id="@+id/regt_tv_toyan"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginLeft="16dp"
@@ -186,10 +193,72 @@
                 android:id="@+id/regl_ll_li3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-            	android:background="#e9e9e9"
-                android:visibility="gone" >
-                
+                android:background="#e9e9e9"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/regist_pass_bg"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/rege_et_pass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/transparent"
+                        android:hint="设置密码"
+                        android:inputType="textPassword"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/main_col300" />
+
+                    <EditText
+                        android:id="@+id/rege_et_repass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/transparent"
+                        android:hint="设置密码"
+                        android:inputType="textPassword"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/regt_tv_toregist"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/login_btn_sel"
+                    android:gravity="center"
+                    android:text="注册"
+                    android:textColor="@color/col_w1tow2"
+                    android:textSize="18sp" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
