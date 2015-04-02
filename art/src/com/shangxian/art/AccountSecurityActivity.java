@@ -1,14 +1,15 @@
 package com.shangxian.art;
 
-import com.shangxian.art.base.BaseActivity;
-
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class AccountSecurityActivity extends BaseActivity{
+import com.shangxian.art.base.BaseActivity;
+
+public class AccountSecurityActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +17,6 @@ public class AccountSecurityActivity extends BaseActivity{
 		setContentView(R.layout.activity_account_security);
 	}
 
-	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -36,15 +35,25 @@ public class AccountSecurityActivity extends BaseActivity{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void doClick(View view){
+
+	public void doClick(View view) {
 		switch (view.getId()) {
-		case R.id.iv_settingbutton:
-			startActivity(new Intent(this, AccountSecurityActivity.class));
+		case R.id.tv_logout:
+			myToast("注销");
+			deletedata();
+			finish();
 			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void deletedata() {
+		SharedPreferences preferences = getSharedPreferences("userinfo",
+				MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.clear();
+		editor.commit();
 	}
 }

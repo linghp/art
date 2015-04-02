@@ -260,6 +260,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_logout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -268,7 +269,7 @@
         android:background="@color/blue"
         android:gravity="center"
         android:onClick="doClick"
-        android:padding="5dp"
+        android:padding="10dp"
         android:text="注销"
         android:textColor="@color/white"
         android:textSize="@dimen/list_title_size" />

@@ -101,7 +101,7 @@ public class MineActivity extends BaseActivity {
 	public void doClick(View view){
 		switch (view.getId()) {
 		case R.id.iv_settingbutton:
-			startActivity(new Intent(this, AccountSecurityActivity.class));
+			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
 			break;
 
 		default:
