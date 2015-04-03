@@ -6,7 +6,7 @@ public class Constant {
 	
     
     // 连接超时
- 	public static final int timeOut = 12000;
+ 	public static final int timeOut = 10000;
  	// 建立连接
  	public static final int connectOut = 12000;
  	// 获取数据

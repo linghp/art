@@ -93,8 +93,15 @@
         </activity>
         <activity
             android:name=".AccountSecurityActivity"
-            android:label="@string/title_activity_account_security"
-             >
+            android:label="@string/title_activity_account_security" >
+        </activity>
+        <activity
+            android:name=".RegistSogoActivity"
+            android:label="@string/title_activity_regist_sogo" >
+        </activity>
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_regist_sogo" >
         </activity>
     </application>
 

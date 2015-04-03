@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.LocalUserInfo;
 
 public class MineActivity extends BaseActivity {
 	private String username_local;
@@ -19,6 +20,9 @@ public class MineActivity extends BaseActivity {
 	private TextView tv_username;
 	
 	
+	private ImageView user_head;
+	
+	private String userphoto_filename;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

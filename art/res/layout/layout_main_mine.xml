@@ -476,7 +476,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="账户与安全"
+                        android:text="@string/title_activity_account_security"
                         android:textSize="@dimen/list_title_size" />
 
                     <TextView

@@ -3,7 +3,7 @@
     android:id="@+id/rl_title"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/blue" >
+    android:background="@color/main_col500" >
 
     <ImageView
         android:id="@+id/btn_left"
@@ -63,5 +63,16 @@
         android:scaleType="fitCenter"
         android:src="@drawable/map" />
     
-    
+    <TextView 
+        android:id="@+id/topt_tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="商户入驻"
+        android:textSize="16sp"
+        android:textColor="@color/col_w1tow2"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="4dp"
+        android:visibility="gone"
+        android:singleLine="true"/>
 </RelativeLayout>

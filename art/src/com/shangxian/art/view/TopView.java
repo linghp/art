@@ -32,6 +32,7 @@ public class TopView extends RelativeLayout {
 	private ImageView btn_left, btn_right;
 	private TextView tv_title;
 	private RelativeLayout rl_title;
+	private TextView rt_name;
 
 	public TopView(Context context) {
 		super(context); 
@@ -59,6 +60,7 @@ public class TopView extends RelativeLayout {
 		et_search = mRootView.findViewById(R.id.et_search);
 		btn_right = (ImageView) mRootView.findViewById(R.id.btn_right);
 		rl_title = (RelativeLayout) mRootView.findViewById(R.id.rl_title);
+		rt_name = (TextView) mRootView.findViewById(R.id.topt_tv_right);
 		
 //		hideLefttBtn();
 //		hideRightBtn();
@@ -259,6 +261,16 @@ public class TopView extends RelativeLayout {
 	 */
 	public void hideLeftBtn(){
 		btn_left.setVisibility(View.GONE);
+	}
+	
+	/**
+	 * 设置右边按钮文字
+	 */
+	public void setRightText(String name, OnClickListener listener){
+		rt_name.setVisibility(View.VISIBLE);
+		btn_right.setVisibility(View.GONE);
+		rt_name.setText(name);
+		rt_name.setOnClickListener(listener);
 	}
 	
 	/**
