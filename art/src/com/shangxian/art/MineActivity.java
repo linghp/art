@@ -11,11 +11,14 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 
 public class MineActivity extends BaseActivity {
 	private String username_local;
 	private View ll_loginbefore,ll_loginafter;
 	private TextView tv_username;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,6 +33,15 @@ public class MineActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				Intent intent = new Intent(MineActivity.this, LoginActivity.class);
 				startActivityForResult(intent, 1);
+			}
+		});
+		//商品管理
+		findViewById(R.id.ll_tab1).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
 			}
 		});
 	}

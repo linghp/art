@@ -40,22 +40,7 @@ public class ClassifyCommodityActivity extends BaseActivity{
 		initData();
 		listener();
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		topView = MainActivity.getTopView();
-		//HomeActivity homeActivity=(HomeActivity) ((MainActivity)getParent()).getLocalActivityManager().getActivity("首页");
-		topView.setActivity(this);
-		topView.showLeftBtn();
-		topView.showRightBtn();
-		topView.showCenterSearch();
-		topView.hideTitle();
-		MainActivity activity=(MainActivity)getParent();
-		topView.setLeftBtnListener(activity);
-		topView.setRightBtnListener(activity);
-		topView.setCenterListener(activity);
-	}
+	
 	private void initView() {
 		// TODO Auto-generated method stub
 		list = (ListView) findViewById(R.id.classitycommodity);
