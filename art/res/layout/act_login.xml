@@ -5,16 +5,15 @@
     android:background="@color/grey200"
     android:orientation="vertical" >
 
-    <View
-        android:id="@+id/title"
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/main_col500" />
-
+        android:layout_height="wrap_content" />
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/top_title"
         android:orientation="vertical" >
 
         <ImageView
