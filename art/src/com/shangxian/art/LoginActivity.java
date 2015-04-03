@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
+import com.shangxian.art.utils.LocalUserInfo;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
