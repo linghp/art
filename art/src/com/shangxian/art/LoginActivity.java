@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.LocalUserInfo;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -68,11 +69,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void savedata() {
-		SharedPreferences preferences = getSharedPreferences("userinfo",
-				MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("username", user);
-		editor.commit();
+		LocalUserInfo.getInstance(this).setUserInfo("username", user);
 	}
 
 	private boolean mathLogin() {
