@@ -8,11 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.LocalUserInfo;
 
 public class MineActivity extends BaseActivity {
 	private String username_local;
