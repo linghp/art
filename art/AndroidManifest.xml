@@ -79,10 +79,11 @@
             android:name=".RegistActivity"
             android:label="@string/title_activity_regist" >
         </activity>
-        <activity
-            android:name=".AccountSecurityActivity"
-            android:label="@string/title_activity_account_security"
-             >
+        <activity android:name=".AccountSecurityActivity" >
+        </activity>
+        <activity android:name=".LocationActivity" >
+        </activity>
+        <activity android:name=".ConfirmOrderActivity" >
         </activity>
     </application>
 

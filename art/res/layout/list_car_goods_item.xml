@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/check_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:button="@drawable/check_sel"
+            android:focusable="false" />
+
+        <ImageView
+            android:id="@+id/car_goodsimg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="6dp"
+            android:src="@drawable/image_empty"
+             />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="4" >
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/car_goodsname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="2014冬装羊羔毛翻领情侣棉衣"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView android:layout_marginTop="5dp"
+                android:id="@+id/car_goodsattr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/car_goodsname"
+                android:textSize="12sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:drawableRight="@drawable/edit"
+                android:drawablePadding="4dp"
+                android:text="颜色：黄色；尺码：L"
+                 />
+  <!-- 
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/car_num_reduce"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                     />
+
+                <TextView
+                    android:id="@+id/car_num"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1" />
+
+                <ImageButton
+                    android:id="@+id/car_num_add"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+
+          <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/reducenum_shape"
+                    android:button="@null"
+                    android:drawableTop="@drawable/jian_down"
+                    android:focusable="false"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                   
+                    android:layout_width="45dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/addnum__num_shape"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/addnum_shape"
+                    android:button="@null"
+                    android:drawableTop="@drawable/jia_down"
+                    android:focusable="false"
+                    android:paddingTop="1dp" />
+            </LinearLayout> -->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.7"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/car_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥197.14"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                 />
+
+            <TextView
+                android:id="@+id/car_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/car_goods_price"
+                android:textStyle="bold"
+                android:text="x1" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
