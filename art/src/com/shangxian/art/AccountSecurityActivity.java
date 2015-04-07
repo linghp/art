@@ -27,6 +27,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 
+/**
+ * 设置
+ * @author Administrator
+ *
+ */
 public class AccountSecurityActivity extends BaseActivity {
 	private ImageView iv_photo;
 

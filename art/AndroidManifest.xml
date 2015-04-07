@@ -80,6 +80,14 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".AddParentClassActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".AddSubClassActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_mine" >
         </activity>

@@ -1,7 +1,5 @@
 package com.shangxian.art;
-/**
- * 分类--->  商品展示
- */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.utils.CommonUtil;
-
+/**
+ * 分类--->  商品展示
+ * @author Administrator
+ *
+ */
 public class ClassifyCommodityActivity extends BaseActivity{
 	//列表
 	private ListView list;

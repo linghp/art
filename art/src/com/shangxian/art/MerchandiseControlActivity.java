@@ -8,6 +8,11 @@ import android.widget.LinearLayout;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
 
+/**
+ * 商品管理（登陆成功后）
+ * @author Administrator
+ *
+ */
 public class MerchandiseControlActivity extends BaseActivity{
 	private LinearLayout shangpin,peisong,tianjia,sousuo;
 
@@ -42,9 +47,6 @@ public class MerchandiseControlActivity extends BaseActivity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				myToast("商品类别维护");
-				
 				CommonUtil.gotoActivity(MerchandiseControlActivity.this, ShangPinWeiHuActivity.class, false);
 			}
 		});
