@@ -18,6 +18,7 @@
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:layout_below="@id/top_title"
         android:padding="10dp" >
 
         <ImageView

@@ -13,8 +13,16 @@
     <string name="pay">充值</string>
     <string name="title_activity_regist">RegistActivity</string>
     <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
+<<<<<<< HEAD
     <string name="title_activity_accountsecurity">账户与安全</string>
+=======
+    <string name="title_activity_account_security">账户与安全</string>
+>>>>>>> branch 'master' of https://github.com/linghp/art.git
     <string name="title_activity_location">LocationActivity</string>
+<<<<<<< HEAD
     <string name="title_activity_confirm_order">ConfirmOrderActivity</string>
+=======
+    <string name="title_activity_regist_sogo">RegistSogoActivity</string>
+>>>>>>> branch 'master' of https://github.com/linghp/art.git
 
 </resources>
