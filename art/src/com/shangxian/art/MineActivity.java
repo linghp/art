@@ -1,7 +1,9 @@
 package com.shangxian.art;
 
+import java.io.File;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -11,15 +13,14 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.LocalUserInfo;
 
 public class MineActivity extends BaseActivity {
 	private String username_local;
 	private View ll_loginbefore,ll_loginafter;
 	private TextView tv_username;
-	
-	
 	private ImageView user_head;
 	
 	private String userphoto_filename;
@@ -27,6 +28,8 @@ public class MineActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main_mine);
+		userphoto_filename = LocalUserInfo.getInstance(this)
+                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
 		initView();
 		initListener();
 	}
@@ -39,20 +42,12 @@ public class MineActivity extends BaseActivity {
 				startActivityForResult(intent, 1);
 			}
 		});
-		//商品管理
-		findViewById(R.id.ll_tab1).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
-			}
-		});
 	}
 
 	private void initView() {
 		ll_loginbefore=findViewById(R.id.ll_loginbefore);
 		ll_loginafter=findViewById(R.id.ll_loginafter);
+		user_head=(ImageView) findViewById(R.id.user_head);
 		changeview();
 	}
 
@@ -69,9 +64,7 @@ public class MineActivity extends BaseActivity {
 	}
 
 	private boolean islogin() {
-		SharedPreferences preferences = getSharedPreferences("userinfo",
-				MODE_PRIVATE);
-		username_local = preferences.getString("username", "");
+		username_local=LocalUserInfo.getInstance(this).getUserInfo("username");
 		return !TextUtils.isEmpty(username_local);
 	}
 	
@@ -113,6 +106,23 @@ public class MineActivity extends BaseActivity {
 		topView.setCenterListener(null);
 		topView.setTitle("我的");
 		topView.showTitle();
+		//显示头像
+		if(islogin()){
+        String userphoto_filename_temp = LocalUserInfo.getInstance(this)
+                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
+        if (!userphoto_filename_temp.equals(userphoto_filename)) {
+        	String imagelocaldir=AbFileUtil.getImageDownloadDir(this)+File.separator;
+    		if (!TextUtils.isEmpty(userphoto_filename_temp)) {
+    			File file = new File(imagelocaldir, userphoto_filename_temp);
+    			// 从文件中找
+    			if (file.exists()) {
+    				// Log.i("aaaa", "image exists in file" + filename);
+    				user_head.setImageBitmap(BitmapFactory.decodeFile(imagelocaldir
+    						+ userphoto_filename_temp));
+    			}
+    		}
+        }
+		}
 	}
 	
 	public void doClick(View view){

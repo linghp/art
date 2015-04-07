@@ -8,26 +8,30 @@
     <ImageView
         android:id="@+id/btn_left"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:scaleType="fitCenter"
         android:src="@drawable/qr_code" />
 
-    <com.shangxian.art.view.MyLinearlayout
+    <com.shangxian.art.view.MyRelativeLayout
         android:id="@+id/ll_center"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/btn_right"
         android:layout_toRightOf="@id/btn_left"
-        android:clickable="true" android:focusable="true">
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
+            android:layout_gravity="center_horizontal"
+            android:text="xxx"
             android:textColor="@color/white"
             android:textSize="@dimen/title_txt_size"
             android:visibility="gone" />
@@ -36,22 +40,20 @@
             android:id="@+id/et_search"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/searchbox_bg"
+            android:clickable="false"
             android:drawableLeft="@drawable/search_button"
             android:drawablePadding="10dp"
+            android:editable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:gravity="center_vertical"
             android:hint="搜索商家/分类"
             android:paddingLeft="10dp"
             android:singleLine="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:editable="false"
-            android:clickable="false"
             android:textColorHint="@color/txt_white2" >
         </EditText>
-    </com.shangxian.art.view.MyLinearlayout>
+    </com.shangxian.art.view.MyRelativeLayout>
 
     <ImageView
         android:id="@+id/btn_right"
@@ -59,20 +61,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:scaleType="fitCenter"
         android:src="@drawable/map" />
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/topt_tv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="商户入驻"
-        android:textSize="16sp"
-        android:textColor="@color/col_w1tow2"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dp"
-        android:visibility="gone"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:text="商户入驻"
+        android:textColor="@color/col_w1tow2"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
 </RelativeLayout>

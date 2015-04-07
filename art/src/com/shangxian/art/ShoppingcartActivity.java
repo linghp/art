@@ -54,7 +54,7 @@ OnHeaderRefreshListener,OnClickListener{
 		CarItem section = new CarItem(CarItem.SECTION, store, null, store.getStoreid());
 		listCarItem.add(section);
 		for (int i = 0; i < 2; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("001"+(i+1), "商品"+(i+1), store.getStoreid(), 1,145.10f);
+			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("001"+(i+1), "商品"+(i+1), store.getStoreid(), 1,(float)(Math.round(145.10f*100))/100);
 			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store.getStoreid());
 			listCarItem.add(item);
 		}
@@ -63,7 +63,7 @@ OnHeaderRefreshListener,OnClickListener{
 		CarItem section1 = new CarItem(CarItem.SECTION, store1, null, store1.getStoreid());
 		listCarItem.add(section1);
 		for (int i = 0; i < 2; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("002"+(i+1), "商品"+(i+1), store1.getStoreid(), 1,23.50f);
+			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("002"+(i+1), "商品"+(i+1), store1.getStoreid(), 1,(float)(Math.round(23.50f*100))/100);
 			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store1.getStoreid());
 			listCarItem.add(item);
 		}
@@ -72,7 +72,7 @@ OnHeaderRefreshListener,OnClickListener{
 		CarItem section2 = new CarItem(CarItem.SECTION, store2, null, store2.getStoreid());
 		listCarItem.add(section2);
 		for (int i = 0; i < 3; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("003"+(i+1), "商品"+(i+1), store2.getStoreid(),1,88.20f);
+			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("003"+(i+1), "商品"+(i+1), store2.getStoreid(),1,(float)(Math.round(45.32f*100))/100);
 			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store1.getStoreid());
 			listCarItem.add(item);
 		}

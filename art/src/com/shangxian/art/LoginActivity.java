@@ -12,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.view.TopView;
 import com.shangxian.art.utils.LocalUserInfo;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -42,23 +40,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void initView() {
 		et_user = (EditText) findViewById(R.id.loge_et_user);
 		et_pass = (EditText) findViewById(R.id.loge_et_pass);
-		
 		tv_login = (TextView) findViewById(R.id.logt_tv_login);
 		tv_find = (TextView) findViewById(R.id.logt_tv_find);
 		tv_regist = (TextView) findViewById(R.id.logt_tv_regist);
-		
-		topView = (TopView) findViewById(R.id.top_title);
-		topView.hideCenterSearch();
-		topView.hideLeftBtn();
-		topView.hideBackBtn();
-		topView.setTitle("登录");
-		topView.showTitle();
-		topView.setRightText("商户入驻", new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				CommonUtil.gotoActivity(LoginActivity.this, RegistSogoActivity.class, false);
-			}
-		});
 	}
 
 	public void initListener() {
@@ -85,11 +69,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void savedata() {
-		SharedPreferences preferences = getSharedPreferences("userinfo",
-				MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("username", user);
-		editor.commit();
+		LocalUserInfo.getInstance(this).setUserInfo("username", user);
 	}
 
 	private boolean mathLogin() {
