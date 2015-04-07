@@ -4,18 +4,19 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * TODO: document your custom view class.
  */
-public class MyLinearlayout extends LinearLayout {
+public class MyRelativeLayout extends RelativeLayout {
 
-	public MyLinearlayout(Context context) {
+	public MyRelativeLayout(Context context) {
 		super(context);
 		init(null, 0);
 	}
 
-	public MyLinearlayout(Context context, AttributeSet attrs) {
+	public MyRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(attrs, 0);
 	}

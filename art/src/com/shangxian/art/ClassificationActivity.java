@@ -38,12 +38,14 @@ public class ClassificationActivity extends BaseActivity {
 		super.onResume();
 		topView = MainActivity.getTopView();
 		topView.setActivity(this);
-		topView.hideLeftBtn();
-		topView.hideRightBtn();
-		topView.hideCenterSearch();
-		topView.setCenterListener(null);
-		topView.setTitle("分类");
-		topView.showTitle();
+		topView.showLeftBtn();
+		topView.showRightBtn();
+		topView.showCenterSearch();
+		topView.hideTitle();
+		MainActivity activity = (MainActivity) getParent();
+		topView.setLeftBtnListener(activity);
+		topView.setRightBtnListener(activity);
+		topView.setCenterListener(activity);
 	}
 	//添加数据
 	private void initData() {
