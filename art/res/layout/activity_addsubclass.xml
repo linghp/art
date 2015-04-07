@@ -3,7 +3,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/txt_white2" >
-    
-    
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择父类"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/addsubclass_xuanze"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:drawableRight="@drawable/pulldown"
+                android:padding="10dp"
+                android:text="父类名称1"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="设置子类信息"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_title_size" />
+
+        <LinearLayout
+            android:id="@+id/addparentclass_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分类图片"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:id="@+id/addsubclass_addimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/addclassification" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addparentclass_linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addparentclass_linear1"
+            android:layout_marginTop="1dp"
+            android:background="@color/txt_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分类名称"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+
+            <EditText
+                android:id="@+id/addsubclass_addname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入分类名称"
+                android:padding="10dp"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addparentclass_linear2"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/addsubclass_quxiao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/soge_next_bg_sel"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="取消"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/button_txt_size" />
+
+            <TextView
+                android:id="@+id/addsubclass_baocun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/soge_next_bg_sel"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="保存"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/button_txt_size" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -11,7 +11,9 @@
         android:id="@+id/addparentclass_linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/txt_white"
+        android:layout_below="@id/top_title"
         android:orientation="horizontal"
         android:padding="10dp"
         android:gravity="center_vertical">
@@ -19,9 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分类图片"
-            android:textColor="@color/txt_black"
+            android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_title_size"/>
         <ImageView 
+            android:id="@+id/addparentclass_addimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/addclassification"
@@ -36,18 +39,22 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:layout_marginTop="1dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center_vertical">
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分类名称"
-            android:textColor="@color/txt_black"
+            android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_title_size"/>
         <EditText 
+            android:id="@+id/addparentclass_addname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/regist_et_bg_sel"
-            android:padding="5dp"
+            android:padding="10dp"
+            android:hint="请输入分类名称"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
     <LinearLayout 
@@ -59,21 +66,28 @@
         android:layout_marginTop="50dp"
         android:padding="10dp">
         <TextView 
+            android:id="@+id/addparentclass_quxiao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="取消"
             android:gravity="center_horizontal"
             android:textSize="@dimen/button_txt_size"
-            android:textColor="@color/txt_white"/>
+            android:textColor="@color/txt_white"
+            android:padding="5dp"
+            android:background="@drawable/soge_next_bg_sel"/>
         <TextView 
+            android:id="@+id/addparentclass_baocun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:text="确定"
+            android:text="保存"
             android:textSize="@dimen/button_txt_size"
-            android:textColor="@color/txt_white"/>
+            android:textColor="@color/txt_white"
+            android:padding="5dp"
+            android:background="@drawable/soge_next_bg_sel"/>
     </LinearLayout>
 
 </RelativeLayout>

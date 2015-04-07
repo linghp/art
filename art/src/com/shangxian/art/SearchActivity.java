@@ -16,7 +16,11 @@ import com.shangxian.art.adapter.SearchAdapter;
  */
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.SearchModel;
-
+/**
+ * 搜索
+ * @author Administrator
+ *
+ */
 public class SearchActivity extends BaseActivity{
 
 	ListView list;

@@ -19,6 +19,7 @@
         android:padding="10dp" >
 
         <LinearLayout
+            android:id="@+id/shangpinweihu_addparentclass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,11 +32,12 @@
                 android:src="@drawable/add_btn" /> -->
 
             <TextView
+                android:id="@+id/shangpinweihu_addparentclass_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/add_btn"
                 android:text="添加父类"
-                android:textColor="@color/txt_black"
+                android:textColor="@color/txt_blacktogreen"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
 
@@ -45,6 +47,7 @@
             android:background="@color/txt_black3" />
 
         <LinearLayout
+            android:id="@+id/shangpinweihu_subclass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,11 +60,12 @@
                 android:src="@drawable/add_btn" /> -->
 
             <TextView
+                android:id="@+id/shangpinweihu_subclass_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/add_btn"
                 android:text="添加子类"
-                android:textColor="@color/txt_black"
+                android:textColor="@color/txt_blacktogreen"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
     </LinearLayout>
@@ -70,6 +74,7 @@
         android:id="@+id/shangpinweihu_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_above="@id/shangpinweihu_linear"
         android:layout_below="@id/top_title"
         android:scrollbars="none" >
