@@ -3,9 +3,13 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,16 +28,17 @@ import com.ab.util.AbSharedUtil;
 import com.ab.util.AbToastUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import com.google.gson.Gson;
 import com.shangxian.art.adapter.HomeGridAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.GoodBean;
 import com.shangxian.art.bean.HomeData;
+import com.shangxian.art.bean.HomeadsBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
-import com.shangxian.art.view.TopView;
 
 public class HomeActivity extends BaseActivity implements
 		OnHeaderRefreshListener, OnClickListener {
@@ -50,8 +55,6 @@ public class HomeActivity extends BaseActivity implements
 
 	/** 首页轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
-	/** 动态添加图地址 */
-	private List<String> addimgList = new ArrayList<String>();
 	/** 首页广告数据 */
 	// private List<String> tipsList = new ArrayList<String>();
 	/** 首页热门礼品 */
@@ -60,6 +63,9 @@ public class HomeActivity extends BaseActivity implements
 	private HomeData mDatas = new HomeData();
 
 	private AbHttpUtil httpUtil = null;
+	
+	/** 动态添加图地址 */
+	private List<HomeadsBean> listHomeadsBean=new ArrayList<HomeadsBean>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,18 +93,173 @@ public class HomeActivity extends BaseActivity implements
 
 		adp = new HomeGridAdp();
 		mGridView.setAdapter(adp);
-		// 动态添加模块的图片
-		addimgList
-				.add("http://img2.imgtn.bdimg.com/it/u=932381865,934729565&fm=15&gp=0.jpg");
-		addimgList
-				.add("http://imga.deyi.com/common/cf/163251zcs887k6hxhhwdal.jpg");
-		addimgList
-				.add("http://img1.imgtn.bdimg.com/it/u=3294451140,1176711197&fm=21&gp=0.jpg");
-		addimgList
-				.add("http://img5.imgtn.bdimg.com/it/u=2254149823,2917968794&fm=21&gp=0.jpg");
-		// 第一次加载数据
+
+		// 请求轮滑图片
 		refreshTask();
+		//请求动态布局的数据
+		requestTask();
 	}
+
+	private void requestTask() {
+		AbDialogUtil.showLoadDialog(HomeActivity.this,
+				R.drawable.progress_circular, "数据加载中...");
+		AbRequestParams params = new AbRequestParams();
+//		params.put("shopid", "1019");
+//		params.put("code", "88881110344801123456");
+//		params.put("phone", "15889936624");
+		String url=Constant.BASEURL+Constant.home2;
+		httpUtil.get(url, params, new AbStringHttpResponseListener() {
+
+			@Override
+			public void onStart() {
+			}
+
+			@Override
+			public void onFinish() {
+				AbDialogUtil.removeDialog(HomeActivity.this);
+				mAbPullToRefreshView.onHeaderRefreshFinish();
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error) {
+				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				// AbToastUtil.showToast(HomeActivity.this, content);
+				AbLogUtil.i(HomeActivity.this, content);
+				if (!TextUtils.isEmpty(content)) {
+					Gson gson=new Gson();
+				try {
+					JSONObject jsonObject = new JSONObject(content);
+					String result_code=jsonObject.getString("result_code");
+					if (result_code.equals("200")) {
+						JSONArray resultObjectArray=jsonObject.getJSONArray("result");
+						int length=resultObjectArray.length();
+						for (int i = 0; i < length; i++) {
+							JSONObject jo=resultObjectArray.getJSONObject(i);
+							listHomeadsBean.add(gson.fromJson(jo.toString(), HomeadsBean.class));
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				}
+				
+				
+				ll_mainhomehead_add.removeAllViews();
+				if(listHomeadsBean.size()>0){
+					int i=0;
+					List<HomeadsBean> listHomeadsBean_three=new ArrayList<HomeadsBean>();
+					for (HomeadsBean homeadsBean : listHomeadsBean) {
+						if(homeadsBean.getSingle()){
+							View view = mInflater.inflate(
+									R.layout.layout_main_home_item1, null);
+							Imageloader_homePager.displayImage(Constant.BASEURL+homeadsBean.getImageUrl(),
+									(ImageView) view.findViewById(R.id.iv_01),
+									new Handler(), null);
+							ll_mainhomehead_add.addView(view);
+						}else{
+							i++;
+							listHomeadsBean_three.add(homeadsBean);
+							if(i%3==0){
+								View view2 = mInflater.inflate(
+										R.layout.layout_main_home_item2, null);
+								for (int j = 0; j < listHomeadsBean_three.size(); j++) {
+									if(j==0){
+										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(0).getImageUrl(),
+												(ImageView) view2.findViewById(R.id.iv_01),
+												new Handler(), null);
+									}else if(j==1){
+										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(1).getImageUrl(),
+												(ImageView) view2.findViewById(R.id.iv_02),
+												new Handler(), null);
+									}else if(j==2){
+										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(2).getImageUrl(),
+												(ImageView) view2.findViewById(R.id.iv_03),
+												new Handler(), null);
+									}
+								}
+								ll_mainhomehead_add.addView(view2);
+								listHomeadsBean_three.clear();	
+							}
+						}
+					}
+				}
+				// TestBean bean = (TestBean) AbJsonUtil.fromJson(content,
+				// TestBean.class);
+				// tv_tips.setText(bean.getPname());
+
+//				imgList.clear();
+//				// tipsList.clear();
+//				// goods.clear();
+//
+//				ArrayList<String> imgs = new ArrayList<String>();
+//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+//				imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
+//				imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
+//				imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
+//				// ArrayList<String> tips = new ArrayList<String>();
+//				// tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
+//				// ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
+//				// for (int i = 0; i < 3; i++) {
+//				// GoodBean good = new GoodBean();
+//				// //good.setContent("中国测试产品:" + i);
+//				// //good.setPrice(1000 + i + "");
+//				// good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
+//				// goodlist.add(good);
+//				// }
+//
+//				mDatas.setImgList(imgs);
+//				// mDatas.setTipsList(tips);
+//				// mDatas.setGoods(goodlist);
+//
+//				if (mDatas != null) {
+//					if (mDatas.getImgList() != null
+//							&& mDatas.getImgList().size() > 0) {
+//						imgList.addAll(mDatas.getImgList());
+//						// viewPager.setVisibility(View.VISIBLE);
+//						viewPager.setOnGetView(new OnGetView() {
+//
+//							@Override
+//							public View getView(ViewGroup container,
+//									int position) {
+//								ImageView iv = new ImageView(HomeActivity.this);
+//								Imageloader_homePager.displayImage(
+//										imgList.get(position), iv,
+//										new Handler(), null);
+//								container.addView(iv);
+//								return iv;
+//							}
+//						});
+//						viewPager.setAdapter(imgList.size());
+//					} else {
+//						// viewPager.setVisibility(View.GONE);
+//					}
+//
+//					// if (mDatas.getTipsList() != null
+//					// && mDatas.getTipsList().size() > 0) {
+//					// tipsList.addAll(mDatas.getTipsList());
+//					// tv_tips.setVisibility(View.VISIBLE);
+//					// tv_tips.setText(tipsList.get(0));
+//					// } else {
+//					// tv_tips.setVisibility(View.GONE);
+//					// }
+//
+//					// if (mDatas.getGoods() != null
+//					// && mDatas.getGoods().size() > 0) {
+//					// goods.addAll(mDatas.getGoods());
+//					// adp.updateData(goods);
+//					// }
+//				}
+//
+//				addlayout();
+			}
+		});
+	}		
 
 	@Override
 	protected void onResume() {
@@ -117,8 +278,6 @@ public class HomeActivity extends BaseActivity implements
 	}
 
 	private void refreshTask() {
-		AbDialogUtil.showLoadDialog(HomeActivity.this,
-				R.drawable.progress_circular, "数据加载中...");
 		String url = "http://59.36.101.88:8013/app/shop/warehouse/custuihuosaomiao.asp?";
 		AbRequestParams params = new AbRequestParams();
 		params.put("shopid", "1019");
@@ -132,14 +291,14 @@ public class HomeActivity extends BaseActivity implements
 
 			@Override
 			public void onFinish() {
-				AbDialogUtil.removeDialog(HomeActivity.this);
-				mAbPullToRefreshView.onHeaderRefreshFinish();
+//				AbDialogUtil.removeDialog(HomeActivity.this);
+//				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+//				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 				imgList.clear();
 				ArrayList<String> imgs = new ArrayList<String>();
 				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
@@ -240,42 +399,9 @@ public class HomeActivity extends BaseActivity implements
 					// }
 				}
 
-				addlayout();
+				//addlayout();
 			}
 		});
-	}
-
-	private void addlayout() {
-		View view1 = LayoutInflater.from(this).inflate(
-				R.layout.layout_main_home_item1, null);
-		View view2 = LayoutInflater.from(this).inflate(
-				R.layout.layout_main_home_item2, null);
-		View view3 = LayoutInflater.from(this).inflate(
-				R.layout.layout_main_home_item1, null);
-		ll_mainhomehead_add.removeAllViews();
-		ll_mainhomehead_add.addView(view1);
-		ll_mainhomehead_add.addView(view2);
-		ll_mainhomehead_add.addView(view3);
-		Imageloader_homePager
-				.displayImage(addimgList.get(0),
-						(ImageView) view1.findViewById(R.id.iv_01),
-						new Handler(), null);
-		Imageloader_homePager
-				.displayImage(addimgList.get(1),
-						(ImageView) view2.findViewById(R.id.iv_01),
-						new Handler(), null);
-		Imageloader_homePager
-				.displayImage(addimgList.get(2),
-						(ImageView) view2.findViewById(R.id.iv_02),
-						new Handler(), null);
-		Imageloader_homePager
-				.displayImage(addimgList.get(3),
-						(ImageView) view2.findViewById(R.id.iv_03),
-						new Handler(), null);
-		Imageloader_homePager
-				.displayImage(addimgList.get(0),
-						(ImageView) view3.findViewById(R.id.iv_01),
-						new Handler(), null);
 	}
 
 	/** 初始化头部VIEW */
@@ -322,7 +448,8 @@ public class HomeActivity extends BaseActivity implements
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView arg0) {
-		refreshTask();
+		//refreshTask();
+		requestTask();
 	}
 
 	/** 首页按钮点击事件 */
