@@ -30,7 +30,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/nextlevel" />
+            android:src="@drawable/next_level" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/nextlevel" />
+            android:src="@drawable/next_level" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/nextlevel" />
+            android:src="@drawable/next_level" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/nextlevel" />
+            android:src="@drawable/next_level" />
     </LinearLayout>
 
 </LinearLayout>
