@@ -110,7 +110,7 @@ public class MineActivity extends BaseActivity {
 		if(islogin()){
         String userphoto_filename_temp = LocalUserInfo.getInstance(this)
                 .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
-        if (!userphoto_filename_temp.equals(userphoto_filename)) {
+       // if (!userphoto_filename_temp.equals(userphoto_filename)) {
         	String imagelocaldir=AbFileUtil.getImageDownloadDir(this)+File.separator;
     		if (!TextUtils.isEmpty(userphoto_filename_temp)) {
     			File file = new File(imagelocaldir, userphoto_filename_temp);
@@ -121,7 +121,7 @@ public class MineActivity extends BaseActivity {
     						+ userphoto_filename_temp));
     			}
     		}
-        }
+      //  }
 		}
 	}
 	
