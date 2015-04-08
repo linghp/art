@@ -3,7 +3,10 @@ package com.shangxian.art;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,8 +18,9 @@ import com.shangxian.art.base.BaseActivity;
  *
  */
 public class AddGoodsActivity extends BaseActivity{
-	EditText miaoshu;
-	TextView zishu;
+	EditText biaoti,miaoshu;
+	TextView shangpinleibie,peisongleibie,zishu,quxiao,xiayibu;
+	ImageView img1,img2,img3,img4,img5,img6;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -31,6 +35,18 @@ public class AddGoodsActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		miaoshu = (EditText) findViewById(R.id.addgoods_edit);
 		zishu = (TextView) findViewById(R.id.addgoods_zishu_txt);
+		
+		biaoti = (EditText) findViewById(R.id.addgoods_addname);
+		shangpinleibie = (TextView) findViewById(R.id.addgoods_shangpinleibie);
+		peisongleibie = (TextView) findViewById(R.id.addgoods_peisongleibie);
+		img1 = (ImageView) findViewById(R.id.addgoods_img1);
+		img2 = (ImageView) findViewById(R.id.addgoods_img2);
+		img3 = (ImageView) findViewById(R.id.addgoods_img3);
+		img4 = (ImageView) findViewById(R.id.addgoods_img4);
+		img5 = (ImageView) findViewById(R.id.addgoods_img5);
+		img6 = (ImageView) findViewById(R.id.addgoods_img6);
+		quxiao = (TextView) findViewById(R.id.addgoods_quxiao);
+		xiayibu = (TextView) findViewById(R.id.addgoods_next);
 	}
 
 	private void initData() {
@@ -66,5 +82,25 @@ public class AddGoodsActivity extends BaseActivity{
 			}
 		};
 		miaoshu.addTextChangedListener(watcher);
+		
+		//取消
+		quxiao.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		//下一步
+		xiayibu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
+	
 }
