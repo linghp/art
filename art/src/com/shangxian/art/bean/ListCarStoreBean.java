@@ -1,10 +1,13 @@
 package com.shangxian.art.bean;
+
+import java.io.Serializable;
+
 /**
  * 商品bean
  * @author Administrator
  *
  */
-public class ListCarStoreBean {
+public class ListCarStoreBean implements Serializable{
 
 	public String storeid;
 	public String storename;

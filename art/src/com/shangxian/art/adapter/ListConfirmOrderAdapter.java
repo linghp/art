@@ -2,6 +2,7 @@ package com.shangxian.art.adapter;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -18,29 +19,55 @@ import android.widget.TextView;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
+import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 public class ListConfirmOrderAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater inflater;
-	public  List<CarItem> listdata;
+	private List<ListCarStoreBean> listStoreBean=new ArrayList<ListCarStoreBean>();
+	private HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans=new HashMap<String, List<ListCarGoodsBean>>();
 
-	public ListConfirmOrderAdapter(Context contex, List<CarItem> listdata) {
+	public ListConfirmOrderAdapter(Context contex, List<ListCarStoreBean> listStoreBean,HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans) {
 		this.context = contex;
-		this.listdata = listdata;
+		this.listStoreBean = listStoreBean;
+		this.hashmapGoodsBeans = hashmapGoodsBeans;
 		inflater = LayoutInflater.from(contex);
+		//initdata();
 	}
+
+
+
+//	private void initdata() {
+//		for (CarItem carItem : listdata) {
+//			if(carItem.getType()==CarItem.SECTION){
+//				listStoreBean.add(carItem.getListCarStoreBean());
+//			}
+//		}
+//		for (ListCarStoreBean listCarStoreBean : listStoreBean) {
+//			List<ListCarGoodsBean> listGoodsBeans=new ArrayList<ListCarGoodsBean>();
+//			String storeid=listCarStoreBean.getStoreid();
+//			for (CarItem carItem : listdata) {
+//				if(carItem.getType()==CarItem.ITEM){
+//					if(carItem.getListCarGoodsBean().getStoreId().equals(storeid)){
+//						listGoodsBeans.add(carItem.getListCarGoodsBean());
+//					}
+//				}
+//			}
+//			hashmapGoodsBeans.put(storeid, listGoodsBeans);
+//		}
+//	}
 
 
 
 	public int getCount() {
-		return listdata.size();
+		return listStoreBean.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return listdata.get(position);
+		return listStoreBean.get(position);
 	}
 
 	@Override
@@ -52,24 +79,30 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder = new ViewHolder();
 		MyLogger.i(position+"");
-		final CarItem item = (CarItem) getItem(position);
-		if (item.type == CarItem.SECTION) {
-			convertView = inflater.inflate(R.layout.list_car_store_item, null);
-			LinearLayout ll_item= (LinearLayout) convertView.findViewById(R.id.ll_item);
-			if(position==0){
-				CommonUtil.setMargins(ll_item, 0, CommonUtil.px2dip(context, 20), 0, 0);
-			}
+		final ListCarStoreBean listCarStoreBean = (ListCarStoreBean) getItem(position);
+			convertView = inflater.inflate(R.layout.list_confirmorder_item, null);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
-			holder.check_store = (CheckBox) convertView.findViewById(R.id.check_store);
-			holder.check_store.setVisibility(View.GONE);
-			holder.storeName.setText(item.listCarStoreBean.storename);
-		} else {
-			convertView = inflater.inflate(R.layout.list_car_goods_item, null);
-			holder.goodsName = (TextView) convertView.findViewById(R.id.car_goodsname);
-			holder.goodsImg = (ImageView) convertView.findViewById(R.id.car_goodsimg);
-			holder.goodsAttr = (TextView) convertView.findViewById(R.id.car_goodsattr);
-			holder.goodsNum = (TextView) convertView.findViewById(R.id.car_num);
-			holder.goodsPrice = (TextView) convertView.findViewById(R.id.car_goods_price);
+			holder.storeName.setText(listCarStoreBean.storename);
+			holder.ll_goodsitem_add=(LinearLayout) convertView.findViewById(R.id.ll_goodsitem_add);
+			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
+			holder.ll_goodsitem_add.removeAllViews();
+			List<ListCarGoodsBean> listCarGoodsBeans=hashmapGoodsBeans.get(listCarStoreBean.getStoreid());
+			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
+				View child = inflater.inflate(
+						R.layout.list_car_goods_item, null);
+				View view=new View(context);
+				holder.ll_goodsitem_add.addView(child);
+				((TextView) child.findViewById(R.id.car_goodsname)).setText(listCarGoodsBean.goodsName);
+				//holder.goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
+				//holder.goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
+				TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
+				TextView goodsPrice = (TextView) child.findViewById(R.id.car_goods_price);
+				goodsNum.setText("x"+listCarGoodsBean.goodsNum);
+				goodsPrice.setText("￥"+listCarGoodsBean.price);
+				
+				 child.findViewById(R.id.check_goods).setVisibility(View.GONE);
+			}
+			
 			// 给控件赋值
 //			DisplayImageOptions options;
 //			options = new DisplayImageOptions.Builder().cacheInMemory(true)// 是否緩存都內存中
@@ -78,49 +111,40 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 //			ImageLoader imageLoader = ImageLoader.getInstance();
 //			String path = (RequestServer.FILE_REQUEST + item.goods.goodsImg).replaceAll("\\\\", "/");
 //			imageLoader.displayImage(path, holder.goodsImg, options, null);
-
-			holder.goodsName.setText(item.listCarGoodsBean.goodsName);
-			//holder.goodsAttr.setText(item.listCarGoodsBean.goodsAttr);
-			holder.goodsNum.setText("x"+item.listCarGoodsBean.goodsNum);
+//			if(item.getType()==CarItem.ITEM){
+//			holder.goodsName.setText(item.listCarGoodsBean.goodsName);
+//			
+//			//holder.goodsAttr.setText(item.listCarGoodsBean.goodsAttr);
+//			holder.goodsNum.setText("x"+item.listCarGoodsBean.goodsNum);
 //			if(!StringUtils.isEmpty(item.listCarGoodsBean.goodsOldPrice)){
 //				holder.goodsOldPrice.setText(item.goods.goodsOldPrice);
 //			}else{
 //				holder.goodsOldPrice.setVisibility(View.GONE);
 //			}
 			//holder.goodsOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.price);
-			holder.goodsid = item.listCarGoodsBean.goodsId;
-		}
+//			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.price);
+//			holder.goodsid = item.listCarGoodsBean.goodsId;
+			//}
 		return convertView;
 	}
 
-	@Override
-	public int getViewTypeCount() {
-		return 2;
-	}
+//	public List<ListCarGoodsBean> getGoodsByStoreId(String id) {
+//		List<ListCarGoodsBean> listgoods = new ArrayList<ListCarGoodsBean>();
+//		for (int i = 0; i < listdata.size(); i++) {
+//			CarItem item = listdata.get(i);
+//			if (item.type == CarItem.ITEM) {
+//				if (item.listCarGoodsBean.storeId .equals(id)) {
+//					listgoods.add(item.listCarGoodsBean);
+//				}
+//			}
+//		}
+//		return listgoods;
+//	}
 
-	public List<ListCarGoodsBean> getGoodsByStoreId(String id) {
-		List<ListCarGoodsBean> listgoods = new ArrayList<ListCarGoodsBean>();
-		for (int i = 0; i < listdata.size(); i++) {
-			CarItem item = listdata.get(i);
-			if (item.type == CarItem.ITEM) {
-				if (item.listCarGoodsBean.storeId .equals(id)) {
-					listgoods.add(item.listCarGoodsBean);
-				}
-			}
-		}
-		return listgoods;
-	}
 
-	@Override
-	public int getItemViewType(int position) {
-		CarItem item = (CarItem) getItem(position);
-		return item.type;
-	}
-
-	public List<CarItem> getListItem() {
-		return listdata;
-	}
+//	public List<CarItem> getListItem() {
+//		return listdata;
+//	}
 
 //	private List<CarItem> removeDuplicate(List<CarItem> list) {
 //		Set<CarItem> set = new HashSet<CarItem>();
@@ -150,5 +174,6 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 		public ImageView goodsDelete;
 		public String goodsid;
 		public String storeid;
+		public LinearLayout ll_goodsitem_add;
 	}
 }
