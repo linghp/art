@@ -1,12 +1,14 @@
 package com.shangxian.art.bean;
 
+import java.io.Serializable;
+
 /**
  * 购物车item
  * 
  * @author Administrator
  *
  */
-public class CarItem {
+public class CarItem implements Serializable{
 	public final static int SECTION = 0;
 	public final static int ITEM = 1;
 
