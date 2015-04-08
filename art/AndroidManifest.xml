@@ -72,6 +72,26 @@
             android:label="@string/title_activity_classification" >
         </activity>
         <activity
+            android:name=".MerchandiseControlActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".ShangPinWeiHuActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".AddParentClassActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".AddSubClassActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_classification" >
         </activity>
@@ -79,18 +99,18 @@
             android:name=".RegistActivity"
             android:label="@string/title_activity_regist" >
         </activity>
-        <activity
-            android:name=".AccountSecurityActivity"
-            android:label="@string/title_activity_account_security" >
+        <activity android:name=".AccountSecurityActivity" >
         </activity>
+        <activity android:name=".LocationActivity" >
+        </activity>
+        <activity android:name=".ConfirmOrderActivity" >
+           </activity>
+
         <activity
             android:name=".RegistSogoActivity"
             android:label="@string/title_activity_regist_sogo" >
         </activity>
-        <activity
-            android:name=".LocationActivity"
-            android:label="@string/title_activity_regist_sogo" >
-        </activity>
+
     </application>
 
 </manifest>

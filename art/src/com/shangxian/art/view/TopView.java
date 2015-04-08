@@ -28,7 +28,7 @@ public class TopView extends RelativeLayout {
 	private Activity mActivity; // 当前activity
 	private View mRootView;
 	private View ll_center,et_search;
-	private Button btn_back;
+	//private Button btn_back;
 	private ImageView btn_left, btn_right;
 	private TextView tv_title;
 	private RelativeLayout rl_title;
@@ -99,38 +99,18 @@ public class TopView extends RelativeLayout {
 			// TODO Auto-generated method stub
 			if(mActivity != null){
 				mActivity.finish();
-				mActivity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+				//mActivity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 			}
 		}
 	};
 	
 	/**
-	 * 重写返回按钮事件
+	 * 设置返回的一系列事件
+	 * @param listener
 	 */
-	public void setBackBtnListener(OnClickListener listener){
-		btn_back.setOnClickListener(listener);
-	}
-	
-	/**
-	 * 隐藏返回按钮
-	 */
-	public void hideBackBtn(){
-		//btn_back.setVisibility(View.GONE);
-	}
-	
-	/**
-	 * 显示返回按钮
-	 */
-	public void showBackBtn(){
-		btn_back.setVisibility(View.VISIBLE);
-	}
-	
-	/**
-	 * 设置返回按钮背景图
-	 * @param resid 背景图资源id
-	 */
-	public void setBackBtnBackground(int resid){
-		btn_back.setBackgroundResource(resid);
+	public void setBack(int resid){
+		setLeftBtnDrawalbe(resid);
+		btn_left.setOnClickListener(mListener);
 	}
 	
 	//////////////////
@@ -170,7 +150,7 @@ public class TopView extends RelativeLayout {
 	 * @param resid 背景图资源id
 	 */
 	public void setRightBtnDrawable(int resid){
-		btn_right.setBackgroundResource(resid);
+		btn_right.setImageResource(resid);
 	}
 	
 	/**
@@ -185,6 +165,13 @@ public class TopView extends RelativeLayout {
 	 */
 	public void hideRightBtn(){
 		btn_right.setVisibility(View.GONE);
+	}
+	/**
+	 * 隐藏右按钮
+	 */
+	public void hideRightBtn_invisible(){
+		btn_right.setVisibility(View.INVISIBLE);
+		btn_right.setOnClickListener(null);
 	}
 	
 	/**
@@ -246,7 +233,7 @@ public class TopView extends RelativeLayout {
 	 * @param resid 背景图资源id
 	 */
 	public void setLeftBtnDrawalbe(int resid){
-		btn_left.setBackgroundResource(resid);
+		btn_left.setImageResource(resid);
 	}
 	
 	/**

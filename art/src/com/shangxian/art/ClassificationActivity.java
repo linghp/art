@@ -1,11 +1,7 @@
 package com.shangxian.art;
 
-/**
- * 分类
- */
 import java.util.ArrayList;
 import java.util.List;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,13 +9,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-
 import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.view.TopView;
 
+/**
+ * 分类
+ * @author Administrator
+ *
+ */
 public class ClassificationActivity extends BaseActivity {
 	private ListView list;
 	private List<ClassificationModel>model;
@@ -32,7 +31,22 @@ public class ClassificationActivity extends BaseActivity {
 		initData();
 		listener();
 	}
-	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		topView = MainActivity.getTopView();
+		topView.setActivity(this);
+		topView.showLeftBtn();
+		topView.showRightBtn();
+		topView.showCenterSearch();
+		topView.hideTitle();
+		MainActivity activity = (MainActivity) getParent();
+		topView.setLeftBtnListener(activity);
+		topView.setRightBtnListener(activity);
+		topView.setCenterListener(activity);
+	}
 	//添加数据
 	private void initData() {
 		// TODO Auto-generated method stub
@@ -45,32 +59,16 @@ public class ClassificationActivity extends BaseActivity {
 		}
 		adapter = new ClassificationAdp(this, R.layout.item_classifiymain, model);
 		list.setAdapter(adapter);
-		
+
 	}
 
 	//初始化控件
 	private void initView() {
 		// TODO Auto-generated method stub
 		list = (ListView) findViewById(R.id.classify);
-		
+
 	}
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		topView = MainActivity.getTopView();
-		//HomeActivity homeActivity=(HomeActivity) ((MainActivity)getParent()).getLocalActivityManager().getActivity("首页");
-		topView.setActivity(this);
-		topView.showLeftBtn();
-		topView.showRightBtn();
-		topView.showCenterSearch();
-		topView.hideTitle();
-		MainActivity activity=(MainActivity)getParent();
-		topView.setLeftBtnListener(activity);
-		topView.setRightBtnListener(activity);
-		topView.setCenterListener(activity);
-	}
 	//事件监听
 	private void listener(){
 		list.setOnItemClickListener(new OnItemClickListener() {
@@ -79,7 +77,7 @@ public class ClassificationActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-//				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
+				//				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
 				CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
 			}
 		});

@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.shangxian.art.R;
 import com.shangxian.art.constant.Global;
@@ -315,4 +317,16 @@ public class CommonUtil {
 		return physicalSize > 7;
 	}
 
+	/**
+	 * 设置margins
+	 * 
+	 * @return
+	 */
+	public static void setMargins (View v, int l, int t, int r, int b) {
+	    if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+	        ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+	        p.setMargins(l, t, r, b);
+	        v.requestLayout();
+	    }
+	}
 }

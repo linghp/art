@@ -1,7 +1,5 @@
 package com.shangxian.art;
-/**
- * 分类--->  商品展示
- */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.utils.CommonUtil;
-
+/**
+ * 分类--->  商品展示
+ * @author Administrator
+ *
+ */
 public class ClassifyCommodityActivity extends BaseActivity{
 	//列表
 	private ListView list;
@@ -40,22 +42,7 @@ public class ClassifyCommodityActivity extends BaseActivity{
 		initData();
 		listener();
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		topView = MainActivity.getTopView();
-		//HomeActivity homeActivity=(HomeActivity) ((MainActivity)getParent()).getLocalActivityManager().getActivity("首页");
-		topView.setActivity(this);
-		topView.showLeftBtn();
-		topView.showRightBtn();
-		topView.showCenterSearch();
-		topView.hideTitle();
-		MainActivity activity=(MainActivity)getParent();
-		topView.setLeftBtnListener(activity);
-		topView.setRightBtnListener(activity);
-		topView.setCenterListener(activity);
-	}
+	
 	private void initView() {
 		// TODO Auto-generated method stub
 		list = (ListView) findViewById(R.id.classitycommodity);

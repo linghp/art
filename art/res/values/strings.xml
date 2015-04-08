@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_classification">Classification</string>
+    <string name="title_activity_classification">Classification</string><!-- 分类 -->
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
@@ -13,8 +13,9 @@
     <string name="pay">充值</string>
     <string name="title_activity_regist">RegistActivity</string>
     <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
-    <string name="title_activity_account_security">账户与安全</string>
+    <string name="title_activity_accountsecurity">账户与安全</string>
     <string name="title_activity_location">LocationActivity</string>
+    <string name="title_activity_confirm_order">确认订单</string>
     <string name="title_activity_regist_sogo">RegistSogoActivity</string>
 
 </resources>

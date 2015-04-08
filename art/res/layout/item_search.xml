@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/txt_white"
+    android:gravity="center_vertical"
+    android:padding="10dp" >
+    
+    <ImageView 
+        android:id="@+id/search_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/alipaypayment"/>
+    <TextView 
+        android:id="@+id/search_title"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:text="特价美食"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/list_title_size"
+        android:layout_marginLeft="10dp"/>
+    <TextView 
+        android:id="@+id/search_time"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="2015-04-01"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/list_title_size"
+        android:layout_marginLeft="20dp"/>
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/next_level"/>
+
+</LinearLayout>
