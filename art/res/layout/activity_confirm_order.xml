@@ -10,75 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/rl_address"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top_title"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_topbottom"
-        android:gravity="center_vertical"
-        android:padding="16dp" >
-
-        <ImageView
-            android:id="@+id/iv_locationicon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/delivery_address" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/iv_locationicon" >
-
-            <TextView
-                android:id="@+id/tv_receiver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="收货人：xxx"
-                android:textSize="@dimen/list_summary_size" />
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="13812345678"
-                android:textSize="@dimen/list_summary_size" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/tv_receiver"
-                android:layout_marginTop="5dp"
-                android:text="收货地址:重庆市南岸区上海城xxx"
-                android:textSize="@dimen/list_summary_size" />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/next_level" />
-    </RelativeLayout>
-
     <ListView
         android:id="@+id/listview"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/rl_address"
+        android:layout_below="@id/top_title"
         android:cacheColorHint="#00000000"
         android:divider="@color/gray"
-        android:dividerHeight="1dp" />
+        android:layout_above="@+id/rl_bottom"
+        android:dividerHeight="8dp" />
 
     <RelativeLayout
         android:id="@+id/rl_bottom"

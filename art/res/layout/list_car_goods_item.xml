@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="100dp"
     android:background="@color/white"
-    android:descendantFocusability="blocksDescendants"
+    android:descendantFocusability="afterDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="2014冬装羊羔毛翻领情侣棉衣"
-                android:textSize="@dimen/list_summary_size" />
+                 />
 
             <TextView android:layout_marginTop="5dp"
                 android:id="@+id/car_goodsattr"
@@ -56,6 +56,7 @@
                 android:drawableRight="@drawable/edit"
                 android:drawablePadding="4dp"
                 android:text="颜色：黄色；尺码：L"
+                android:visibility="gone"
                  />
   <!-- 
             <LinearLayout

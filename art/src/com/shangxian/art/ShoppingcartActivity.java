@@ -1,9 +1,13 @@
 package com.shangxian.art;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -261,8 +265,53 @@ OnHeaderRefreshListener,OnClickListener{
 //					MerCartDTO car = new MerCartDTO();
 //					car.setFstoreId(listGoods.get(0).storeId);
 //					car.setStoreName(listGoods.get(0).storeName);
+				List<CarItem> listCarItem_select=new ArrayList<CarItem>();
+				Map<String, Boolean> goodsCheced=adapter.getGoodsCheced();
+				List<ListCarStoreBean> listStoreBean=new ArrayList<ListCarStoreBean>();
+				//提取店铺list
+				LinkedHashMap<String, ListCarStoreBean> linkedHashMap=new LinkedHashMap<String, ListCarStoreBean>();
+				ListCarStoreBean listCarStoreBean=null;
+				for (CarItem carItem : listCarItem) {
+					if(carItem.getType()==CarItem.SECTION){
+						listCarStoreBean=carItem.getListCarStoreBean();
+					}else{
+						if(goodsCheced.get(carItem.getListCarGoodsBean().getGoodsId())){
+							listCarItem_select.add(carItem);
+							linkedHashMap.put(carItem.getListCarGoodsBean().getStoreId(), listCarStoreBean);
+						}
+					}
+				}
+				for (ListCarStoreBean listCarStoreBean2 : linkedHashMap.values()) {
+					listStoreBean.add(listCarStoreBean2);
+				}
+		
+				//存放每个店铺下的订单
+				HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans=new HashMap<String, List<ListCarGoodsBean>>();
+				for(ListCarStoreBean listCarStoreBean2:linkedHashMap.values()){
+					List<ListCarGoodsBean> listGoodsBeans=new ArrayList<ListCarGoodsBean>();
+					String storeid=listCarStoreBean2.getStoreid();
+					for (CarItem carItem : listCarItem_select) {
+						if(carItem.getType()==CarItem.ITEM){
+							if(carItem.getListCarGoodsBean().getStoreId().equals(storeid)){
+								listGoodsBeans.add(carItem.getListCarGoodsBean());
+							}
+						}
+					}
+					hashmapGoodsBeans.put(storeid, listGoodsBeans);
+				}
+				
+//				for (String storeid : hashmapGoodsBeans.keySet()) {
+//					for (CarItem carItem : listCarItem) {
+//						if(carItem.getType()==CarItem.ITEM){
+//							if(storeid.equals(carItem.getListCarStoreBean().getStoreid()))
+//								listStoreBean.add(carItem.getListCarStoreBean());
+//						}
+//					}
+//				}
+				
 					Intent intent = new Intent(this, ConfirmOrderActivity.class);
-//					intent.putExtra("listGoods", (Serializable) listGoods);
+					intent.putExtra("mapCarItem_goods",(Serializable)hashmapGoodsBeans);
+					intent.putExtra("listCarItem_stores",(Serializable)listStoreBean);
 //					Bundle bundle = new Bundle();
 //					bundle.putSerializable("car", car);
 //					intent.putExtras(bundle);
