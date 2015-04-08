@@ -70,14 +70,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ListView
+    <com.shangxian.art.view.SlidingListView
         android:id="@+id/shangpinweihu_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_above="@id/shangpinweihu_linear"
         android:layout_below="@id/top_title"
         android:scrollbars="none" >
-    </ListView>
+    </com.shangxian.art.view.SlidingListView>
 
 </RelativeLayout>

@@ -1,5 +1,8 @@
 package com.shangxian.art;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -8,11 +11,13 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.SelectImgUtil;
 import com.shangxian.art.view.TopView;
 
 public class RegistSogoActivity extends BaseActivity implements OnClickListener{
@@ -63,6 +68,15 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	private int timer;
 	private Animation anim_right_in;
 	private Animation anim_left_out;
+	private EditText et_name;
+	private EditText et_charter;
+	private EditText et_location;
+	private EditText et_totime;
+	private EditText et_addresss;
+	private EditText et_cell;
+	private TextView tv_no2;
+	private TextView tv_next2;
+	private ImageView iv_lipic;
 	
 	private void initData() {
 		anim_right_in = AnimationUtils.loadAnimation(this, R.anim.anim_right_in); 
@@ -83,7 +97,22 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		//ll_li3 = (LinearLayout) findViewById(R.id.sogl_ll_li3);
 		//ll_li4 = (LinearLayout) findViewById(R.id.sogl_ll_li4);
 		initRegist();
-		showView(UI_LI1);
+		initSogoInfo();
+		showView(UI_LI2);
+	}
+
+	private void initSogoInfo() {
+		et_name = (EditText) findViewById(R.id.soge_et_name);//商铺名
+		et_charter = (EditText) findViewById(R.id.soge_et_charter);//执照注册号
+		et_location = (EditText) findViewById(R.id.soge_et_location);//执照所在地
+		et_totime = (EditText) findViewById(R.id.soge_et_totime);//营业期限
+		et_addresss = (EditText) findViewById(R.id.soge_et_address);
+		et_cell = (EditText) findViewById(R.id.soge_et_cell);
+		
+		tv_no2 = (TextView) findViewById(R.id.sogt_tv_no2);
+		tv_next2 = (TextView) findViewById(R.id.sogt_tv_next2);
+		
+		iv_lipic = (ImageView) findViewById(R.id.sogi_iv_license);
 	}
 
 	private void initRegist() {
@@ -101,6 +130,9 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		rl_yan = (RelativeLayout) findViewById(R.id.sogr_rl_yan);
 		showView(NORMAL);
 	}
+	private static final int TO_PIC_UI2 = 0x00116;
+	private static final int TO_PIC_UI3_Z = 0x100117;
+	private static final int TO_PIC_UI3_F = 0x100118;
 
 	private static final int NORMAL = 1001;
 	private static final int LOADING = 1002;
@@ -110,7 +142,9 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	private static final int UI_LI2 = 2002;
 	private static final int UI_LI3 = 2003;
 	private static final int UI_LI4 = 2004;
+	private int curShow;
 	private void showView(int show){
+		curShow = show;
 		switch (show) {
 		case NORMAL:
 			tv_getyan.setVisibility(View.VISIBLE);
@@ -192,6 +226,9 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		rl_yan.setOnClickListener(this);
 		tv_next1.setOnClickListener(this);
 		tv_no1.setOnClickListener(this);
+		tv_no2.setOnClickListener(this);
+		tv_next2.setOnClickListener(this);
+		iv_lipic.setOnClickListener(this);
 	}
 
 	@Override
@@ -209,9 +246,42 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 			next1();
 		} else if (v == tv_no1) {
 			no1();
+		} else if (v == tv_next2) {
+			
+		} else if (v == tv_no2) {
+			no1();
+		} else if (v == iv_lipic) {
+			//liPic();
+			SelectImgUtil.toSelectImg(this, TO_PIC_UI2);
 		}
 	}
-
+	
+	private String picPath_ui2;
+	private Bitmap bitmap_ui2;
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent data) {
+		//super.onActivityResult(arg0, arg1, data);
+		if (arg1 == RESULT_OK) {
+			System.out.println("reqid =============== " + arg0 + "    " + (arg0 == TO_PIC_UI2) + "   "+ arg0);
+			if (arg0 == TO_PIC_UI2) {
+				picPath_ui2 = SelectImgUtil.getImgPath(this, data);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+		        options.inSampleSize = 2;
+		        bitmap_ui2 = BitmapFactory.decodeFile(picPath_ui2, options);
+		        System.out.println("bit ================ " + (bitmap_ui2 == null) + " ===========  " + picPath_ui2);
+				iv_lipic.setImageBitmap(bitmap_ui2);
+			} else if (arg0 == TO_PIC_UI3_Z) {
+				
+			} else if (arg0 == TO_PIC_UI3_F) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 获取验证码
+	 */
 	private void getYan() {
 		showView(LOADING);
 		new Handler().postDelayed(new Runnable() {
@@ -224,7 +294,7 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 
 	private void next1() {
 		if (match1()) {
-			showView(UI_LI1);
+			showView(UI_LI2);
 		}
 	}
 
@@ -258,5 +328,13 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 
 	private void no1() {
 		finish();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (bitmap_ui2 != null) {
+			bitmap_ui2.recycle();
+		}
 	}
 }
