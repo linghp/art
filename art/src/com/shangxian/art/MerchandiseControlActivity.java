@@ -56,6 +56,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				myToast("配送类别维护");
+				CommonUtil.gotoActivity(MerchandiseControlActivity.this, DeliveryServiceActivity.class, false);
 			}
 		});
 		tianjia.setOnClickListener(new OnClickListener() {
@@ -64,6 +65,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				myToast("添加商品");
+				CommonUtil.gotoActivity(MerchandiseControlActivity.this, AddGoodsActivity.class, false);
 			}
 		});
 		sousuo.setOnClickListener(new OnClickListener() {
