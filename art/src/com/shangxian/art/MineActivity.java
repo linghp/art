@@ -11,10 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 
 public class MineActivity extends BaseActivity {
@@ -24,6 +26,8 @@ public class MineActivity extends BaseActivity {
 	private ImageView user_head;
 	
 	private String userphoto_filename;
+	
+	private LinearLayout shangpinguanli;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +46,23 @@ public class MineActivity extends BaseActivity {
 				startActivityForResult(intent, 1);
 			}
 		});
+		
+		shangpinguanli.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
+			}
+		});
 	}
 
 	private void initView() {
 		ll_loginbefore=findViewById(R.id.ll_loginbefore);
 		ll_loginafter=findViewById(R.id.ll_loginafter);
 		user_head=(ImageView) findViewById(R.id.user_head);
+		
+		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);
 		changeview();
 	}
 
