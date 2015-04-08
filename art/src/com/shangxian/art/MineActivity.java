@@ -122,6 +122,8 @@ public class MineActivity extends BaseActivity {
     			}
     		}
       //  }
+		}else{
+			user_head.setImageResource(R.drawable.defaultloginheader);
 		}
 	}
 	
