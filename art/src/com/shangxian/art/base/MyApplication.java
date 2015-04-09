@@ -12,6 +12,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.shangxian.art.R;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.net.BaseServer;
 
 
 public class MyApplication extends Application {
@@ -41,6 +42,7 @@ public class MyApplication extends Application {
 //				.build();
 		// Initialize ImageLoader with configuration.
 //		ImageLoader.getInstance().init(config);
+		BaseServer.toRegistContext(mInstance);
 		SDKInitializer.initialize(getApplicationContext());
 		mLocationClient = new LocationClient(this.getApplicationContext());
 		mMyLocationListener = new MyLocationListener();

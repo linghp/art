@@ -532,7 +532,7 @@
                             android:textColor="@color/txt_black1"
                             android:textSize="18sp" />
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/txt_white"
@@ -548,7 +548,7 @@
                                 android:layout_height="60dp"
                                 android:background="@drawable/draw_selpic_sel"
                                 android:src="@drawable/add_pic" />
-                        </LinearLayout>
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout

@@ -20,6 +20,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.SelectImgUtil;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 注册商铺
+ * @author libo
+ * @time 2015/4/9 ...
+ */
 public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 
 	private TextView tv_title;
