@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -67,12 +68,12 @@ public class HomeActivity extends BaseActivity implements
 	/** 动态添加图地址 */
 	private List<HomeadsBean> listHomeadsBean = new ArrayList<HomeadsBean>();
 
-	public enum acAction {
-		PRODUCT_LIST, // 一种商品类型下的商品列表
-		SHOP_LIST, // 一种商品类型下的商铺列表
-		SHOP, // 一个商铺
-		PRODUCT// 一个商品
-	}
+	public static final String[] acActions = {
+		"PRODUCT_LIST", // 一种商品类型下的商品列表
+		"SHOP_LIST", // 一种商品类型下的商铺列表
+		"SHOP", // 一个商铺
+		"PRODUCT"// 一个商品
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class HomeActivity extends BaseActivity implements
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
 		// params.put("phone", "15889936624");
-		String url = Constant.BASEURL + Constant.home2;
+		String url = Constant.BASEURL +Constant.CONTENT+ Constant.HOME;
 		httpUtil.get(url, params, new AbStringHttpResponseListener() {
 
 			@Override
@@ -172,9 +173,8 @@ public class HomeActivity extends BaseActivity implements
 									+ homeadsBean.getImageUrl(),
 									(ImageView) view.findViewById(R.id.iv_01),
 									new Handler(), null);
-							view.setTag(homeadsBean.getAdAction());
 							ll_mainhomehead_add.addView(view);
-							view.setOnClickListener(HomeActivity.this);
+							extracted(homeadsBean, view);
 						} else {
 							i++;
 							listHomeadsBean_three.add(homeadsBean);
@@ -184,35 +184,38 @@ public class HomeActivity extends BaseActivity implements
 								for (int j = 0; j < listHomeadsBean_three
 										.size(); j++) {
 									if (j == 0) {
+										ImageView iv=(ImageView) view2.findViewById(R.id.iv_01);
 										Imageloader_homePager
 												.displayImage(
 														Constant.BASEURL
 																+ listHomeadsBean_three
 																		.get(0)
 																		.getImageUrl(),
-														(ImageView) view2
-																.findViewById(R.id.iv_01),
+																		iv,
 														new Handler(), null);
+										extracted(homeadsBean, iv);
 									} else if (j == 1) {
+										ImageView iv=(ImageView) view2.findViewById(R.id.iv_02);
 										Imageloader_homePager
 												.displayImage(
 														Constant.BASEURL
 																+ listHomeadsBean_three
 																		.get(1)
 																		.getImageUrl(),
-														(ImageView) view2
-																.findViewById(R.id.iv_02),
+																		iv,
 														new Handler(), null);
+										extracted(homeadsBean, iv);
 									} else if (j == 2) {
+										ImageView iv=(ImageView) view2.findViewById(R.id.iv_03);
 										Imageloader_homePager
 												.displayImage(
 														Constant.BASEURL
 																+ listHomeadsBean_three
 																		.get(2)
 																		.getImageUrl(),
-														(ImageView) view2
-																.findViewById(R.id.iv_03),
+																		iv,
 														new Handler(), null);
+										extracted(homeadsBean, iv);
 									}
 								}
 								ll_mainhomehead_add.addView(view2);
@@ -291,6 +294,12 @@ public class HomeActivity extends BaseActivity implements
 				// }
 				//
 				// addlayout();
+			}
+
+			private void extracted(HomeadsBean homeadsBean, View view) {
+				view.setTag(homeadsBean.getAdAction());
+				view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());;
+				view.setOnClickListener(HomeActivity.this);
 			}
 		});
 	}
@@ -531,19 +540,35 @@ public class HomeActivity extends BaseActivity implements
 	// }
 	//
 	// }
-
 	@Override
 	public void onClick(View v) {
-//		String tag=(String) v.getTag();
-//		switch (tag) {
-//		case acAction:
-//			
-//			break;
-//
-//		default:
-//			break;
-//		}
-//		myToast(v.getTag()+"");
+		String tag=(String) v.getTag();
+		String dataurl=(String) v.getTag(R.id.homeDataUrl);
+		switch (tag) {
+		case "PRODUCT_LIST":// 一种商品类型下的商品列表
+			myStartActivity(dataurl,ClassifyCommodityActivity.class);
+			break;
+		case "SHOP_LIST":// 一种商品类型下的商铺列表
+			
+			break;
+		case "SHOP":// 一个商铺
+			
+			break;
+		case "PRODUCT":// 一个商品
+			myStartActivity(dataurl,CommodityContentActivity.class);
+			break;
+
+		default:
+			break;
+		}
+		myToast(v.getTag()+"");
 	}
+
+	private void myStartActivity(String dataurl,Class class1) {
+		Intent intent=new Intent(this, class1);
+		intent.putExtra("dataurl", dataurl);
+		startActivity(intent);
+	}
+
 
 }

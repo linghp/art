@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:layout_weight="1"
-        android:scaleType="fitCenter" android:background="@drawable/shape_all"/>
+        android:scaleType="fitXY" android:background="@drawable/shape_all"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,13 +24,13 @@
             android:id="@+id/iv_02"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:scaleType="fitCenter" android:background="@drawable/shape_all"/>
+            android:scaleType="fitXY" android:background="@drawable/shape_all"/>
 
         <ImageView
             android:id="@+id/iv_03"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:scaleType="fitCenter" android:background="@drawable/shape_all"/>
+            android:scaleType="fitXY" android:background="@drawable/shape_all"/>
     </LinearLayout>
 
 </LinearLayout>
