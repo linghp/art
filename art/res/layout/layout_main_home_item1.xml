@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="top"
+    android:onClick="true"
     android:paddingBottom="@dimen/home_itemmargin" >
 
     <ImageView
