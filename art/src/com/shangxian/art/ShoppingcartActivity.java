@@ -31,7 +31,12 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
-
+import com.shangxian.art.view.TopView;
+/**
+ * 购物车
+ * @author Administrator
+ *
+ */
 public class ShoppingcartActivity extends BaseActivity implements
 OnHeaderRefreshListener,OnClickListener{
 	private ListView listcar;
@@ -96,6 +101,18 @@ OnHeaderRefreshListener,OnClickListener{
 	}
 
 	private void initViews() {
+//		Intent intent = new Intent();
+		
+//		topView=(TopView) findViewById(R.id.top_title);
+//		topView.setActivity(this);
+//		topView.setBack(R.drawable.back);//返回
+//		topView.hideRightBtn();
+//		topView.hideCenterSearch();
+//		topView.setCenterListener(null);
+//		topView.setTitle("购物车");
+//		topView.showTitle();
+		
+		
 		mAbPullToRefreshView = (AbPullToRefreshView)findViewById(R.id.mPullRefreshView);
 		listcar=(ListView) findViewById(R.id.listcar);
 		selecteall=(CheckBox) findViewById(R.id.selectall);

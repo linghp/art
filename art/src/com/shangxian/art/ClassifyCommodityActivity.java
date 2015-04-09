@@ -17,6 +17,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.TopView;
 /**
  * 分类--->  商品展示
  * @author Administrator
@@ -45,6 +46,11 @@ public class ClassifyCommodityActivity extends BaseActivity{
 	
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.setRightBtnDrawable(R.drawable.shopcart);//右侧按钮（购物车 白色）
+		topView.setBack(R.drawable.back);//返回
+		
 		list = (ListView) findViewById(R.id.classitycommodity);
 		//底部选项
 		shaixuan = (TextView) findViewById(R.id.classitycommodity_saixuan);//筛选
@@ -122,5 +128,14 @@ public class ClassifyCommodityActivity extends BaseActivity{
 //				System.out.println(">>>>>>>加入购物车");
 //			}
 //		});
+		//title购物车跳转
+		topView.setRightBtnListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+//				CommonUtil.gotoActivityForResult(ClassifyCommodityActivity.this, ShoppingcartActivity.class, 10010, false);
+			}
+		});
 	}
 }

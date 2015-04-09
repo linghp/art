@@ -21,7 +21,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
+/**
+ * 确认订单
+ * @author Administrator
+ *
+ */
 public class ConfirmOrderActivity extends BaseActivity {
 	private static TopView topView;
 	private ListView listview;
