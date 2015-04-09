@@ -27,7 +27,12 @@ import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.StarRatingView;
-
+import com.shangxian.art.view.TopView;
+/**
+ * 商品详情
+ * @author Administrator
+ *
+ */
 public class CommodityContentActivity extends BaseActivity implements OnClickListener{
     private ImageView commoditycontent_img;
     private TextView commoditycontent_jieshao,commoditycontent_jiage,commoditycontent_jiarugouwuche;
@@ -153,6 +158,13 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
 //		star = (StarRatingView) findViewById(R.id.commoditycontent_starRating);
 //		star.setSelectNums(1);//设置默认选中星星数
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn_invisible();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);//返回
+		topView.setTitle("商品详情");//title文字
 	}
 
 	@Override
