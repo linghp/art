@@ -50,6 +50,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		topView.hideCenterSearch();
 		topView.hideLeftBtn();
 		topView.setTitle("登录");
+		topView.showTitle();
 		topView.setRightText("商户入驻", new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
