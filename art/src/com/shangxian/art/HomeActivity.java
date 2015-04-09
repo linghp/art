@@ -63,9 +63,16 @@ public class HomeActivity extends BaseActivity implements
 	private HomeData mDatas = new HomeData();
 
 	private AbHttpUtil httpUtil = null;
-	
+
 	/** 动态添加图地址 */
-	private List<HomeadsBean> listHomeadsBean=new ArrayList<HomeadsBean>();
+	private List<HomeadsBean> listHomeadsBean = new ArrayList<HomeadsBean>();
+
+	public enum acAction {
+		PRODUCT_LIST, // 一种商品类型下的商品列表
+		SHOP_LIST, // 一种商品类型下的商铺列表
+		SHOP, // 一个商铺
+		PRODUCT// 一个商品
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +103,7 @@ public class HomeActivity extends BaseActivity implements
 
 		// 请求轮滑图片
 		refreshTask();
-		//请求动态布局的数据
+		// 请求动态布局的数据
 		requestTask();
 	}
 
@@ -104,10 +111,10 @@ public class HomeActivity extends BaseActivity implements
 		AbDialogUtil.showLoadDialog(HomeActivity.this,
 				R.drawable.progress_circular, "数据加载中...");
 		AbRequestParams params = new AbRequestParams();
-//		params.put("shopid", "1019");
-//		params.put("code", "88881110344801123456");
-//		params.put("phone", "15889936624");
-		String url=Constant.BASEURL+Constant.home2;
+		// params.put("shopid", "1019");
+		// params.put("code", "88881110344801123456");
+		// params.put("phone", "15889936624");
+		String url = Constant.BASEURL + Constant.home2;
 		httpUtil.get(url, params, new AbStringHttpResponseListener() {
 
 			@Override
@@ -131,60 +138,85 @@ public class HomeActivity extends BaseActivity implements
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				AbLogUtil.i(HomeActivity.this, content);
 				if (!TextUtils.isEmpty(content)) {
-					Gson gson=new Gson();
-				try {
-					JSONObject jsonObject = new JSONObject(content);
-					String result_code=jsonObject.getString("result_code");
-					if (result_code.equals("200")) {
-						JSONArray resultObjectArray=jsonObject.getJSONArray("result");
-						int length=resultObjectArray.length();
-						for (int i = 0; i < length; i++) {
-							JSONObject jo=resultObjectArray.getJSONObject(i);
-							listHomeadsBean.add(gson.fromJson(jo.toString(), HomeadsBean.class));
+					Gson gson = new Gson();
+					try {
+						JSONObject jsonObject = new JSONObject(content);
+						String result_code = jsonObject
+								.getString("result_code");
+						if (result_code.equals("200")) {
+							JSONArray resultObjectArray = jsonObject
+									.getJSONArray("result");
+							int length = resultObjectArray.length();
+							for (int i = 0; i < length; i++) {
+								JSONObject jo = resultObjectArray
+										.getJSONObject(i);
+								listHomeadsBean.add(gson.fromJson(
+										jo.toString(), HomeadsBean.class));
+							}
 						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-				}
-				
-				
+
 				ll_mainhomehead_add.removeAllViews();
-				if(listHomeadsBean.size()>0){
-					int i=0;
-					List<HomeadsBean> listHomeadsBean_three=new ArrayList<HomeadsBean>();
+				if (listHomeadsBean.size() > 0) {
+					int i = 0;
+					List<HomeadsBean> listHomeadsBean_three = new ArrayList<HomeadsBean>();
 					for (HomeadsBean homeadsBean : listHomeadsBean) {
-						if(homeadsBean.getSingle()){
+						if (homeadsBean.getSingle()) {
 							View view = mInflater.inflate(
 									R.layout.layout_main_home_item1, null);
-							Imageloader_homePager.displayImage(Constant.BASEURL+homeadsBean.getImageUrl(),
+							Imageloader_homePager.displayImage(Constant.BASEURL
+									+ homeadsBean.getImageUrl(),
 									(ImageView) view.findViewById(R.id.iv_01),
 									new Handler(), null);
+							view.setTag(homeadsBean.getAdAction());
 							ll_mainhomehead_add.addView(view);
-						}else{
+							view.setOnClickListener(HomeActivity.this);
+						} else {
 							i++;
 							listHomeadsBean_three.add(homeadsBean);
-							if(i%3==0){
+							if (i % 3 == 0) {
 								View view2 = mInflater.inflate(
 										R.layout.layout_main_home_item2, null);
-								for (int j = 0; j < listHomeadsBean_three.size(); j++) {
-									if(j==0){
-										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(0).getImageUrl(),
-												(ImageView) view2.findViewById(R.id.iv_01),
-												new Handler(), null);
-									}else if(j==1){
-										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(1).getImageUrl(),
-												(ImageView) view2.findViewById(R.id.iv_02),
-												new Handler(), null);
-									}else if(j==2){
-										Imageloader_homePager.displayImage(Constant.BASEURL+listHomeadsBean_three.get(2).getImageUrl(),
-												(ImageView) view2.findViewById(R.id.iv_03),
-												new Handler(), null);
+								for (int j = 0; j < listHomeadsBean_three
+										.size(); j++) {
+									if (j == 0) {
+										Imageloader_homePager
+												.displayImage(
+														Constant.BASEURL
+																+ listHomeadsBean_three
+																		.get(0)
+																		.getImageUrl(),
+														(ImageView) view2
+																.findViewById(R.id.iv_01),
+														new Handler(), null);
+									} else if (j == 1) {
+										Imageloader_homePager
+												.displayImage(
+														Constant.BASEURL
+																+ listHomeadsBean_three
+																		.get(1)
+																		.getImageUrl(),
+														(ImageView) view2
+																.findViewById(R.id.iv_02),
+														new Handler(), null);
+									} else if (j == 2) {
+										Imageloader_homePager
+												.displayImage(
+														Constant.BASEURL
+																+ listHomeadsBean_three
+																		.get(2)
+																		.getImageUrl(),
+														(ImageView) view2
+																.findViewById(R.id.iv_03),
+														new Handler(), null);
 									}
 								}
 								ll_mainhomehead_add.addView(view2);
-								listHomeadsBean_three.clear();	
+								listHomeadsBean_three.clear();
 							}
 						}
 					}
@@ -193,73 +225,75 @@ public class HomeActivity extends BaseActivity implements
 				// TestBean.class);
 				// tv_tips.setText(bean.getPname());
 
-//				imgList.clear();
-//				// tipsList.clear();
-//				// goods.clear();
-//
-//				ArrayList<String> imgs = new ArrayList<String>();
-//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-//				imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
-//				imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
-//				imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
-//				// ArrayList<String> tips = new ArrayList<String>();
-//				// tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
-//				// ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
-//				// for (int i = 0; i < 3; i++) {
-//				// GoodBean good = new GoodBean();
-//				// //good.setContent("中国测试产品:" + i);
-//				// //good.setPrice(1000 + i + "");
-//				// good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
-//				// goodlist.add(good);
-//				// }
-//
-//				mDatas.setImgList(imgs);
-//				// mDatas.setTipsList(tips);
-//				// mDatas.setGoods(goodlist);
-//
-//				if (mDatas != null) {
-//					if (mDatas.getImgList() != null
-//							&& mDatas.getImgList().size() > 0) {
-//						imgList.addAll(mDatas.getImgList());
-//						// viewPager.setVisibility(View.VISIBLE);
-//						viewPager.setOnGetView(new OnGetView() {
-//
-//							@Override
-//							public View getView(ViewGroup container,
-//									int position) {
-//								ImageView iv = new ImageView(HomeActivity.this);
-//								Imageloader_homePager.displayImage(
-//										imgList.get(position), iv,
-//										new Handler(), null);
-//								container.addView(iv);
-//								return iv;
-//							}
-//						});
-//						viewPager.setAdapter(imgList.size());
-//					} else {
-//						// viewPager.setVisibility(View.GONE);
-//					}
-//
-//					// if (mDatas.getTipsList() != null
-//					// && mDatas.getTipsList().size() > 0) {
-//					// tipsList.addAll(mDatas.getTipsList());
-//					// tv_tips.setVisibility(View.VISIBLE);
-//					// tv_tips.setText(tipsList.get(0));
-//					// } else {
-//					// tv_tips.setVisibility(View.GONE);
-//					// }
-//
-//					// if (mDatas.getGoods() != null
-//					// && mDatas.getGoods().size() > 0) {
-//					// goods.addAll(mDatas.getGoods());
-//					// adp.updateData(goods);
-//					// }
-//				}
-//
-//				addlayout();
+				// imgList.clear();
+				// // tipsList.clear();
+				// // goods.clear();
+				//
+				// ArrayList<String> imgs = new ArrayList<String>();
+				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				// imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
+				// imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
+				// imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
+				// // ArrayList<String> tips = new ArrayList<String>();
+				// //
+				// tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
+				// // ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
+				// // for (int i = 0; i < 3; i++) {
+				// // GoodBean good = new GoodBean();
+				// // //good.setContent("中国测试产品:" + i);
+				// // //good.setPrice(1000 + i + "");
+				// //
+				// good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
+				// // goodlist.add(good);
+				// // }
+				//
+				// mDatas.setImgList(imgs);
+				// // mDatas.setTipsList(tips);
+				// // mDatas.setGoods(goodlist);
+				//
+				// if (mDatas != null) {
+				// if (mDatas.getImgList() != null
+				// && mDatas.getImgList().size() > 0) {
+				// imgList.addAll(mDatas.getImgList());
+				// // viewPager.setVisibility(View.VISIBLE);
+				// viewPager.setOnGetView(new OnGetView() {
+				//
+				// @Override
+				// public View getView(ViewGroup container,
+				// int position) {
+				// ImageView iv = new ImageView(HomeActivity.this);
+				// Imageloader_homePager.displayImage(
+				// imgList.get(position), iv,
+				// new Handler(), null);
+				// container.addView(iv);
+				// return iv;
+				// }
+				// });
+				// viewPager.setAdapter(imgList.size());
+				// } else {
+				// // viewPager.setVisibility(View.GONE);
+				// }
+				//
+				// // if (mDatas.getTipsList() != null
+				// // && mDatas.getTipsList().size() > 0) {
+				// // tipsList.addAll(mDatas.getTipsList());
+				// // tv_tips.setVisibility(View.VISIBLE);
+				// // tv_tips.setText(tipsList.get(0));
+				// // } else {
+				// // tv_tips.setVisibility(View.GONE);
+				// // }
+				//
+				// // if (mDatas.getGoods() != null
+				// // && mDatas.getGoods().size() > 0) {
+				// // goods.addAll(mDatas.getGoods());
+				// // adp.updateData(goods);
+				// // }
+				// }
+				//
+				// addlayout();
 			}
 		});
-	}		
+	}
 
 	@Override
 	protected void onResume() {
@@ -291,14 +325,14 @@ public class HomeActivity extends BaseActivity implements
 
 			@Override
 			public void onFinish() {
-//				AbDialogUtil.removeDialog(HomeActivity.this);
-//				mAbPullToRefreshView.onHeaderRefreshFinish();
+				// AbDialogUtil.removeDialog(HomeActivity.this);
+				// mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-//				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 				imgList.clear();
 				ArrayList<String> imgs = new ArrayList<String>();
 				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
@@ -399,7 +433,7 @@ public class HomeActivity extends BaseActivity implements
 					// }
 				}
 
-				//addlayout();
+				// addlayout();
 			}
 		});
 	}
@@ -448,7 +482,7 @@ public class HomeActivity extends BaseActivity implements
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView arg0) {
-		//refreshTask();
+		// refreshTask();
 		requestTask();
 	}
 
@@ -500,8 +534,16 @@ public class HomeActivity extends BaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
+//		String tag=(String) v.getTag();
+//		switch (tag) {
+//		case acAction:
+//			
+//			break;
+//
+//		default:
+//			break;
+//		}
+//		myToast(v.getTag()+"");
 	}
 
 }
