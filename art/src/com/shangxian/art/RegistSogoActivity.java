@@ -1,5 +1,7 @@
 package com.shangxian.art;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.SelectImgUtil;
 import com.shangxian.art.view.TopView;
@@ -82,10 +83,24 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	private TextView tv_no2;
 	private TextView tv_next2;
 	private ImageView iv_lipic;
+	private EditText et_loc;
+	private EditText et_nickname;
+	private EditText et_shouji;
+	private EditText et_cardid;
+	private ImageView iv_zpic;
+	private ImageView iv_fpiac;
+	private TextView tv_no3;
+	private TextView tv_next3;
+	private EditText et_backuser;
+	private EditText et_bank;
+	private EditText et_bankcity;
+	private EditText et_subbank;
+	private EditText et_account;
+	private TextView tv_submit;
 	
 	private void initData() {
 		anim_right_in = AnimationUtils.loadAnimation(this, R.anim.anim_right_in); 
-		anim_left_out = AnimationUtils.loadAnimation(this, R.anim.anim_right_in); 
+		anim_left_out = AnimationUtils.loadAnimation(this, R.anim.anim_left_out); 
 	}
 
 	private void initView() {
@@ -99,11 +114,40 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		tv_title = (TextView) findViewById(R.id.sogt_tv_title);
 		ll_li1 = (LinearLayout) findViewById(R.id.sogl_ll_li1);
 		ll_li2 = (LinearLayout) findViewById(R.id.sogl_ll_li2);
-		//ll_li3 = (LinearLayout) findViewById(R.id.sogl_ll_li3);
-		//ll_li4 = (LinearLayout) findViewById(R.id.sogl_ll_li4);
+		ll_li3 = (LinearLayout) findViewById(R.id.sogl_ll_li3);
+		ll_li4 = (LinearLayout) findViewById(R.id.sogl_ll_li4);
 		initRegist();
 		initSogoInfo();
-		showView(UI_LI2);
+		initUi3();
+		ininUi4();
+		showView(UI_LI1);
+	}
+
+	/**
+	 * 加载界面4
+	 */
+	private void ininUi4() {
+		et_backuser = (EditText) findViewById(R.id.soge_et_bankuser);
+		et_bank = (EditText) findViewById(R.id.soge_et_bank);
+		et_bankcity = (EditText) findViewById(R.id.soge_et_bankcity);
+		et_subbank = (EditText) findViewById(R.id.soge_et_subbank);
+		et_account = (EditText) findViewById(R.id.soge_et_account);
+		
+		tv_submit = (TextView) findViewById(R.id.sogt_tv_submit);
+	}
+
+	private void initUi3() {
+		et_loc = (EditText) findViewById(R.id.soge_et_loc);
+		et_nickname = (EditText) findViewById(R.id.soge_et_nickname);
+		et_shouji = (EditText) findViewById(R.id.soge_et_shouji);
+		et_cardid = (EditText) findViewById(R.id.soge_et_cardid);
+		
+		iv_zpic = (ImageView) findViewById(R.id.sogi_iv_zpic);
+		iv_fpiac = (ImageView) findViewById(R.id.sogi_iv_fpic);
+		
+		tv_no3 = (TextView) findViewById(R.id.sogt_tv_no3);
+		tv_next3 = (TextView) findViewById(R.id.sogt_tv_next3);
+		
 	}
 
 	private void initSogoInfo() {
@@ -135,9 +179,10 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		rl_yan = (RelativeLayout) findViewById(R.id.sogr_rl_yan);
 		showView(NORMAL);
 	}
+	
 	private static final int TO_PIC_UI2 = 0x00116;
-	private static final int TO_PIC_UI3_Z = 0x100117;
-	private static final int TO_PIC_UI3_F = 0x100118;
+	private static final int TO_PIC_UI3_Z = 0x00117;
+	private static final int TO_PIC_UI3_F = 0x00118;
 
 	private static final int NORMAL = 1001;
 	private static final int LOADING = 1002;
@@ -171,32 +216,38 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 			isToYan = true;	
 			break;
 		case UI_LI1:
-			topView.setTitle("使用手机号注册爱农谷账号");
+			tv_title.setText("使用手机号注册爱农谷账号");
 			ll_li1.setVisibility(View.VISIBLE);
 			ll_li2.setVisibility(View.GONE);
-			//ll_li3.setVisibility(View.GONE);
-			//ll_li4.setVisibility(View.GONE);
+			ll_li3.setVisibility(View.GONE);
+			ll_li4.setVisibility(View.GONE);
 			break;
 		case UI_LI2:
-			topView.setTitle("请提供你的商铺信息");
+			tv_title.setText("请提供你的商铺信息");
+			ll_li1.startAnimation(anim_left_out);
 			ll_li1.setVisibility(View.GONE);
+			ll_li2.startAnimation(anim_right_in);
 			ll_li2.setVisibility(View.VISIBLE);
-			//ll_li3.setVisibility(View.GONE);
-			//ll_li4.setVisibility(View.GONE);
+			ll_li3.setVisibility(View.GONE);
+			ll_li4.setVisibility(View.GONE);
 			break;
 		case UI_LI3:
-			topView.setTitle("请提供法定代表信息");
+			tv_title.setText("请提供法定代表信息");
 			ll_li1.setVisibility(View.GONE);
+			ll_li2.startAnimation(anim_left_out);
 			ll_li2.setVisibility(View.GONE);
-			//ll_li3.setVisibility(View.VISIBLE);
-			//ll_li4.setVisibility(View.GONE);
+			ll_li3.startAnimation(anim_right_in);
+			ll_li3.setVisibility(View.VISIBLE);
+			ll_li4.setVisibility(View.GONE);
 			break;
 		case UI_LI4:
-			topView.setTitle("请设置商铺银行账户信息");
+			tv_title.setText("请设置商铺银行账户信息");
 			ll_li1.setVisibility(View.GONE);
 			ll_li2.setVisibility(View.GONE);
-			//ll_li3.setVisibility(View.GONE);
-			//ll_li4.setVisibility(View.VISIBLE);
+			ll_li3.startAnimation(anim_left_out);
+			ll_li3.setVisibility(View.GONE);
+			ll_li4.startAnimation(anim_right_in);
+			ll_li4.setVisibility(View.VISIBLE);
 			break;
 		}
 	}
@@ -225,15 +276,35 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	private String yan;
 	private String pass;
 	private String repass;
+	private String ui2_name;
+	private String ui2_charter;
+	private String ui2_location;
+	private String ui2_totime;
+	private String ui2_address;
+	private String ui2_cell;
+	private String ui3_loc;
+	private String ui3_nickname;
+	private String ui3_shouji;
+	private String ui3_cardid;
+	private String ui4_bankuser;
+	private String ui4_bank;
+	private String ui4_bankcity;
+	private String ui4_subbank;
+	private String ui4_account;
+	private AlertDialog dialog;
 	
 	private void initListener() {
-		//tv_getyan.setOnClickListener(this);
 		rl_yan.setOnClickListener(this);
 		tv_next1.setOnClickListener(this);
 		tv_no1.setOnClickListener(this);
 		tv_no2.setOnClickListener(this);
 		tv_next2.setOnClickListener(this);
 		iv_lipic.setOnClickListener(this);
+		iv_zpic.setOnClickListener(this);
+		iv_fpiac.setOnClickListener(this);
+		tv_no3.setOnClickListener(this);
+		tv_next3.setOnClickListener(this);
+		tv_submit.setOnClickListener(this);
 	}
 
 	@Override
@@ -252,34 +323,185 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		} else if (v == tv_no1) {
 			no1();
 		} else if (v == tv_next2) {
-			
+			next2();
 		} else if (v == tv_no2) {
 			no1();
 		} else if (v == iv_lipic) {
-			//liPic();
 			SelectImgUtil.toSelectImg(this, TO_PIC_UI2);
+		} else if (v == iv_zpic) {
+			SelectImgUtil.toSelectImg(this, TO_PIC_UI3_Z);
+		} else if (v == iv_fpiac) {
+			SelectImgUtil.toSelectImg(this, TO_PIC_UI3_F);
+		} else if (v == tv_no3) {
+			no1();
+		} else if (v == tv_next3) {
+			next3();
+		} else if (v == tv_submit) {
+			submit();
 		}
 	}
 	
+	@SuppressLint("NewApi")
+	private void submit() {
+		if (match4()) {
+			dialog = new AlertDialog.Builder(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen).setView(initDialog()).show();
+			dialog.setCanceledOnTouchOutside(false);
+		}
+	}
+
+	private View initDialog() {
+		View view = getLayoutInflater().inflate(R.layout.dialog_registsogo, null);
+		view.findViewById(R.id.sodt_tv_ok).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		return view;
+	}
+
+	private boolean match4() {
+		ui4_bankuser = et_backuser.getText().toString();
+		ui4_bank = et_bank.getText().toString();
+		ui4_bankcity = et_bankcity.getText().toString();
+		ui4_subbank = et_subbank.getText().toString();
+		ui4_account = et_account.getText().toString();
+		if (TextUtils.isEmpty(ui4_bankuser)) {
+			myToast("银行开户名不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui4_bank)) {
+			myToast("开户银行不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui4_bankcity)) {
+			myToast("银行所在城市不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui4_subbank)) {
+			myToast("支行名称不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui4_account)) {
+			myToast("门店对公账户不能为空");
+			return false;
+		}
+		return true;
+	}
+
+	private void next3() {
+		if (match3()) {
+			showView(UI_LI4);
+		}
+	}
+
+	private boolean match3() {
+		ui3_loc = et_loc.getText().toString();
+		ui3_nickname = et_nickname.getText().toString();
+		ui3_shouji = et_shouji.getText().toString();
+		ui3_cardid = et_cardid.getText().toString();
+		if (TextUtils.isEmpty(ui3_loc)) {
+			myToast("法定代表人归属地不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui3_nickname)) {
+			myToast("法定代表人真实姓名不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui3_shouji)) {
+			myToast("法定代表人手机号不能为空");
+			return false;
+		}
+		if (TextUtils.isEmpty(ui3_cardid)) {
+			myToast("法定代表人身份证号码不能为空");
+			return false;
+		}
+		return true;
+	}
+
+	private void next2() {
+		if (match2()) {
+			showView(UI_LI3);
+		}
+	}
+
+	private void next1() {
+		if (match1()) {
+			showView(UI_LI2);
+		}
+	}
+	/**
+	 * 匹配界面2输入内容格式
+	 * @return
+	 */
+	private boolean match2() {
+		ui2_name = et_name.getText().toString();
+		ui2_charter = et_charter.getText().toString();
+		ui2_location = et_location.getText().toString();
+		ui2_totime = et_totime.getText().toString();
+		ui2_address = et_addresss.getText().toString();
+		ui2_cell = et_cell.getText().toString();
+		if (TextUtils.isEmpty(ui2_name)) {
+			myToast("商铺名称不能为空");
+			return false;
+		}
+		
+		if (TextUtils.isEmpty(ui2_charter)) {
+			myToast("营业执照注册号不能为空");
+			return false;
+		}
+		
+		if (TextUtils.isEmpty(ui2_location)) {
+			myToast("营业执照所在地不能为空");
+			return false;
+		}
+		
+		if (TextUtils.isEmpty(ui2_totime)) {
+			myToast("营业执照期限不能为空");
+			return false;
+		}
+		
+		if (TextUtils.isEmpty(ui2_address)) {
+			myToast("常用地址不能为空");
+			return false;
+		}
+		
+		if (TextUtils.isEmpty(ui2_cell)) {
+			myToast("联系电话不能为空");
+			return false;
+		}	
+		return true;
+	}
+
 	private String picPath_ui2;
 	private Bitmap bitmap_ui2;
+	private String picPath_ui3_z;
+	private Bitmap bitmap_ui3_z;
+	private String picPath_ui3_f;
+	private Bitmap bitmap_ui3_f;
 	
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent data) {
 		//super.onActivityResult(arg0, arg1, data);
 		if (arg1 == RESULT_OK) {
-			System.out.println("reqid =============== " + arg0 + "    " + (arg0 == TO_PIC_UI2) + "   "+ arg0);
 			if (arg0 == TO_PIC_UI2) {
 				picPath_ui2 = SelectImgUtil.getImgPath(this, data);
 				BitmapFactory.Options options = new BitmapFactory.Options();
 		        options.inSampleSize = 2;
 		        bitmap_ui2 = BitmapFactory.decodeFile(picPath_ui2, options);
-		        System.out.println("bit ================ " + (bitmap_ui2 == null) + " ===========  " + picPath_ui2);
 				iv_lipic.setImageBitmap(bitmap_ui2);
 			} else if (arg0 == TO_PIC_UI3_Z) {
-				
+				picPath_ui3_z = SelectImgUtil.getImgPath(this, data);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+		        options.inSampleSize = 2;
+		        bitmap_ui3_z = BitmapFactory.decodeFile(picPath_ui3_z, options);
+		        iv_zpic.setImageBitmap(bitmap_ui3_z);
 			} else if (arg0 == TO_PIC_UI3_F) {
-				
+				picPath_ui3_f = SelectImgUtil.getImgPath(this, data);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+		        options.inSampleSize = 2;
+		        bitmap_ui3_f = BitmapFactory.decodeFile(picPath_ui3_f, options);
+		        iv_fpiac.setImageBitmap(bitmap_ui3_f);	
 			}
 		}
 	}
@@ -297,12 +519,12 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		}, 2000);
 	}
 
-	private void next1() {
-		if (match1()) {
-			showView(UI_LI2);
-		}
-	}
-
+	
+	
+	/**
+	 * 匹配界面1输入内容格式
+	 * @return
+	 */
 	private boolean match1() {
 		phone = et_phone.getText().toString();
 		yan = et_yan.getText().toString();
@@ -312,15 +534,15 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 			myToast("请输入手机号");
 			return false;
 		}
-		if (TextUtils.isEmpty(phone)) {
+		if (TextUtils.isEmpty(yan)) {
 			myToast("请输入验证码");
 			return false;
 		}
-		if (TextUtils.isEmpty(phone)) {
+		if (TextUtils.isEmpty(pass)) {
 			myToast("请输入密码");
 			return false;
 		}
-		if (TextUtils.isEmpty(phone)) {
+		if (TextUtils.isEmpty(repass)) {
 			myToast("请重复您的密码");
 			return false;
 		}
@@ -340,6 +562,12 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 		if (bitmap_ui2 != null) {
 			bitmap_ui2.recycle();
+		}
+		if (bitmap_ui3_z != null) {
+			bitmap_ui3_z.recycle();
+		}
+		if (bitmap_ui3_f != null) {
+			bitmap_ui3_f.recycle();
 		}
 	}
 }

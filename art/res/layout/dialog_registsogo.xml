@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:gravity="center_horizontal"
+	    android:padding="16dp"
+	    android:layout_marginLeft="24dp"
+	    android:layout_marginRight="24dp"
+	    android:background="@drawable/dialog_registsogo_bg">
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:minLines="5"
+	        android:text="@string/regist_sogo_success"
+	        android:gravity="center_vertical"
+	       	android:textColor="@color/txt_white1"
+	       	android:textSize="18sp"/>
+	    
+	    <TextView 
+	        android:id="@+id/sodt_tv_ok"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:text="确定"
+	        android:gravity="center"
+	        android:background="@drawable/soge_next_bg_sel"
+	        android:textColor="@color/txt_white1"/>
+	</LinearLayout>
+</LinearLayout>
