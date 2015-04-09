@@ -25,6 +25,8 @@ import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.HttpClients;
+import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.StarRatingView;
 import com.shangxian.art.view.TopView;
@@ -33,7 +35,7 @@ import com.shangxian.art.view.TopView;
  * @author Administrator
  *
  */
-public class CommodityContentActivity extends BaseActivity implements OnClickListener{
+public class CommodityContentActivity extends BaseActivity implements OnClickListener,HttpCilentListener{
     private ImageView commoditycontent_img;
     private TextView commoditycontent_jieshao,commoditycontent_jiage,commoditycontent_jiarugouwuche;
 	
@@ -180,7 +182,27 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 	}
 
 	private void dotask_addcart() {
-		// TODO Auto-generated method stub
-		
+		String json="{\"productId\":"+model.getId()+",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
+		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
+	}
+
+	@Override
+	public void onResponse(String content) {
+		MyLogger.i(content);
+		if (!TextUtils.isEmpty(content)) {
+			try {
+				JSONObject jsonObject = new JSONObject(content);
+				String result_code = jsonObject
+						.getString("result_code");
+				if (result_code.equals("200")) {
+					myToast(jsonObject
+						.getString("result"));
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

@@ -9,8 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,17 +25,22 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbStringHttpResponseListener;
 import com.ab.task.AbTask;
 import com.ab.task.AbTaskItem;
 import com.ab.task.AbTaskListListener;
 import com.ab.util.AbLogUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import com.google.gson.Gson;
 import com.shangxian.art.adapter.ListCarAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CarItem;
+import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.view.TopView;
 /**
  * 购物车
@@ -47,8 +57,8 @@ OnHeaderRefreshListener,OnClickListener{
 	private Button btn_settlement;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	
+	private AbHttpUtil httpUtil = null;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
-	
 	private static ListCarAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,12 @@ OnHeaderRefreshListener,OnClickListener{
 	}
 
 	private void initdata() {
+		httpUtil = AbHttpUtil.getInstance(this);
+		httpUtil.setTimeout(Constant.timeOut);
+		String url=Constant.BASEURL+Constant.CONTENT+Constant.CART;
+		refreshTask(url);
+		
+		
 		ListCarStoreBean store=new ListCarStoreBean("001", "商店名称1");
 		CarItem section = new CarItem(CarItem.SECTION, store, null, store.getStoreid());
 		listCarItem.add(section);
@@ -96,6 +112,89 @@ OnHeaderRefreshListener,OnClickListener{
 					adapter.selectAll(selecteall.isChecked());
 					accountCar();
 				}
+			}
+		});
+	}
+	
+	private void refreshTask(String url) {
+	//	AbRequestParams params = new AbRequestParams();
+//		params.put("shopid", "1019");
+//		params.put("code", "88881110344801123456");
+//		params.put("phone", "15889936624");
+		httpUtil.get(url,new AbStringHttpResponseListener() {
+
+			@Override
+			public void onStart() {
+			}
+
+			@Override
+			public void onFinish() {
+				// AbDialogUtil.removeDialog(HomeActivity.this);
+				// mAbPullToRefreshView.onHeaderRefreshFinish();
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error) {
+				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+//				imgList.clear();
+//				ArrayList<String> imgs = new ArrayList<String>();
+//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+//				mDatas.setImgList(imgs);
+//				if (mDatas != null) {
+//					if (mDatas.getImgList() != null
+//							&& mDatas.getImgList().size() > 0) {
+//						imgList.addAll(mDatas.getImgList());
+//						// viewPager.setVisibility(View.VISIBLE);
+//						viewPager.setOnGetView(new OnGetView() {
+//
+//							@Override
+//							public View getView(ViewGroup container,
+//									int position) {
+//								ImageView iv = new ImageView(HomeActivity.this);
+//								Imageloader_homePager.displayImage(
+//										imgList.get(position), iv,
+//										new Handler(), null);
+//								container.addView(iv);
+//								return iv;
+//							}
+//						});
+//						viewPager.setAdapter(imgList.size());
+//					}
+//
+//				}
+
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				// AbToastUtil.showToast(HomeActivity.this, content);
+				AbLogUtil.i(ShoppingcartActivity.this, content);
+				//model.clear();
+				if (!TextUtils.isEmpty(content)) {
+					Gson gson = new Gson();
+					try {
+						JSONObject jsonObject = new JSONObject(content);
+						String result_code = jsonObject
+								.getString("result_code");
+						if (result_code.equals("200")) {
+							JSONArray resultObjectArray = jsonObject
+									.getJSONArray("result");
+							int length = resultObjectArray.length();
+							for (int i = 0; i < length; i++) {
+								JSONObject jo = resultObjectArray
+										.getJSONObject(i);
+//								model.add(gson.fromJson(
+//										jo.toString(), ClassityCommdityModel.class));
+							}
+							adapter.notifyDataSetChanged();
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+	
 			}
 		});
 	}
