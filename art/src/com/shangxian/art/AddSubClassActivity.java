@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.view.TopView;
 
 
 /**
@@ -29,6 +30,14 @@ public class AddSubClassActivity extends BaseActivity{
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideCenterSearch();//隐藏搜索框
+		topView.hideRightBtn_invisible();//隐藏右按钮
+		topView.showTitle();
+		topView.setTitle("添加子类");
+		topView.setBack(R.drawable.back);//返回
+
 		xuanze = (TextView) findViewById(R.id.addsubclass_xuanze);
 		addimg = (ImageView) findViewById(R.id.addsubclass_addimg);
 		addname = (TextView) findViewById(R.id.addsubclass_addname);
@@ -73,6 +82,7 @@ public class AddSubClassActivity extends BaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>>>>取消");
+				finish();
 			}
 		});
 		baocun.setOnClickListener(new OnClickListener() {

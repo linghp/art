@@ -130,7 +130,7 @@ public class TopView extends RelativeLayout {
 	 * @param name
 	 */
 	public void setRightBtnText(String name){
-	//	btn_right.setText(name);
+//		btn_right.setText(name);
 	}
 	
 	/**
@@ -199,7 +199,10 @@ public class TopView extends RelativeLayout {
 		et_search.setVisibility(View.VISIBLE);
 	}
 	
-
+/**
+ * 隐藏搜索框
+ * @param hideCenterSearch 
+ */
 	public void hideCenterSearch(){
 		et_search.setVisibility(View.GONE);
 	}
@@ -248,6 +251,12 @@ public class TopView extends RelativeLayout {
 	 */
 	public void hideLeftBtn(){
 		btn_left.setVisibility(View.GONE);
+	}
+	/**
+	 * 隐藏左按钮保留位置
+	 */
+	public void hideLeftBtnz(){
+		btn_left.setVisibility(View.INVISIBLE);
 	}
 	
 	/**

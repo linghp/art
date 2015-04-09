@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.TopView;
 
 /**
  * 商品管理（登陆成功后）
@@ -29,6 +30,15 @@ public class MerchandiseControlActivity extends BaseActivity{
 	
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideCenterSearch();//隐藏搜索框
+		topView.hideRightBtn_invisible();//隐藏右按钮
+		topView.showTitle();
+		topView.setTitle("商品管理");
+	
+		topView.setBack(R.drawable.back);//返回
+		
 		shangpin = (LinearLayout) findViewById(R.id.merchandisecontrol_linear1);
 		peisong = (LinearLayout) findViewById(R.id.merchandisecontrol_linear2);
 		tianjia = (LinearLayout) findViewById(R.id.merchandisecontrol_linear3);

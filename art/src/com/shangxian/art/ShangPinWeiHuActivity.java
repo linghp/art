@@ -16,6 +16,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.SearchModel;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.SlidingListView;
+import com.shangxian.art.view.TopView;
 /**
  * 商品类别维护
  * @author Administrator
@@ -43,6 +44,14 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideCenterSearch();//隐藏搜索框
+		topView.hideRightBtn_invisible();//隐藏右按钮
+		topView.showTitle();//显示title
+		topView.setTitle("商品类别维护");
+		topView.setBack(R.drawable.back);//返回
+
 		list = (SlidingListView) findViewById(R.id.shangpinweihu_list);
 		addParentClass = (LinearLayout) findViewById(R.id.shangpinweihu_addparentclass);
 		addSubClass = (LinearLayout) findViewById(R.id.shangpinweihu_subclass);
@@ -50,7 +59,7 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 		addSubClass_txt = (TextView) findViewById(R.id.shangpinweihu_subclass_txt);
 	}
 	private void initData() {
-		
+
 		// TODO Auto-generated method stub
 		model = new ArrayList<SearchModel>();
 		for (int i = 0; i < 5; i++) {
