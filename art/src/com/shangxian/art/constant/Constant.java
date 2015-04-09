@@ -3,6 +3,10 @@ package com.shangxian.art.constant;
 
 
 public class Constant {
+	//public static final String BASEURL = "http://192.168.1.125:8888/art/";
+	public static final String BASEURL = "http://test.peoit.com/";
+	public static final String home2 = "api/ads";//动态布局的数据
+	
 	
     
     // 连接超时
@@ -21,7 +25,7 @@ public class Constant {
  	//3表示下载暂停
  	public static final int downLoadPause = 3;
  	
- 	public static final String BASEURL = "http://www.amsoft.cn/";
+ 	public static final String BASEURL1 = "http://www.amsoft.cn/";
  	
  	
     

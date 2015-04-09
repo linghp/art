@@ -58,7 +58,7 @@ public class NearlyActivity extends BaseActivity implements
 		// mAbTitleBar.setLogoLine(R.drawable.line);
 		
 		for (int i = 0; i < 23; i++) {
-			mPhotoList.add(Constant.BASEURL
+			mPhotoList.add(Constant.BASEURL1
 					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
 		}
 

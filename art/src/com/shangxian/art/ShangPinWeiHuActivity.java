@@ -15,6 +15,7 @@ import com.shangxian.art.adapter.SearchAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.SearchModel;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.SlidingListView;
 /**
  * 商品类别维护
  * @author Administrator
@@ -22,7 +23,7 @@ import com.shangxian.art.utils.CommonUtil;
  */
 public class ShangPinWeiHuActivity extends BaseActivity{
 
-	ListView list;
+	private SlidingListView list;
 	List<SearchModel> model;
 	SearchAdapter adapter;
 
@@ -42,14 +43,14 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 
 	private void initView() {
 		// TODO Auto-generated method stub
-		list = (ListView) findViewById(R.id.shangpinweihu_list);
+		list = (SlidingListView) findViewById(R.id.shangpinweihu_list);
 		addParentClass = (LinearLayout) findViewById(R.id.shangpinweihu_addparentclass);
 		addSubClass = (LinearLayout) findViewById(R.id.shangpinweihu_subclass);
 		addParentClass_txt = (TextView) findViewById(R.id.shangpinweihu_addparentclass_txt);
 		addSubClass_txt = (TextView) findViewById(R.id.shangpinweihu_subclass_txt);
 	}
-
 	private void initData() {
+		
 		// TODO Auto-generated method stub
 		model = new ArrayList<SearchModel>();
 		for (int i = 0; i < 5; i++) {
@@ -67,8 +68,7 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 
 			@Override
 			public void onClick(View v) {
-//				addParentClass_txt.setTextColor(color.col_gy500togy300);
-				
+
 				CommonUtil.gotoActivity(ShangPinWeiHuActivity.this, AddParentClassActivity.class, false);
 			}
 		});
