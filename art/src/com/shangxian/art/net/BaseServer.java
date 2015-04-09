@@ -36,7 +36,7 @@ public class BaseServer {
 		mAbHttpUtil = AbHttpUtil.getInstance(mContext);
 	}
 	
-	protected void toGet(String url, AbRequestParams params, final OnHttpListener l){
+	protected static void toGet(String url, AbRequestParams params, final OnHttpListener l){
 		mAbHttpUtil.get(url, params, new AbStringHttpResponseListener() {
 			@Override
 			public void onStart() {}
@@ -64,7 +64,7 @@ public class BaseServer {
 		});
 	}
 	
-	protected void toPost(String url, AbRequestParams params, final OnHttpListener l){
+	protected static void toPost(String url, AbRequestParams params, final OnHttpListener l){
 		mAbHttpUtil.post(url, params, new AbStringHttpResponseListener() {
 			@Override
 			public void onStart() {}
@@ -92,11 +92,28 @@ public class BaseServer {
 		});
 	}
 	
-	protected void toFile(){
-		
+	protected static void toFile(String url, AbRequestParams params, final OnHttpListener l){
+		mAbHttpUtil.post(url, params, new AbFileHttpResponseListener() {
+			@Override
+			public void onStart() {
+				
+			}
+			@Override
+			public void onFinish() {
+				
+			}
+			@Override
+			public void onFailure(int arg0, String arg1, Throwable arg2) {
+				
+			}
+		});
 	}
 	
 	protected interface OnHttpListener{
 		void onHttp(String res);
+	}
+	
+	public interface OnLoginListener{
+		void onLogin(boolean isLogin);
 	}
 }

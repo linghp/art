@@ -56,7 +56,6 @@ public class LocationActivity extends BaseActivity {
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 		initOverlay();
-
 	}
 	
 	/**

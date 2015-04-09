@@ -17,5 +17,5 @@
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_confirm_order">确认订单</string>
     <string name="title_activity_regist_sogo">RegistSogoActivity</string>
-
+	<string name="regist_sogo_success">您的商户申请已提交，请耐心等待审核结果，如通过，系统会第一时间通知您。感谢您的支持！</string>
 </resources>
