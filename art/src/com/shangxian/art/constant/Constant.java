@@ -4,8 +4,11 @@ package com.shangxian.art.constant;
 
 public class Constant {
 	//public static final String BASEURL = "http://192.168.1.125:8888/art/";
-	public static final String BASEURL = "http://test.peoit.com/";
-	public static final String home2 = "api/ads";//动态布局的数据
+	public static final String BASEURL = "http://test.peoit.com";
+	public static final String CONTENT = "/api";
+	public static final String HOME = "/ads";//动态布局的数据
+	public static final String CATEGORYS = "/categorys";//动态布局的数据
+	public static final String CART = "/cart";//动态布局的数据
 	
 	
     

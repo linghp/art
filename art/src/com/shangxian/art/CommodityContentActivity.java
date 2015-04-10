@@ -1,11 +1,36 @@
 package com.shangxian.art;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbLogUtil;
+import com.google.gson.Gson;
+import com.shangxian.art.adapter.ClassityCommodiyAdp;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.bean.CommodityContentModel;
+import com.shangxian.art.cache.Imageloader_homePager;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.HttpClients;
+import com.shangxian.art.net.HttpClients.HttpCilentListener;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 /**
@@ -13,12 +38,14 @@ import com.shangxian.art.view.TopView;
  * @author Administrator
  *
  */
-public class CommodityContentActivity extends BaseActivity{
-
-	//	private StarRatingView star;
-	private LinearLayout shangpu;
-
-
+public class CommodityContentActivity extends BaseActivity implements OnClickListener,HttpCilentListener{
+  private LinearLayout shangpu;
+    private ImageView commoditycontent_img;
+    private TextView commoditycontent_jieshao,commoditycontent_jiage,commoditycontent_jiarugouwuche;
+	
+	private AbHttpUtil httpUtil = null;
+	private CommodityContentModel model;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

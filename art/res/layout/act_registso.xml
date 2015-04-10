@@ -272,7 +272,8 @@
             android:id="@+id/sogl_ll_li2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -318,7 +319,6 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
                                 android:hint="请输入您的店铺名称"
-                                android:inputType="phone"
                                 android:singleLine="true"
                                 android:textColor="@color/txt_black1"
                                 android:textColorHint="@color/txt_black2"
@@ -357,7 +357,7 @@
                                 android:layout_weight="1"
                                 android:background="@color/transparent"
                                 android:hint="请输入你营业执照注册号"
-                                android:inputType="numberSigned"
+                                android:inputType="number"
                                 android:singleLine="true"
                                 android:textColor="@color/txt_black1"
                                 android:textColorHint="@color/txt_black2"
@@ -433,7 +433,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
                                 android:hint="请输入营业期限"
-                                android:inputType="textPassword"
+                                android:inputType="number"
                                 android:singleLine="true"
                                 android:textColor="@color/txt_black1"
                                 android:textColorHint="@color/txt_black2"
@@ -471,7 +471,6 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
                                 android:hint="请输入常用地址"
-                                android:inputType="textPassword"
                                 android:singleLine="true"
                                 android:textColor="@color/txt_black1"
                                 android:textColorHint="@color/txt_black2"
@@ -509,7 +508,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
                                 android:hint="请输入联系电话"
-                                android:inputType="textPassword"
+                                android:inputType="phone"
+                                android:phoneNumber="true"
                                 android:singleLine="true"
                                 android:textColor="@color/txt_black1"
                                 android:textColorHint="@color/txt_black2"
@@ -532,7 +532,7 @@
                             android:textColor="@color/txt_black1"
                             android:textSize="18sp" />
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/txt_white"
@@ -548,7 +548,7 @@
                                 android:layout_height="60dp"
                                 android:background="@drawable/draw_selpic_sel"
                                 android:src="@drawable/add_pic" />
-                        </LinearLayout>
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -586,7 +586,6 @@
             </ScrollView>
         </LinearLayout>
 
-        <!--
         <LinearLayout
             android:id="@+id/sogl_ll_li3"
             android:layout_width="match_parent"
@@ -627,8 +626,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="请输入您的店铺名称"
-                        android:inputType="phone"
+                        android:hint="请输入法定代表人归属地"
                         android:singleLine="true"
                         android:textColor="@color/txt_black1"
                         android:textColorHint="@color/txt_black2"
@@ -649,7 +647,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="营业执照"
+                        android:text="真实姓名"
                         android:textColor="@color/txt_black1"
                         android:textSize="18sp" />
 
@@ -661,51 +659,12 @@
                         android:background="@color/grey500" />
 
                     <EditText
-                        android:id="@+id/soge_et_charter"
+                        android:id="@+id/soge_et_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/transparent"
-                        android:hint="请输入你营业执照注册号"
-                        android:inputType="numberSigned"
-                        android:singleLine="true"
-                        android:textColor="@color/txt_black1"
-                        android:textColorHint="@color/txt_black2"
-                        android:textSize="18sp" />                   
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey300" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="所  在  地"
-                        android:textColor="@color/txt_black1"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@color/grey500" />
-
-                    <EditText
-                        android:id="@+id/soge_et_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:hint="请输入你营业执照的所在地"
-                        android:inputType="textPassword"
+                        android:hint="请输入法定代表人真实姓名"
                         android:singleLine="true"
                         android:textColor="@color/txt_black1"
                         android:textColorHint="@color/txt_black2"
@@ -726,7 +685,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="营业期限"
+                        android:text="手机号码"
                         android:textColor="@color/txt_black1"
                         android:textSize="18sp" />
 
@@ -738,12 +697,277 @@
                         android:background="@color/grey500" />
 
                     <EditText
-                        android:id="@+id/soge_et_totime"
+                        android:id="@+id/soge_et_shouji"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="请输入营业期限"
-                        android:inputType="textPassword"
+                        android:hint="请输入法定代表人手机号"
+                        android:inputType="phone"
+                        android:phoneNumber="true"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="身份证码"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/grey500" />
+
+                    <EditText
+                        android:id="@+id/soge_et_cardid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="请输入法定代表人身份证号码"
+                        android:digits="1234567890xyzXZY"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="请上传身份证正反面照片"
+                android:textColor="@color/txt_black1"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp" 
+                android:background="@color/txt_white">
+                
+                <ImageView 
+                    android:id="@+id/sogi_iv_zpic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/draw_selpic_sel"
+                    android:src="@drawable/add_pic"
+                    android:layout_marginRight="8dp"/>
+                
+                <ImageView 
+                    android:id="@+id/sogi_iv_fpic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/draw_selpic_sel"
+                    android:src="@drawable/add_pic"
+                    android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/sogt_tv_no3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/soge_not_bg_sel"
+                    android:gravity="center"
+                    android:text="取    消"
+                    android:textColor="@color/col_w1tow2"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sogt_tv_next3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/soge_next_bg_sel"
+                    android:gravity="center"
+                    android:text="下一步"
+                    android:textColor="@color/col_w1tow2"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sogl_ll_li4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/txt_white"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开  户  名"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/grey500" />
+
+                    <EditText
+                        android:id="@+id/soge_et_bankuser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="请输入银行开户名"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开户银行"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/grey500" />
+
+                    <EditText
+                        android:id="@+id/soge_et_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="请输入开户银行"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="所在城市"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/grey500" />
+
+                    <EditText
+                        android:id="@+id/soge_et_bankcity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="请输入银行所在城市"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textColorHint="@color/txt_black2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支行名称"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@color/grey500" />
+
+                    <EditText
+                        android:id="@+id/soge_et_subbank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="请输入支行名称"
                         android:singleLine="true"
                         android:textColor="@color/txt_black1"
                         android:textColorHint="@color/txt_black2"
@@ -764,7 +988,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="常用地址"
+                        android:text="对公账户"
                         android:textColor="@color/txt_black1"
                         android:textSize="18sp" />
 
@@ -776,50 +1000,11 @@
                         android:background="@color/grey500" />
 
                     <EditText
-                        android:id="@+id/soge_et_address"
+                        android:id="@+id/soge_et_account"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="请输入常用地址"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:textColor="@color/txt_black1"
-                        android:textColorHint="@color/txt_black2"
-                        android:textSize="18sp" />
-                </LinearLayout>
-                
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey300" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="联系电话"
-                        android:textColor="@color/txt_black1"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@color/grey500" />
-
-                    <EditText
-                        android:id="@+id/soge_et_cell"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:hint="请输入联系电话"
-                        android:inputType="textPassword"
+                        android:hint="请输入门店对公账户"
                         android:singleLine="true"
                         android:textColor="@color/txt_black1"
                         android:textColorHint="@color/txt_black2"
@@ -835,32 +1020,17 @@
                 android:padding="8dp" >
 
                 <TextView
-                    android:id="@+id/sogt_tv_no3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/soge_not_bg_sel"
-                    android:gravity="center"
-                    android:text="取    消"
-                    android:textColor="@color/col_w1tow2"
-                    android:textSize="18sp"
-                    android:layout_marginRight="8dp" />
-
-                <TextView
-                    android:id="@+id/sogt_tv_next3"
+                    android:id="@+id/sogt_tv_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/soge_next_bg_sel"
                     android:gravity="center"
-                    android:text="下一步"
+                    android:text="提交"
                     android:textColor="@color/col_w1tow2"
-                    android:layout_marginLeft="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
-        -->
-
     </FrameLayout>
 
 </RelativeLayout>

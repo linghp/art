@@ -1,10 +1,10 @@
 package com.shangxian.art;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.view.TopView;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -43,12 +45,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tv_login = (TextView) findViewById(R.id.logt_tv_login);
 		tv_find = (TextView) findViewById(R.id.logt_tv_find);
 		tv_regist = (TextView) findViewById(R.id.logt_tv_regist);
+		
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.hideCenterSearch();
+		topView.hideLeftBtn();
+		topView.setTitle("登录");
+		topView.showTitle();
+		topView.setRightText("商户入驻", new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				CommonUtil.gotoActivity(LoginActivity.this, RegistSogoActivity.class, false);
+			}
+		});
 	}
 
 	public void initListener() {
 		tv_login.setOnClickListener(this);
 		tv_find.setOnClickListener(this);
 		tv_regist.setOnClickListener(this);
+		
 	}
 
 	@Override
