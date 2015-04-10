@@ -13,6 +13,7 @@ public class ListCarStoreBean implements Serializable{
 	private String shopId;
 	private String shopName;
 	private String logo;
+	private String recommand;
 	private List<ListCarGoodsBean> itemDtos;
 	
 	@Override
@@ -43,6 +44,12 @@ public class ListCarStoreBean implements Serializable{
 	}
 	public void setItemDtos(List<ListCarGoodsBean> itemDtos) {
 		this.itemDtos = itemDtos;
+	}
+	public String getRecommand() {
+		return recommand;
+	}
+	public void setRecommand(String recommand) {
+		this.recommand = recommand;
 	}
 
 

@@ -9,22 +9,21 @@ import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shangxian.art.R;
-import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.MyLogger;
 
 public class ListConfirmOrderAdapter extends BaseAdapter {
 	private Context context;
@@ -88,6 +87,7 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
 			holder.ll_goodsitem_add=(LinearLayout) convertView.findViewById(R.id.ll_goodsitem_add);
+			holder.et_message=(EditText) convertView.findViewById(R.id.et_message);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
 			convertView.setTag(holder);
 		}else{
@@ -119,6 +119,17 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 					+ listCarStoreBean.getLogo(),
 					holder.iv_logo,
 					new Handler(), null);
+			holder.et_message.setText(listCarStoreBean.getRecommand());
+			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {
+	            public void onFocusChange(View view, boolean hasFocus) {
+	                if (!hasFocus){
+	                    //final int position = view.getId();
+	                   final EditText editText = (EditText) view;
+	                   // myItems.set(position, editText.getText().toString());
+						listCarStoreBean.setRecommand(editText.getText().toString());
+	                }
+	            }
+	        });
 			
 			// 给控件赋值
 //			DisplayImageOptions options;
@@ -190,6 +201,7 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 		public TextView storeId;
 		public TextView goodsId;
 		public ImageView goodsDelete;
+		public EditText et_message;
 		public String goodsid;
 		public String storeid;
 		public LinearLayout ll_goodsitem_add;
