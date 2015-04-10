@@ -4,28 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-    <LinearLayout android:id="@+id/ll_item"
-        android:background="@color/white"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
+    <LinearLayout
+        android:id="@+id/ll_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <CheckBox
             android:id="@+id/check_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/check_sel"
-            android:focusable="false"
-            />
+            android:focusable="false" />
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/car_storename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="测试店铺1"
             android:textSize="@dimen/list_summary_size" />
     </LinearLayout>

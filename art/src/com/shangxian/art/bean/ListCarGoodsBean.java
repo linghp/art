@@ -9,46 +9,65 @@ import java.io.Serializable;
  */
 public class ListCarGoodsBean implements Serializable{
 
-	public String goodsId;
-	public String goodsName;
-	public String storeId;
-	public int goodsNum;
-	public float price;
+	private String productId;
+	private String name;
+	private String shopId;
+	private String specs;
+	private String photo;
+	private int quantity;
+	private float promotionPrice;
 	
-	public ListCarGoodsBean(String goodsId, String goodsName, String storeId,
-			int goodsNum,float price) {
-		super();
-		this.goodsId = goodsId;
-		this.goodsName = goodsName;
-		this.storeId = storeId;
-		this.goodsNum = goodsNum;
-		this.price=price;
+	public String getProductId() {
+		return productId;
 	}
-	public String getGoodsId() {
-		return goodsId;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
+	public String getName() {
+		return name;
 	}
-	public String getGoodsName() {
-		return goodsName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
+	public String getShopId() {
+		return shopId;
 	}
-	public String getStoreId() {
-		return storeId;
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
+	public String getSpecs() {
+		return specs;
 	}
-	public int getGoodsNum() {
-		return goodsNum;
+	public void setSpecs(String specs) {
+		this.specs = specs;
 	}
-	public void setGoodsNum(int goodsNum) {
-		this.goodsNum = goodsNum;
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public float getPromotionPrice() {
+		return promotionPrice;
+	}
+	public void setPromotionPrice(float promotionPrice) {
+		this.promotionPrice = promotionPrice;
+	}
+	@Override
+	public String toString() {
+		return "ListCarGoodsBean [productId=" + productId + ", name=" + name
+				+ ", shopId=" + shopId + ", specs=" + specs + ", photo="
+				+ photo + ", quantity=" + quantity + ", promotionPrice="
+				+ promotionPrice + "]";
 	}
 	
+
 
 
 }

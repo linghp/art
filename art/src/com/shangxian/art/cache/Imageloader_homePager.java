@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.shangxian.art.utils.MyLogger;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.shangxian.art.R;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.cache.Imageloader_homePager;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
@@ -77,31 +80,45 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		final ViewHolder holder = new ViewHolder();
-		MyLogger.i(position+"");
+		final ViewHolder holder ;;
 		final ListCarStoreBean listCarStoreBean = (ListCarStoreBean) getItem(position);
+		if(convertView==null){
+			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_confirmorder_item, null);
+			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
-			holder.storeName.setText(listCarStoreBean.storename);
 			holder.ll_goodsitem_add=(LinearLayout) convertView.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
+			convertView.setTag(holder);
+		}else{
+			holder=(ViewHolder) convertView.getTag();
+		}
 			holder.ll_goodsitem_add.removeAllViews();
-			List<ListCarGoodsBean> listCarGoodsBeans=hashmapGoodsBeans.get(listCarStoreBean.getStoreid());
+			List<ListCarGoodsBean> listCarGoodsBeans=hashmapGoodsBeans.get(listCarStoreBean.getShopId());
 			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
 				View child = inflater.inflate(
 						R.layout.list_car_goods_item, null);
-				View view=new View(context);
 				holder.ll_goodsitem_add.addView(child);
-				((TextView) child.findViewById(R.id.car_goodsname)).setText(listCarGoodsBean.goodsName);
+				((TextView) child.findViewById(R.id.car_goodsname)).setText(listCarGoodsBean.getName());
 				//holder.goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 				//holder.goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
 				TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 				TextView goodsPrice = (TextView) child.findViewById(R.id.car_goods_price);
-				goodsNum.setText("x"+listCarGoodsBean.goodsNum);
-				goodsPrice.setText("￥"+listCarGoodsBean.price);
-				
-				 child.findViewById(R.id.check_goods).setVisibility(View.GONE);
+				//final ViewHolder holder1 = new ViewHolder();
+				ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
+				goodsNum.setText("x"+listCarGoodsBean.getQuantity());
+				goodsPrice.setText("￥"+listCarGoodsBean.getPromotionPrice());
+			    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
+				Imageloader_homePager.displayImage(Constant.BASEURL
+						+ listCarGoodsBean.getPhoto(),
+						goodsImg,
+						new Handler(), null);
 			}
+			holder.storeName.setText(listCarStoreBean.getShopName());
+			Imageloader_homePager.displayImage(Constant.BASEURL
+					+ listCarStoreBean.getLogo(),
+					holder.iv_logo,
+					new Handler(), null);
 			
 			// 给控件赋值
 //			DisplayImageOptions options;
@@ -160,6 +177,7 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	public class ViewHolder {
 		public CheckBox check_store;
 		public CheckBox check_goods;
+		public ImageView iv_logo;
 		public TextView storeName;
 		public TextView goodsName;
 		public ImageView goodsImg;
