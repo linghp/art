@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.view.TopView;
 
 /**
  * 添加父类
@@ -31,6 +32,14 @@ public class AddParentClassActivity extends BaseActivity{
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideCenterSearch();//隐藏搜索框
+		topView.hideRightBtn_invisible();//隐藏右按钮
+		topView.showTitle();
+		topView.setTitle("添加父类");
+		topView.setBack(R.drawable.back);//返回
+		
 		addimg = (ImageView) findViewById(R.id.addparentclass_addimg);
 		addname = (EditText) findViewById(R.id.addparentclass_addname);
 		quxiao = (TextView) findViewById(R.id.addparentclass_quxiao);

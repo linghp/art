@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.view.TopView;
 
 /**
  * 添加商品
@@ -33,6 +34,14 @@ public class AddGoodsActivity extends BaseActivity{
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideCenterSearch();//隐藏搜索框
+		topView.hideRightBtn_invisible();//隐藏右按钮
+		topView.showTitle();
+		topView.setTitle("添加商品");
+		topView.setBack(R.drawable.back);//返回
+		
 		miaoshu = (EditText) findViewById(R.id.addgoods_edit);
 		zishu = (TextView) findViewById(R.id.addgoods_zishu_txt);
 		

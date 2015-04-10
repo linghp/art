@@ -5,18 +5,16 @@ import android.os.Bundle;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.view.TopView;
 /**
- * 配送类别维护
+ * 商铺简介
  * @author Administrator
  *
  */
-
-public class DeliveryServiceActivity extends BaseActivity{
-
+public class ShopsSummaryActivity extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_deliveryservice);
+		setContentView(R.layout.activity_shopssummary);
 		initView();
 		initData();
 		initListener();
@@ -26,11 +24,8 @@ public class DeliveryServiceActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		topView=(TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
-		topView.setRightBtnDrawable(R.drawable.addto);
-		topView.hideCenterSearch();//隐藏搜索框
-//		topView.hideRightBtn_invisible();//隐藏右按钮
-		topView.showTitle();
-		topView.setTitle("配送类别维护");
+		topView.setRightBtnDrawable(R.drawable.more1);
+		topView.setTitle("商铺简介");
 		topView.setBack(R.drawable.back);//返回
 	}
 
@@ -43,4 +38,5 @@ public class DeliveryServiceActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		
 	}
+
 }

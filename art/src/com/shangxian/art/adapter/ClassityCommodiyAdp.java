@@ -6,6 +6,7 @@ package com.shangxian.art.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.cache.Imageloader_homePager;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 
 public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
@@ -41,10 +44,13 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getTitle());
-		holder.summary.setText(dates.get(position).getSummary());
-		holder.price.setText(dates.get(position).getPrice());
-		
+		holder.title.setText(dates.get(position).getName());
+		holder.summary.setText(dates.get(position).getReDetails());
+		holder.price.setText(dates.get(position).getPromotionPrice()+"");
+		Imageloader_homePager.displayImage(Constant.BASEURL
+				+ dates.get(position).getPhoto(),
+				holder.img,
+				new Handler(), null);
 		return convertView;
 	}
 	public static class ViewHolder{

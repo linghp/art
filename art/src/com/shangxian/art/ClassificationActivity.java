@@ -2,17 +2,37 @@ package com.shangxian.art;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbRequestParams;
+import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbLogUtil;
+import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
+import com.shangxian.art.bean.HomeadsBean;
+import com.shangxian.art.cache.Imageloader_homePager;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.TagViewPager.OnGetView;
 
 /**
  * 分类
@@ -23,6 +43,8 @@ public class ClassificationActivity extends BaseActivity {
 	private ListView list;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
+	
+	private AbHttpUtil httpUtil = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,17 +71,104 @@ public class ClassificationActivity extends BaseActivity {
 	}
 	//添加数据
 	private void initData() {
-		// TODO Auto-generated method stub
+		httpUtil = AbHttpUtil.getInstance(this);
+		httpUtil.setTimeout(Constant.timeOut);
 		model = new ArrayList<ClassificationModel>();
-		for (int i = 0; i < 10; i++) {
-			ClassificationModel m = new ClassificationModel();
-			m.setTitle("特价美食" + 1+i);
-			m.setSummary("特价美食，干果/仙贝" + 1+i);
-			model.add(m);
-		}
+		refreshTask();
+//		for (int i = 0; i < 10; i++) {
+//			ClassificationModel m = new ClassificationModel();
+//			m.setTitle("特价美食" + 1+i);
+//			m.setSummary("特价美食，干果/仙贝" + 1+i);
+//			model.add(m);
+//		}
+		
 		adapter = new ClassificationAdp(this, R.layout.item_classifiymain, model);
 		list.setAdapter(adapter);
 
+	}
+	
+	private void refreshTask() {
+		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
+	//	AbRequestParams params = new AbRequestParams();
+//		params.put("shopid", "1019");
+//		params.put("code", "88881110344801123456");
+//		params.put("phone", "15889936624");
+		httpUtil.get(url,new AbStringHttpResponseListener() {
+
+			@Override
+			public void onStart() {
+			}
+
+			@Override
+			public void onFinish() {
+				// AbDialogUtil.removeDialog(HomeActivity.this);
+				// mAbPullToRefreshView.onHeaderRefreshFinish();
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error) {
+				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+//				imgList.clear();
+//				ArrayList<String> imgs = new ArrayList<String>();
+//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+//				mDatas.setImgList(imgs);
+//				if (mDatas != null) {
+//					if (mDatas.getImgList() != null
+//							&& mDatas.getImgList().size() > 0) {
+//						imgList.addAll(mDatas.getImgList());
+//						// viewPager.setVisibility(View.VISIBLE);
+//						viewPager.setOnGetView(new OnGetView() {
+//
+//							@Override
+//							public View getView(ViewGroup container,
+//									int position) {
+//								ImageView iv = new ImageView(HomeActivity.this);
+//								Imageloader_homePager.displayImage(
+//										imgList.get(position), iv,
+//										new Handler(), null);
+//								container.addView(iv);
+//								return iv;
+//							}
+//						});
+//						viewPager.setAdapter(imgList.size());
+//					}
+//
+//				}
+
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				// AbToastUtil.showToast(HomeActivity.this, content);
+				AbLogUtil.i(ClassificationActivity.this, content);
+				model.clear();
+				if (!TextUtils.isEmpty(content)) {
+					Gson gson = new Gson();
+					try {
+						JSONObject jsonObject = new JSONObject(content);
+						String result_code = jsonObject
+								.getString("result_code");
+						if (result_code.equals("200")) {
+							JSONArray resultObjectArray = jsonObject
+									.getJSONArray("result");
+							int length = resultObjectArray.length();
+							for (int i = 0; i < length; i++) {
+								JSONObject jo = resultObjectArray
+										.getJSONObject(i);
+								model.add(gson.fromJson(
+										jo.toString(), ClassificationModel.class));
+							}
+							adapter.notifyDataSetChanged();
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+	
+			}
+		});
 	}
 
 	//初始化控件
@@ -78,7 +187,10 @@ public class ClassificationActivity extends BaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				//				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
-				CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
+				//CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
+				Intent intent=new Intent(ClassificationActivity.this, ClassifyCommodityActivity.class);
+				intent.putExtra("id", model.get(position).getId()+"");
+				startActivity(intent);
 			}
 		});
 	}
