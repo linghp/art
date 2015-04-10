@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/txt_white" >
+    <TextView 
+        android:id="@+id/screen_shopslist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="商铺名称列表"
+        android:drawableRight="@drawable/next_level"
+        android:padding="20dp"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_summary_size"/>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/txt_black3"/>
+    <TextView 
+        android:id="@+id/screen_classifylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分类列表"
+        android:drawableRight="@drawable/next_level"
+        android:padding="20dp"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_summary_size"/>
+
+</LinearLayout>
