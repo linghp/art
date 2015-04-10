@@ -8,7 +8,8 @@ public class Constant {
 	public static final String CONTENT = "/api";
 	public static final String HOME = "/ads";//动态布局的数据
 	public static final String CATEGORYS = "/categorys";//动态布局的数据
-	public static final String CART = "/cart";//动态布局的数据
+	public static final String CART = "/cart";//购物车
+	public static final String ORDER = "/order";//下订单
 	
 	
     

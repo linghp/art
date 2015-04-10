@@ -5,7 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_classification">Classification</string><!-- 分类 -->
+    <string name="title_activity_classification">Classification</string>
+ <!-- 分类 -->
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
@@ -17,9 +18,9 @@
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_confirm_order">确认订单</string>
     <string name="title_activity_regist_sogo">RegistSogoActivity</string>
-	<string name="regist_sogo_success">您的商户申请已提交，请耐心等待审核结果，如通过，系统会第一时间通知您。感谢您的支持！</string>
+    <string name="regist_sogo_success">您的商户申请已提交，请耐心等待审核结果，如通过，系统会第一时间通知您。感谢您的支持！</string>
 
-   <!-- 异常 -->
+    <!-- 异常 -->
     <string name="need_pwd">请输入密码</string>
     <string name="need_username">请输入用户名</string>
     <string name="need_phonenumber">请输入手机号</string>
@@ -27,4 +28,10 @@
     <string name="need_newpassword">请输新密码</string>
     <string name="need_newpasswordconfirm">请输确认新密码</string>
     <string name="passworddifferent">密码不一致，请重输</string>
+    
+    
+    
+    
+    <string name="title_activity_pay">付款</string>
+
 </resources>

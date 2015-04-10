@@ -55,6 +55,13 @@ public class CarItem implements Serializable{
 	public void setListCarGoodsBean(ListCarGoodsBean listCarGoodsBean) {
 		this.listCarGoodsBean = listCarGoodsBean;
 	}
+
+	@Override
+	public String toString() {
+		return "CarItem [id=" + id + ", type=" + type + ", listCarStoreBean="
+				+ listCarStoreBean + ", listCarGoodsBean=" + listCarGoodsBean
+				+ "]";
+	}
 	
 	
 }
