@@ -188,7 +188,7 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 
 	private void dotask_addcart() {
 		String json="{\"productId\":"+model.getId()+",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
-		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
+		//HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
 	}
 
 	@Override

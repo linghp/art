@@ -6,34 +6,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.crypto.spec.PSource;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-
 import com.shangxian.art.utils.MyLogger;
 
 import android.os.Handler;
@@ -65,34 +50,18 @@ public class HttpClients {
 				}
 			};
 		};
-//		final String user_token = ParkApplication.getPrefer().getString(
-//				Constants.USER_TOKEN, null);
 		final String user_token = "1";
 		final HttpClient httpClient = getHttpClient();
 		executorService.submit(new Runnable() {
-			// private JSONObject resultJsonObject;
-
 			@Override
 			public void run() {
 				try {
 					HttpPost postMethod = new HttpPost(baseUrl);
-					/*JSONObject jsonObject = new JSONObject();
-					try {
-						jsonObject.put("Content_Type", "application/json");
-						if (!TextUtils.isEmpty(user_token)) {
-							// postMethod.addHeader("user_token", user_token);
-							jsonObject.put("user_token", user_token);
-						}
-						jsonObject.put("jsonString", params.toString());
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 					postMethod.setHeader("Content-Type", "application/json");
 					if (!TextUtils.isEmpty(user_token)) {
 						postMethod.addHeader("user_token", user_token);
 					}
-					StringEntity se = new StringEntity(json.trim());
+					StringEntity se = new StringEntity(json.trim(), "UTF-8");
 					postMethod.setEntity(se);
 					// 将参数填入POST
 					// Entity中
@@ -109,21 +78,21 @@ public class HttpClients {
 						}
 						postHandler.sendEmptyMessage(FAIL);
 						return;
+					} else {
+						StringBuilder builder = new StringBuilder();
+						BufferedReader bufferedReader2 = new BufferedReader(
+								new InputStreamReader(response.getEntity()
+										.getContent()));
+						String str2 = "";
+						for (String s = bufferedReader2.readLine(); s != null; s = bufferedReader2
+								.readLine()) {
+							builder.append(s);
+						}
+						Message message = Message.obtain(postHandler, SUCCESS,
+								builder.toString());
+						postHandler.sendMessage(message);
+						MyLogger.d(builder.toString());
 					}
-
-					StringBuilder builder = new StringBuilder();
-					BufferedReader bufferedReader2 = new BufferedReader(
-							new InputStreamReader(response.getEntity()
-									.getContent()));
-					String str2 = "";
-					for (String s = bufferedReader2.readLine(); s != null; s = bufferedReader2
-							.readLine()) {
-						builder.append(s);
-					}
-					Message message = Message.obtain(postHandler, SUCCESS,
-							builder.toString());
-					postHandler.sendMessage(message);
-					MyLogger.d(builder.toString());
 				} catch (UnsupportedEncodingException e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
