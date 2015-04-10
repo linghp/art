@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white2" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/balance" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="账户余额"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear1"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/recharge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="充值"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear2"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/withdrawals" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="提现"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear3"
+        android:layout_marginTop="20dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="收益"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear4"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bankcard" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="银行卡"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nonghebao_linear6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear5"
+        android:layout_marginTop="1dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/incomeandexpdituredetails" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="收支明细"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+</RelativeLayout>
