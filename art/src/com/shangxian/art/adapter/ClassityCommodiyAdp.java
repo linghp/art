@@ -39,7 +39,7 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 			holder.summary = (TextView) convertView.findViewById(R.id.item_commodity_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_commodity_img);
 			holder.price = (TextView) convertView.findViewById(R.id.item_commodity_price);
-			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
+//			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder) convertView.getTag();
@@ -55,6 +55,7 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 	}
 	public static class ViewHolder{
 		TextView title,summary,price;
-		ImageView img,shop;
+		ImageView img;
+//		ImageView shop;
 	}
 }

@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ import com.shangxian.art.ShoppingcartActivity;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.cache.Imageloader_homePager;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
@@ -57,9 +60,9 @@ public class ListCarAdapter extends BaseAdapter {
 		for (int i = 0; i < listdata.size(); i++) {
 			CarItem item = listdata.get(i);
 			if (item.type == CarItem.SECTION) {
-				storeChecked.put(item.listCarStoreBean.storeid, false);
+				storeChecked.put(item.listCarStoreBean.getShopId(), false);
 			} else {
-				goodsCheced.put(item.listCarGoodsBean.goodsId, false);
+				goodsCheced.put(item.listCarGoodsBean.getProductId(), false);
 			}
 		}
 	}
@@ -89,23 +92,29 @@ public class ListCarAdapter extends BaseAdapter {
 			if(position==0){
 				CommonUtil.setMargins(ll_item, 0, CommonUtil.px2dip(context, 20), 0, 0);
 			}
+			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
 			holder.check_store = (CheckBox) convertView.findViewById(R.id.check_store);
-			holder.storeName.setText(item.listCarStoreBean.storename);
-			final List<ListCarGoodsBean> list = getGoodsByStoreId(item.listCarStoreBean.storeid);
+			holder.storeName.setText(item.listCarStoreBean.getShopName());
+			Imageloader_homePager.displayImage(Constant.BASEURL
+					+ item.getListCarStoreBean().getLogo(),
+					holder.iv_logo,
+					new Handler(), null);
+			
+			final List<ListCarGoodsBean> list = getGoodsByStoreId(item.listCarStoreBean.getShopId());
 			holder.check_store.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton arg0, boolean cheched) {
 
 					if (cheched) {
-						storeChecked.put(item.listCarStoreBean.storeid, true);
+						storeChecked.put(item.listCarStoreBean.getShopId(), true);
 						for (int i = 0; i < list.size(); i++) {
-							goodsCheced.put(list.get(i).goodsId, true);
+							goodsCheced.put(list.get(i).getProductId(), true);
 						}
 					} else {
-						storeChecked.put(item.listCarStoreBean.storeid, false);
+						storeChecked.put(item.listCarStoreBean.getShopId(), false);
 						for (int i = 0; i < list.size(); i++) {
-							goodsCheced.put(list.get(i).goodsId, false);
+							goodsCheced.put(list.get(i).getProductId(), false);
 						}
 
 					}
@@ -116,11 +125,12 @@ public class ListCarAdapter extends BaseAdapter {
 
 			int flag = 0;
 			for (int i = 0; i < list.size(); i++) {
-				if (goodsCheced.get(list.get(i).goodsId) != null && goodsCheced.get(list.get(i).goodsId) == true) {
+				if (goodsCheced.get(list.get(i).getProductId()) != null && goodsCheced.get(list.get(i).getProductId()) == true) {
 					flag++;
 				}
 			}
-			if (flag == list.size() || storeChecked.get(item.listCarStoreBean.storeid) == true) {
+			//MyLogger.i(storeChecked.toString());
+			if (flag == list.size() || storeChecked.get(item.listCarStoreBean.getShopId()) == true) {
 				holder.check_store.setChecked(true);
 			} else {
 				holder.check_store.setChecked(false);
@@ -143,6 +153,10 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.goodsNum = (TextView) convertView.findViewById(R.id.car_num);
 			holder.goodsPrice = (TextView) convertView.findViewById(R.id.car_goods_price);
 			holder.check_goods = (CheckBox) convertView.findViewById(R.id.check_goods);
+			Imageloader_homePager.displayImage(Constant.BASEURL
+					+ item.getListCarGoodsBean().getPhoto(),
+					holder.goodsImg,
+					new Handler(), null);
 			// 给控件赋值
 //			DisplayImageOptions options;
 //			options = new DisplayImageOptions.Builder().cacheInMemory(true)// 是否緩存都內存中
@@ -152,29 +166,29 @@ public class ListCarAdapter extends BaseAdapter {
 //			String path = (RequestServer.FILE_REQUEST + item.goods.goodsImg).replaceAll("\\\\", "/");
 //			imageLoader.displayImage(path, holder.goodsImg, options, null);
 
-			holder.goodsName.setText(item.listCarGoodsBean.goodsName);
+			holder.goodsName.setText(item.listCarGoodsBean.getName());
 			//holder.goodsAttr.setText(item.listCarGoodsBean.goodsAttr);
-			holder.goodsNum.setText("x"+item.listCarGoodsBean.goodsNum);
+			holder.goodsNum.setText("x"+item.listCarGoodsBean.getQuantity());
 //			if(!StringUtils.isEmpty(item.listCarGoodsBean.goodsOldPrice)){
 //				holder.goodsOldPrice.setText(item.goods.goodsOldPrice);
 //			}else{
 //				holder.goodsOldPrice.setVisibility(View.GONE);
 //			}
 			//holder.goodsOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.price);
-			holder.goodsid = item.listCarGoodsBean.goodsId;
+			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.getPromotionPrice());
+			holder.goodsid = item.listCarGoodsBean.getProductId();
 
-			if (goodsCheced.get(item.listCarGoodsBean.goodsId) != null) {
-				holder.check_goods.setChecked(goodsCheced.get(item.listCarGoodsBean.goodsId));
+			if (goodsCheced.get(item.listCarGoodsBean.getProductId()) != null) {
+				holder.check_goods.setChecked(goodsCheced.get(item.listCarGoodsBean.getProductId()));
 			}
 
 			holder.check_goods.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton arg0, boolean checked) {
 					if (checked) {
-						goodsCheced.put(item.listCarGoodsBean.goodsId, true);
+						goodsCheced.put(item.listCarGoodsBean.getProductId(), true);
 					} else {
-						goodsCheced.put(item.listCarGoodsBean.goodsId, false);
-						storeChecked.put(item.listCarGoodsBean.storeId, false);
+						goodsCheced.put(item.listCarGoodsBean.getProductId(), false);
+						storeChecked.put(item.listCarGoodsBean.getProductId(), false);
 
 					}
 					ShoppingcartActivity.setSelecteAll();
@@ -294,7 +308,7 @@ public class ListCarAdapter extends BaseAdapter {
 		for (int i = 0; i < listdata.size(); i++) {
 			CarItem item = listdata.get(i);
 			if (item.type == CarItem.ITEM) {
-				if (item.listCarGoodsBean.storeId .equals(id)) {
+				if (item.listCarGoodsBean.getShopId() .equals(id)) {
 					listgoods.add(item.listCarGoodsBean);
 				}
 			}
@@ -311,9 +325,9 @@ public class ListCarAdapter extends BaseAdapter {
 	public void selectAll(boolean checked) {
 		for (int i = 0; i < listdata.size(); i++) {
 			if (listdata.get(i).type == CarItem.SECTION) {
-				storeChecked.put(listdata.get(i).listCarStoreBean.storeid, checked);
+				storeChecked.put(listdata.get(i).listCarStoreBean.getShopId(), checked);
 			} else {
-				goodsCheced.put(listdata.get(i).listCarGoodsBean.goodsId, checked);
+				goodsCheced.put(listdata.get(i).listCarGoodsBean.getProductId(), checked);
 			}
 		}
 		ListCarAdapter.this.notifyDataSetChanged();
@@ -412,6 +426,7 @@ public class ListCarAdapter extends BaseAdapter {
 		public CheckBox check_goods;
 		public TextView storeName;
 		public TextView goodsName;
+		public ImageView iv_logo;
 		public ImageView goodsImg;
 		public TextView goodsAttr;
 		public TextView goodsNum;

@@ -1,64 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:descendantFocusability="afterDescendants"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingTop="5dp" 
+    android:paddingBottom="5dp" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+    <CheckBox
+        android:id="@+id/check_goods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:button="@drawable/check_sel"
+        android:focusable="false" />
 
-        <CheckBox
-            android:id="@+id/check_goods"
+    <ImageView
+        android:id="@+id/car_goodsimg"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/image_empty" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="4" >
+
+        <TextView
+            android:id="@+id/car_goodsname"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="2014冬装羊羔毛翻领情侣棉衣" />
+
+        <TextView
+            android:id="@+id/car_goodsattr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:button="@drawable/check_sel"
-            android:focusable="false" />
-
-        <ImageView
-            android:id="@+id/car_goodsimg"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="6dp"
-            android:src="@drawable/image_empty"
-             />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="4" >
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/car_goodsname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="2014冬装羊羔毛翻领情侣棉衣"
-                 />
-
-            <TextView android:layout_marginTop="5dp"
-                android:id="@+id/car_goodsattr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/car_goodsname"
-                android:textSize="12sp"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:drawableRight="@drawable/edit"
-                android:drawablePadding="4dp"
-                android:text="颜色：黄色；尺码：L"
-                android:visibility="gone"
-                 />
-  <!-- 
+            android:layout_below="@id/car_goodsname"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/edit"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="颜色：黄色；尺码：L"
+            android:textSize="12sp"
+            android:visibility="gone" />
+        <!--
             <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="25dp"
@@ -129,34 +122,32 @@
                     android:drawableTop="@drawable/jia_down"
                     android:focusable="false"
                     android:paddingTop="1dp" />
-            </LinearLayout> -->
-        </RelativeLayout>
+            </LinearLayout>
+        -->
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.7"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/car_goods_price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.7"
-            android:orientation="vertical" >
+            android:layout_centerHorizontal="true"
+            android:text="￥197.14"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/car_goods_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥197.14"
-                android:layout_centerHorizontal="true"
-                android:textStyle="bold"
-                 />
-
-            <TextView
-                android:id="@+id/car_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/car_goods_price"
-                android:textStyle="bold"
-                android:text="x1" />
-
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/car_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_goods_price"
+            android:layout_centerHorizontal="true"
+            android:text="x1"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 </LinearLayout>

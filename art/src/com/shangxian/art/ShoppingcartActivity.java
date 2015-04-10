@@ -41,6 +41,7 @@ import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
  * 购物车
@@ -54,11 +55,13 @@ OnHeaderRefreshListener,OnClickListener{
 	//private static ListCarAdapter adapter;
 	//private CustomProgressDialog dialog;
 	static TextView allprice;
+	private static float price;//总价
 	private Button btn_settlement;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	
 	private AbHttpUtil httpUtil = null;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
+	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
 	private static ListCarAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,36 +77,6 @@ OnHeaderRefreshListener,OnClickListener{
 		String url=Constant.BASEURL+Constant.CONTENT+Constant.CART;
 		refreshTask(url);
 		
-		
-		ListCarStoreBean store=new ListCarStoreBean("001", "商店名称1");
-		CarItem section = new CarItem(CarItem.SECTION, store, null, store.getStoreid());
-		listCarItem.add(section);
-		for (int i = 0; i < 2; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("001"+(i+1), "商品"+(i+1), store.getStoreid(), 1,(float)(Math.round(145.10f*100))/100);
-			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store.getStoreid());
-			listCarItem.add(item);
-		}
-		
-		ListCarStoreBean store1=new ListCarStoreBean("002", "商店名称2");
-		CarItem section1 = new CarItem(CarItem.SECTION, store1, null, store1.getStoreid());
-		listCarItem.add(section1);
-		for (int i = 0; i < 2; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("002"+(i+1), "商品"+(i+1), store1.getStoreid(), 1,(float)(Math.round(23.50f*100))/100);
-			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store1.getStoreid());
-			listCarItem.add(item);
-		}
-		
-		ListCarStoreBean store2=new ListCarStoreBean("003", "商店名称3");
-		CarItem section2 = new CarItem(CarItem.SECTION, store2, null, store2.getStoreid());
-		listCarItem.add(section2);
-		for (int i = 0; i < 3; i++) {
-			ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean("003"+(i+1), "商品"+(i+1), store2.getStoreid(),1,(float)(Math.round(45.32f*100))/100);
-			CarItem item = new CarItem(CarItem.ITEM, null, listCarGoodsBean, store1.getStoreid());
-			listCarItem.add(item);
-		}
-		
-		adapter = new ListCarAdapter(this, listCarItem);
-		listcar.setAdapter(adapter);
 		// 全选点击事件
 		selecteall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -184,10 +157,12 @@ OnHeaderRefreshListener,OnClickListener{
 							for (int i = 0; i < length; i++) {
 								JSONObject jo = resultObjectArray
 										.getJSONObject(i);
-//								model.add(gson.fromJson(
-//										jo.toString(), ClassityCommdityModel.class));
+								listStore.add(gson.fromJson(
+										jo.toString(), ListCarStoreBean.class));
 							}
-							adapter.notifyDataSetChanged();
+							assembleData();
+							adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
+							listcar.setAdapter(adapter);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -196,9 +171,25 @@ OnHeaderRefreshListener,OnClickListener{
 				}
 	
 			}
+
 		});
 	}
 
+	private void assembleData() {
+		for (ListCarStoreBean listCarStoreBean : listStore) {
+			CarItem carItem=new CarItem(CarItem.SECTION, listCarStoreBean, null, "");
+			listCarItem.add(carItem);
+			String storeId=listCarStoreBean.getShopId();
+			List<ListCarGoodsBean> listCarGoodsBeans=listCarStoreBean.getItemDtos();
+			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
+				listCarGoodsBean.setShopId(storeId);
+				CarItem carItem2=new CarItem(CarItem.ITEM, null, listCarGoodsBean, "");
+				listCarItem.add(carItem2);
+			}
+		}
+		MyLogger.i(listCarItem.toString());
+	}
+	
 	private void initViews() {
 //		Intent intent = new Intent();
 		
@@ -232,8 +223,8 @@ OnHeaderRefreshListener,OnClickListener{
 
 	// 结算购物车的总价格
 	public static void accountCar() {
-		float price = 0;
 		// 遍历选中的商品，算出总价
+		price = 0;
 		Iterator iter1 = adapter.getGoodsCheced().entrySet().iterator();
 		while (iter1.hasNext()) {
 			Map.Entry entry = (Map.Entry) iter1.next();
@@ -241,8 +232,8 @@ OnHeaderRefreshListener,OnClickListener{
 				for (int i = 0; i < adapter.listdata.size(); i++) {
 					CarItem item = adapter.listdata.get(i);
 					if (item.type == CarItem.ITEM) {
-						if (item.listCarGoodsBean.goodsId.equals(entry.getKey())) {
-							float goodsprice = item.listCarGoodsBean.price;
+						if (item.listCarGoodsBean.getProductId().equals(entry.getKey())) {
+							float goodsprice = item.listCarGoodsBean.getPromotionPrice();
 							price += goodsprice;
 						}
 					}
@@ -391,9 +382,9 @@ OnHeaderRefreshListener,OnClickListener{
 					if(carItem.getType()==CarItem.SECTION){
 						listCarStoreBean=carItem.getListCarStoreBean();
 					}else{
-						if(goodsCheced.get(carItem.getListCarGoodsBean().getGoodsId())){
+						if(goodsCheced.get(carItem.getListCarGoodsBean().getProductId())){
 							listCarItem_select.add(carItem);
-							linkedHashMap.put(carItem.getListCarGoodsBean().getStoreId(), listCarStoreBean);
+							linkedHashMap.put(carItem.getListCarGoodsBean().getShopId(), listCarStoreBean);
 						}
 					}
 				}
@@ -405,10 +396,10 @@ OnHeaderRefreshListener,OnClickListener{
 				HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans=new HashMap<String, List<ListCarGoodsBean>>();
 				for(ListCarStoreBean listCarStoreBean2:linkedHashMap.values()){
 					List<ListCarGoodsBean> listGoodsBeans=new ArrayList<ListCarGoodsBean>();
-					String storeid=listCarStoreBean2.getStoreid();
+					String storeid=listCarStoreBean2.getShopId();
 					for (CarItem carItem : listCarItem_select) {
 						if(carItem.getType()==CarItem.ITEM){
-							if(carItem.getListCarGoodsBean().getStoreId().equals(storeid)){
+							if(carItem.getListCarGoodsBean().getShopId().equals(storeid)){
 								listGoodsBeans.add(carItem.getListCarGoodsBean());
 							}
 						}
@@ -426,6 +417,7 @@ OnHeaderRefreshListener,OnClickListener{
 //				}
 				
 					Intent intent = new Intent(this, ConfirmOrderActivity.class);
+					intent.putExtra("totalprice",price);
 					intent.putExtra("mapCarItem_goods",(Serializable)hashmapGoodsBeans);
 					intent.putExtra("listCarItem_stores",(Serializable)listStoreBean);
 //					Bundle bundle = new Bundle();

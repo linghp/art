@@ -32,9 +32,12 @@ import com.shangxian.art.view.TopView;
  */
 public class CommodityContentActivity extends BaseActivity implements OnClickListener,HttpCilentListener{
 	private LinearLayout shangpu;
-    private ImageView commoditycontent_img;
+    private ImageView commoditycontent_img,commoditycontent_shoucang;
     private TextView commoditycontent_jieshao,commoditycontent_jiage,commoditycontent_jiarugouwuche;
 	
+  //判断是否收藏
+  	boolean iscollection = false;
+  	
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
 	@Override
@@ -56,6 +59,21 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				CommonUtil.gotoActivity(CommodityContentActivity.this, ShopsActivity.class, false);
+			}
+		});
+		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!iscollection) {
+					commoditycontent_shoucang.setImageResource(R.drawable.collection_on);
+					myToast("已收藏");
+				}else {
+					commoditycontent_shoucang.setImageResource(R.drawable.collection_off);
+					myToast("取消收藏");
+				}
+				iscollection = !iscollection;
 			}
 		});
 	}
@@ -159,6 +177,7 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 	private void initView() {
 		// TODO Auto-generated method stub
 		commoditycontent_img = (ImageView) findViewById(R.id.commoditycontent_img);
+		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
 		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);

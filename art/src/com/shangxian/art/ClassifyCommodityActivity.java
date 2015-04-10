@@ -39,8 +39,6 @@ public class ClassifyCommodityActivity extends BaseActivity{
 	private List<ClassityCommdityModel> model;
 	private ClassityCommodiyAdp adapter;
 	private AbHttpUtil httpUtil = null;
-	//列表里的购物车图标
-	TextView shop;
 
 	//底部选项
 	TextView shaixuan,xiaoliang,jiage,xinpin;
@@ -78,9 +76,6 @@ public class ClassifyCommodityActivity extends BaseActivity{
         refreshTask(url);
 		adapter = new ClassityCommodiyAdp(this, R.layout.item_classitycommodity, model);
 		list.setAdapter(adapter);
-		
-		shop = (TextView) findViewById(R.id.item_commodity_shop);
-
 	}
 	
 	private void refreshTask(String url) {
@@ -186,6 +181,8 @@ public class ClassifyCommodityActivity extends BaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>筛选");
+				
+				
 			}
 		});
 		xiaoliang.setOnClickListener(new OnClickListener() {

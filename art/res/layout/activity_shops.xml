@@ -25,7 +25,7 @@
                 android:id="@+id/shops_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/bg_login" />
 
             <LinearLayout
@@ -37,6 +37,7 @@
                 android:padding="10dp" >
 
                 <ImageView
+                    android:id="@+id/shops_shopsimg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/alipaypayment" />
@@ -48,6 +49,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/shops_shopsname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -56,6 +58,7 @@
                         android:textSize="@dimen/list_title_size" />
 
                     <TextView
+                        android:id="@+id/shops_guanzu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -65,9 +68,11 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/shops_collectionimg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/attention" />
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/collection_off" />
             </LinearLayout>
 
             <View
@@ -94,6 +99,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/shops_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="63"
@@ -121,6 +127,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/shops_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3"
@@ -148,6 +155,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/shops_youhui"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -196,12 +204,14 @@
                         android:orientation="vertical" >
 
                         <ImageView
+                            android:id="@+id/shops_img1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ainonggu" />
 
                         <TextView
+                            android:id="@+id/shops_summary1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -217,6 +227,7 @@
                             android:background="@color/txt_black3" />
 
                         <TextView
+                            android:id="@+id/shops_price1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -233,12 +244,14 @@
                         android:orientation="vertical" >
 
                         <ImageView
+                            android:id="@+id/shops_img2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ainonggu" />
 
                         <TextView
+                            android:id="@+id/shops_summary2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -254,6 +267,7 @@
                             android:background="@color/txt_black3" />
 
                         <TextView
+                            android:id="@+id/shops_price2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"

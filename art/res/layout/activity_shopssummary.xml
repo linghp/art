@@ -20,6 +20,7 @@
         android:padding="10dp" >
 
         <ImageView
+            android:id="@+id/shopssummary_shopsimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/alipaypayment" />
@@ -31,6 +32,7 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/shopssummary_shopsname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="云南神奇水果专卖店"
@@ -38,6 +40,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+               	android:id="@+id/shopssummary_guanzu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2.0万关注"
@@ -70,6 +73,7 @@
                 android:textSize="@dimen/list_summary_size" />
 
             <TextView
+                android:id="@+id/shopssummary_zhanggui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -100,16 +104,21 @@
                 android:textSize="@dimen/list_summary_size" />
 
             <TextView
+                android:id="@+id/shopssummary_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:text="023-55254886"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
 
             <ImageView
+                android:id="@+id/shopssummary_phoneimg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/call" />
         </LinearLayout>
 
         <View
@@ -134,16 +143,21 @@
                 android:textSize="@dimen/list_summary_size" />
 
             <TextView
+                android:id="@+id/shopssummary_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:text="重庆市沙坪坝区沙中路225号"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
 
             <ImageView
+                android:id="@+id/shopssummary_addressimg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/distance" />
         </LinearLayout>
     </LinearLayout>
 
@@ -157,6 +171,7 @@
         android:orientation="vertical"
         android:padding="10dp" >
         <TextView
+            android:id="@+id/shopssummary_summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇"
