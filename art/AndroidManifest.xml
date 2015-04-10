@@ -39,7 +39,7 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".base.MyApplication"
@@ -47,17 +47,16 @@
         android:icon="@drawable/ainonggu"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="wVx47v9LtmNLozGme6VnGfwZ" />
-        
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
         </service>
-        
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -144,13 +143,15 @@
         <activity android:name=".LocationActivity" >
         </activity>
         <activity android:name=".ConfirmOrderActivity" >
-           </activity>
-
+        </activity>
         <activity
             android:name=".RegistSogoActivity"
             android:label="@string/title_activity_regist_sogo" >
         </activity>
-
+        <activity
+            android:name=".PayActivity"
+            android:label="@string/title_activity_pay" >
+        </activity>
     </application>
 
 </manifest>

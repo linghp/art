@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ConfirmOrderActivity extends BaseActivity implements OnClickListener,HttpCilentListener{
-	private static TopView topView;
+	private TopView topView;
 	private ListView listview;
 	private TextView tv_car_allprice_value;
 	private View headView = null;
@@ -127,8 +128,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				String result_code = jsonObject
 						.getString("result_code");
 				if (result_code.equals("200")) {
-					myToast(jsonObject
-						.getString("result"));
+					if(jsonObject
+					.getString("reason").equals("success")){
+						PayActivity.startThisActivity("", totalprice, this);
+					}
+					//myToast(jsonObject.getString("result"));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
