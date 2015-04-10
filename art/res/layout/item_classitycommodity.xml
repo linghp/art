@@ -54,11 +54,11 @@
                 android:textColor="@color/red500"
                 android:textSize="@dimen/list_price_size" />
 
-			<ImageView
+			<!-- <ImageView
 			    android:id="@+id/item_commodity_shop"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:src="@drawable/shoppingcart_btn" />
+			    android:src="@drawable/shoppingcart_btn" /> -->
 
         </LinearLayout>
     </LinearLayout>
