@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.BaseServer.OnLoginListener;
+import com.shangxian.art.net.UserServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.view.TopView;
@@ -63,21 +67,32 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tv_login.setOnClickListener(this);
 		tv_find.setOnClickListener(this);
 		tv_regist.setOnClickListener(this);
-		
 	}
 
 	@Override
 	public void onClick(View v) {
 		if (v == tv_login) {
 			if (mathLogin()) {
-				Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-				savedata();
-				finish();
+				UserServer.toLogin(user, pass, new OnLoginListener() {
+					@Override
+					public void onLogin(UserInfo info) {
+						if (info != null && !info.isNull()) {
+							System.out.println("登录=========================" + info.toString());
+							myToast("登录成功");
+							share.putUser(info);
+							share.put(Constant.PRE_LOGIN_USERNAME, user);
+							share.put(Constant.PRE_LOGIN_PASSWORD, pass);
+							share.put(Constant.PRE_LOGIN_LASTTIME, System.currentTimeMillis());
+							share.put(Constant.PRE_LOGIN_STATE, true);
+						} else {
+							myToast("登录失败");
+						}
+					}
+				});
 			}
 		} else if (v == tv_find) {
 			Toast.makeText(this, "忘记密码", Toast.LENGTH_SHORT).show();
 		} else if (v == tv_regist) {
-			// Toast.makeText(this, "注册", Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
 			startActivity(intent);
 		}
