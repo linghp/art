@@ -9,16 +9,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.shangxian.art.LocationActivity;
+import com.shangxian.art.LoginActivity;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 public class BaseActivity extends AbActivity {
 	protected TopView topView;
+	protected LocalUserInfo share;
+	protected BaseActivity mAc;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		MyLogger.i(getClass().getSimpleName());
+		share = LocalUserInfo.getInstance(this);
+		mAc = this;
 	}
 
 	protected void myToast(String str) {
@@ -31,7 +40,6 @@ public class BaseActivity extends AbActivity {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
 			View v = getCurrentFocus();
 			if (isShouldHideInput(v, ev)) {
-
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 				if (imm != null) {
 					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -64,5 +72,18 @@ public class BaseActivity extends AbActivity {
 			}
 		}
 		return false;
+	}
+	
+	protected boolean isLogin(){
+		return share.getBoolean(Constant.PRE_LOGIN_STATE, false);
+	}
+	
+	protected boolean isLoginAndToLogin(){
+		if (share.getBoolean(Constant.PRE_LOGIN_STATE, false)) {
+			return true;
+		} else {
+			CommonUtil.gotoActivity(mAc, LoginActivity.class, false);
+			return false;
+		}
 	}
 }

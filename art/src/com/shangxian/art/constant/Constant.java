@@ -31,5 +31,21 @@ public class Constant {
  	public static final String BASEURL1 = "http://www.amsoft.cn/";
  	
  	
-    
+    /**
+     * 
+     * ------------------------------ 偏好设置相关(PRE开头) -----------------------------------
+     * 
+     */
+ 	
+ 	public static final String PRE_USER_ID = "user_id";
+ 	public static final String PRE_USER_LOGINTYPE = "user_loginType";
+ 	public static final String PRE_USER_NICKNAME = "user_nickName";
+ 	public static final String PRE_USER_PHONENUMBER = "user_phoneNumber";
+ 	public static final String PRE_USER_SCALEPHOTO = "user_scalePhoto";
+ 	
+ 	public static final String PRE_LOGIN_STATE = "pre_isLogin";
+ 	public static final String PRE_LOGIN_USERNAME = "pre_username";//上一次登录用户名
+ 	public static final String PRE_LOGIN_PASSWORD = "pre_password";//上一次登录密码
+ 	public static final String PRE_LOGIN_LASTTIME = "pre_lasttime";//上一次登录时间
+ 	
 }
