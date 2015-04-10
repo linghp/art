@@ -152,6 +152,10 @@
             android:name=".PayActivity"
             android:label="@string/title_activity_pay" >
         </activity>
+        <activity
+            android:name=".MyOrderActivity"
+            android:label="@string/title_activity_my_order" >
+        </activity>
     </application>
 
 </manifest>

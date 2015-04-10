@@ -147,6 +147,9 @@ public class MineActivity extends BaseActivity {
 		case R.id.iv_settingbutton:
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
 			break;
+		case R.id.ll_my_item1:
+			startActivity(new Intent(this, MyOrderActivity.class));
+			break;
 
 		default:
 			break;
