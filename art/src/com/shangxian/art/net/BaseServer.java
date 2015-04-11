@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbFileHttpResponseListener;
@@ -11,6 +12,7 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
+import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 
@@ -29,6 +31,8 @@ public class BaseServer {
 	public static final String HOST = "http://test.peoit.com/api//";
 	protected static final String NET_LOGIN = HOST + "login";//登录接口
 	protected static final String NET_ADS = HOST + "abs";//首页广告列表
+	protected static final String NET_ACCOUNT = HOST + "account";//首页广告列表
+	
 	/**
 	 * 
 	 * ----------------------------------------------------------------
@@ -123,11 +127,25 @@ public class BaseServer {
 	}
 	
 	protected static void toPostJson(String url, String json, final OnHttpListener l){
+		if (json == null) {
+			json = "";
+		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				if (l != null) {
-					l.onHttp(res);
+					//l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code =================" + result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
 				}
 			}
 		});
@@ -154,7 +172,17 @@ public class BaseServer {
 		void onHttp(String res);
 	}
 	
+	/*
+	 * 登录返回监听
+	 */
 	public interface OnLoginListener{
 		void onLogin(UserInfo info);
+	}
+	
+	/*
+	 * 获取爱农币、爱农元返回监听
+	 */
+	public interface OnAccountSumListener{
+		void onAccountSum(AccountSumInfo info);
 	}
 }

@@ -30,8 +30,10 @@ import android.view.WindowManager;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.zxing.camera.CameraManager;
 import com.shangxian.art.zxing.decoding.CaptureActivityHandler;
 import com.shangxian.art.zxing.decoding.InactivityTimer;
@@ -212,7 +214,8 @@ public class CaptureActivity extends BaseActivity implements Callback {
 		if (!TextUtils.isEmpty(res) && res.equals("这个测试用的二维码")) {
 			//myToast("付款");
 			if (isLoginAndToLogin()) {
-				myToast("付款");
+				//myToast("付款");
+				CommonUtil.gotoActivity(mAc, PayActivity.class, true);
 			}
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
