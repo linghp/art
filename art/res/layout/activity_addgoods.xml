@@ -182,14 +182,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/regist_et_bg_sel" >
+                android:background="@drawable/regist_et_bg_sel"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
 
                 <EditText
                     android:id="@+id/addgoods_edit"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="@color/transparent"
+                    android:background="@drawable/regist_et_bg_sel"
                     android:gravity="top"
+                    android:hint="请输入商品描述"
                     android:padding="5dp"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_summary_size" />
@@ -218,11 +221,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/soge_next_bg_sel"
+                    android:background="@drawable/btn_btn"
                     android:gravity="center_horizontal"
                     android:padding="5dp"
                     android:text="取    消"
-                    android:textColor="@color/txt_white"
+                    android:textColor="@color/txt_whitetoback"
                     android:textSize="@dimen/button_txt_size" />
 
                 <TextView
@@ -231,11 +234,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/soge_next_bg_sel"
+                    android:background="@drawable/btn_btn"
                     android:gravity="center_horizontal"
                     android:padding="5dp"
                     android:text="下一步"
-                    android:textColor="@color/txt_white"
+                    android:textColor="@color/txt_whitetoback"
                     android:textSize="@dimen/button_txt_size" />
             </LinearLayout>
         </LinearLayout>

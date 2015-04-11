@@ -115,6 +115,22 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".CashActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".IdValidateActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".ProfitActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".RechargeActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".ShangPinWeiHuActivity"
             android:label="@string/title_activity_mine" >
         </activity>

@@ -9,85 +9,107 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/addparentclass_linear1"
+    <TextView
+        android:id="@+id/idvalidate_txt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
-        android:layout_marginTop="10dp"
-        android:background="@color/txt_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="分类图片"
-            android:textColor="@color/txt_black2"
-            android:textSize="@dimen/list_title_size" />
-
-        <ImageView
-            android:id="@+id/addparentclass_addimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/addclassification" />
-    </LinearLayout>
+        android:background="@color/gray"
+        android:padding="10dp"
+        android:text="支付密码验证"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_title_size" />
 
     <LinearLayout
-        android:id="@+id/addparentclass_linear2"
+        android:id="@+id/idvalidate_linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addparentclass_linear1"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/idvalidate_txt1"
         android:background="@color/txt_white"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/idvalidate_mima"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="分类名称"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="请输入支付密码"
+            android:numeric="decimal"
+            android:padding="10dp"
+            android:password="true"
             android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_title_size" />
-
-        <EditText
-            android:id="@+id/addparentclass_addname"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/regist_et_bg_sel"
-            android:hint="请输入分类名称"
-            android:padding="10dp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/addparentclass_linear3"
+    <TextView
+        android:id="@+id/idvalidate_txt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addparentclass_linear2"
+        android:layout_below="@id/idvalidate_linear1"
+        android:background="@color/gray"
+        android:padding="10dp"
+        android:text="请输入手机157****8182收到的短信校验码"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_title_size" />
+<LinearLayout
+        android:id="@+id/idvalidate_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idvalidate_txt2"
+        android:background="@color/txt_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/idvalidate_yanzhengma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="短信验证码"
+            android:numeric="integer"
+            android:padding="10dp"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_title_size" />
+        <TextView
+            android:id="@+id/idvalidate_huoqu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="获取验证码"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+    
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idvalidate_linear2"
         android:layout_marginTop="50dp"
         android:orientation="horizontal"
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/addparentclass_quxiao"
+            android:id="@+id/idvalidate_shangyibu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_btn"
             android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="取消"
+            android:text="上一步"
             android:textColor="@color/txt_whitetoback"
             android:textSize="@dimen/button_txt_size" />
 
         <TextView
-            android:id="@+id/addparentclass_baocun"
+            android:id="@+id/idvalidate_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -95,9 +117,8 @@
             android:background="@drawable/btn_btn"
             android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="保存"
+            android:text="下一步"
             android:textColor="@color/txt_whitetoback"
             android:textSize="@dimen/button_txt_size" />
     </LinearLayout>
-
 </RelativeLayout>

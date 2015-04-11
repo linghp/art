@@ -3,24 +3,26 @@ package com.shangxian.art;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
- * 账户余额
+ * 身份验证
  * @author Administrator
  *
  */
-public class BalanceActivity extends BaseActivity{
-	TextView ainongbi,ainongyuan,cash,recharge;
+public class IdValidateActivity extends BaseActivity{
+	EditText mima,yanzhengma;
+	TextView shoujihao,huoqu,shangyibu,xiayibu;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_balance);
+		setContentView(R.layout.activity_idvalidate);
 		initView();
 		initData();
 		initListener();
@@ -33,13 +35,16 @@ public class BalanceActivity extends BaseActivity{
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();//显示title
-		topView.setTitle("账户余额");
+		topView.setTitle("身份验证");
 		topView.setBack(R.drawable.back);//返回
 		
-		ainongbi = (TextView) findViewById(R.id.balance_ainongbi);
-		ainongyuan = (TextView) findViewById(R.id.balance_ainongyuan);
-		cash = (TextView) findViewById(R.id.balance_tixian);//提现
-		recharge = (TextView) findViewById(R.id.balance_congzhi);//充值
+		mima = (EditText) findViewById(R.id.idvalidate_mima);//密码
+		yanzhengma = (EditText) findViewById(R.id.idvalidate_yanzhengma);//验证码
+		
+		shoujihao = (TextView) findViewById(R.id.idvalidate_txt2);//短信验证码上面的文字(请输入手机157****8182收到的短信校验码)
+		huoqu = (TextView) findViewById(R.id.idvalidate_huoqu);//获取验证码
+		shangyibu = (TextView) findViewById(R.id.idvalidate_shangyibu);//下一步
+		xiayibu = (TextView) findViewById(R.id.idvalidate_next);//下一步
 	}
 
 	private void initData() {
@@ -49,22 +54,29 @@ public class BalanceActivity extends BaseActivity{
 
 	private void initListener() {
 		// TODO Auto-generated method stub
-		cash.setOnClickListener(new OnClickListener() {
-			//提现
+		huoqu.setOnClickListener(new OnClickListener() {
+			//获取验证码
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(BalanceActivity.this, CashActivity.class, false);
+				
 			}
 		});
-		recharge.setOnClickListener(new OnClickListener() {
-			//充值
+		shangyibu.setOnClickListener(new OnClickListener() {
+			//上一步
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(BalanceActivity.this, RechargeActivity.class, false);
+				finish();
+			}
+		});
+		xiayibu.setOnClickListener(new OnClickListener() {
+			//下一步
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}
-
 }
