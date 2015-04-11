@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/profit_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:background="@color/txt_white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="总金额:"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/profit_allprice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:text="4520.10"
+            android:textColor="@color/txt_black"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profit_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profit_linear1"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner_write"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="平均收益率"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/profit_pingjun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:padding="10dp"
+            android:text="11.2%"
+            android:textColor="@color/txt_red"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profit_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profit_linear2"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner_green1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日收益(元)"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/profit_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.02"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_title_size" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/txt_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日收益(元)"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/profit_yesterday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.08"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_title_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/txt_white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="累计收益(元)"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/profit_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50.02"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_price_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
