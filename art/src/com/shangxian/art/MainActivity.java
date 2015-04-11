@@ -20,7 +20,9 @@ import android.widget.Toast;
 
 import com.ab.util.AbSharedUtil;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
+import com.shangxian.art.zxing.CaptureActivity;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements OnClickListener{
@@ -76,7 +78,6 @@ public class MainActivity extends TabActivity implements OnClickListener{
 		tabhost.setCurrentTab(0);
 		// 设置tabHost切换时动态更改图标
 		tabhost.setOnTabChangedListener(new OnTabChangeListener() {
-
 			@Override
 			public void onTabChanged(String tabId) {
 				tabChanged(tabId);
@@ -173,7 +174,8 @@ public class MainActivity extends TabActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_left:
-			myToast("扫描");
+			//myToast("扫描");
+			CommonUtil.gotoActivity(this, CaptureActivity.class, false);
 			break;
 		case R.id.btn_right:
 			myToast("定位");
@@ -181,7 +183,6 @@ public class MainActivity extends TabActivity implements OnClickListener{
 		case R.id.ll_center:
 			myToast("搜索");
 			break;
-
 		default:
 			break;
 		}

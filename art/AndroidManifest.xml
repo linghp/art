@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shangxian.art"
+    android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -27,6 +28,13 @@
     </uses-permission>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
     </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <!-- 百度地图相关 -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -173,8 +181,16 @@
             android:label="@string/title_activity_regist_sogo" >
         </activity>
         <activity
+            android:name=".zxing.CaptureActivity"
+            android:label="@string/title_activity_regist_sogo" >
+        </activity>
+        <activity
             android:name=".PayActivity"
             android:label="@string/title_activity_pay" >
+        </activity>
+        <activity
+            android:name=".MyOrderActivity"
+            android:label="@string/title_activity_my_order" >
         </activity>
     </application>
 

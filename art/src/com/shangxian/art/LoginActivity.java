@@ -21,7 +21,6 @@ import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.view.TopView;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
-
 	private EditText et_pass;
 	private EditText et_user;
 	private TextView tv_login;
@@ -84,6 +83,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 							share.put(Constant.PRE_LOGIN_PASSWORD, pass);
 							share.put(Constant.PRE_LOGIN_LASTTIME, System.currentTimeMillis());
 							share.put(Constant.PRE_LOGIN_STATE, true);
+							finish();
 						} else {
 							myToast("登录失败");
 						}

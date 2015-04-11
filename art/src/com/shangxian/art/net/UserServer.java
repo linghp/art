@@ -8,8 +8,6 @@ import org.json.JSONObject;
 import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.bean.UserInfo;
 

@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_gray" >
+        android:background="@color/bg_gray"
+        android:paddingBottom="10dp" >
 
         <com.shangxian.art.view.TopView
             android:id="@+id/top_title"
@@ -18,7 +19,7 @@
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_below="@id/top_title"
             android:background="@drawable/shape_bottom"
             android:gravity="center_vertical"
@@ -32,7 +33,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
-                android:id="@+id/tv_paymoney"
+                android:id="@+id/payt_tv_paymoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -68,17 +69,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="余额60元"
                     android:layout_weight="1"
+                    android:text="余额60元"
                     android:textColor="@color/grey1"
                     android:textSize="@dimen/list_summary_size" />
 
-                <ToggleButton
+                <!--
+                     <ToggleButton
                     android:id="@+id/toggleButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ToggleButton" />
-                
+                -->
+
+                <com.shangxian.art.view.SwitchButton
+                    android:id="@+id/pays_sb_bi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View
@@ -101,16 +108,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
                     android:text="余额100元"
                     android:textColor="@color/grey1"
                     android:textSize="@dimen/list_summary_size" />
-                                <ToggleButton
-                    android:id="@+id/toggleButton2"
+
+                <com.shangxian.art.view.SwitchButton
+                    android:id="@+id/pays_sb_yuan"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ToggleButton" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View
@@ -131,7 +138,8 @@
                     android:text="实付金额"
                     android:textSize="@dimen/list_summary_size" />
 
-                <TextView android:id="@+id/tv_realpaymoney"
+                <TextView
+                    android:id="@+id/tv_realpaymoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -147,7 +155,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/linearLayout2"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="支付方式"
             android:textSize="@dimen/list_summary_size" />
 
@@ -156,21 +165,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_payment_method"
-            android:layout_marginTop="10dp"
             android:background="@drawable/shape_bottom"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" >
 
             <LinearLayout
-                android:id="@+id/ll_item"
+                android:id="@+id/payl_ll_zhi"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:onClick="doClick"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <CheckBox
-                    android:id="@+id/check_01"
+                    android:id="@+id/payc_cb_zhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/check_sel"
@@ -197,14 +206,15 @@
                 android:background="@color/gray" />
 
             <LinearLayout
-                android:id="@+id/ll_item2"
+                android:id="@+id/payl_ll_yin"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center_vertical"
+                android:onClick="doClick"
                 android:orientation="horizontal" >
 
                 <CheckBox
-                    android:id="@+id/check_02"
+                    android:id="@+id/payc_cb_yin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/check_sel"
@@ -235,32 +245,33 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp" >
 
-            <TextView android:id="@+id/tv_cancel"
+            <TextView
+                android:id="@+id/payt_tv_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@color/grey2"
-                android:gravity="center"
-                android:text="放弃"
+                android:background="@drawable/soge_not_bg_sel"
                 android:clickable="true"
+                android:gravity="center"
                 android:onClick="doClick"
+                android:text="放弃"
                 android:textColor="@color/white"
                 android:textSize="@dimen/list_summary_size" />
 
-            <TextView android:id="@+id/tv_ensure"
+            <TextView
+                android:id="@+id/payt_tv_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:background="@color/blue"
-                android:gravity="center"
-                android:text="确定"
+                android:background="@drawable/soge_next_bg_sel"
                 android:clickable="true"
+                android:gravity="center"
                 android:onClick="doClick"
+                android:text="确定"
                 android:textColor="@color/white"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
     </RelativeLayout>
-
 </ScrollView>

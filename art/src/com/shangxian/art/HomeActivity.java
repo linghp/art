@@ -366,9 +366,7 @@ public class HomeActivity extends BaseActivity implements
 						});
 						viewPager.setAdapter(imgList.size());
 					}
-
 				}
-
 			}
 
 			@Override
