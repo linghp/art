@@ -10,6 +10,7 @@ public class Constant {
 	public static final String CATEGORYS = "/categorys";//动态布局的数据
 	public static final String CART = "/cart";//购物车
 	public static final String ORDER = "/order";//下订单
+	public static final String ORDERS = "/orders";//我的订单
 	
 	
     

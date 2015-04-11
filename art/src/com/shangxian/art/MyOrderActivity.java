@@ -1,34 +1,71 @@
 package com.shangxian.art;
 
+import java.util.ArrayList;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TextView;
+
+import com.shangxian.art.adapter.FragmentViewPagerAdp;
+import com.shangxian.art.adapter.FragmentViewPagerAdp.OnExtraPageChangeListener;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.fragment.MyOrder_All_Fragment;
+import com.shangxian.art.fragment.MyOrder_dfh_Fragment;
+import com.shangxian.art.fragment.MyOrder_dfk_Fragment;
+import com.shangxian.art.fragment.MyOrder_dsh_Fragment;
 import com.shangxian.art.view.TopView;
 
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class MyOrderActivity extends BaseActivity {
+public class MyOrderActivity extends BaseActivity implements OnClickListener{
 	private TopView topView;
+    private ViewPager  mViewPager;
+
+	private ArrayList<Fragment> fragments;
+	private TextView tv_first, tv_second, tv_three, tv_four;
+	private ImageView img_first, img_second, img_three, img_four;
+	
+	private Fragment firstFragment, secondFragment, thirdFragment, fourthFragment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_order);
 		initViews();
+		initViewPager();
 		initdata();
 		listener();
+		
+        if (savedInstanceState != null) {
+           // mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+        }
 	}
+
 	private void listener() {
-		// TODO Auto-generated method stub
-		
+		tv_first.setOnClickListener(this);
+		tv_second.setOnClickListener(this);
+		tv_three.setOnClickListener(this);
+		tv_four.setOnClickListener(this);
 	}
+
 	private void initdata() {
-		// TODO Auto-generated method stub
-		
 	}
+
 	private void initViews() {
-		//改变topbar
-		topView=(TopView) findViewById(R.id.top_title);
+		tv_first = (TextView) findViewById(R.id.text_one);
+		tv_second = (TextView) findViewById(R.id.text_two);
+		tv_three = (TextView) findViewById(R.id.text_three);
+		tv_four = (TextView) findViewById(R.id.text_four);
+
+		img_first = (ImageView) findViewById(R.id.image_one);
+		img_second = (ImageView) findViewById(R.id.image_two);
+		img_three = (ImageView) findViewById(R.id.image_three);
+		img_four = (ImageView) findViewById(R.id.image_four);
+		// 改变topbar
+		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
 		topView.hideCenterSearch();
@@ -36,6 +73,101 @@ public class MyOrderActivity extends BaseActivity {
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_activity_my_order));
 	}
+	
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //outState.putString("tab", mTabHost.getCurrentTabTag());
+    }
 
 
+	private void initViewPager() {
+		mViewPager = (ViewPager) findViewById(R.id.vp_content);
+
+		fragments = new ArrayList<Fragment>();
+		firstFragment = new MyOrder_All_Fragment();
+		secondFragment = new MyOrder_dfk_Fragment();
+		thirdFragment = new MyOrder_dfh_Fragment();
+		fourthFragment = new MyOrder_dsh_Fragment();
+
+		fragments.add(0, firstFragment);
+		fragments.add(1, secondFragment);
+		fragments.add(2, thirdFragment);
+		fragments.add(3, fourthFragment);
+
+		setBackground_slide(0);
+		
+		FragmentViewPagerAdp adapter = new FragmentViewPagerAdp(
+				getSupportFragmentManager(), mViewPager, fragments);
+
+		adapter.setOnExtraPageChangeListener(new OnExtraPageChangeListener() {
+
+			@Override
+			public void onExtraPageSelected(int position) {
+				setBackground_slide(position);
+//				if(position == 0) {
+//					firstFragment.getActivitiesData();
+//				} else 
+				if(position == 1) {
+					//secondFragment.getEducateData();
+				}
+			}
+
+		});
+	}
+
+	private void setBackground_slide(int position) {
+		img_first.setBackgroundResource(R.color.transparent);
+		img_second.setBackgroundResource(R.color.transparent);
+		img_three.setBackgroundResource(R.color.transparent);
+		img_four.setBackgroundResource(R.color.transparent);
+
+		tv_first.setTextColor(Color.parseColor("#333333"));
+		tv_second.setTextColor(Color.parseColor("#333333"));
+		tv_three.setTextColor(Color.parseColor("#333333"));
+		tv_four.setTextColor(Color.parseColor("#333333"));
+
+		switch (position) {
+		case 0:
+			img_first.setBackgroundResource(R.color.blue);
+			tv_first.setTextColor(getResources().getColor(R.color.blue));
+			break;
+		case 1:
+			img_second.setBackgroundResource(R.color.blue);
+			tv_second.setTextColor(getResources().getColor(R.color.blue));
+			break;
+		case 2:
+			img_three.setBackgroundResource(R.color.blue);
+			tv_three.setTextColor(getResources().getColor(R.color.blue));
+			break;
+		case 3:
+			img_four.setBackgroundResource(R.color.blue);
+			tv_four.setTextColor(getResources().getColor(R.color.blue));
+			break;
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.text_one:
+			mViewPager.setCurrentItem(0);
+			break;
+		case R.id.text_two:
+			mViewPager.setCurrentItem(1);
+			break;
+		case R.id.text_three:
+			mViewPager.setCurrentItem(2);
+			break;
+		case R.id.text_four:
+			mViewPager.setCurrentItem(3);
+			break;
+		}
+	}
 }

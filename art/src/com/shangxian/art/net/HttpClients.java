@@ -67,7 +67,7 @@ public class HttpClients {
 		};
 //		final String user_token = ParkApplication.getPrefer().getString(
 //				Constants.USER_TOKEN, null);
-		final String user_token = "1";
+		final String user_token = "2";
 		final HttpClient httpClient = getHttpClient();
 		executorService.submit(new Runnable() {
 			// private JSONObject resultJsonObject;
@@ -90,10 +90,12 @@ public class HttpClients {
 					}*/
 					postMethod.setHeader("Content-Type", "application/json");
 					if (!TextUtils.isEmpty(user_token)) {
-						postMethod.addHeader("user_token", user_token);
+						postMethod.addHeader("User-Token", user_token);
 					}
+					if(!TextUtils.isEmpty(json)){
 					StringEntity se = new StringEntity(json.trim());
 					postMethod.setEntity(se);
+					}
 					// 将参数填入POST
 					// Entity中
 					MyLogger.i("respone:" + postMethod.toString());
