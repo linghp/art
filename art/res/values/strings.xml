@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_classification">Classification</string>
- <!-- 分类 -->
+    <!-- 分类 -->
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
@@ -28,6 +28,8 @@
     <string name="need_newpassword">请输新密码</string>
     <string name="need_newpasswordconfirm">请输确认新密码</string>
     <string name="passworddifferent">密码不一致，请重输</string>
-    <string name="title_activity_pay">PayActivity</string>
+
+    <string name="title_activity_pay">付款</string>
+    <string name="title_activity_my_order">我的订单</string>
 
 </resources>

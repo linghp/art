@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white2" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/balance_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:id="@+id/balance_linear1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/leftcorner"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="爱农币"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/red300"
+                    android:textSize="@dimen/list_title_size" />
+
+                <TextView
+                    android:id="@+id/balance_ainongbi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"
+                    android:textColor="@color/red500"
+                    android:textSize="@dimen/list_price_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/balance_linear2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rightcorner"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="爱农元"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/red300"
+                    android:textSize="@dimen/list_title_size" />
+
+                <TextView
+                    android:id="@+id/balance_ainongyuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="320"
+                    android:textColor="@color/red500"
+                    android:textSize="@dimen/list_price_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/balance_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_linear"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/balance_tixian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="提现"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/balance_congzhi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="充值"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+</RelativeLayout>

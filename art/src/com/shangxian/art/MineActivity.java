@@ -27,7 +27,7 @@ public class MineActivity extends BaseActivity {
 	
 	private String userphoto_filename;
 	
-	private LinearLayout shangpinguanli;
+	private LinearLayout shangpinguanli,nonghebao;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,11 +48,19 @@ public class MineActivity extends BaseActivity {
 		});
 		
 		shangpinguanli.setOnClickListener(new OnClickListener() {
-			
+			//跳转到商品管理
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
+			}
+		});
+		nonghebao.setOnClickListener(new OnClickListener() {
+			//跳转到农合宝
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CommonUtil.gotoActivity(MineActivity.this, NongHeBaoActivity.class, false);
 			}
 		});
 	}
@@ -62,7 +70,8 @@ public class MineActivity extends BaseActivity {
 		ll_loginafter=findViewById(R.id.ll_loginafter);
 		user_head=(ImageView) findViewById(R.id.user_head);
 		
-		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);
+		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);//商品管理
+		nonghebao = (LinearLayout) findViewById(R.id.ll_my_item2);//农合宝
 		changeview();
 	}
 
@@ -146,6 +155,9 @@ public class MineActivity extends BaseActivity {
 		switch (view.getId()) {
 		case R.id.iv_settingbutton:
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
+			break;
+		case R.id.ll_my_item1:
+			startActivity(new Intent(this, MyOrderActivity.class));
 			break;
 
 		default:
