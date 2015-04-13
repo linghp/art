@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.shangxian.art.R;
 import com.shangxian.art.constant.Global;
@@ -330,5 +331,9 @@ public class CommonUtil {
 			p.setMargins(l, t, r, b);
 			v.requestLayout();
 		}
+	}
+	
+	public static void toast(String str,Context context) {
+		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
 	}
 }

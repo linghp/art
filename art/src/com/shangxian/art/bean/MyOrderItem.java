@@ -19,6 +19,7 @@ public class MyOrderItem implements Serializable {
 	private String orderNumber;
 	@Expose
 	private String status;
+	public String stateValue;
 	@Expose
 	private Integer shopId;
 	@Expose

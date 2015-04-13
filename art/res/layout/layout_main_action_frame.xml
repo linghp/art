@@ -4,21 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/lv_action"
+    <TextView
+        android:id="@+id/tv_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/bg_gray"
-        android:dividerHeight="0.5dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/list_title_size"
+        android:text="抱歉，没有找到相关订单" />
+
+    <ListView 
+        android:id="@+id/lv_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="8dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:scrollbars="none"
         android:smoothScrollbar="true" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center" />
 
 </FrameLayout>

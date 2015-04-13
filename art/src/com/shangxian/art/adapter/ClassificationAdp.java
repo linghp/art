@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ab.image.AbImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.cache.Imageloader_homePager;
@@ -20,11 +21,16 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 
 public class ClassificationAdp extends EntityAdapter<ClassificationModel>{
-
+	private AbImageLoader mAbImageLoader = null;
 	public ClassificationAdp(Activity mAc, int layoutId,
 			List<ClassificationModel> dates) {
 		super(mAc, layoutId, dates);
-		// TODO Auto-generated constructor stub
+        mAbImageLoader = AbImageLoader.newInstance(mAc);
+        mAbImageLoader.setMaxWidth(100);
+        mAbImageLoader.setMaxHeight(100);
+        mAbImageLoader.setLoadingImage(R.drawable.image_loading);
+        mAbImageLoader.setErrorImage(R.drawable.image_error);
+        mAbImageLoader.setEmptyImage(R.drawable.image_empty);
 	}
 	
 	@Override
@@ -44,10 +50,13 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel>{
 		}
 		holder.title.setText(dates.get(position).getName());
 		holder.summary.setText(dates.get(position).getSubTitle());
-		Imageloader_homePager.displayImage(Constant.BASEURL
-				+ dates.get(position).getPhoto(),
-				holder.img,
-				new Handler(), null);
+//		Imageloader_homePager.displayImage(Constant.BASEURL
+//				+ dates.get(position).getPhoto(),
+//				holder.img,
+//				new Handler(), null);
+        //图片的下载
+        mAbImageLoader.display(holder.img,Constant.BASEURL
+				+ dates.get(position).getPhoto());
 		
 		return convertView;
 	}

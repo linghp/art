@@ -26,13 +26,13 @@ public class Imageloader_homePager {
 	public static void displayImage(final String url, ImageView imageView, Handler hd,
 			ProgressBar bar) {
 		Bitmap bitmap = imageCache.get(url);
-		if (bitmap != null && !bitmap.isRecycled()) {
-			imageView.setImageBitmap(bitmap);
-			if (bar != null) {
-				bar.setVisibility(View.GONE);
-			}
-			return;
-		}
+//		if (bitmap != null && !bitmap.isRecycled()) {
+//			imageView.setImageBitmap(bitmap);
+//			if (bar != null) {
+//				bar.setVisibility(View.GONE);
+//			}
+//			return;
+//		}
 		if (bitmap != null && !bitmap.isRecycled()) {
 			imageView.setImageBitmap(bitmap);
 			imageCache.put("url", bitmap);
