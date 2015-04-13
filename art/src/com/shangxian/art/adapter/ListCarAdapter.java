@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ab.image.AbImageLoader;
 import com.ab.image.toolbox.ImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.ShoppingcartActivity;
@@ -42,6 +43,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 public class ListCarAdapter extends BaseAdapter {
+	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
 	private LayoutInflater inflater;
 	public  List<CarItem> listdata;
@@ -54,6 +56,19 @@ public class ListCarAdapter extends BaseAdapter {
 		this.listdata = listdata;
 		inflater = LayoutInflater.from(contex);
 		initState();
+		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
+		mAbImageLoader_goodsImg = AbImageLoader.newInstance(contex);
+		
+		mAbImageLoader_logo.setMaxWidth(100);
+		mAbImageLoader_logo.setMaxHeight(100);
+		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
+		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
+		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
+		mAbImageLoader_goodsImg.setMaxWidth(100);
+		mAbImageLoader_goodsImg.setMaxHeight(100);
+		mAbImageLoader_goodsImg.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader_goodsImg.setErrorImage(R.drawable.image_error);
+		mAbImageLoader_goodsImg.setEmptyImage(R.drawable.image_empty);
 	}
 
 	public void initState() {
@@ -96,11 +111,8 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
 			holder.check_store = (CheckBox) convertView.findViewById(R.id.check_store);
 			holder.storeName.setText(item.listCarStoreBean.getShopName());
-			Imageloader_homePager.displayImage(Constant.BASEURL
-					+ item.getListCarStoreBean().getLogo(),
-					holder.iv_logo,
-					new Handler(), null);
-			
+			mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
+					+ item.getListCarStoreBean().getLogo());
 			final List<ListCarGoodsBean> list = getGoodsByStoreId(item.listCarStoreBean.getShopId());
 			holder.check_store.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
@@ -153,10 +165,8 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.goodsNum = (TextView) convertView.findViewById(R.id.car_num);
 			holder.goodsPrice = (TextView) convertView.findViewById(R.id.car_goods_price);
 			holder.check_goods = (CheckBox) convertView.findViewById(R.id.check_goods);
-			Imageloader_homePager.displayImage(Constant.BASEURL
-					+ item.getListCarGoodsBean().getPhoto(),
-					holder.goodsImg,
-					new Handler(), null);
+			mAbImageLoader_goodsImg.display(holder.goodsImg,Constant.BASEURL
+					+ item.getListCarGoodsBean().getPhoto());
 			// 给控件赋值
 //			DisplayImageOptions options;
 //			options = new DisplayImageOptions.Builder().cacheInMemory(true)// 是否緩存都內存中

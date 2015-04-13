@@ -3,6 +3,8 @@ package com.shangxian.art;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -51,6 +53,19 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		listener();
 	}
 
+	public static void startThisActivity(String id,
+			Context context) {
+		Intent intent = new Intent(context, CommodityContentActivity.class);
+		intent.putExtra("id", id);
+		context.startActivity(intent);
+	}
+	
+	public static void startThisActivity_url(String url, Context context) {
+		Intent intent = new Intent(context, CommodityContentActivity.class);
+		intent.putExtra("url", url);
+		context.startActivity(intent);
+	}
+	
 	private void listener() {
 		commoditycontent_jiarugouwuche.setOnClickListener(this);
 		shangpu.setOnClickListener(new OnClickListener() {
@@ -82,7 +97,13 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String id=getIntent().getStringExtra("id");
-		String url=Constant.BASEURL+Constant.CONTENT+"/product"+"/"+id;
+		String geturl = getIntent().getStringExtra("url");
+		String url = "";
+		if (TextUtils.isEmpty(geturl)) {
+			url=Constant.BASEURL+Constant.CONTENT+"/product"+"/"+id;
+		} else {
+			url = Constant.BASEURL + Constant.CONTENT + geturl;
+		}
         refreshTask(url);
 	}
 
