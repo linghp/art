@@ -18,14 +18,14 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import com.shangxian.art.constant.Constant;
-import com.shangxian.art.utils.LocalUserInfo;
-import com.shangxian.art.utils.MyLogger;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 
 public class HttpClients {
 	private static final int SUCCESS = 1;
@@ -57,6 +57,8 @@ public class HttpClients {
 				}
 			};
 		};
+//		final String user_token = ParkApplication.getPrefer().getString(
+//				Constants.USER_TOKEN, null);
 		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
 				Constant.PRE_USER_ID, Integer.MIN_VALUE);
 		final HttpClient httpClient = getHttpClient();
@@ -69,8 +71,10 @@ public class HttpClients {
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("user_token", user_token + "");
 					}
+					if(!TextUtils.isEmpty(json)){
 					StringEntity se = new StringEntity(json.trim(), "UTF-8");
 					postMethod.setEntity(se);
+					}
 					// 将参数填入POST
 					// Entity中
 					MyLogger.i("respone:" + postMethod.toString());

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ab.image.AbImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
@@ -26,6 +27,7 @@ import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 
 public class ListConfirmOrderAdapter extends BaseAdapter {
+	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
 	private LayoutInflater inflater;
 	private List<ListCarStoreBean> listStoreBean=new ArrayList<ListCarStoreBean>();
@@ -37,6 +39,19 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 		this.hashmapGoodsBeans = hashmapGoodsBeans;
 		inflater = LayoutInflater.from(contex);
 		//initdata();
+		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
+		mAbImageLoader_goodsImg = AbImageLoader.newInstance(contex);
+		
+		mAbImageLoader_logo.setMaxWidth(100);
+		mAbImageLoader_logo.setMaxHeight(100);
+		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
+		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
+		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
+		mAbImageLoader_goodsImg.setMaxWidth(100);
+		mAbImageLoader_goodsImg.setMaxHeight(100);
+		mAbImageLoader_goodsImg.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader_goodsImg.setErrorImage(R.drawable.image_error);
+		mAbImageLoader_goodsImg.setEmptyImage(R.drawable.image_empty);
 	}
 
 
@@ -109,16 +124,12 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 				goodsNum.setText("x"+listCarGoodsBean.getQuantity());
 				goodsPrice.setText("￥"+listCarGoodsBean.getPromotionPrice());
 			    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
-				Imageloader_homePager.displayImage(Constant.BASEURL
-						+ listCarGoodsBean.getPhoto(),
-						goodsImg,
-						new Handler(), null);
+				mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
+						+ listCarGoodsBean.getPhoto());
 			}
 			holder.storeName.setText(listCarStoreBean.getShopName());
-			Imageloader_homePager.displayImage(Constant.BASEURL
-					+ listCarStoreBean.getLogo(),
-					holder.iv_logo,
-					new Handler(), null);
+			mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
+					+ listCarStoreBean.getLogo());
 			holder.et_message.setText(listCarStoreBean.getRecommand());
 			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {
 	            public void onFocusChange(View view, boolean hasFocus) {

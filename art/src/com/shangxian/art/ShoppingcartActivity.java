@@ -81,7 +81,7 @@ OnHeaderRefreshListener,OnClickListener{
 		selecteall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (buttonView.isPressed()) {
+				if (buttonView.isPressed()&&adapter!=null) {
 					adapter.selectAll(selecteall.isChecked());
 					accountCar();
 				}
