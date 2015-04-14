@@ -5,6 +5,7 @@ import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.dialog.PayPasswordDialog;
 import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
 import com.shangxian.art.net.BaseServer.OnAccountSumListener;
+import com.shangxian.art.net.BaseServer.OnPaymentListener;
 import com.shangxian.art.net.PayServer;
 import com.shangxian.art.view.SwitchButton;
 import com.shangxian.art.view.TopView;
@@ -45,6 +46,7 @@ public class PayActivity extends BaseActivity {
 	private TextView tv_bi;
 	private TextView tv_yuan;
 	private double lastMon = Double.MIN_VALUE;
+	private String type = "ALB_ALY";//默认:爱农币+爱农元
 
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -58,29 +60,38 @@ public class PayActivity extends BaseActivity {
 				} else {
 					lastMon = mon;
 					//et_scan.setText(text);
-					if (mon != Double.MAX_VALUE && !mAccount.isNull()) {
+					if (mon != Double.MIN_VALUE && !mAccount.isNull()) {
 						if (isBi && !isYuan) {
+							type = "ALB";
 							if (mon > mAccount.getAlb()) {
-								tv_realpaymoney.setText("¥" + String.format("%.2f",
+								tv_realpaymoney.setText("¥ " + String.format("%.2f",
 										mon - mAccount.getAlb()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && isYuan) {
+							type = "ALY";
 							if (mon > mAccount.getAly()) {
-								tv_realpaymoney.setText("¥" + String.format("%.2f",
+								tv_realpaymoney.setText("¥ " + String.format("%.2f",
 										mon - mAccount.getAly()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (isBi && isYuan) {
+							type = "ALB_ALY";
 							if (mon > (mAccount.getAly() + mAccount.getAlb())) {
-								tv_realpaymoney.setText("¥" + String.format(
+								tv_realpaymoney.setText("¥ " + String.format(
 										"%.2f",
 										mon - mAccount.getAly()
 												- mAccount.getAlb()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && !isYuan) {
-							tv_realpaymoney.setText("¥" + String.format(
+							tv_realpaymoney.setText("¥ " + String.format(
 									"%.2f",
 									mon));
 						}
@@ -174,7 +185,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isBi = isChecked;
 				handler.sendEmptyMessage(0);
-				// myToast("" + isBi);
+				//myToast("isBi === " + isBi);
 			}
 		});
 		sb_yuan.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -183,7 +194,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isYuan = isChecked;
 				handler.sendEmptyMessage(0);
-				// myToast("" + isYuan);
+				//myToast("isYuan === " + isYuan);
 			}
 		});
 
@@ -251,14 +262,12 @@ public class PayActivity extends BaseActivity {
 			break;
 		case R.id.payl_ll_zhi:
 			// myToast("支付宝功能暂未开通");
-
-			// TODO: ------------ ------------
+			// TODO: ------------------------------- -----------------------------------
 			cb_zhi.setChecked(!isZhi);
 			break;
 		case R.id.payl_ll_yin:
 			// myToast("银行卡支付暂未开通");
-
-			// TODO: ----------- -------------
+			// TODO: ------------------------------- --------------------------------------
 			cb_yin.setChecked(!isYin);
 			break;
 		}
@@ -267,7 +276,7 @@ public class PayActivity extends BaseActivity {
 	private void okToPay() {
 		if (match()) {
 			PayPasswordDialog dialog = new PayPasswordDialog(mAc);
-			dialog.setMoney("¥" + String.format("%.2f", lastMon));
+			dialog.setMoney("¥ " + String.format("%.2f", lastMon));
 			if (isBi && !isYuan) {
 				dialog.setType("爱农币");
 			}
@@ -280,7 +289,13 @@ public class PayActivity extends BaseActivity {
 			dialog.setOnScanedListener(new OnScanedListener() {
 				@Override
 				public void onScan(String pass) {
-					myToast(pass);
+					//myToast(pass);
+					PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
+						@Override
+						public void onPayment(String res) {
+							myToast(res);
+						}
+					});
 				}
 			});
 			dialog.show();

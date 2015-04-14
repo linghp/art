@@ -1,5 +1,9 @@
 package com.shangxian.art.net;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,12 +35,12 @@ public class BaseServer {
 	 * 
 	 */
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
-	public static final String HOST = "http://test.peoit.com/api//";
+	public static final String HOST = "http://test.peoit.com/api/";
 	protected static final String NET_LOGIN = HOST + "login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
 	protected static final String NET_ACCOUNT = HOST + "account";// 首页广告列表
-	protected static final String NET_PAYMENT = "payment";// 直接支付
-	protected static final String NET_PAY_ORDER = "pay";// 订单支付
+	protected static final String NET_PAYMENT = HOST + "payment";// 直接支付
+	protected static final String NET_PAY_ORDER = HOST + "pay";// 订单支付
 
 	/**
 	 * 
@@ -102,6 +106,8 @@ public class BaseServer {
 
 	protected static void toPost(String url, AbRequestParams params,
 			final OnHttpListener l) {
+		System.out.println(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				+ url);
 		mAbHttpUtil.post(url, params, new AbStringHttpResponseListener() {
 			@Override
 			public void onStart() {
@@ -113,6 +119,9 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
+				System.out
+						.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					l.onHttp(null);
 				}
@@ -120,6 +129,9 @@ public class BaseServer {
 
 			@Override
 			public void onSuccess(int code, String res) {
+				System.out
+						.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					if (code != 200) {
 						l.onHttp(null);
@@ -130,7 +142,10 @@ public class BaseServer {
 							System.out.println("result_code ================="
 									+ result_code);
 							if (result_code == 200) {
-								l.onHttp(json.getString("result"));
+								String rest = json.getString("result");
+								System.out.println("toPsot -> rest >>>>>>> "
+										+ rest);
+								l.onHttp(rest);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -161,6 +176,33 @@ public class BaseServer {
 							l.onHttp(json.getString("result"));
 						}
 					} catch (JSONException e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
+				}
+			}
+		});
+	}
+
+	protected static void toPost(String url, List<BasicNameValuePair> pairs,
+			final OnHttpListener l) {
+		if (pairs == null) {
+			pairs = new ArrayList<BasicNameValuePair>();
+		}
+		HttpClients.toPost(url, pairs, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code ================="
+								+ result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						}
+					} catch (Exception e) {
 						e.printStackTrace();
 						l.onHttp(null);
 					}
@@ -205,5 +247,9 @@ public class BaseServer {
 	 */
 	public interface OnAccountSumListener {
 		void onAccountSum(AccountSumInfo info);
+	}
+
+	public interface OnPaymentListener {
+		void onPayment(String res);
 	}
 }

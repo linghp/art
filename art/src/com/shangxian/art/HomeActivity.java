@@ -117,23 +117,18 @@ public class HomeActivity extends BaseActivity implements
 		// params.put("phone", "15889936624");
 		String url = Constant.BASEURL +Constant.CONTENT+ Constant.HOME;
 		httpUtil.get(url, params, new AbStringHttpResponseListener() {
-
 			@Override
-			public void onStart() {
-			}
-
+			public void onStart() {}
 			@Override
 			public void onFinish() {
 				AbDialogUtil.removeDialog(HomeActivity.this);
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
-
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
 				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 			}
-
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);

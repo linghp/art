@@ -21,19 +21,20 @@ import com.shangxian.art.utils.LocalUserInfo;
 
 public class MineActivity extends BaseActivity {
 	private String username_local;
-	private View ll_loginbefore,ll_loginafter;
+	private View ll_loginbefore, ll_loginafter;
 	private TextView tv_username;
 	private ImageView user_head;
-	
+
 	private String userphoto_filename;
-	
-	private LinearLayout shangpinguanli,nonghebao;
+
+	private LinearLayout shangpinguanli, nonghebao;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main_mine);
-		userphoto_filename = LocalUserInfo.getInstance(this)
-                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
+		userphoto_filename = LocalUserInfo.getInstance(this).getUserInfo(
+				LocalUserInfo.USERPHOTO_FILENAME);
 		initView();
 		initListener();
 	}
@@ -42,63 +43,67 @@ public class MineActivity extends BaseActivity {
 		findViewById(R.id.mine).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MineActivity.this, LoginActivity.class);
+				Intent intent = new Intent(MineActivity.this,
+						LoginActivity.class);
 				startActivityForResult(intent, 1);
 			}
 		});
-		
+
 		shangpinguanli.setOnClickListener(new OnClickListener() {
-			//跳转到商品管理
+			// 跳转到商品管理
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
+				CommonUtil.gotoActivity(MineActivity.this,
+						MerchandiseControlActivity.class, false);
 			}
 		});
 		nonghebao.setOnClickListener(new OnClickListener() {
-			//跳转到农合宝
+			// 跳转到农合宝
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(MineActivity.this, NongHeBaoActivity.class, false);
+				CommonUtil.gotoActivity(MineActivity.this,
+						NongHeBaoActivity.class, false);
 			}
 		});
 	}
 
 	private void initView() {
-		ll_loginbefore=findViewById(R.id.ll_loginbefore);
-		ll_loginafter=findViewById(R.id.ll_loginafter);
-		user_head=(ImageView) findViewById(R.id.user_head);
-		
-		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);//商品管理
-		nonghebao = (LinearLayout) findViewById(R.id.ll_my_item2);//农合宝
+		ll_loginbefore = findViewById(R.id.ll_loginbefore);
+		ll_loginafter = findViewById(R.id.ll_loginafter);
+		user_head = (ImageView) findViewById(R.id.user_head);
+
+		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);// 商品管理
+		nonghebao = (LinearLayout) findViewById(R.id.ll_my_item2);// 农合宝
 		changeview();
 	}
 
 	private void changeview() {
-		if(islogin()){
+		if (isLogin()) {
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
-			tv_username=(TextView) findViewById(R.id.tv_username);
+			tv_username = (TextView) findViewById(R.id.tv_username);
 			tv_username.setText(username_local);
-		}else{
+		} else {
 			ll_loginbefore.setVisibility(View.VISIBLE);
 			ll_loginafter.setVisibility(View.GONE);
 		}
 	}
 
-	private boolean islogin() {
-		username_local=LocalUserInfo.getInstance(this).getUserInfo("username");
+	/*private boolean islogin() {
+		username_local = LocalUserInfo.getInstance(this)
+				.getUserInfo("username");
 		return !TextUtils.isEmpty(username_local);
 	}
-	
+*/
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		changeview();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -117,7 +122,7 @@ public class MineActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -130,31 +135,35 @@ public class MineActivity extends BaseActivity {
 		topView.setCenterListener(null);
 		topView.setTitle("我的");
 		topView.showTitle();
-		//显示头像
-		if(islogin()){
-        String userphoto_filename_temp = LocalUserInfo.getInstance(this)
-                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
-       // if (!userphoto_filename_temp.equals(userphoto_filename)) {
-        	String imagelocaldir=AbFileUtil.getImageDownloadDir(this)+File.separator;
-    		if (!TextUtils.isEmpty(userphoto_filename_temp)) {
-    			File file = new File(imagelocaldir, userphoto_filename_temp);
-    			// 从文件中找
-    			if (file.exists()) {
-    				// Log.i("aaaa", "image exists in file" + filename);
-    				user_head.setImageBitmap(BitmapFactory.decodeFile(imagelocaldir
-    						+ userphoto_filename_temp));
-    			}
-    		}
-      //  }
-		}else{
+		// 显示头像
+		if (isLogin()) {
+			String userphoto_filename_temp = LocalUserInfo.getInstance(this)
+					.getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
+			// if (!userphoto_filename_temp.equals(userphoto_filename)) {
+			String imagelocaldir = AbFileUtil.getImageDownloadDir(this)
+					+ File.separator;
+			if (!TextUtils.isEmpty(userphoto_filename_temp)) {
+				File file = new File(imagelocaldir, userphoto_filename_temp);
+				// 从文件中找
+				if (file.exists()) {
+					// Log.i("aaaa", "image exists in file" + filename);
+					user_head
+							.setImageBitmap(BitmapFactory
+									.decodeFile(imagelocaldir
+											+ userphoto_filename_temp));
+				}
+			}
+			// }
+		} else {
 			user_head.setImageResource(R.drawable.defaultloginheader);
 		}
 	}
-	
-	public void doClick(View view){
+
+	public void doClick(View view) {
 		switch (view.getId()) {
 		case R.id.iv_settingbutton:
-			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
+			startActivityForResult((new Intent(this,
+					AccountSecurityActivity.class)), 2);
 			break;
 		case R.id.ll_my_item1:
 			startActivity(new Intent(this, MyOrderActivity.class));
