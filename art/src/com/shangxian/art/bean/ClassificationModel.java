@@ -1,10 +1,13 @@
 package com.shangxian.art.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
 public class ClassificationModel implements Serializable{
+	
 	@Expose
 	private Integer id;
 	@Expose
@@ -19,7 +22,23 @@ public class ClassificationModel implements Serializable{
 	private String photo;
 	@Expose
 	private Integer pid;
+	public boolean isexpand;
+	@Expose
+	private List<ClassificationModel> productCategoryDtos = new ArrayList<ClassificationModel>();
 
+	@Override
+	public String toString() {
+		return "ClassificationModel [id=" + id + ", name=" + name + ", level="
+				+ level + ", subTitle=" + subTitle + ", sortOrder=" + sortOrder
+				+ ", photo=" + photo + ", pid=" + pid
+				+ ", productCategoryDtos=" + productCategoryDtos + "]";
+	}
+	public List<ClassificationModel> getProductCategoryDtos() {
+		return productCategoryDtos;
+	}
+	public void setProductCategoryDtos(List<ClassificationModel> productCategoryDtos) {
+		this.productCategoryDtos = productCategoryDtos;
+	}
 	public Integer getId() {
 		return id;
 	}
