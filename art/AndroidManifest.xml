@@ -91,6 +91,10 @@
             android:label="@string/title_activity_nearly" >
         </activity>
         <activity
+            android:name=".ShopsListActivity"
+            android:label="@string/title_activity_classification" >
+        </activity>
+        <activity
             android:name=".MineActivity"
             android:label="@string/title_activity_mine" >
         </activity>
