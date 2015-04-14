@@ -38,6 +38,7 @@ import com.shangxian.art.bean.HomeadsBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
 
@@ -550,7 +551,7 @@ public class HomeActivity extends BaseActivity implements
 			
 			break;
 		case "SHOP":// 一个商铺
-			
+			CommonUtil.gotoActivity(HomeActivity.this, ShopsListActivity.class, false);
 			break;
 		case "PRODUCT":// 一个商品
 			CommodityContentActivity.startThisActivity_url(dataurl, HomeActivity.this);

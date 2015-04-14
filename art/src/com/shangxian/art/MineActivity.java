@@ -76,7 +76,7 @@ public class MineActivity extends BaseActivity {
 	}
 
 	private void changeview() {
-		if(islogin()){
+		if(isLogin()){
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
 			tv_username=(TextView) findViewById(R.id.tv_username);
@@ -87,10 +87,7 @@ public class MineActivity extends BaseActivity {
 		}
 	}
 
-	private boolean islogin() {
-		username_local=LocalUserInfo.getInstance(this).getUserInfo("username");
-		return !TextUtils.isEmpty(username_local);
-	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -131,7 +128,7 @@ public class MineActivity extends BaseActivity {
 		topView.setTitle("我的");
 		topView.showTitle();
 		//显示头像
-		if(islogin()){
+		if(isLogin()){
         String userphoto_filename_temp = LocalUserInfo.getInstance(this)
                 .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
        // if (!userphoto_filename_temp.equals(userphoto_filename)) {
