@@ -193,7 +193,7 @@ public class HomeActivity extends BaseActivity implements
 																		.getImageUrl(),
 																		iv,
 														new Handler(), null);
-										extracted(homeadsBean, iv);
+										extracted(listHomeadsBean_three.get(j), iv);
 									} else if (j == 1) {
 										ImageView iv=(ImageView) view2.findViewById(R.id.iv_02);
 										Imageloader_homePager
@@ -204,7 +204,7 @@ public class HomeActivity extends BaseActivity implements
 																		.getImageUrl(),
 																		iv,
 														new Handler(), null);
-										extracted(homeadsBean, iv);
+										extracted(listHomeadsBean_three.get(j), iv);
 									} else if (j == 2) {
 										ImageView iv=(ImageView) view2.findViewById(R.id.iv_03);
 										Imageloader_homePager
@@ -215,7 +215,7 @@ public class HomeActivity extends BaseActivity implements
 																		.getImageUrl(),
 																		iv,
 														new Handler(), null);
-										extracted(homeadsBean, iv);
+										extracted(listHomeadsBean_three.get(j), iv);
 									}
 								}
 								ll_mainhomehead_add.addView(view2);
@@ -544,7 +544,7 @@ public class HomeActivity extends BaseActivity implements
 		String dataurl=(String) v.getTag(R.id.homeDataUrl);
 		switch (tag) {
 		case "PRODUCT_LIST":// 一种商品类型下的商品列表
-			myStartActivity(dataurl,ClassifyCommodityActivity.class);
+			ClassifyCommodityActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 		case "SHOP_LIST":// 一种商品类型下的商铺列表
 			
@@ -553,20 +553,13 @@ public class HomeActivity extends BaseActivity implements
 			
 			break;
 		case "PRODUCT":// 一个商品
-			myStartActivity(dataurl,CommodityContentActivity.class);
+			CommodityContentActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 
 		default:
 			break;
 		}
-		myToast(v.getTag()+"");
+		//myToast(v.getTag()+"--"+dataurl);
 	}
-
-	private void myStartActivity(String dataurl,Class class1) {
-		Intent intent=new Intent(this, class1);
-		intent.putExtra("dataurl", dataurl);
-		startActivity(intent);
-	}
-
 
 }

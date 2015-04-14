@@ -29,4 +29,10 @@ public class CommitOrder implements Serializable {
 		this.orderItems = orderItems;
 	}
 
+	@Override
+	public String toString() {
+		return "CommitOrder [addressId=" + addressId + ", orderItems="
+				+ orderItems + "]";
+	}
+
 }
