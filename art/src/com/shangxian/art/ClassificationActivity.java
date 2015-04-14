@@ -7,16 +7,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -24,15 +20,13 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbLogUtil;
+import com.ab.util.AbToastUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
-import com.shangxian.art.bean.HomeadsBean;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.view.TagViewPager.OnGetView;
+import com.shangxian.art.utils.MyLogger;
 
 /**
  * 分类
@@ -89,11 +83,11 @@ public class ClassificationActivity extends BaseActivity {
 	
 	private void refreshTask() {
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
-	//	AbRequestParams params = new AbRequestParams();
-//		params.put("shopid", "1019");
+		AbRequestParams params = new AbRequestParams();
+		params.put("level", "all");
 //		params.put("code", "88881110344801123456");
 //		params.put("phone", "15889936624");
-		httpUtil.get(url,new AbStringHttpResponseListener() {
+		httpUtil.post(url,params,new AbStringHttpResponseListener() {
 
 			@Override
 			public void onStart() {
@@ -108,7 +102,7 @@ public class ClassificationActivity extends BaseActivity {
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				 AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
 //				imgList.clear();
 //				ArrayList<String> imgs = new ArrayList<String>();
 //				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
@@ -159,6 +153,7 @@ public class ClassificationActivity extends BaseActivity {
 								model.add(gson.fromJson(
 										jo.toString(), ClassificationModel.class));
 							}
+							MyLogger.i(model.toString());
 							adapter.notifyDataSetChanged();
 						}
 					} catch (JSONException e) {

@@ -4,20 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/txt_white"
     android:gravity="center_vertical"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
-
-        <ImageView
+        <ImageView android:layout_marginLeft="16dp"
             android:id="@+id/item_classifiymain_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ainonggu" />
+            android:scaleType="fitXY"
+            android:src="@drawable/image_loading" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,15 +46,6 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="20dp"
-            android:src="@drawable/pull_down1" />
+            android:src="@drawable/next_level" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/item_classifiymain_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:visibility="gone" >
-    </ListView>
-
-</LinearLayout>
