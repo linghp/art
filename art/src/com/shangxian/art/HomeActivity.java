@@ -548,10 +548,11 @@ public class HomeActivity extends BaseActivity implements
 			ClassifyCommodityActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 		case "SHOP_LIST":// 一种商品类型下的商铺列表
-			
+//			CommonUtil.gotoActivity(HomeActivity.this, ShopsListActivity.class, false);
+			ShopsListActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 		case "SHOP":// 一个商铺
-			CommonUtil.gotoActivity(HomeActivity.this, ShopsListActivity.class, false);
+			
 			break;
 		case "PRODUCT":// 一个商品
 			CommodityContentActivity.startThisActivity_url(dataurl, HomeActivity.this);

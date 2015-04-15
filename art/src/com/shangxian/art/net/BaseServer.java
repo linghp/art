@@ -37,6 +37,7 @@ public class BaseServer {
 	protected static final String NET_ACCOUNT = HOST + "account";// 首页广告列表
 	protected static final String NET_PAYMENT = "payment";// 直接支付
 	protected static final String NET_PAY_ORDER = "pay";// 订单支付
+	
 
 	/**
 	 * 
