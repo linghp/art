@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.io.Serializable;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +20,11 @@ import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.dialog.PayPasswordDialog;
 import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
 import com.shangxian.art.net.BaseServer.OnAccountSumListener;
+import com.shangxian.art.net.BaseServer.OnPayListener;
 import com.shangxian.art.net.BaseServer.OnPaymentListener;
 import com.shangxian.art.net.PayServer;
 import com.shangxian.art.utils.MyLogger;
@@ -63,7 +66,8 @@ public class PayActivity extends BaseActivity {
 			}
 			double mon = Double.MIN_VALUE;
 			try {
-				mon = Double.parseDouble(money);
+				mon = Double.parseDouble(money) / 100d;
+				//myToast("handler" + mon +" >>> money==" + money + " >>> isBi ===" + isBi + " >>>> isYuan ==" + isYuan);
 				if (mon > 100000000) {
 					myToast("超出最大交易金额");
 					et_scan.setText(String.format("%.2f", lastMon));
@@ -105,7 +109,7 @@ public class PayActivity extends BaseActivity {
 									"%.2f",
 									mon));
 						}
-					}
+					} 
 				}
 			} catch (Exception e) {
 				myToast("输入支付金额格式错误");
@@ -126,12 +130,14 @@ public class PayActivity extends BaseActivity {
 	}
 
 	private void initdata() {
-		orderids = (List<String>) getIntent().getSerializableExtra("orderids");
-		MyLogger.i(orderids.toString());
 		totalprice = getIntent().getFloatExtra("totalprice", 0f);
 		if (totalprice != 0) {
 			isOrder = true;
 			price = totalprice;
+			orderids = (List<String>) getIntent().getSerializableExtra("orderids");
+			if (orderids != null) {
+				MyLogger.i(orderids.toString());
+			}
 		} else {
 			isOrder = false;
 		}
@@ -191,9 +197,14 @@ public class PayActivity extends BaseActivity {
 		});
 
 		if (isOrder) {
-			tv_paymoney.setText("￥ " + totalprice);
+			tv_paymoney.setText("￥ " + totalprice / 100f);
 			tv_realpaymoney.setText("￥ " + totalprice);
-			handler.sendEmptyMessage(0);
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+				handler.sendEmptyMessage(0);
+				}
+			}, 200);
 		} else {
 			tv_realpaymoney.setText("¥ 0.00");
 		}
@@ -269,11 +280,11 @@ public class PayActivity extends BaseActivity {
 	}
 
 	public static void startThisActivity(List<String> orderids, float totalprice,
-			Context context) {
-		Intent intent = new Intent(context, PayActivity.class);
+			Activity mAc) {
+		Intent intent = new Intent(mAc, PayActivity.class);
 		intent.putExtra("orderids", (Serializable)orderids);
 		intent.putExtra("totalprice", totalprice);
-		context.startActivity(intent);
+		mAc.startActivityForResult(intent, 1000);
 	}
 
 	public void doClick(View view) {
@@ -316,17 +327,39 @@ public class PayActivity extends BaseActivity {
 				@Override
 				public void onScan(String pass) {
 					//myToast(pass);
-					PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
-						@Override
-						public void onPayment(String res) {
-							if (res.equals("true")) {
-								myToast("支付成功");
-								finish();
-							} else {
-								myToast("支付失败");
+					if (isOrder) {
+						PayOrderInfo info = new PayOrderInfo();
+						info.setAmount((int) (lastMon * 100));
+						info.setOrderNumber(orderids);
+						info.setPayPassword(pass);
+						info.setPayType(type);
+						PayServer.toPayOrder(info, new OnPayListener() {
+							@Override
+							public void onPayment(boolean res) {
+								if (res) {
+									myToast("支付成功");
+									Intent data = new Intent();
+									data.putExtra("pay_order_res", true);
+									setResult(RESULT_OK, data);
+									finish();
+								} else { 
+									myToast("支付失败");
+								}
 							}
-						}
-					});
+						});
+					} else {
+						PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
+							@Override
+							public void onPayment(String res) {
+								if (res.equals("true")) {
+									myToast("支付成功");
+									finish();
+								} else {
+									myToast("支付失败");
+								}
+							}
+						});
+					}
 				}
 			});
 			dialog.show();

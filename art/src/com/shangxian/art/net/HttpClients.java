@@ -70,12 +70,12 @@ public class HttpClients {
 			public void run() {
 				try {
 					HttpPost postMethod = new HttpPost(baseUrl);
-					postMethod.setHeader("Content-Type", "application/json");
+					postMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("user_token", user_token + "");
+						postMethod.addHeader("User_Token", user_token + "");
 					}
 					if (!TextUtils.isEmpty(json)) {
-						StringEntity se = new StringEntity(json.trim(), "UTF-8");
+						StringEntity se = new StringEntity(json.trim());
 						postMethod.setEntity(se);
 					}
 					// 将参数填入POST

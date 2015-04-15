@@ -96,7 +96,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		switch (v.getId()) {
 		case R.id.tv_settlement:
 			dosettlement();
-			myToast("去结算");
+			//myToast("去结算");
 			break;
 
 		default:
@@ -146,6 +146,19 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			}catch (Exception e) {
 				e.printStackTrace();
 		}
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent data) {
+		super.onActivityResult(arg0, arg1, data);
+		if (arg1 == RESULT_OK) {
+			if (arg0 == 1000) {
+				boolean isPay = data.getBooleanExtra("pay_order_res", false);
+				if (isPay) {
+					finish();
+				}
+			}
 		}
 	}
 }

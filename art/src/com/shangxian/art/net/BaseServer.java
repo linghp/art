@@ -92,6 +92,8 @@ public class BaseServer {
 							int result_code = json.getInt("result_code");
 							if (result_code == 200) {
 								l.onHttp(json.getString("result"));
+							} else {
+								l.onHttp(null);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -146,6 +148,8 @@ public class BaseServer {
 								System.out.println("toPsot -> rest >>>>>>> "
 										+ rest);
 								l.onHttp(rest);
+							} else {
+								l.onHttp(null);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -161,10 +165,17 @@ public class BaseServer {
 			final OnHttpListener l) {
 		if (json == null) {
 			json = "";
+		} else {
+			System.out
+			.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+					+ json);
 		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
+				System.out
+				.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+						+ res);
 				if (l != null) {
 					// l.onHttp(res);
 					try {
@@ -174,8 +185,10 @@ public class BaseServer {
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
 						}
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 						l.onHttp(null);
 					}
@@ -201,6 +214,8 @@ public class BaseServer {
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

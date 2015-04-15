@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.ab.http.AbRequestParams;
+import com.baidu.mapapi.map.Text;
 import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.PayOrderInfo;
@@ -49,7 +50,12 @@ public class PayServer extends BaseServer {
 		toPostJson(NET_PAY_ORDER, json, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				
+				System.out.println("toPayOrder ==>>>>>>>>>>>>>> " + res);
+				if (l != null && !TextUtils.isEmpty(res) && res.equals("支付成功")) {
+					l.onPayment(true);
+				} else {
+					l.onPayment(false);
+				}
 			}
 		});
 	}
