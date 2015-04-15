@@ -69,12 +69,12 @@ public class PayPasswordDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+//				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dialog_pay_password);
 		setCanceledOnTouchOutside(false);
-		
 		ininView();
 		initListener();
 	}

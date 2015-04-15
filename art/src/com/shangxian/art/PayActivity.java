@@ -47,10 +47,17 @@ public class PayActivity extends BaseActivity {
 	private TextView tv_yuan;
 	private double lastMon = Double.MIN_VALUE;
 	private String type = "ALB_ALY";//默认:爱农币+爱农元
-
+	private float price;
+	
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			String money = et_scan.getText().toString();
+			int what = msg.what;
+			String money = "";
+			if (isOrder) {
+				money = price + "";
+			} else {
+				money = et_scan.getText().toString();
+			}
 			double mon = Double.MIN_VALUE;
 			try {
 				mon = Double.parseDouble(money);
@@ -99,10 +106,13 @@ public class PayActivity extends BaseActivity {
 				}
 			} catch (Exception e) {
 				myToast("输入支付金额格式错误");
+				if (isOrder) {
+					finish();
+				}
 			}
 		};
 	};
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,8 +124,13 @@ public class PayActivity extends BaseActivity {
 
 	private void initdata() {
 		orderid = getIntent().getStringExtra("orderid");
-		totalprice = getIntent().getFloatExtra("totalprice", 0);
-		isOrder = false;
+		totalprice = getIntent().getFloatExtra("totalprice", 0f);
+		if (totalprice != 0) {
+			isOrder = true;
+			price = totalprice;
+		} else {
+			isOrder = false;
+		}
 	}
 
 	private void initViews() {
@@ -132,6 +147,8 @@ public class PayActivity extends BaseActivity {
 		ll_money = (LinearLayout) findViewById(R.id.payl_ll_money);
 		ll_scan = (LinearLayout) findViewById(R.id.payl_ll_scan);
 		et_scan = (EditText) findViewById(R.id.paye_et_scan);
+		
+		//et_scan.setFocusable(true);
 		// 改变topbar
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
@@ -169,8 +186,13 @@ public class PayActivity extends BaseActivity {
 			}
 		});
 
-		tv_paymoney.setText("￥ " + totalprice);
-		tv_realpaymoney.setText("￥ " + totalprice);
+		if (isOrder) {
+			tv_paymoney.setText("￥ " + totalprice);
+			tv_realpaymoney.setText("￥ " + totalprice);
+			handler.sendEmptyMessage(0);
+		} else {
+			tv_realpaymoney.setText("¥ 0.00");
+		}
 
 		sb_bi.setChecked(isBi);
 		sb_yuan.setChecked(isYuan);
@@ -293,7 +315,12 @@ public class PayActivity extends BaseActivity {
 					PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
 						@Override
 						public void onPayment(String res) {
-							myToast(res);
+							if (res.equals("true")) {
+								myToast("支付成功");
+								finish();
+							} else {
+								myToast("支付失败");
+							}
 						}
 					});
 				}

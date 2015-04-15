@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.ab.http.AbRequestParams;
 import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.utils.MyLogger;
 
 import android.text.TextUtils;
@@ -42,10 +43,10 @@ public class PayServer extends BaseServer {
 		});
 	}
 	
-	public static void toPayOrder(){
-		AbRequestParams params = new AbRequestParams();
-		//params.put("", value);
-		toPost(NET_PAY_ORDER, params, new OnHttpListener() {
+	public static void toPayOrder(PayOrderInfo info, final OnPayListener l){
+		String json = gson.toJson(info);
+		System.out.println("toPayorder >>>>>>>> json ---------------->" + json);
+		toPostJson(NET_PAY_ORDER, json, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				
@@ -54,13 +55,6 @@ public class PayServer extends BaseServer {
 	}
 	
 	public static void toPayment(String pass, int toid, int amount, String type, final OnPaymentListener l){
-		//List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-//		AbRequestParams params = new AbRequestParams();
-//		params.put("from", "2");
-//		params.put("to", "3");
-//		params.put("amount", "200");
-//		params.put("payPassword", "612714");
-//		params.put("payType", "ALB_ALY");
 		AbRequestParams params = new AbRequestParams();
 		params.put("from", curUser.getId() + "");
 		params.put("to", "3");
@@ -68,12 +62,6 @@ public class PayServer extends BaseServer {
 		params.put("payPassword", pass);
 		params.put("payType", type);
 		MyLogger.i(curUser.getId() + " ---- " + String.valueOf(amount) + " ---- " + pass + "----" + type);
-		/*pairs.add(new BasicNameValuePair("from", curUser.getId() + ""));
-		pairs.add(new BasicNameValuePair("to", "3"));
-		pairs.add(new BasicNameValuePair("amount", String.valueOf(amount)));
-		pairs.add(new BasicNameValuePair("payPassword", pass));
-		pairs.add(new BasicNameValuePair("payType", type));
-		System.out.println("params == " + curUser.getId() + " == " + pass + " == " + toid + " == " + amount + " == " + type);*/
 		toPost("http://test.peoit.com/api/payment", params, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {

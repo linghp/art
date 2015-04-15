@@ -252,4 +252,8 @@ public class BaseServer {
 	public interface OnPaymentListener {
 		void onPayment(String res);
 	}
+	
+	public interface OnPayListener {
+		void onPayment(boolean res);
+	}
 }
