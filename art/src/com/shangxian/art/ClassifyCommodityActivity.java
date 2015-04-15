@@ -163,7 +163,9 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
+				//请求
 				AbLogUtil.i(ClassifyCommodityActivity.this, content);
+//				System.out.println(">>>>>>>>>>>>>>>content"+content);
 				model.clear();
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -247,15 +249,6 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			}
 		});
 
-		// //购物车
-		// shop.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// System.out.println(">>>>>>>加入购物车");
-		// }
-		// });
 		// title购物车跳转
 		topView.setRightBtnListener(new OnClickListener() {
 

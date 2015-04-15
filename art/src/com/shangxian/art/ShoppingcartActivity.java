@@ -274,6 +274,12 @@ OnHeaderRefreshListener,OnClickListener{
 		topView.setTitle("购物车");
 		topView.showTitle();
 		
+		if(isLogin()&&listCarItem.size()==0){//如果是登陆且购物车没有数据
+			initdata();
+		}else if(!isLogin()&&listCarItem.size()>0){//如果是没有登陆且购物车有数据，清空
+			listCarItem.clear();
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	@Override
