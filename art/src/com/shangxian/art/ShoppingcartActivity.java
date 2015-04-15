@@ -75,8 +75,9 @@ OnHeaderRefreshListener,OnClickListener{
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String url=Constant.BASEURL+Constant.CONTENT+Constant.CART;
+		if(isLogin()){
 		refreshTask(url);
-		
+		}
 		// 全选点击事件
 		selecteall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -272,6 +273,7 @@ OnHeaderRefreshListener,OnClickListener{
 		topView.setCenterListener(null);
 		topView.setTitle("购物车");
 		topView.showTitle();
+		
 	}
 
 	@Override

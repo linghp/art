@@ -87,7 +87,7 @@ public class ShopsActivity extends BaseActivity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if(isLoginAndToLogin()){
 				if (!iscollection) {
 					collectionimg.setImageResource(R.drawable.collection_on);
 					myToast("已收藏");
@@ -96,6 +96,7 @@ public class ShopsActivity extends BaseActivity{
 					myToast("取消收藏");
 				}
 				iscollection = !iscollection;
+				}
 			}
 		});
 	}

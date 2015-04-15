@@ -196,7 +196,7 @@ public class TopView extends RelativeLayout {
 	}
 
 	public void showCenterSearch(){
-		et_search.setVisibility(View.VISIBLE);
+		ll_center.setVisibility(View.VISIBLE);
 	}
 	
 /**
@@ -204,7 +204,7 @@ public class TopView extends RelativeLayout {
  * @param hideCenterSearch 
  */
 	public void hideCenterSearch(){
-		et_search.setVisibility(View.GONE);
+		ll_center.setVisibility(View.GONE);
 	}
 	public void showTitle(){
 		tv_title.setVisibility(View.VISIBLE);

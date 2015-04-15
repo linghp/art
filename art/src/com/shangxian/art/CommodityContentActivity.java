@@ -80,7 +80,7 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if(isLoginAndToLogin()){
 				if (!iscollection) {
 					commoditycontent_shoucang.setImageResource(R.drawable.collection_on);
 					myToast("已收藏");
@@ -89,6 +89,7 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 					myToast("取消收藏");
 				}
 				iscollection = !iscollection;
+				}
 			}
 		});
 	}
@@ -218,7 +219,9 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.commoditycontent_jiarugouwuche:
+			if(isLoginAndToLogin()){
 			dotask_addcart();
+			}
 			break;
 
 		default:
@@ -228,7 +231,8 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 
 	private void dotask_addcart() {
 		String json="{\"productId\":"+model.getId()+",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
-		//HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
+		//MyLogger.i(json);
+		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
 	}
 
 	@Override

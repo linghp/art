@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.SelectImgUtil;
 import com.shangxian.art.view.TopView;
@@ -104,12 +105,14 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initView() {
-		topView = (TopView) findViewById(R.id.top_title);
-		//topView.showBackBtn();
-		topView.setTitle("爱农谷");
-		topView.hideCenterSearch();
-		topView.hideLeftBtn();
+		//改变topbar
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
 		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle(getString(R.string.title_activity_regist_sogo));
 		
 		tv_title = (TextView) findViewById(R.id.sogt_tv_title);
 		ll_li1 = (LinearLayout) findViewById(R.id.sogl_ll_li1);

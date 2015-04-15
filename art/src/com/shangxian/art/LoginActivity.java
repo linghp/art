@@ -81,7 +81,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.hideCenterSearch();
-		topView.hideLeftBtn();
+		topView.setActivity(this);
+		topView.setBack(R.drawable.back);
 		topView.setTitle("登录");
 		topView.showTitle();
 		topView.setRightText("商户入驻", new OnClickListener() {
