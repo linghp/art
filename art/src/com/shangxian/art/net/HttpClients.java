@@ -72,7 +72,7 @@ public class HttpClients {
 					HttpPost postMethod = new HttpPost(baseUrl);
 					postMethod.setHeader("Content-Type", "application/json");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("user_token", user_token + "");
+						postMethod.addHeader("User-Token", user_token + "");
 					}
 					if (!TextUtils.isEmpty(json)) {
 						StringEntity se = new StringEntity(json.trim(), "UTF-8");

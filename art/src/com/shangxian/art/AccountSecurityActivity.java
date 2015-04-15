@@ -26,6 +26,7 @@ import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.TopView;
 
 /**
  * 设置
@@ -66,6 +67,14 @@ public class AccountSecurityActivity extends BaseActivity {
 
 	private void initviews() {
 		iv_photo = (ImageView) findViewById(R.id.iv_photo);
+		// 改变topbar
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn_invisible();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle(getString(R.string.title_activity_accountsecurity));
 	}
 
 	@Override
