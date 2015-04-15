@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ab.view.pullview.AbPullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mPullRefreshView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bg_gray" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white2" >
 
     <com.shangxian.art.view.TopView
         android:id="@+id/top_title"
@@ -11,12 +10,20 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <ListView
-        android:id="@+id/mListView"
+    <com.ab.view.pullview.AbPullToRefreshView
+        android:id="@+id/mPullRefreshView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="@null"
-        android:dividerHeight="2dp" />
+        android:layout_below="@id/top_title"
+        android:background="@color/bg_gray" >
 
-</com.ab.view.pullview.AbPullToRefreshView>
+        <ListView
+            android:id="@+id/mListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:dividerHeight="2dp" />
+    </com.ab.view.pullview.AbPullToRefreshView>
+
+</RelativeLayout>

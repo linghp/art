@@ -5,14 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
-import com.ab.fragment.AbLoadDialogFragment;
 import com.ab.fragment.AbDialogFragment.AbDialogOnLoadListener;
+import com.ab.fragment.AbLoadDialogFragment;
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbStringHttpResponseListener;
 import com.ab.task.AbTask;
 import com.ab.task.AbTaskItem;
 import com.ab.task.AbTaskListListener;
@@ -22,12 +31,15 @@ import com.ab.util.AbToastUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
-import com.shangxian.art.adapter.ImageListAdapter;
+import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
+import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.bean.ShopsListModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -41,30 +53,39 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mListView = null;
-	private List<Map<String, Object>> list = null;
+	//	private List<Map<String, Object>> list = null;
 	private ShopsListAdapter myListViewAdapter = null;
 	private AbLoadDialogFragment mDialogFragment = null;
-	private int currentPage = 1;
-	private int pageSize = 15;
-	private int total = 50;
+//	private int currentPage = 1;
+//	private int pageSize = 15;
+//	private int total = 50;
 
+	//数据请求
+	private AbHttpUtil httpUtil = null;
+	private String url = "";
+	private List<ShopsListModel> model;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.pull_to_refresh_list);
+		initView();
+		initData();
+		initListener();
+	}
+
+
+
+	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setVisibility(View.VISIBLE);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
 		topView.setBack(R.drawable.back);//返回
 		topView.showCenterSearch();
-		
+
 		application = (MyApplication) abApplication;
-		for (int i = 0; i < 23; i++) {
-			mPhotoList.add(Constant.BASEURL1
-					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
-		}
+
 		// 获取ListView对象
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
@@ -79,145 +100,228 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		// ListView数据
-		list = new ArrayList<Map<String, Object>>();
+
+
+	}
+	private void initData() {
+		httpUtil = AbHttpUtil.getInstance(this);
+		httpUtil.setTimeout(Constant.timeOut);
+		//		String geturl = getIntent().getStringExtra("url");
+
+		url = Constant.BASEURL + Constant.CONTENT + "/1/shops";//第一条数据地址
+
+		model = new ArrayList<ShopsListModel>();
+		refreshTask(url);
+
+		//		// ListView数据
+		//		list = new ArrayList<Map<String, Object>>();
+
 		// 使用自定义的Adapter(得到item中的控件)
-		myListViewAdapter = new ShopsListAdapter(this, list,
-				R.layout.item_list, new String[] { "itemsIcon", "itemsTitle",
-		"itemsText" }, new int[] { R.id.itemsIcon,
-				R.id.itemsTitle, R.id.itemsText, R.id.items_bottom, R.id.items_bottom1 });
+		myListViewAdapter = new ShopsListAdapter(this, model, R.layout.item_list);
 		mListView.setAdapter(myListViewAdapter);
+		// 显示进度框
+//		mDialogFragment = AbDialogUtil.showLoadDialog(this,
+//				R.drawable.progress_loading2, "查询中,请等一小会");
+	}
+
+	private void initListener() {
+//		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
+//
+//			@Override
+//			public void onLoad() {
+//				// 下载网络数据
+//				refreshTask(url);
+//			}
+//
+//		});
+
+
 		// item被点击事件
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-			CommonUtil.gotoActivity(ShopsListActivity.this, ShopsActivity.class, false);
+				CommonUtil.gotoActivity(ShopsListActivity.this, ShopsActivity.class, false);
 
 			}
 		});
 
-		// 显示进度框
-		mDialogFragment = AbDialogUtil.showLoadDialog(this,
-				R.drawable.progress_loading2, "查询中,请等一小会");
-		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
-
-			@Override
-			public void onLoad() {
-				// 下载网络数据
-				refreshTask();
-			}
-
-		});
 	}
 
+	public static void startThisActivity(String id,
+			Context context) {
+		Intent intent = new Intent(context, ShopsListActivity.class);
+		intent.putExtra("id", id);
+		context.startActivity(intent);
+	}
+
+	public static void startThisActivity_url(String url, Context context) {
+		Intent intent = new Intent(context, ShopsListActivity.class);
+		intent.putExtra("url", url);
+		context.startActivity(intent);
+	}
 	@Override
 	public void onFooterLoad(AbPullToRefreshView arg0) {
 		// TODO Auto-generated method stub
-		loadMoreTask();
+//		loadMoreTask();
 	}
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView arg0) {
 		// TODO Auto-generated method stub
-		refreshTask();
+		refreshTask(url);
 	}
 
-	public void refreshTask() {
-		AbLogUtil.prepareLog(this);
-		AbTask mAbTask = new AbTask();
-		final AbTaskItem item = new AbTaskItem();
-		item.setListener(new AbTaskListListener() {
+	//
+	public void refreshTask(String url) {
+		httpUtil.get(url, new AbStringHttpResponseListener() {
+
 			@Override
-			public List<?> getList() {
-				List<Map<String, Object>> newList = null;
-				try {
-					Thread.sleep(1000);
-					currentPage = 1;
-					newList = new ArrayList<Map<String, Object>>();
-					Map<String, Object> map = null;
+			public void onStart() {
+				// TODO Auto-generated method stub
 
-					for (int i = 0; i < pageSize; i++) {
-						map = new HashMap<String, Object>();
-						map.put("itemsIcon", mPhotoList.get(i));
-						map.put("itemsTitle", "item" + (i + 1));
-						map.put("itemsText", "item..." + (i + 1));
-						newList.add(map);
-
-					}
-				} catch (Exception e) {
-				}
-				return newList;
 			}
 
 			@Override
-			public void update(List<?> paramList) {
-
-				// 通知Dialog
-				mDialogFragment.loadFinish();
-				AbLogUtil.d(ShopsListActivity.this, "返回", true);
-				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-				list.clear();
-				if (newList != null && newList.size() > 0) {
-					list.addAll(newList);
-					myListViewAdapter.notifyDataSetChanged();
-					newList.clear();
-				}
+			public void onFinish() {
 				mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-		});
-
-		mAbTask.execute(item);
-	}
-	public void loadMoreTask() {
-		AbTask mAbTask = new AbTask();
-		final AbTaskItem item = new AbTaskItem();
-		item.setListener(new AbTaskListListener() {
-
-			@Override
-			public void update(List<?> paramList) {
-				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-				if (newList != null && newList.size() > 0) {
-					list.addAll(newList);
-					myListViewAdapter.notifyDataSetChanged();
-					newList.clear();
-				}
 				mAbPullToRefreshView.onFooterLoadFinish();
+			}
+
+			@Override
+			public void onFailure(int arg0, String arg1, Throwable arg2) {
+				// TODO Auto-generated method stub
 
 			}
 
 			@Override
-			public List<?> getList() {
-				List<Map<String, Object>> newList = null;
-				try {
-					currentPage++;
-					Thread.sleep(1000);
-					newList = new ArrayList<Map<String, Object>>();
-					Map<String, Object> map = null;
-
-					for (int i = 0; i < pageSize; i++) {
-						map = new HashMap<String, Object>();
-						map.put("itemsIcon", mPhotoList.get(i));
-						map.put("itemsTitle", "item上拉"
-								+ ((currentPage - 1) * pageSize + (i + 1)));
-						map.put("itemsText", "item上拉..."
-								+ ((currentPage - 1) * pageSize + (i + 1)));
-						if ((list.size() + newList.size()) < total) {
-							newList.add(map);
+			public void onSuccess(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				AbLogUtil.i(ShopsListActivity.this, arg1);
+				//				System.out.println(">>>>>>>>>>请求到的数据"+arg1);
+				//解析
+				if (!TextUtils.isEmpty(arg1)) {
+					Gson gson = new Gson();
+					JSONObject jsonObject;
+					try {
+						jsonObject = new JSONObject(arg1);
+						String result_code = jsonObject.getString("result_code");
+						String reason = jsonObject.getString("reason");
+						if (result_code.equals("200")&&reason.equals("success")) {
+							JSONArray resultObjectArray = jsonObject.getJSONArray("result");
+							int length = resultObjectArray.length();
+							model.clear();
+							for (int i = 0; i < length; i++) {
+								JSONObject jo = resultObjectArray.getJSONObject(i);
+								model.add(gson.fromJson(jo.toString(),ShopsListModel.class));
+							}
+							MyLogger.i(model.toString());
+							myListViewAdapter.notifyDataSetChanged();
 						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
-				} catch (Exception e) {
-					currentPage--;
-					newList.clear();
-					AbToastUtil.showToastInThread(ShopsListActivity.this,
-							e.getMessage());
 				}
-				return newList;
-			};
+			}
 		});
-
-		mAbTask.execute(item);
 	}
+//		AbLogUtil.prepareLog(this);
+//		AbTask mAbTask = new AbTask();
+//		final AbTaskItem item = new AbTaskItem();
+//		item.setListener(new AbTaskListListener() {
+//			@Override
+//			public List<?> getList() {
+//				List<Map<String, Object>> newList = null;
+//				try {
+//					Thread.sleep(1000);
+//					currentPage = 1;
+//					newList = new ArrayList<Map<String, Object>>();
+//					Map<String, Object> map = null;
+//
+//					for (int i = 0; i < pageSize; i++) {
+//						map = new HashMap<String, Object>();
+//						map.put("itemsIcon", mPhotoList.get(i));
+//						map.put("itemsTitle", "item" + (i + 1));
+//						map.put("itemsText", "item..." + (i + 1));
+//						newList.add(map);
+//
+//					}
+//				} catch (Exception e) {
+//				}
+//				return newList;
+//			}
+//
+//			@Override
+//			public void update(List<?> paramList) {
+//
+//				// 通知Dialog
+//				mDialogFragment.loadFinish();
+//				AbLogUtil.d(ShopsListActivity.this, "返回", true);
+//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
+//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+//				model.clear();
+//				if (newList != null && newList.size() > 0) {
+//					model.addAll(newList);
+//					myListViewAdapter.notifyDataSetChanged();
+//					newList.clear();
+//				}
+//				mAbPullToRefreshView.onHeaderRefreshFinish();
+//			}
+//
+//		});
+//
+//		mAbTask.execute(item);
+//	}
+//	public void loadMoreTask() {
+//		AbTask mAbTask = new AbTask();
+//		final AbTaskItem item = new AbTaskItem();
+//		item.setListener(new AbTaskListListener() {
+//
+//			@Override
+//			public void update(List<?> paramList) {
+//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
+//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+//				if (newList != null && newList.size() > 0) {
+//					model.addAll(newList);
+//					myListViewAdapter.notifyDataSetChanged();
+//					newList.clear();
+//				}
+//				mAbPullToRefreshView.onFooterLoadFinish();
+//			}
+//
+//			@Override
+//			public List<?> getList() {
+//				List<Map<String, Object>> newList = null;
+//				try {
+//					currentPage++;
+//					Thread.sleep(1000);
+//					newList = new ArrayList<Map<String, Object>>();
+//					Map<String, Object> map = null;
+//
+//					for (int i = 0; i < pageSize; i++) {
+//						map = new HashMap<String, Object>();
+//						map.put("itemsIcon", mPhotoList.get(i));
+//						map.put("itemsTitle", "item上拉"
+//								+ ((currentPage - 1) * pageSize + (i + 1)));
+//						map.put("itemsText", "item上拉..."
+//								+ ((currentPage - 1) * pageSize + (i + 1)));
+//						if ((model.size() + newList.size()) < total) {
+//							newList.add(map);
+//						}
+//					}
+//
+//				} catch (Exception e) {
+//					currentPage--;
+//					newList.clear();
+//					AbToastUtil.showToastInThread(ShopsListActivity.this,
+//							e.getMessage());
+//				}
+//				return newList;
+//			};
+//		});
+//
+//		mAbTask.execute(item);
+//	}
 }
