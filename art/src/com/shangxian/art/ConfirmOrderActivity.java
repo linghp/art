@@ -22,6 +22,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommitOrder;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.bean.Mapbean;
 import com.shangxian.art.bean.OrderItem;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients;
@@ -42,6 +43,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private ListConfirmOrderAdapter listadapter;
 	private List<ListCarStoreBean> listStoreBean;
 	private HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans;
+	//private Map
 	private float totalprice;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,15 +132,20 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				if (result_code.equals("200")) {
 					if(jsonObject
 					.getString("reason").equals("success")){
-						PayActivity.startThisActivity("", totalprice, this);
+						String result=jsonObject.getString("result");
+						Gson gson=new Gson();
+						Mapbean mapbeans=gson.fromJson("{\"result\":"+result+"}", Mapbean.class);
+						List<String> ordernumbers=new ArrayList<String>(mapbeans.result.keySet());
+						PayActivity.startThisActivity(ordernumbers, totalprice, this);
 					}
 					//myToast(jsonObject.getString("result"));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}catch (Exception e) {
+				e.printStackTrace();
 		}
-
+		}
 	}
 }

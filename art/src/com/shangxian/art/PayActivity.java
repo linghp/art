@@ -1,22 +1,14 @@
 package com.shangxian.art;
 
-import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.AccountSumInfo;
-import com.shangxian.art.dialog.PayPasswordDialog;
-import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
-import com.shangxian.art.net.BaseServer.OnAccountSumListener;
-import com.shangxian.art.net.BaseServer.OnPaymentListener;
-import com.shangxian.art.net.PayServer;
-import com.shangxian.art.view.SwitchButton;
-import com.shangxian.art.view.TopView;
+import java.io.Serializable;
+import java.util.List;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,10 +17,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.dialog.PayPasswordDialog;
+import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
+import com.shangxian.art.net.BaseServer.OnAccountSumListener;
+import com.shangxian.art.net.BaseServer.OnPaymentListener;
+import com.shangxian.art.net.PayServer;
+import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.SwitchButton;
+import com.shangxian.art.view.TopView;
+
 public class PayActivity extends BaseActivity {
 	private TopView topView;
 	private TextView tv_paymoney, tv_realpaymoney;
-	private String orderid;
+	private List<String> orderids;
 	private float totalprice;
 	private SwitchButton sb_bi;
 	private SwitchButton sb_yuan;
@@ -113,7 +116,8 @@ public class PayActivity extends BaseActivity {
 	}
 
 	private void initdata() {
-		orderid = getIntent().getStringExtra("orderid");
+		orderids = (List<String>) getIntent().getSerializableExtra("orderids");
+		MyLogger.i(orderids.toString());
 		totalprice = getIntent().getFloatExtra("totalprice", 0);
 		isOrder = false;
 	}
@@ -242,10 +246,10 @@ public class PayActivity extends BaseActivity {
 		});
 	}
 
-	public static void startThisActivity(String orderid, float totalprice,
+	public static void startThisActivity(List<String> orderids, float totalprice,
 			Context context) {
 		Intent intent = new Intent(context, PayActivity.class);
-		intent.putExtra("orderid", orderid);
+		intent.putExtra("orderids", (Serializable)orderids);
 		intent.putExtra("totalprice", totalprice);
 		context.startActivity(intent);
 	}
