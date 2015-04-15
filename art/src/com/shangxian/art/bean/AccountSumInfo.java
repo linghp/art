@@ -44,7 +44,7 @@ public class AccountSumInfo implements Serializable{
 	}
 
 	public double getAlb() {
-		return alb/100d;
+		return alb;
 	}
 
 	public void setAlb(double alb) {
@@ -52,7 +52,7 @@ public class AccountSumInfo implements Serializable{
 	}
 
 	public double getAly() {
-		return aly/100d;
+		return aly;
 	}
 
 	public void setAly(double aly) {
