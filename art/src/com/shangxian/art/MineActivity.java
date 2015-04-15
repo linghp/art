@@ -27,7 +27,7 @@ public class MineActivity extends BaseActivity {
 	
 	private String userphoto_filename;
 	
-	private LinearLayout shangpinguanli,nonghebao;
+	private LinearLayout shangpinguanli;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,14 +55,6 @@ public class MineActivity extends BaseActivity {
 				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
 			}
 		});
-		nonghebao.setOnClickListener(new OnClickListener() {
-			//跳转到农合宝
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(MineActivity.this, NongHeBaoActivity.class, false);
-			}
-		});
 	}
 
 	private void initView() {
@@ -71,7 +63,6 @@ public class MineActivity extends BaseActivity {
 		user_head=(ImageView) findViewById(R.id.user_head);
 		
 		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);//商品管理
-		nonghebao = (LinearLayout) findViewById(R.id.ll_my_item2);//农合宝
 		changeview();
 	}
 
@@ -154,7 +145,12 @@ public class MineActivity extends BaseActivity {
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
 			break;
 		case R.id.ll_my_item1:
+			if(isLoginAndToLogin())
 			startActivity(new Intent(this, MyOrderActivity.class));
+			break;
+		case R.id.ll_my_item2:
+			if(isLoginAndToLogin())
+			startActivity(new Intent(this, NongHeBaoActivity.class));
 			break;
 
 		default:

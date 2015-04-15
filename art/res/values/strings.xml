@@ -12,12 +12,12 @@
     <string name="title_activity_mine">MineActivity</string>
     <string name="hotel_reservation">酒店预订</string>
     <string name="pay">充值</string>
-    <string name="title_activity_regist">RegistActivity</string>
+    <string name="title_activity_regist">注册</string>
     <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
     <string name="title_activity_accountsecurity">账户与安全</string>
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_confirm_order">确认订单</string>
-    <string name="title_activity_regist_sogo">RegistSogoActivity</string>
+    <string name="title_activity_regist_sogo">商户入驻</string>
     <string name="regist_sogo_success">您的商户申请已提交，请耐心等待审核结果，如通过，系统会第一时间通知您。感谢您的支持！</string>
 
     <!-- 异常 -->

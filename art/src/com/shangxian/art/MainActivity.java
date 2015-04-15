@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.util.AbSharedUtil;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.view.TopView;
 import com.shangxian.art.zxing.CaptureActivity;
 
@@ -99,12 +101,21 @@ public class MainActivity extends TabActivity implements OnClickListener{
 			tabhost.setCurrentTabByTag("首页");
 		} else if (tabId.equals("2")) {
 			tabhost.setCurrentTabByTag("分类");
-		} else if (tabId.equals("3")) {
+		} else if (tabId.equals("3")&&isLoginAndToLogin()) {
 			tabhost.setCurrentTabByTag("购物车");
 		} else if (tabId.equals("4")) {
 			tabhost.setCurrentTabByTag("活动");
 		}else if (tabId.equals("5")) {
 			tabhost.setCurrentTabByTag("活动");
+		}
+	}
+	
+	protected boolean isLoginAndToLogin(){
+		if (LocalUserInfo.getInstance(this).getBoolean(Constant.PRE_LOGIN_STATE, false)) {
+			return true;
+		} else {
+			CommonUtil.gotoActivity(this, LoginActivity.class, false);
+			return false;
 		}
 	}
 

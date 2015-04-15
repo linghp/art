@@ -1,21 +1,15 @@
 package com.shangxian.art;
 
-import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.AccountSumInfo;
-import com.shangxian.art.dialog.PayPasswordDialog;
-import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
-import com.shangxian.art.net.BaseServer.OnAccountSumListener;
-import com.shangxian.art.net.PayServer;
-import com.shangxian.art.view.SwitchButton;
-import com.shangxian.art.view.TopView;
+import java.io.Serializable;
+import java.util.List;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,10 +18,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.bean.PayOrderInfo;
+import com.shangxian.art.dialog.PayPasswordDialog;
+import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
+import com.shangxian.art.net.BaseServer.OnAccountSumListener;
+import com.shangxian.art.net.BaseServer.OnPayListener;
+import com.shangxian.art.net.BaseServer.OnPaymentListener;
+import com.shangxian.art.net.PayServer;
+import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.SwitchButton;
+import com.shangxian.art.view.TopView;
+
 public class PayActivity extends BaseActivity {
 	private TopView topView;
 	private TextView tv_paymoney, tv_realpaymoney;
-	private String orderid;
+	private List<String> orderids;
 	private float totalprice;
 	private SwitchButton sb_bi;
 	private SwitchButton sb_yuan;
@@ -45,53 +52,74 @@ public class PayActivity extends BaseActivity {
 	private TextView tv_bi;
 	private TextView tv_yuan;
 	private double lastMon = Double.MIN_VALUE;
-
+	private String type = "ALB_ALY";//默认:爱农币+爱农元
+	private float price;
+	
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			String money = et_scan.getText().toString();
+			int what = msg.what;
+			String money = "";
+			if (isOrder) {
+				money = price + "";
+			} else {
+				money = et_scan.getText().toString();
+			}
 			double mon = Double.MIN_VALUE;
 			try {
-				mon = Double.parseDouble(money);
+				mon = Double.parseDouble(money) / 100d;
+				//myToast("handler" + mon +" >>> money==" + money + " >>> isBi ===" + isBi + " >>>> isYuan ==" + isYuan);
 				if (mon > 100000000) {
 					myToast("超出最大交易金额");
 					et_scan.setText(String.format("%.2f", lastMon));
 				} else {
 					lastMon = mon;
 					//et_scan.setText(text);
-					if (mon != Double.MAX_VALUE && !mAccount.isNull()) {
+					if (mon != Double.MIN_VALUE && !mAccount.isNull()) {
 						if (isBi && !isYuan) {
+							type = "ALB";
 							if (mon > mAccount.getAlb()) {
-								tv_realpaymoney.setText("¥" + String.format("%.2f",
+								tv_realpaymoney.setText("¥ " + String.format("%.2f",
 										mon - mAccount.getAlb()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && isYuan) {
+							type = "ALY";
 							if (mon > mAccount.getAly()) {
-								tv_realpaymoney.setText("¥" + String.format("%.2f",
+								tv_realpaymoney.setText("¥ " + String.format("%.2f",
 										mon - mAccount.getAly()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (isBi && isYuan) {
+							type = "ALB_ALY";
 							if (mon > (mAccount.getAly() + mAccount.getAlb())) {
-								tv_realpaymoney.setText("¥" + String.format(
+								tv_realpaymoney.setText("¥ " + String.format(
 										"%.2f",
 										mon - mAccount.getAly()
 												- mAccount.getAlb()));
+							} else {
+								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && !isYuan) {
-							tv_realpaymoney.setText("¥" + String.format(
+							tv_realpaymoney.setText("¥ " + String.format(
 									"%.2f",
 									mon));
 						}
-					}
+					} 
 				}
 			} catch (Exception e) {
 				myToast("输入支付金额格式错误");
+				if (isOrder) {
+					finish();
+				}
 			}
 		};
 	};
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,9 +130,17 @@ public class PayActivity extends BaseActivity {
 	}
 
 	private void initdata() {
-		orderid = getIntent().getStringExtra("orderid");
-		totalprice = getIntent().getFloatExtra("totalprice", 0);
-		isOrder = false;
+		totalprice = getIntent().getFloatExtra("totalprice", 0f);
+		if (totalprice != 0) {
+			isOrder = true;
+			price = totalprice;
+			orderids = (List<String>) getIntent().getSerializableExtra("orderids");
+			if (orderids != null) {
+				MyLogger.i(orderids.toString());
+			}
+		} else {
+			isOrder = false;
+		}
 	}
 
 	private void initViews() {
@@ -121,6 +157,8 @@ public class PayActivity extends BaseActivity {
 		ll_money = (LinearLayout) findViewById(R.id.payl_ll_money);
 		ll_scan = (LinearLayout) findViewById(R.id.payl_ll_scan);
 		et_scan = (EditText) findViewById(R.id.paye_et_scan);
+		
+		//et_scan.setFocusable(true);
 		// 改变topbar
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
@@ -158,8 +196,18 @@ public class PayActivity extends BaseActivity {
 			}
 		});
 
-		tv_paymoney.setText("￥ " + totalprice);
-		tv_realpaymoney.setText("￥ " + totalprice);
+		if (isOrder) {
+			tv_paymoney.setText("￥ " + totalprice / 100f);
+			tv_realpaymoney.setText("￥ " + totalprice);
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+				handler.sendEmptyMessage(0);
+				}
+			}, 200);
+		} else {
+			tv_realpaymoney.setText("¥ 0.00");
+		}
 
 		sb_bi.setChecked(isBi);
 		sb_yuan.setChecked(isYuan);
@@ -174,7 +222,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isBi = isChecked;
 				handler.sendEmptyMessage(0);
-				// myToast("" + isBi);
+				//myToast("isBi === " + isBi);
 			}
 		});
 		sb_yuan.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -183,7 +231,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isYuan = isChecked;
 				handler.sendEmptyMessage(0);
-				// myToast("" + isYuan);
+				//myToast("isYuan === " + isYuan);
 			}
 		});
 
@@ -231,12 +279,12 @@ public class PayActivity extends BaseActivity {
 		});
 	}
 
-	public static void startThisActivity(String orderid, float totalprice,
-			Context context) {
-		Intent intent = new Intent(context, PayActivity.class);
-		intent.putExtra("orderid", orderid);
+	public static void startThisActivity(List<String> orderids, float totalprice,
+			Activity mAc) {
+		Intent intent = new Intent(mAc, PayActivity.class);
+		intent.putExtra("orderids", (Serializable)orderids);
 		intent.putExtra("totalprice", totalprice);
-		context.startActivity(intent);
+		mAc.startActivityForResult(intent, 1000);
 	}
 
 	public void doClick(View view) {
@@ -251,14 +299,12 @@ public class PayActivity extends BaseActivity {
 			break;
 		case R.id.payl_ll_zhi:
 			// myToast("支付宝功能暂未开通");
-
-			// TODO: ------------ ------------
+			// TODO: ------------------------------- -----------------------------------
 			cb_zhi.setChecked(!isZhi);
 			break;
 		case R.id.payl_ll_yin:
 			// myToast("银行卡支付暂未开通");
-
-			// TODO: ----------- -------------
+			// TODO: ------------------------------- --------------------------------------
 			cb_yin.setChecked(!isYin);
 			break;
 		}
@@ -267,7 +313,7 @@ public class PayActivity extends BaseActivity {
 	private void okToPay() {
 		if (match()) {
 			PayPasswordDialog dialog = new PayPasswordDialog(mAc);
-			dialog.setMoney("¥" + String.format("%.2f", lastMon));
+			dialog.setMoney("¥ " + String.format("%.2f", lastMon));
 			if (isBi && !isYuan) {
 				dialog.setType("爱农币");
 			}
@@ -280,7 +326,40 @@ public class PayActivity extends BaseActivity {
 			dialog.setOnScanedListener(new OnScanedListener() {
 				@Override
 				public void onScan(String pass) {
-					myToast(pass);
+					//myToast(pass);
+					if (isOrder) {
+						PayOrderInfo info = new PayOrderInfo();
+						info.setAmount((int) (lastMon * 100));
+						info.setOrderNumber(orderids);
+						info.setPayPassword(pass);
+						info.setPayType(type);
+						PayServer.toPayOrder(info, new OnPayListener() {
+							@Override
+							public void onPayment(boolean res) {
+								if (res) {
+									myToast("支付成功");
+									Intent data = new Intent();
+									data.putExtra("pay_order_res", true);
+									setResult(RESULT_OK, data);
+									finish();
+								} else { 
+									myToast("支付失败");
+								}
+							}
+						});
+					} else {
+						PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
+							@Override
+							public void onPayment(String res) {
+								if (res.equals("true")) {
+									myToast("支付成功");
+									finish();
+								} else {
+									myToast("支付失败");
+								}
+							}
+						});
+					}
 				}
 			});
 			dialog.show();

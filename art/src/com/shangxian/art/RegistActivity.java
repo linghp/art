@@ -1,6 +1,7 @@
 package com.shangxian.art;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.view.TopView;
 
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -51,6 +52,15 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void initView() {
+		//改变topbar
+		topView=(TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle(getString(R.string.title_activity_regist));
+		
 		tv_ti = (TextView) findViewById(R.id.regt_tv_ti1);
 		tv_getyan = (TextView) findViewById(R.id.regt_tv_getyan);
 		tv_phone = (TextView) findViewById(R.id.regt_tv_phone);
