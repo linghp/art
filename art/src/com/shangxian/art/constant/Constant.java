@@ -53,4 +53,13 @@ public class Constant {
  	public static final String PRE_LOGIN_LASTTIME = "pre_lasttime";//上一次登录时间
  	
  	public static final String INT_SHOPS_2_LOC = "int_shops_2_loc";
+ 	public static final String INT_LOC_TOTYPE = "int_loc_totype";
+ 	
+ 	/***
+ 	 * 
+ 	 * ------------------------------------ 地图相关 （MAP开头） ------------------------------------------
+ 	 * 
+ 	 */
+ 	public static final int MAP_SHOPS_2_LOC = 0x00001000;
+ 	public static final int MAP_NEARLY_LOC = 0x00001001;
 }
