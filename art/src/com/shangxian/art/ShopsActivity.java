@@ -245,6 +245,7 @@ public class ShopsActivity extends BaseActivity{
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
+				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
 				CommonUtil.gotoActivityWithData(ShopsActivity.this, LocationActivity.class, bundle, false);
 			}
 		});

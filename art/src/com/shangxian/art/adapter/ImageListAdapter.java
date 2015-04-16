@@ -8,6 +8,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.ab.util.AbViewHolder;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.NearlyActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 
 /**
@@ -105,7 +107,10 @@ public class ImageListAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				//Toast.makeText(mContext, "location", 0).show();
-				CommonUtil.gotoActivity((Activity)mContext, LocationActivity.class, false);
+				//TODO:========================= 传递参数
+				Bundle bundle = new Bundle();
+				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_NEARLY_LOC);
+				CommonUtil.gotoActivityWithData((Activity) mContext, LocationActivity.class, bundle, false);
 			}
 		});
 		  //获取该行的数据

@@ -48,7 +48,7 @@ public class MyApplication extends Application {
 		mMyLocationListener = new MyLocationListener();
 		mLocationClient.registerLocationListener(mMyLocationListener);
 		mGeofenceClient = new GeofenceClient(getApplicationContext());
-		
+		mLocationClient.start();
 		loader = AbImageLoader.newInstance(this);
 		loader.setEmptyImage(R.drawable.image_empty);
 		loader.setErrorImage(R.drawable.image_error);
