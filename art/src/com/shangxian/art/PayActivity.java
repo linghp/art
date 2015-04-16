@@ -66,7 +66,7 @@ public class PayActivity extends BaseActivity {
 			}
 			double mon = Double.MIN_VALUE;
 			try {
-				mon = Double.parseDouble(money) / 100d;
+				mon = Double.parseDouble(money);
 				//myToast("handler" + mon +" >>> money==" + money + " >>> isBi ===" + isBi + " >>>> isYuan ==" + isYuan);
 				if (mon > 100000000) {
 					myToast("超出最大交易金额");
@@ -197,7 +197,7 @@ public class PayActivity extends BaseActivity {
 		});
 
 		if (isOrder) {
-			tv_paymoney.setText("￥ " + totalprice / 100f);
+			tv_paymoney.setText("￥ " + totalprice);
 			tv_realpaymoney.setText("￥ " + totalprice);
 			handler.postDelayed(new Runnable() {
 				@Override
@@ -329,7 +329,7 @@ public class PayActivity extends BaseActivity {
 					//myToast(pass);
 					if (isOrder) {
 						PayOrderInfo info = new PayOrderInfo();
-						info.setAmount((int) (lastMon * 100));
+						info.setAmount((int) (lastMon));
 						info.setOrderNumber(orderids);
 						info.setPayPassword(pass);
 						info.setPayType(type);
@@ -348,7 +348,7 @@ public class PayActivity extends BaseActivity {
 							}
 						});
 					} else {
-						PayServer.toPayment(pass, 3, (int) (lastMon * 100), type, new OnPaymentListener() {
+						PayServer.toPayment(pass, 3, (int) (lastMon), type, new OnPaymentListener() {
 							@Override
 							public void onPayment(String res) {
 								if (res.equals("true")) {
