@@ -93,9 +93,9 @@ public class ShopsListAdapter extends BaseAdapter{
 		  //获取该行的数据
 //       final Map<String, Object>  obj = (Map<String, Object>)mData.get(position);
 //       String imageUrl = (String)obj.get("itemsIcon");
-//       itemsTitle.setText((String)obj.get("shangpu"));
-//       itemsText.setText((String)obj.get("itemsText"));
-//       items_bottom.setText((string)obj.get("items_bottom1"));
+       itemsTitle.setText(shopsListModel.getShopName());
+       itemsText.setText(shopsListModel.getSubTitle());
+       items_bottom.setText("￥"+shopsListModel.getPrice()+"/起");
        items_bottom.setVisibility(View.GONE);
        items_bottom1.setVisibility(View.VISIBLE);
        //设置加载中的View

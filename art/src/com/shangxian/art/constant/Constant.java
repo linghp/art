@@ -52,4 +52,5 @@ public class Constant {
  	public static final String PRE_LOGIN_PASSWORD = "pre_password";//上一次登录密码
  	public static final String PRE_LOGIN_LASTTIME = "pre_lasttime";//上一次登录时间
  	
+ 	public static final String INT_SHOPS_2_LOC = "int_shops_2_loc";
 }

@@ -11,7 +11,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/top_title"
         android:scrollbars="none" >
 
@@ -24,9 +24,8 @@
             <ImageView
                 android:id="@+id/shops_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_login" />
+                android:layout_height="200dp"
+                android:scaleType="fitXY" />
 
             <LinearLayout
                 android:id="@+id/shops_linear1"
@@ -72,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
+                    android:padding="10dp"
                     android:src="@drawable/collection_off" />
             </LinearLayout>
 
@@ -169,10 +169,69 @@
                         android:textColor="@color/txt_black2"
                         android:textSize="@dimen/list_summary_size" />
                 </LinearLayout>
-                
-                
             </LinearLayout>
-            
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/txt_white2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp" >
+
+                <LinearLayout
+                    android:id="@+id/shops_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/call" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="15025496981" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="@color/txt_black3" />
+
+                <LinearLayout
+                    android:id="@+id/shops_dingwei"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="4dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/distance" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="重庆市沙坪坝区" />
+                </LinearLayout>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -191,95 +250,19 @@
                     android:text="热销商品"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_title_size" />
-
-               <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-
-                        <ImageView
-                            android:id="@+id/shops_img1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ainonggu" />
-
-                        <TextView
-                            android:id="@+id/shops_summary1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="新鲜水果全国包邮"
-                            android:lines="2"
-                            android:textColor="@color/txt_black2"
-                            android:textSize="@dimen/list_summary_size" />
-
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@color/txt_black3" />
-
-                        <TextView
-                            android:id="@+id/shops_price1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="￥69"
-                            android:textColor="@color/txt_red"
-                            android:textSize="@dimen/list_price_size" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-
-                        <ImageView
-                            android:id="@+id/shops_img2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ainonggu" />
-
-                        <TextView
-                            android:id="@+id/shops_summary2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="草莓、蓝莓、樱桃特价处理"
-                           android:lines="2"
-                            android:textColor="@color/txt_black2"
-                            android:textSize="@dimen/list_summary_size" />
-
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@color/txt_black3" />
-
-                        <TextView
-                            android:id="@+id/shops_price2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="￥69"
-                            android:textColor="@color/txt_red"
-                            android:textSize="@dimen/list_price_size" />
-                    </LinearLayout>
-                    
-                </LinearLayout>
             </LinearLayout>
+
+            <com.shangxian.art.view.MyGridView
+                android:id="@+id/shops_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/txt_white"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:padding="10dp"
+                android:verticalSpacing="10dp" >
+            </com.shangxian.art.view.MyGridView>
         </LinearLayout>
     </ScrollView>
 
