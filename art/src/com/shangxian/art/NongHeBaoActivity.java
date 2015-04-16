@@ -28,7 +28,7 @@ public class NongHeBaoActivity extends BaseActivity{
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();//显示title
-		topView.setTitle("农合宝");
+		topView.setTitle("爱农卡");
 		topView.setBack(R.drawable.back);//返回
 		
 		balance = (LinearLayout) findViewById(R.id.nonghebao_linear1);//余额
