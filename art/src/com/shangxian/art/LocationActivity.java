@@ -32,7 +32,7 @@ public class LocationActivity extends BaseActivity {
 	}
 
 	private void initData() {
-
+		
 	}
 
 	private void initView() {

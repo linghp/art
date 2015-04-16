@@ -169,8 +169,10 @@
                         android:textColor="@color/txt_black2"
                         android:textSize="@dimen/list_summary_size" />
                 </LinearLayout>
+                
+                
             </LinearLayout>
-
+            
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -190,7 +192,7 @@
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_title_size" />
 
-                <LinearLayout
+               <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -275,6 +277,7 @@
                             android:textColor="@color/txt_red"
                             android:textSize="@dimen/list_price_size" />
                     </LinearLayout>
+                    
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
