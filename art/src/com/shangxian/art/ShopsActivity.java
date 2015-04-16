@@ -134,6 +134,7 @@ public class ShopsActivity extends BaseActivity{
 			public void onSuccess(int arg0, String arg1) {
 				AbLogUtil.i(ShopsActivity.this, arg1);
 //				System.out.println(">>>>>>>>>>请求到的数据"+arg1);
+				
 				//解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -146,9 +147,13 @@ public class ShopsActivity extends BaseActivity{
 							JSONObject resultObject = jsonObject.getJSONObject("result");
 							model=gson.fromJson(resultObject.toString(),ShopsModel.class);
 							
-							mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());
-							shopsname.setText(""+model.getName());
-							
+							mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
+							mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
+							shopsname.setText(""+model.getName());//商铺名
+							guanzu.setText(model.getNoticeCount()+"人关注");//关注
+							all.setText(""+model.getProductCount());//全部商品
+							up.setText(""+model.getNewCount());//上新
+							youhui.setText(""+model.getSpecialCount());//优惠
 							
 							list=model.getProductDtos();
 							if (adapter == null) {
