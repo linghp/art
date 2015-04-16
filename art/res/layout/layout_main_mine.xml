@@ -286,7 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="农合宝"
+                        android:text="爱农卡"
                         android:textSize="@dimen/list_title_size" />
 
                     <View

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <ImageView
+        android:id="@+id/item_shops_img"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:src="@drawable/image_loading" />
+
+    <TextView
+        android:id="@+id/item_shops_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="新鲜水果全国包邮"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_summary_size" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/txt_black3" />
+
+    <TextView
+        android:id="@+id/item_shops_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="￥69"
+        android:textColor="@color/txt_red"
+        android:textSize="@dimen/list_price_size" />
+
+</LinearLayout>

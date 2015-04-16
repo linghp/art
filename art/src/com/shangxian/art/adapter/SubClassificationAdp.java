@@ -33,7 +33,7 @@ public class SubClassificationAdp extends EntityAdapter<SubClassificationModel>{
 			holder = (SubViewHolder) convertView.getTag();
 			holder.subtitle.setText(dates.get(position).getSubtitle());
 		}
-		return null;
+		return convertView;
 	}
 	public static class SubViewHolder{
 		private TextView subtitle;

@@ -23,7 +23,7 @@
             android:id="@+id/shopssummary_shopsimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/alipaypayment" />
+            android:src="@drawable/image_loading" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -118,7 +118,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/call" />
+                android:src="@drawable/call_btn"
+                android:padding="5dp" />
         </LinearLayout>
 
         <View
@@ -157,7 +158,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/distance" />
+                android:src="@drawable/fourth_tab"
+                android:padding="5dp" />
         </LinearLayout>
     </LinearLayout>
 

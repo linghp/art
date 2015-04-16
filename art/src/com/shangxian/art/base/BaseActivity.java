@@ -21,12 +21,14 @@ public class BaseActivity extends AbActivity {
 	protected TopView topView;
 	protected LocalUserInfo share;
 	protected BaseActivity mAc;
+	protected MyApplication app;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		MyLogger.i(getClass().getSimpleName());
 		share = LocalUserInfo.getInstance(this);
+		app = MyApplication.getInstance();
 		mAc = this;
 	}
 
