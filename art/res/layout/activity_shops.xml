@@ -266,6 +266,29 @@
                 android:padding="10dp"
                 android:verticalSpacing="10dp" >
             </com.shangxian.art.view.MyGridView>
+            <!-- <com.shangxian.art.view.GridLinearLayout
+                android:id="@+id/shops_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/txt_white"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:padding="10dp"
+                android:verticalSpacing="10dp"> 
+            </com.shangxian.art.view.GridLinearLayout> -->
+            <!-- <GridView 
+               android:id="@+id/shops_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:padding="10dp"
+                android:verticalSpacing="10dp" >
+                
+            </GridView> -->
         </LinearLayout>
     </ScrollView>
 

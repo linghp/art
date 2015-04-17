@@ -1,7 +1,5 @@
 package com.shangxian.art;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,9 +9,12 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
+import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -32,38 +33,41 @@ import com.shangxian.art.constant.Constant;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class LocationActivity extends BaseActivity {
 	private MapView mp_loc;
 	private BaiduMap mMap;
 	private LocationClient mLocClient;
 	public boolean isFirstLoc = true;
-	
-	
+
 	BitmapDescriptor bdShops = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_gcoding);//商铺地图图标
-	
+			.fromResource(R.drawable.icon_gcoding);// 商铺地图图标
+
 	BitmapDescriptor bdnA = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_marka);//A标签
+			.fromResource(R.drawable.icon_marka);// A标签
 	BitmapDescriptor bdnB = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markb);//B标签
+			.fromResource(R.drawable.icon_markb);// B标签
 	BitmapDescriptor bdnC = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markc);//C标签
+			.fromResource(R.drawable.icon_markc);// C标签
 	BitmapDescriptor bdnD = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markd);//D标签
+			.fromResource(R.drawable.icon_markd);// D标签
 	BitmapDescriptor bdnE = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_marke);//E标签
+			.fromResource(R.drawable.icon_marke);// E标签
 	BitmapDescriptor bdnF = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markf);//F标签
+			.fromResource(R.drawable.icon_markf);// F标签
 	BitmapDescriptor bdnG = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markg);//G标签
+			.fromResource(R.drawable.icon_markg);// G标签
 	BitmapDescriptor bdnH = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markh);//H标签
+			.fromResource(R.drawable.icon_markh);// H标签
 	BitmapDescriptor bdnI = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_marki);//I标签
+			.fromResource(R.drawable.icon_marki);// I标签
 	BitmapDescriptor bdnJ = BitmapDescriptorFactory
-			.fromResource(R.drawable.icon_markj);//J标签
-	
+			.fromResource(R.drawable.icon_markj);// J标签
+
 	List<BitmapDescriptor> bits = new ArrayList<BitmapDescriptor>();
 
 	@Override
@@ -79,16 +83,18 @@ public class LocationActivity extends BaseActivity {
 	private final static int MAP_SHOPS = Constant.MAP_SHOPS_2_LOC;
 	private final static int MAP_NEARLY = Constant.MAP_NEARLY_LOC;
 	private int curType;
-	
-	//TODO: --------------------------------------------------------------------------------------------
+
+	// TODO:
+	// --------------------------------------------------------------------------------------------
 	private BDLocation mLoc;
 	private Random mRandom = new Random();
 	private LatLng mShopLatlng;
 	private List<LatLng> mNearlyLatlngs = new ArrayList<LatLng>();
-	
+
 	private void initData() {
 		Intent intent = getIntent();
-		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE, Integer.MIN_VALUE);
+		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
+				Integer.MIN_VALUE);
 		switch (type) {
 		case MAP_SHOPS:
 			curType = MAP_SHOPS;
@@ -106,19 +112,39 @@ public class LocationActivity extends BaseActivity {
 	}
 
 	private void nearly() {
-		/*mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));
-		mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude()  + mRandom.nextInt(20) / 1000000.0d));*/
-		
+		/*
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
+		 * mRandom.nextInt(20) / 1000000.0d, mLoc.getLongitude() +
+		 * mRandom.nextInt(20) / 1000000.0d)); mNearlyLatlngs.add(new
+		 * LatLng(mLoc.getLatitude() + mRandom.nextInt(20) / 1000000.0d,
+		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
+		 */
+
 		bits.add(bdnA);
 		bits.add(bdnB);
 		bits.add(bdnC);
@@ -131,12 +157,20 @@ public class LocationActivity extends BaseActivity {
 		bits.add(bdnJ);
 		int len = mRandom.nextInt(6) + 4;
 		for (int i = 0; i < len; i++) {
-			mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() + (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d, mLoc.getLongitude()  + (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d));
+			mNearlyLatlngs.add(new LatLng(mLoc.getLatitude()
+					+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+					/ 1000000.0d, mLoc.getLongitude()
+					+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+					/ 1000000.0d));
 		}
 	}
 
 	private void shops() {
-		mShopLatlng = new LatLng(mLoc.getLatitude() + (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d, mLoc.getLongitude()  + (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d);
+		mShopLatlng = new LatLng(mLoc.getLatitude()
+				+ (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d,
+				mLoc.getLongitude()
+						+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+						/ 1000000.0d);
 	}
 
 	private void initView() {
@@ -147,9 +181,9 @@ public class LocationActivity extends BaseActivity {
 		upDataMap();
 	}
 
-	
 	private void upDataMap() {
-		MapStatus u = new MapStatus.Builder(mMap.getMapStatus()).target(getLat()).zoom(16f).build();
+		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())
+				.target(getLat()).zoom(16f).build();
 		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
 		mMap.setMapStatus(msu);
 		// 开启定位图层
@@ -158,11 +192,11 @@ public class LocationActivity extends BaseActivity {
 		} else if (curType == MAP_NEARLY) {
 			mMap.setMyLocationEnabled(false);
 		}
-		//mMap.set
+		// mMap.set
 		// 定位初始化
 		mLocClient = new LocationClient(this);
 		mLocClient.registerLocationListener(myListener);
-		
+
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
@@ -170,13 +204,14 @@ public class LocationActivity extends BaseActivity {
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 		initOverlay();
-	}	
+	}
 
 	/**
 	 * 定位SDK监听函数
 	 */
 	public MyLocationListenner myListener = new MyLocationListenner();
 	private Marker mMarkerShop;
+
 	public class MyLocationListenner implements BDLocationListener {
 		@Override
 		public void onReceiveLocation(BDLocation location) {
@@ -193,8 +228,10 @@ public class LocationActivity extends BaseActivity {
 				isFirstLoc = false;
 				LatLng ll = new LatLng(location.getLatitude(),
 						location.getLongitude());
-				/*MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mMap.animateMapStatus(u);*/
+				/*
+				 * MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				 * mMap.animateMapStatus(u);
+				 */
 			}
 		}
 
@@ -212,41 +249,102 @@ public class LocationActivity extends BaseActivity {
 			break;
 		}
 	}
-	
+
 	List<Marker> markers;
+
 	private void overNearly() {
 		if (mNearlyLatlngs.size() > 0) {
 			markers = new ArrayList<Marker>();
 			for (int i = 0; i < mNearlyLatlngs.size(); i++) {
-				OverlayOptions ooA = new MarkerOptions().position(mNearlyLatlngs.get(i)).icon(bits.get(i))
+				OverlayOptions ooA = new MarkerOptions()
+						.position(mNearlyLatlngs.get(i)).icon(bits.get(i))
 						.zIndex(mNearlyLatlngs.size() - i);
 				markers.add((Marker) (mMap.addOverlay(ooA)));
 			}
 			mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 				@Override
 				public boolean onMarkerClick(Marker marker) {
-					int mark = markers.indexOf(marker);
-					myToast("点击了" + mark);
+					mMap.hideInfoWindow();
+					final int mark = markers.indexOf(marker);
+					// myToast("点击了" + mark);
+					Button button = new Button(getApplicationContext());
+					button.setBackgroundResource(R.drawable.infowindow);
+					button.setText("测试商铺" + mark);
+					mInfoWindow = new InfoWindow(BitmapDescriptorFactory
+							.fromView(button), marker.getPosition(), -47,
+							new OnInfoWindowClickListener() {
+								@Override
+								public void onInfoWindowClick() {
+									myToast("点击测试商铺" + mark);
+									mMap.hideInfoWindow();
+								}
+							});
+					mMap.showInfoWindow(mInfoWindow);
+					isShowWindowing = true;
+					toHideWindow(marker);
 					return true;
 				}
 			});
 		}
 	}
 
+	private InfoWindow mInfoWindow;
+
+	private boolean isShowWindowing = false;
+
 	private void overShop() {
-		OverlayOptions ooA = new MarkerOptions().position(getLat()).icon(bdShops)
-				.zIndex(9).draggable(true);
+		OverlayOptions ooA = new MarkerOptions().position(getLat())
+				.icon(bdShops).zIndex(9).draggable(true);
 		mMarkerShop = (Marker) (mMap.addOverlay(ooA));
-		mMap.setOnMarkerClickListener(new OnMarkerClickListener() {	
+		mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(Marker mark) {
-				if (mark == mMarkerShop) {
-					MapStatusUpdate msu = MapStatusUpdateFactory.zoomIn();
-					return true;
-				}
-				return false;
+				Button button = new Button(getApplicationContext());
+				button.setText("测试商铺>");
+				button.setBackgroundResource(R.drawable.infowindow);
+				LatLng ll = mark.getPosition();
+				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
+						.fromView(button), ll, -47,
+						new OnInfoWindowClickListener() {
+							@Override
+							public void onInfoWindowClick() {
+								myToast("跳转商铺详情");
+								mMap.hideInfoWindow();
+							}
+						});
+				mMap.showInfoWindow(mInfoWindow);
+				isShowWindowing = true;
+				toHideWindow(mark);
+				return true;
 			}
 		});
+	}
+
+	protected void toHideWindow(final Marker mark) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					if (mInfoWindow != null) {
+						if (isShowWindowing && !mark.isVisible()) {
+							new Handler().post(new Runnable() {
+								@Override
+								public void run() {
+									isShowWindowing = false;
+									mMap.hideInfoWindow();
+								}
+							});
+						} else {
+							try {
+								Thread.sleep(200);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		}).start();
 	}
 
 	private LatLng getLat() {
@@ -259,13 +357,24 @@ public class LocationActivity extends BaseActivity {
 				lat += mNearlyLatlngs.get(i).latitude;
 				lon += mNearlyLatlngs.get(i).longitude;
 			}
-			return new LatLng(lat/mNearlyLatlngs.size(), lon/mNearlyLatlngs.size());
+			return new LatLng(lat / mNearlyLatlngs.size(), lon
+					/ mNearlyLatlngs.size());
 		}
 		return null;
 	}
 
 	private void initListener() {
-
+		mMap.setOnMapClickListener(new OnMapClickListener() {
+			@Override
+			public boolean onMapPoiClick(MapPoi arg0) {
+				return false;
+			}
+			
+			@Override
+			public void onMapClick(LatLng arg0) {
+				mMap.hideInfoWindow();
+			}
+		});
 	}
 
 	@Override
