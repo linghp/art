@@ -10,21 +10,21 @@ public class ShopsModel implements Serializable{
 	@Expose
 	private Integer id;
 	@Expose
-	private String owner;
+	private String owner;//所有人（物主）
 	@Expose
-	private String name;
+	private String name;//商铺名
 	@Expose
-	private String indexLogo;
+	private String indexLogo;//标识（图标）
 	@Expose
-	private String logo;
+	private String logo;//标志
 	@Expose
-	private Integer noticeCount;
+	private Integer noticeCount;//关注
 	@Expose
-	private Integer productCount;
+	private Integer productCount;//全部商品
 	@Expose
-	private Integer newCount;
+	private Integer newCount;//最新
 	@Expose
-	private Integer specialCount;
+	private Integer specialCount;//优惠
 	@Expose
 	private List<ProductDto> productDtos = new ArrayList<ProductDto>();
 	public Integer getId() {

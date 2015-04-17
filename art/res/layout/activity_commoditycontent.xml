@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/txt_white"
-        android:layout_centerVertical="true" >
+        android:layout_centerVertical="true"
+        android:background="@color/txt_white" >
 
         <ImageView
             android:id="@+id/commoditycontent_shoucang"
@@ -24,6 +24,14 @@
             android:layout_centerVertical="true"
             android:padding="15dp"
             android:src="@drawable/collection_off" />
+        <ImageView android:layout_toRightOf="@id/commoditycontent_shoucang"
+            android:id="@+id/tv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClick"
+            android:src="@drawable/collection_off" />
 
         <TextView
             android:id="@+id/commoditycontent_jiarugouwuche"
@@ -31,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/addshoppingcart_btn"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
-            android:layout_marginRight="10dp"
             android:text="加入购物车"
             android:textColor="@color/txt_white"
             android:textSize="@dimen/list_min_size" />
@@ -57,9 +65,16 @@
             <ImageView
                 android:id="@+id/commoditycontent_img"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"	
+                android:layout_height="200dp"
                 android:scaleType="fitXY"
-                 />
+                android:src="@drawable/image_loading" />
+
+            <!--
+                 <com.shangxian.art.view.TagViewPager
+                android:id="@+id/shops_mTagViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -143,10 +158,11 @@
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_summary_size" />
 
-                <View 
+                <View
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+                
                 <!-- <com.shangxian.art.view.StarRatingView
                     android:id="@+id/commoditycontent_starRating"
                     android:layout_width="100dp"
@@ -154,7 +170,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp">
                 </com.shangxian.art.view.StarRatingView> -->
-                
+               
 
                 <ImageView
                     android:id="@+id/commoditycontent_next3"
