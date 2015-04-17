@@ -38,6 +38,8 @@ import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.GridLinearLayout;
+import com.shangxian.art.view.GridLinearLayout.OnCellClickListener;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -58,9 +60,12 @@ public class ShopsActivity extends BaseActivity{
 	private TextView fenlei,jianjie;
 
 	GridView mGridView;
+//	GridLinearLayout mGridView;
 	ShopsModel model;
 	List<ProductDto>list;
 	ShopsAdapter adapter;
+	
+	
 
 	//数据请求
 	private AbHttpUtil httpUtil = null;
@@ -103,6 +108,8 @@ public class ShopsActivity extends BaseActivity{
 		dingwei = (LinearLayout) findViewById(R.id.shops_dingwei);
 
 		mGridView = (GridView) findViewById(R.id.shops_grid);
+//		mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
+//		mGridView.setColumns(2);
 		//		summary1= (TextView) findViewById(R.id.shops_summary1);
 		//		price1= (TextView) findViewById(R.id.shops_price1);
 		//		summary2= (TextView) findViewById(R.id.shops_summary2);
@@ -159,6 +166,7 @@ public class ShopsActivity extends BaseActivity{
 							if (adapter == null) {
 								adapter = new ShopsAdapter(ShopsActivity.this, R.layout.item_shops, list);
 								mGridView.setAdapter(adapter);
+//								mGridView.bindLinearLayout();
 							}else {
 								adapter.upDateList(list);
 							}
@@ -203,6 +211,14 @@ public class ShopsActivity extends BaseActivity{
 				System.out.println(">>>>>>>>>"+position);
 			}
 		});
+		/*mGridView.setOnCellClickListener(new OnCellClickListener() {
+			
+			@Override
+			public void onCellClick(int index) {
+				
+					System.out.println(">>>>>>>>>index"+index);
+			}
+		});*/
 		topView.setRightBtnListener(new OnClickListener() {
 
 			@Override
