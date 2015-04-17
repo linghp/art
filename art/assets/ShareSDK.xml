@@ -61,7 +61,7 @@
         SortId="1"
         AppKey="3678455968"
         AppSecret="12b6caf25433e517c6ab2d134ce3fd96"
-        RedirectUrl="http://www.sharesdk.cn"
+        RedirectUrl="http://www.weibo.com"
         ShareByAppClient="true"
         Enable="true" />
 
@@ -77,8 +77,8 @@
     <QZone
         Id="3"
         SortId="3"
-        AppId="1104541400"
-        AppKey="TYKZ0xTUIXP4PLhF"
+        AppId="1104547802"
+        AppKey="auIjfBFsiKI35n88"
         ShareByAppClient="true"
         Enable="true" />
     
@@ -97,32 +97,32 @@
     <Wechat
         Id="4"
         SortId="4"
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
+        AppId="wxc653a07041cb2f64"
+        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
         BypassApproval="false"
         Enable="true" />
     
     <WechatMoments
         Id="5"
         SortId="5"
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
-        BypassApproval="true"
+        AppId="wxc653a07041cb2f64"
+        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
+        BypassApproval="false"
         Enable="true" />
         
 	<WechatFavorite
         Id="6"
         SortId="6"
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
-        Enable="true" />
+        AppId="wxc653a07041cb2f64"
+        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
+        Enable="false" />
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<QQ
         Id="7"
         SortId="7"
-        AppId="1104541400"
-        AppKey="TYKZ0xTUIXP4PLhF"
+        AppId="1104547802"
+        AppKey="auIjfBFsiKI35n88"
         ShareByAppClient="true"
         Enable="true" />
     

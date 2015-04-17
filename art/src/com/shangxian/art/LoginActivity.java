@@ -1,6 +1,7 @@
 package com.shangxian.art;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import com.shangxian.art.net.BaseServer.OnLoginListener;
 import com.shangxian.art.net.UserServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
