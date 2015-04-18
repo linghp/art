@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+	<LinearLayout 
+	    android:id="@+id/title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:gravity="center_vertical"
+	    android:layout_centerHorizontal="true"
+	    android:background="@drawable/infowind"
+	    android:paddingLeft="12dp"
+	    android:paddingRight="12dp"
+	    android:paddingBottom="20dp">
+	    
+	    <ImageView 
+	        android:layout_width="30dp"
+	        android:layout_height="30dp"
+	        android:src="@drawable/icon_home_check"
+	        android:layout_marginRight="8dp"/>
+	    
+	    <TextView 
+	        android:id="@+id/loct_tv_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="测试商铺1"
+	        android:maxWidth="200dp"
+	        android:minLines="1"
+	        android:gravity="center_vertical"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="8dp"
+	        />
+	</LinearLayout>
+</RelativeLayout>
