@@ -107,6 +107,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		topView=(TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.setRightBtnDrawable(R.drawable.more1);
+		topView.getRightbtn().setPadding(CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20));
 		topView.showCenterSearch();
 		topView.setBack(R.drawable.back);//返回
 
@@ -257,7 +258,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				popupWindow.showAsDropDown(topView, 460, -30);
+				popupWindow.showAsDropDown(topView.getRightbtn());
 			}
 		});
 		//收藏
