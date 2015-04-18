@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -19,8 +20,10 @@ import android.widget.ListView;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbDialogUtil;
 import com.ab.util.AbLogUtil;
 import com.ab.util.AbToastUtil;
+import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
@@ -33,7 +36,7 @@ import com.shangxian.art.utils.MyLogger;
  * @author Administrator
  *
  */
-public class ClassificationActivity extends BaseActivity {
+public class ClassificationActivity extends BaseActivity implements OnClickListener{
 	private ListView list;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
@@ -68,7 +71,7 @@ public class ClassificationActivity extends BaseActivity {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		model = new ArrayList<ClassificationModel>();
-		refreshTask();
+		requestTask();
 //		for (int i = 0; i < 10; i++) {
 //			ClassificationModel m = new ClassificationModel();
 //			m.setTitle("特价美食" + 1+i);
@@ -81,7 +84,9 @@ public class ClassificationActivity extends BaseActivity {
 
 	}
 	
-	private void refreshTask() {
+	private void requestTask() {
+		AbDialogUtil.showLoadDialog(this,
+				R.drawable.progress_circular, "数据加载中...");
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
 		AbRequestParams params = new AbRequestParams();
 		params.put("level", "all");
@@ -95,13 +100,14 @@ public class ClassificationActivity extends BaseActivity {
 
 			@Override
 			public void onFinish() {
-				// AbDialogUtil.removeDialog(HomeActivity.this);
+				 AbDialogUtil.removeDialog(ClassificationActivity.this);
 				// mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
+				list.setVisibility(View.GONE);
 				 AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
 //				imgList.clear();
 //				ArrayList<String> imgs = new ArrayList<String>();
@@ -144,6 +150,7 @@ public class ClassificationActivity extends BaseActivity {
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
+							list.setVisibility(View.VISIBLE);
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
 							int length = resultObjectArray.length();
@@ -208,5 +215,16 @@ public class ClassificationActivity extends BaseActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_reload:
+			requestTask();
+			break;
+		default:
+			break;
+		}
 	}
 }

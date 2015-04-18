@@ -17,7 +17,9 @@
             android:scrollbars="none"
             android:divider="@null"
             android:dividerHeight="10dp"
+            
              />
+        <include layout="@layout/no_network"/>
     </com.ab.view.pullview.AbPullToRefreshView>
 
 </LinearLayout>

@@ -70,11 +70,10 @@ public class HomeActivity extends BaseActivity implements
 	/** 动态添加图地址 */
 	private List<HomeadsBean> listHomeadsBean = new ArrayList<HomeadsBean>();
 
-	public static final String[] acActions = {
-		"PRODUCT_LIST", // 一种商品类型下的商品列表
-		"SHOP_LIST", // 一种商品类型下的商铺列表
-		"SHOP", // 一个商铺
-		"PRODUCT"// 一个商品
+	public static final String[] acActions = { "PRODUCT_LIST", // 一种商品类型下的商品列表
+			"SHOP_LIST", // 一种商品类型下的商铺列表
+			"SHOP", // 一个商铺
+			"PRODUCT"// 一个商品
 	};
 
 	@Override
@@ -117,20 +116,25 @@ public class HomeActivity extends BaseActivity implements
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
 		// params.put("phone", "15889936624");
-		String url = Constant.BASEURL +Constant.CONTENT+ Constant.HOME;
+		String url = Constant.BASEURL + Constant.CONTENT + Constant.HOME;
 		httpUtil.get(url, params, new AbStringHttpResponseListener() {
 			@Override
-			public void onStart() {}
+			public void onStart() {
+			}
+
 			@Override
 			public void onFinish() {
 				AbDialogUtil.removeDialog(HomeActivity.this);
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
+
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
 				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				mGridView.setVisibility(View.GONE);
 			}
+
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
@@ -142,6 +146,7 @@ public class HomeActivity extends BaseActivity implements
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
+							mGridView.setVisibility(View.VISIBLE);
 							listHomeadsBean.clear();
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
@@ -182,38 +187,38 @@ public class HomeActivity extends BaseActivity implements
 								for (int j = 0; j < listHomeadsBean_three
 										.size(); j++) {
 									if (j == 0) {
-										ImageView iv=(ImageView) view2.findViewById(R.id.iv_01);
-										Imageloader_homePager
-												.displayImage(
-														Constant.BASEURL
-																+ listHomeadsBean_three
-																		.get(0)
-																		.getImageUrl(),
-																		iv,
-														new Handler(), null);
-										extracted(listHomeadsBean_three.get(j), iv);
+										ImageView iv = (ImageView) view2
+												.findViewById(R.id.iv_01);
+										Imageloader_homePager.displayImage(
+												Constant.BASEURL
+														+ listHomeadsBean_three
+																.get(0)
+																.getImageUrl(),
+												iv, new Handler(), null);
+										extracted(listHomeadsBean_three.get(j),
+												iv);
 									} else if (j == 1) {
-										ImageView iv=(ImageView) view2.findViewById(R.id.iv_02);
-										Imageloader_homePager
-												.displayImage(
-														Constant.BASEURL
-																+ listHomeadsBean_three
-																		.get(1)
-																		.getImageUrl(),
-																		iv,
-														new Handler(), null);
-										extracted(listHomeadsBean_three.get(j), iv);
+										ImageView iv = (ImageView) view2
+												.findViewById(R.id.iv_02);
+										Imageloader_homePager.displayImage(
+												Constant.BASEURL
+														+ listHomeadsBean_three
+																.get(1)
+																.getImageUrl(),
+												iv, new Handler(), null);
+										extracted(listHomeadsBean_three.get(j),
+												iv);
 									} else if (j == 2) {
-										ImageView iv=(ImageView) view2.findViewById(R.id.iv_03);
-										Imageloader_homePager
-												.displayImage(
-														Constant.BASEURL
-																+ listHomeadsBean_three
-																		.get(2)
-																		.getImageUrl(),
-																		iv,
-														new Handler(), null);
-										extracted(listHomeadsBean_three.get(j), iv);
+										ImageView iv = (ImageView) view2
+												.findViewById(R.id.iv_03);
+										Imageloader_homePager.displayImage(
+												Constant.BASEURL
+														+ listHomeadsBean_three
+																.get(2)
+																.getImageUrl(),
+												iv, new Handler(), null);
+										extracted(listHomeadsBean_three.get(j),
+												iv);
 									}
 								}
 								ll_mainhomehead_add.addView(view2);
@@ -296,7 +301,8 @@ public class HomeActivity extends BaseActivity implements
 
 			private void extracted(HomeadsBean homeadsBean, View view) {
 				view.setTag(homeadsBean.getAdAction());
-				view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());;
+				view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());
+				;
 				view.setOnClickListener(HomeActivity.this);
 			}
 		});
@@ -538,27 +544,40 @@ public class HomeActivity extends BaseActivity implements
 	// }
 	@Override
 	public void onClick(View v) {
-		String tag=(String) v.getTag();
-		String dataurl=(String) v.getTag(R.id.homeDataUrl);
-		switch (tag) {
-		case "PRODUCT_LIST":// 一种商品类型下的商品列表
-			ClassifyCommodityActivity.startThisActivity_url(dataurl, HomeActivity.this);
+		String tag = (String) v.getTag();
+		String dataurl = (String) v.getTag(R.id.homeDataUrl);
+		if (!TextUtils.isEmpty(tag)) {
+			switch (tag) {
+			case "PRODUCT_LIST":// 一种商品类型下的商品列表
+				ClassifyCommodityActivity.startThisActivity_url(dataurl,
+						HomeActivity.this);
+				break;
+			case "SHOP_LIST":// 一种商品类型下的商铺列表
+				// CommonUtil.gotoActivity(HomeActivity.this,
+				// ShopsListActivity.class, false);
+				ShopsListActivity.startThisActivity_url(dataurl,
+						HomeActivity.this);
+				break;
+			case "SHOP":// 一个商铺
+				ShopsActivity.startThisActivity_url(dataurl, HomeActivity.this);
+				break;
+			case "PRODUCT":// 一个商品
+				CommodityContentActivity.startThisActivity_url(dataurl,
+						HomeActivity.this);
+				break;
+			default:
+				break;
+			}
+			MyLogger.i(v.getTag() + "--" + dataurl);
+		}
+		
+		switch (v.getId()) {
+		case R.id.iv_reload:
+			requestTask();
 			break;
-		case "SHOP_LIST":// 一种商品类型下的商铺列表
-//			CommonUtil.gotoActivity(HomeActivity.this, ShopsListActivity.class, false);
-			ShopsListActivity.startThisActivity_url(dataurl, HomeActivity.this);
-			break;
-		case "SHOP":// 一个商铺
-			ShopsActivity.startThisActivity_url(dataurl, HomeActivity.this);
-			break;
-		case "PRODUCT":// 一个商品
-			CommodityContentActivity.startThisActivity_url(dataurl, HomeActivity.this);
-			break;
-
 		default:
 			break;
 		}
-		MyLogger.i(v.getTag()+"--"+dataurl);
 	}
 
 }

@@ -24,6 +24,7 @@
             android:cacheColorHint="#00000000"
             android:divider="@null"
             android:dividerHeight="2dp" />
+        <include layout="@layout/no_network"/>
     </com.ab.view.pullview.AbPullToRefreshView>
 
 </RelativeLayout>
