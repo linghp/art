@@ -3,7 +3,6 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,11 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
@@ -33,13 +32,9 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductDto;
-import com.shangxian.art.bean.ShopsListModel;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.MyLogger;
-import com.shangxian.art.view.GridLinearLayout;
-import com.shangxian.art.view.GridLinearLayout.OnCellClickListener;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -59,7 +54,8 @@ public class ShopsActivity extends BaseActivity{
 	private View view;
 	private TextView fenlei,jianjie;
 
-	GridView mGridView;
+	private View headView = null;
+	ListView mGridView;
 //	GridLinearLayout mGridView;
 	ShopsModel model;
 	List<ProductDto>list;
@@ -79,10 +75,28 @@ public class ShopsActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shops);
+		
 		initView();
 		initData();
 		initListener();
 		initPopupWindow();
+	}
+
+	private void initHeadView() {
+		headView = LayoutInflater.from(this).inflate(
+				R.layout.head_shops, null);
+		img = (ImageView) headView.findViewById(R.id.shops_img);
+		shopsimg = (ImageView) headView.findViewById(R.id.shops_shopsimg);
+		collectionimg = (ImageView) headView.findViewById(R.id.shops_collectionimg);
+		shopsname= (TextView) headView.findViewById(R.id.shops_shopsname);
+		guanzu= (TextView) headView.findViewById(R.id.shops_guanzu);
+		all= (TextView) headView.findViewById(R.id.shops_all);
+		up= (TextView) headView.findViewById(R.id.shops_up);
+		youhui= (TextView) headView.findViewById(R.id.shops_youhui);
+		
+		call = (LinearLayout) headView.findViewById(R.id.shops_call);
+		dingwei = (LinearLayout) headView.findViewById(R.id.shops_dingwei);
+		
 	}
 
 	private void initView() {
@@ -93,27 +107,15 @@ public class ShopsActivity extends BaseActivity{
 		topView.showCenterSearch();
 		topView.setBack(R.drawable.back);//返回
 
-		img = (ImageView) findViewById(R.id.shops_img);
-		shopsimg = (ImageView) findViewById(R.id.shops_shopsimg);
-		collectionimg = (ImageView) findViewById(R.id.shops_collectionimg);
-		//		img1 = (ImageView) findViewById(R.id.shops_img1);
-		//		img2 = (ImageView) findViewById(R.id.shops_img2);
-		shopsname= (TextView) findViewById(R.id.shops_shopsname);
-		guanzu= (TextView) findViewById(R.id.shops_guanzu);
-		all= (TextView) findViewById(R.id.shops_all);
-		up= (TextView) findViewById(R.id.shops_up);
-		youhui= (TextView) findViewById(R.id.shops_youhui);
-		
-		call = (LinearLayout) findViewById(R.id.shops_call);
-		dingwei = (LinearLayout) findViewById(R.id.shops_dingwei);
-
-		mGridView = (GridView) findViewById(R.id.shops_grid);
+		mGridView = (ListView) this.findViewById(R.id.shops_mListView);
 //		mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
 //		mGridView.setColumns(2);
 		//		summary1= (TextView) findViewById(R.id.shops_summary1);
 		//		price1= (TextView) findViewById(R.id.shops_price1);
 		//		summary2= (TextView) findViewById(R.id.shops_summary2);
 		//		price2= (TextView) findViewById(R.id.shops_price2);
+		initHeadView();
+		mGridView.addHeaderView(headView);
 		//图片下载器
         mAbImageLoader = AbImageLoader.newInstance(mAc);
         mAbImageLoader.setLoadingImage(R.drawable.image_loading);
@@ -163,12 +165,22 @@ public class ShopsActivity extends BaseActivity{
 							youhui.setText(""+model.getSpecialCount());//优惠
 							
 							list=model.getProductDtos();
+							
 							if (adapter == null) {
-								adapter = new ShopsAdapter(ShopsActivity.this, R.layout.item_shops, list);
+//								//给每项商品设置id
+//								for (int i = 0; i < list.size(); i++) {
+//									ProductDto p = new ProductDto();
+//									p.setId(i);
+//									list.add(p);
+//								}
+								adapter = new ShopsAdapter(ShopsActivity.this);
+								//adapter = new ShopsAdapter(this);
+								adapter.updateData(list);
 								mGridView.setAdapter(adapter);
 //								mGridView.bindLinearLayout();
 							}else {
-								adapter.upDateList(list);
+//								adapter.upDateList(list);
+								adapter.updateData(list);
 							}
 							
 						}
