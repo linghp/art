@@ -168,6 +168,8 @@
     <color name="transparentwhite3">#42ffffff</color><!--白色透明 -->
     <color name="transparentwhite4">#20ffffff</color><!--白色透明 -->
     <color name="transparentlime">#428bc34a</color>
+    
     <color name="primary">#009688</color>
     <color name="primaryDark">#00796b</color>
+    <color name="pupo_color">#fffef4</color>
 </resources>
