@@ -170,27 +170,30 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-        <LinearLayout android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
 
-            <LinearLayout
-                android:id="@+id/shops_call"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:id="@+id/shops_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="4dp" >
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="4dp" >
+                android:src="@drawable/call_btn" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/call_btn" />
             <TextView
                 android:id="@+id/shops_phonenum"
                 android:layout_width="wrap_content"
@@ -200,32 +203,24 @@
                 android:text="15025496981" />
         </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:singleLine="true"
-                    android:text="15025496981" />
-            </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/txt_black3" />
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="30dp"
-                android:background="@color/txt_black3" />
+        <LinearLayout
+            android:id="@+id/shops_dingwei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="4dp" >
 
-            <LinearLayout
-                android:id="@+id/shops_dingwei"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="4dp" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/fourth_tab" />
+                android:src="@drawable/fourth_tab" />
 
             <TextView
                 android:id="@+id/shops_address"
@@ -234,13 +229,13 @@
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:text="重庆市沙坪坝区" />
-            </LinearLayout>
-
         </LinearLayout>
+    </LinearLayout>
 
-    <LinearLayout android:layout_marginTop="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@color/txt_white"
         android:orientation="vertical"
         android:padding="10dp" >
