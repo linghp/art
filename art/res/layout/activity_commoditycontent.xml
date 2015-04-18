@@ -22,16 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:padding="15dp"
+            android:padding="10dp"
             android:src="@drawable/collection_off" />
         <ImageView android:layout_toRightOf="@id/commoditycontent_shoucang"
             android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:onClick="onClick"
-            android:src="@drawable/collection_off" />
+            android:padding="10dp"
+            android:src="@drawable/share_normal" />
 
         <TextView
             android:id="@+id/commoditycontent_jiarugouwuche"
