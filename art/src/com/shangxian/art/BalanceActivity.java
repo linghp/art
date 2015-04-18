@@ -50,10 +50,10 @@ public class BalanceActivity extends BaseActivity {
 		PayServer.loadAccountSum(new OnAccountSumListener() {
 			@Override
 			public void onAccountSum(AccountSumInfo info) {
-				System.out
-						.println("account ======================+++++++++++++++++"
-								+ info == null ? "null" : info.toString());
 				if (info != null && !info.isNull()) {
+					System.out
+					.println("account ======================+++++++++++++++++"
+							+ info == null ? "null" : info.toString());
 					ainongbi.setText(String.format("%.2f", info.getAlb()));
 					ainongyuan.setText(String.format("%.2f", info.getAly()));
 				}

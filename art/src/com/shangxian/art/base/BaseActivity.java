@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.http.AbHttpUtil;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
 import com.shangxian.art.constant.Constant;
@@ -22,6 +23,7 @@ public class BaseActivity extends AbActivity {
 	protected LocalUserInfo share;
 	protected BaseActivity mAc;
 	protected MyApplication app;
+	protected AbHttpUtil httpUtil;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class BaseActivity extends AbActivity {
 		share = LocalUserInfo.getInstance(this);
 		app = MyApplication.getInstance();
 		mAc = this;
+		httpUtil = AbHttpUtil.getInstance(this);
+		httpUtil.setTimeout(Constant.timeOut);
 	}
 
 	protected void myToast(String str) {
