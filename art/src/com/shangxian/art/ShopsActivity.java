@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar.LayoutParams;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -23,11 +24,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.image.AbImageLoader;
-import com.ab.util.AbLogUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsAdapter;
 import com.shangxian.art.base.BaseActivity;
@@ -35,6 +37,7 @@ import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -42,7 +45,7 @@ import com.shangxian.art.view.TopView;
  * @author Administrator
  *
  */
-public class ShopsActivity extends BaseActivity{
+public class ShopsActivity extends BaseActivity implements OnClickListener{
 	ImageView img,shopsimg,collectionimg,img1,img2;
 	TextView shopsname,guanzu,all,up,youhui,summary1,price1,summary2,price2;
 	LinearLayout call,dingwei;
@@ -130,21 +133,39 @@ public class ShopsActivity extends BaseActivity{
 		//请求解析数据
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
-		url = Constant.BASEURL + Constant.CONTENT + "/shop/1";//第一条数据地址
-		refreshTask(url);	
-		
+		String id = getIntent().getStringExtra("id");
+	    String geturl = getIntent().getStringExtra("url");
+		String url = "";
+		if (TextUtils.isEmpty(geturl)) {
+			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+id;
+		} else {
+			url = Constant.BASEURL + Constant.CONTENT + geturl;
+		}
+		refreshTask(url);
+
 	}
 
-	private void refreshTask(String url2) {
+	public static void startThisActivity(String id, Context context) {
+		Intent intent = new Intent(context, ShopsActivity.class);
+		intent.putExtra("id", id);
+		context.startActivity(intent);
+	}
+
+	public static void startThisActivity_url(String url, Context context) {
+		Intent intent = new Intent(context, ShopsActivity.class);
+		intent.putExtra("url", url);
+		context.startActivity(intent);
+	}
+	
+	private void refreshTask(String url) {
 		// TODO Auto-generated method stub
 		httpUtil.get(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {
-				AbLogUtil.i(ShopsActivity.this, arg1);
-//				System.out.println(">>>>>>>>>>请求到的数据"+arg1);
-				
-				//解析
+				MyLogger.i(arg1);
+
+				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
 					JSONObject jsonObject;
@@ -325,5 +346,47 @@ public class ShopsActivity extends BaseActivity{
 			}
 		});
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_share:
+			showShare();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void showShare() {
+		ShareSDK.initSDK(this);
+		OnekeyShare oks = new OnekeyShare();
+		// 关闭sso授权
+		oks.disableSSOWhenAuthorize();
+
+		// 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
+		// oks.setNotification(R.drawable.ic_launcher,
+		// getString(R.string.app_name));
+		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		oks.setTitle(getString(R.string.share));
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl("http://www.peoit.com/");
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText("test");
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		// oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+		// url仅在微信（包括好友和朋友圈）中使用
+		oks.setUrl("http://www.peoit.com/");
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		oks.setComment("我是测试评论文本");
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite(getString(R.string.app_name));
+		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		oks.setSiteUrl("http://www.peoit.com/");
+
+		// 启动分享GUI
+		oks.show(this);
 	}
 }
