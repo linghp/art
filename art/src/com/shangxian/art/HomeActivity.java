@@ -39,6 +39,7 @@ import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
 
@@ -141,6 +142,7 @@ public class HomeActivity extends BaseActivity implements
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
+							listHomeadsBean.clear();
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
 							int length = resultObjectArray.length();
@@ -547,7 +549,7 @@ public class HomeActivity extends BaseActivity implements
 			ShopsListActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 		case "SHOP":// 一个商铺
-			
+			ShopsActivity.startThisActivity_url(dataurl, HomeActivity.this);
 			break;
 		case "PRODUCT":// 一个商品
 			CommodityContentActivity.startThisActivity_url(dataurl, HomeActivity.this);
@@ -556,7 +558,7 @@ public class HomeActivity extends BaseActivity implements
 		default:
 			break;
 		}
-		//myToast(v.getTag()+"--"+dataurl);
+		MyLogger.i(v.getTag()+"--"+dataurl);
 	}
 
 }

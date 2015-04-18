@@ -74,6 +74,14 @@
                     android:layout_marginRight="5dp"
                     android:padding="10dp"
                     android:src="@drawable/collection_off" />
+
+                <ImageView
+                    android:id="@+id/tv_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:onClick="onClick"
+                    android:src="@drawable/share_normal" />
             </LinearLayout>
 
             <View
@@ -266,7 +274,8 @@
                 android:padding="10dp"
                 android:verticalSpacing="10dp" >
             </com.shangxian.art.view.MyGridView>
-            <!-- <com.shangxian.art.view.GridLinearLayout
+            <!--
+            <com.shangxian.art.view.GridLinearLayout
                 android:id="@+id/shops_grid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -276,8 +285,10 @@
                 android:numColumns="2"
                 android:padding="10dp"
                 android:verticalSpacing="10dp"> 
-            </com.shangxian.art.view.GridLinearLayout> -->
-            <!-- <GridView 
+            </com.shangxian.art.view.GridLinearLayout>
+            -->
+            <!--
+            <GridView 
                android:id="@+id/shops_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -288,7 +299,8 @@
                 android:padding="10dp"
                 android:verticalSpacing="10dp" >
                 
-            </GridView> -->
+            </GridView>
+            -->
         </LinearLayout>
     </ScrollView>
 

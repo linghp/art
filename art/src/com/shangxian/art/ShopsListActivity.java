@@ -148,12 +148,12 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 
 	}
 
-	public static void startThisActivity(String id,
-			Context context) {
-		Intent intent = new Intent(context, ShopsListActivity.class);
-		intent.putExtra("id", id);
-		context.startActivity(intent);
-	}
+//	public static void startThisActivity(String id,
+//			Context context) {
+//		Intent intent = new Intent(context, ShopsListActivity.class);
+//		intent.putExtra("id", id);
+//		context.startActivity(intent);
+//	}
 
 	public static void startThisActivity_url(String url, Context context) {
 		Intent intent = new Intent(context, ShopsListActivity.class);

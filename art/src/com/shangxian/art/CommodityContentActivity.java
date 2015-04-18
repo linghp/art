@@ -49,6 +49,7 @@ public class CommodityContentActivity extends BaseActivity implements
 
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
+	private String shopid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,9 @@ public class CommodityContentActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(CommodityContentActivity.this,
-						ShopsActivity.class, false);
+//				CommonUtil.gotoActivity(CommodityContentActivity.this,
+//						ShopsActivity.class, false);
+				ShopsActivity.startThisActivity(shopid, CommodityContentActivity.this);
 			}
 		});
 		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
@@ -189,8 +191,10 @@ public class CommodityContentActivity extends BaseActivity implements
 							model = gson.fromJson(jsonObject1.toString(),
 									CommodityContentModel.class);
 							MyLogger.i(model.toString());
-							if (model != null)
+							if (model != null){
+								shopid=model.getShopId()+"";
 								updateView();
+								}
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -239,7 +243,6 @@ public class CommodityContentActivity extends BaseActivity implements
 			}
 			break;
 		case R.id.tv_share:
-			myToast("share");
 			showShare();
 			break;
 
