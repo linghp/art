@@ -52,6 +52,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	//判断是否收藏
 	boolean iscollection = false;
+	//联系电话
+	String phonenum = null;
+	TextView phone,address;
 	//popupwindow
 	private PopupWindow popupWindow;
 	private View view;
@@ -63,8 +66,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 	ShopsModel model;
 	List<ProductDto>list;
 	ShopsAdapter adapter;
-	
-	
 
 	//数据请求
 	private AbHttpUtil httpUtil = null;
@@ -100,6 +101,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		call = (LinearLayout) headView.findViewById(R.id.shops_call);
 		dingwei = (LinearLayout) headView.findViewById(R.id.shops_dingwei);
 		
+		phone = (TextView) headView.findViewById(R.id.shops_phonenum);
+		address = (TextView) headView.findViewById(R.id.shops_address);
 	}
 
 	private void initView() {
@@ -283,7 +286,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+10086));
+				phonenum = phone.getText().toString().trim();
+				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phonenum));
 				startActivity(intent);
 			}
 		});

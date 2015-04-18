@@ -18,7 +18,8 @@ import com.shangxian.art.view.TopView;
 public class ShopsSummaryActivity extends BaseActivity{
 	ImageView shopsimg,phoneimg,addressimg;//商铺图片、电话图片、地址图片
 	TextView shopsname,guanzu,zhanggui,phone,address,summary;//商铺名字、关注、掌柜名、电话、地址、简介
-	
+	//联系电话
+		String phonenum = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,8 +62,8 @@ public class ShopsSummaryActivity extends BaseActivity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+10086));
+				phonenum = phone.getText().toString().trim();
+				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phonenum));
 				startActivity(intent);
 			}
 		});

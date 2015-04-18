@@ -191,6 +191,7 @@
                 android:src="@drawable/call_btn" />
 
             <TextView
+                android:id="@+id/shops_phonenum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -218,6 +219,7 @@
                 android:src="@drawable/fourth_tab" />
 
             <TextView
+                android:id="@+id/shops_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
