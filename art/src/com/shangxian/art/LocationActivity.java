@@ -279,10 +279,6 @@ public class LocationActivity extends BaseActivity {
 				public boolean onMarkerClick(Marker marker) {
 					mMap.hideInfoWindow();
 					final int mark = markers.indexOf(marker);
-					// myToast("点击了" + mark);
-					/*Button button = new Button(getApplicationContext());
-					button.setBackgroundResource(R.drawable.yinying);
-					button.setText("测试商铺" + mark);*/
 					View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg, null);
 					TextView title = (TextView) view.findViewById(R.id.loct_tv_title);
 					title.setText("测试商铺"  + mark);
