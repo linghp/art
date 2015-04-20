@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -29,45 +30,50 @@ import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
+
 /**
  * 商品详情
+ * 
  * @author Administrator
  *
  */
-public class CommodityContentActivity extends BaseActivity implements OnClickListener,HttpCilentListener{
+public class CommodityContentActivity extends BaseActivity implements
+		OnClickListener, HttpCilentListener {
 	private LinearLayout shangpu;
-    private ImageView commoditycontent_img,commoditycontent_shoucang;
-    private TextView commoditycontent_jieshao,commoditycontent_jiage,commoditycontent_jiarugouwuche;
-	
-  //判断是否收藏
-  	boolean iscollection = false;
-  	
+	private ImageView commoditycontent_img, commoditycontent_shoucang;
+	private TextView commoditycontent_jieshao, commoditycontent_jiage,
+			commoditycontent_jiarugouwuche;
+
+	// 判断是否收藏
+	boolean iscollection = false;
+
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
+	private String shopid;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_commoditycontent);
-		
+
 		initView();
 		initData();
 		listener();
 	}
 
-	public static void startThisActivity(String id,
-			Context context) {
+	public static void startThisActivity(String id, Context context) {
 		Intent intent = new Intent(context, CommodityContentActivity.class);
 		intent.putExtra("id", id);
 		context.startActivity(intent);
 	}
-	
+
 	public static void startThisActivity_url(String url, Context context) {
 		Intent intent = new Intent(context, CommodityContentActivity.class);
 		intent.putExtra("url", url);
 		context.startActivity(intent);
 	}
-	
+
 	private void listener() {
 		commoditycontent_jiarugouwuche.setOnClickListener(this);
 		shangpu.setOnClickListener(new OnClickListener() {
@@ -75,47 +81,56 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(CommodityContentActivity.this, ShopsActivity.class, false);
+//				CommonUtil.gotoActivity(CommodityContentActivity.this,
+//						ShopsActivity.class, false);
+				ShopsActivity.startThisActivity(shopid, CommodityContentActivity.this);
 			}
 		});
 		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if(isLoginAndToLogin()){
-				if (!iscollection) {
-					commoditycontent_shoucang.setImageResource(R.drawable.collection_on);
-					myToast("已收藏");
-				}else {
-					commoditycontent_shoucang.setImageResource(R.drawable.collection_off);
-					myToast("取消收藏");
-				}
-				iscollection = !iscollection;
+				if (isLoginAndToLogin()) {
+					if (!iscollection) {
+						commoditycontent_shoucang
+								.setImageResource(R.drawable.collection_on);
+						myToast("已收藏");
+					} else {
+						commoditycontent_shoucang
+								.setImageResource(R.drawable.collection_off);
+						myToast("取消收藏");
+					}
+					iscollection = !iscollection;
 				}
 			}
 		});
 	}
-
+	String geturl;
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
-		String id=getIntent().getStringExtra("id");
-		String geturl = getIntent().getStringExtra("url");
+		String id = getIntent().getStringExtra("id");
+		geturl = getIntent().getStringExtra("url");
+//		if (TextUtils.isEmpty(geturl)) {
+//			// 获取网页数据test
+//			Uri uri = getIntent().getData();
+//			geturl = uri.getQueryParameter("arg0");
+//		}
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
-			url=Constant.BASEURL+Constant.CONTENT+"/product"+"/"+id;
+			url = Constant.BASEURL + Constant.CONTENT + "/product" + "/" + id;
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
-        refreshTask(url);
+		refreshTask(url);
 	}
 
 	private void refreshTask(String url) {
-	//	AbRequestParams params = new AbRequestParams();
-//		params.put("shopid", "1019");
-//		params.put("code", "88881110344801123456");
-//		params.put("phone", "15889936624");
-		httpUtil.get(url,new AbStringHttpResponseListener() {
+		// AbRequestParams params = new AbRequestParams();
+		// params.put("shopid", "1019");
+		// params.put("code", "88881110344801123456");
+		// params.put("phone", "15889936624");
+		httpUtil.get(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onStart() {
@@ -131,32 +146,32 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
 				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
-//				imgList.clear();
-//				ArrayList<String> imgs = new ArrayList<String>();
-//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-//				mDatas.setImgList(imgs);
-//				if (mDatas != null) {
-//					if (mDatas.getImgList() != null
-//							&& mDatas.getImgList().size() > 0) {
-//						imgList.addAll(mDatas.getImgList());
-//						// viewPager.setVisibility(View.VISIBLE);
-//						viewPager.setOnGetView(new OnGetView() {
-//
-//							@Override
-//							public View getView(ViewGroup container,
-//									int position) {
-//								ImageView iv = new ImageView(HomeActivity.this);
-//								Imageloader_homePager.displayImage(
-//										imgList.get(position), iv,
-//										new Handler(), null);
-//								container.addView(iv);
-//								return iv;
-//							}
-//						});
-//						viewPager.setAdapter(imgList.size());
-//					}
-//
-//				}
+				// imgList.clear();
+				// ArrayList<String> imgs = new ArrayList<String>();
+				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				// mDatas.setImgList(imgs);
+				// if (mDatas != null) {
+				// if (mDatas.getImgList() != null
+				// && mDatas.getImgList().size() > 0) {
+				// imgList.addAll(mDatas.getImgList());
+				// // viewPager.setVisibility(View.VISIBLE);
+				// viewPager.setOnGetView(new OnGetView() {
+				//
+				// @Override
+				// public View getView(ViewGroup container,
+				// int position) {
+				// ImageView iv = new ImageView(HomeActivity.this);
+				// Imageloader_homePager.displayImage(
+				// imgList.get(position), iv,
+				// new Handler(), null);
+				// container.addView(iv);
+				// return iv;
+				// }
+				// });
+				// viewPager.setAdapter(imgList.size());
+				// }
+				//
+				// }
 
 			}
 
@@ -173,31 +188,32 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 						if (result_code.equals("200")) {
 							JSONObject jsonObject1 = jsonObject
 									.getJSONObject("result");
-								model=gson.fromJson(
-										jsonObject1.toString(), CommodityContentModel.class);
-								MyLogger.i(model.toString());
-								if(model!=null)
+							model = gson.fromJson(jsonObject1.toString(),
+									CommodityContentModel.class);
+							MyLogger.i(model.toString());
+							if (model != null){
+								shopid=model.getShopId()+"";
 								updateView();
+								}
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-	
+
 			}
 		});
 	}
-	
+
 	private void updateView() {
 		Imageloader_homePager.displayImage(Constant.BASEURL
-				+ model.getPhotos().get(0),
-				commoditycontent_img,
+				+ model.getPhotos().get(0), commoditycontent_img,
 				new Handler(), null);// TODO Auto-generated method stub
 		commoditycontent_jieshao.setText(model.getName());
-		commoditycontent_jiage.setText("￥"+model.getPromotionPrice());
+		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
 	}
-	
+
 	private void initView() {
 		// TODO Auto-generated method stub
 		commoditycontent_img = (ImageView) findViewById(R.id.commoditycontent_img);
@@ -206,27 +222,27 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
 		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
 		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
-//		star = (StarRatingView) findViewById(R.id.commoditycontent_starRating);
-//		star.setSelectNums(1);//设置默认选中星星数
-		topView=(TopView) findViewById(R.id.top_title);
+		// star = (StarRatingView)
+		// findViewById(R.id.commoditycontent_starRating);
+		// star.setSelectNums(1);//设置默认选中星星数
+		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
 		topView.hideCenterSearch();
 		topView.showTitle();
-		topView.setBack(R.drawable.back);//返回
-		topView.setTitle("商品详情");//title文字
+		topView.setBack(R.drawable.back);// 返回
+		topView.setTitle("商品详情");// title文字
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.commoditycontent_jiarugouwuche:
-			if(isLoginAndToLogin()){
-			dotask_addcart();
+			if (isLoginAndToLogin()) {
+				dotask_addcart();
 			}
 			break;
 		case R.id.tv_share:
-			myToast("share");
 			showShare();
 			break;
 
@@ -235,39 +251,42 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		}
 	}
 
-	private void showShare(){
-		   ShareSDK.initSDK(this);
-		   OnekeyShare oks = new OnekeyShare(); 
-		 //关闭sso授权
-		   oks.disableSSOWhenAuthorize(); 
-		   
-		  // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-		   //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-		   // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-		   oks.setTitle(getString(R.string.share));
-		   // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-		   oks.setTitleUrl("http://sharesdk.cn");
-		   // text是分享文本，所有平台都需要这个字段
-		   oks.setText("我是分享文本");
-		   // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-		   //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-		   // url仅在微信（包括好友和朋友圈）中使用
-		   oks.setUrl("http://sharesdk.cn");
-		   // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-		   oks.setComment("我是测试评论文本");
-		   // site是分享此内容的网站名称，仅在QQ空间使用
-		   oks.setSite(getString(R.string.app_name));
-		   // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-		   oks.setSiteUrl("http://sharesdk.cn");
-		   
-		  // 启动分享GUI
-		   oks.show(this);
-		}
-	
+	private void showShare() {
+		ShareSDK.initSDK(this);
+		OnekeyShare oks = new OnekeyShare();
+		// 关闭sso授权
+		oks.disableSSOWhenAuthorize();
+
+		// 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
+		// oks.setNotification(R.drawable.ic_launcher,
+		// getString(R.string.app_name));
+		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		oks.setTitle(getString(R.string.share));
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl("http://www.peoit.com/");
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText("test");
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		// oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+		// url仅在微信（包括好友和朋友圈）中使用
+		oks.setUrl("http://www.peoit.com/");
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		oks.setComment("我是测试评论文本");
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite(getString(R.string.app_name));
+		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		oks.setSiteUrl("http://www.peoit.com/");
+
+		// 启动分享GUI
+		oks.show(this);
+	}
+
 	private void dotask_addcart() {
-		String json="{\"productId\":"+model.getId()+",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
-		//MyLogger.i(json);
-		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.CART, json, this);
+		String json = "{\"productId\":" + model.getId()
+				+ ",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
+		// MyLogger.i(json);
+		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
+				json, this);
 	}
 
 	@Override
@@ -276,11 +295,9 @@ public class CommodityContentActivity extends BaseActivity implements OnClickLis
 		if (!TextUtils.isEmpty(content)) {
 			try {
 				JSONObject jsonObject = new JSONObject(content);
-				String result_code = jsonObject
-						.getString("result_code");
+				String result_code = jsonObject.getString("result_code");
 				if (result_code.equals("200")) {
-					myToast(jsonObject
-						.getString("result"));
+					myToast(jsonObject.getString("result"));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

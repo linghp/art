@@ -6,6 +6,13 @@ import com.google.gson.annotations.Expose;
 
 public class ProductDto implements Serializable{
 
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Expose
 	private String photo;
 	@Expose
@@ -32,9 +39,10 @@ public class ProductDto implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ProductDto [photo=" + photo + ", name=" + name + ", price="
-				+ price + "]";
+		return "ProductDto [id=" + id + ", photo=" + photo + ", name=" + name
+				+ ", price=" + price + "]";
 	}
+	
 	
 
 }

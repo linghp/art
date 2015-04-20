@@ -5,14 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.ab.fragment.AbDialogFragment.AbDialogOnLoadListener;
 import com.ab.fragment.AbLoadDialogFragment;
+import com.ab.http.AbStringHttpResponseListener;
 import com.ab.task.AbTask;
 import com.ab.task.AbTaskItem;
 import com.ab.task.AbTaskListListener;
@@ -23,15 +30,18 @@ import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.ab.view.titlebar.AbTitleBar;
+import com.google.gson.Gson;
 import com.shangxian.art.adapter.ImageListAdapter;
+import com.shangxian.art.adapter.ListCarAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
+import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 public class NearlyActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnFooterLoadListener {
+		OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 	private MyApplication application;
 	private List<Map<String, Object>> list = null;
 	private AbPullToRefreshView mAbPullToRefreshView = null;
@@ -56,7 +66,7 @@ public class NearlyActivity extends BaseActivity implements
 		// mAbTitleBar.setTitleBarBackground(R.drawable.top_bg);
 		// mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		// mAbTitleBar.setLogoLine(R.drawable.line);
-		
+
 		for (int i = 0; i < 23; i++) {
 			mPhotoList.add(Constant.BASEURL1
 					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
@@ -92,23 +102,11 @@ public class NearlyActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				
+
 			}
 		});
 
-		// 显示进度框
-		mDialogFragment = AbDialogUtil.showLoadDialog(this,
-				R.drawable.progress_loading2, "查询中,请等一小会");
-		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
-
-			@Override
-			public void onLoad() {
-				// 下载网络数据
-				refreshTask();
-			}
-
-		});
+		refreshTask();
 
 	}
 
@@ -122,52 +120,152 @@ public class NearlyActivity extends BaseActivity implements
 		refreshTask();
 	}
 
-	public void refreshTask() {
-		AbLogUtil.prepareLog(this);
-		AbTask mAbTask = new AbTask();
-		final AbTaskItem item = new AbTaskItem();
-		item.setListener(new AbTaskListListener() {
+//	public void refreshTask1() {
+//		AbLogUtil.prepareLog(this);
+//		AbTask mAbTask = new AbTask();
+//		final AbTaskItem item = new AbTaskItem();
+//		item.setListener(new AbTaskListListener() {
+//			@Override
+//			public List<?> getList() {
+//				List<Map<String, Object>> newList = null;
+//				try {
+//					Thread.sleep(1000);
+//					currentPage = 1;
+//					newList = new ArrayList<Map<String, Object>>();
+//					Map<String, Object> map = null;
+//
+//					for (int i = 0; i < pageSize; i++) {
+//						map = new HashMap<String, Object>();
+//						map.put("itemsIcon", mPhotoList.get(i));
+//						map.put("itemsTitle", "item" + (i + 1));
+//						map.put("itemsText", "item..." + (i + 1));
+//						newList.add(map);
+//
+//					}
+//				} catch (Exception e) {
+//				}
+//				return newList;
+//			}
+//
+//			@Override
+//			public void update(List<?> paramList) {
+//
+//				// 通知Dialog
+//				mDialogFragment.loadFinish();
+//				AbLogUtil.d(NearlyActivity.this, "返回", true);
+//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
+//				list.clear();
+//				if (newList != null && newList.size() > 0) {
+//					list.addAll(newList);
+//					myListViewAdapter.notifyDataSetChanged();
+//					newList.clear();
+//				}
+//				mAbPullToRefreshView.onHeaderRefreshFinish();
+//			}
+//
+//		});
+//
+//		mAbTask.execute(item);
+//	}
+
+	private void refreshTask() {
+		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
+		AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
+				"数据加载中...");
+		// AbRequestParams params = new AbRequestParams();
+		// params.put("shopid", "1019");
+		// params.put("code", "88881110344801123456");
+		// params.put("phone", "15889936624");
+		httpUtil.get(url, new AbStringHttpResponseListener() {
+
 			@Override
-			public List<?> getList() {
-				List<Map<String, Object>> newList = null;
-				try {
-					Thread.sleep(1000);
-					currentPage = 1;
-					newList = new ArrayList<Map<String, Object>>();
-					Map<String, Object> map = null;
-
-					for (int i = 0; i < pageSize; i++) {
-						map = new HashMap<String, Object>();
-						map.put("itemsIcon", mPhotoList.get(i));
-						map.put("itemsTitle", "item" + (i + 1));
-						map.put("itemsText", "item..." + (i + 1));
-						newList.add(map);
-
-					}
-				} catch (Exception e) {
-				}
-				return newList;
+			public void onStart() {
 			}
 
 			@Override
-			public void update(List<?> paramList) {
-
-				// 通知Dialog
-				mDialogFragment.loadFinish();
-				AbLogUtil.d(NearlyActivity.this, "返回", true);
-				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-				list.clear();
-				if (newList != null && newList.size() > 0) {
-					list.addAll(newList);
-					myListViewAdapter.notifyDataSetChanged();
-					newList.clear();
-				}
+			public void onFinish() {
+				AbDialogUtil.removeDialog(NearlyActivity.this);
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
-		});
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error) {
+				mListView.setVisibility(View.GONE);
+				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				// imgList.clear();
+				// ArrayList<String> imgs = new ArrayList<String>();
+				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				// mDatas.setImgList(imgs);
+				// if (mDatas != null) {
+				// if (mDatas.getImgList() != null
+				// && mDatas.getImgList().size() > 0) {
+				// imgList.addAll(mDatas.getImgList());
+				// // viewPager.setVisibility(View.VISIBLE);
+				// viewPager.setOnGetView(new OnGetView() {
+				//
+				// @Override
+				// public View getView(ViewGroup container,
+				// int position) {
+				// ImageView iv = new ImageView(HomeActivity.this);
+				// Imageloader_homePager.displayImage(
+				// imgList.get(position), iv,
+				// new Handler(), null);
+				// container.addView(iv);
+				// return iv;
+				// }
+				// });
+				// viewPager.setAdapter(imgList.size());
+				// }
+				//
+				// }
 
-		mAbTask.execute(item);
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				// AbToastUtil.showToast(HomeActivity.this, content);
+				// model.clear();
+				if (!TextUtils.isEmpty(content)) {
+					Gson gson = new Gson();
+					try {
+						JSONObject jsonObject = new JSONObject(content);
+						String result_code = jsonObject
+								.getString("result_code");
+						if (result_code.equals("200")) {
+							mListView.setVisibility(View.VISIBLE);
+							List<Map<String, Object>> newList = null;
+								currentPage = 1;
+								newList = new ArrayList<Map<String, Object>>();
+								Map<String, Object> map = null;
+
+								for (int i = 0; i < pageSize; i++) {
+									map = new HashMap<String, Object>();
+									map.put("itemsIcon", mPhotoList.get(i));
+									map.put("itemsTitle", "item" + (i + 1));
+									map.put("itemsText", "item..." + (i + 1));
+									newList.add(map);
+
+								}
+								
+								AbLogUtil.d(NearlyActivity.this, "返回", true);
+								list.clear();
+								if (newList != null && newList.size() > 0) {
+									list.addAll(newList);
+									myListViewAdapter.notifyDataSetChanged();
+									newList.clear();
+								}
+								mAbPullToRefreshView.onHeaderRefreshFinish();
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+		});
 	}
 
 	public void loadMoreTask() {
@@ -236,6 +334,17 @@ public class NearlyActivity extends BaseActivity implements
 
 	public void onPause() {
 		super.onPause();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_reload:
+			refreshTask();
+			break;
+		default:
+			break;
+		}
 	}
 
 }

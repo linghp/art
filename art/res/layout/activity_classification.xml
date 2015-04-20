@@ -2,14 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/txt_white" >
+     >
 
-    <ListView 
+    <include layout="@layout/no_network" />
+
+    <ListView
         android:id="@+id/classify"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-        
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray"
+        android:scrollbars="none" >
     </ListView>
 
 </RelativeLayout>
