@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,7 +63,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	private View headView = null;
 	ListView mGridView;
-//	GridLinearLayout mGridView;
+	//	GridLinearLayout mGridView;
 	ShopsModel model;
 	List<ProductDto>list;
 	ShopsAdapter adapter;
@@ -70,16 +71,16 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 	//数据请求
 	private AbHttpUtil httpUtil = null;
 	private String url = "";
-	
+
 	//图片下载器
-    private AbImageLoader mAbImageLoader = null;
+	private AbImageLoader mAbImageLoader = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shops);
-		
+
 		initView();
 		initData();
 		initListener();
@@ -89,7 +90,17 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 	private void initHeadView() {
 		headView = LayoutInflater.from(this).inflate(
 				R.layout.head_shops, null);
+
+
 		img = (ImageView) headView.findViewById(R.id.shops_img);
+		//获取屏幕宽、高 
+		Display mDisplay= getWindowManager().getDefaultDisplay(); 
+		int width= mDisplay.getWidth();  
+		int Height= mDisplay.getHeight();
+		img.setScaleType(ImageView.ScaleType.FIT_XY);  
+		img.setAdjustViewBounds(true);  
+		img.setMaxHeight(Height);//屏幕高度  
+		img.setMaxWidth(width);//屏幕宽度
 		shopsimg = (ImageView) headView.findViewById(R.id.shops_shopsimg);
 		collectionimg = (ImageView) headView.findViewById(R.id.shops_collectionimg);
 		shopsname= (TextView) headView.findViewById(R.id.shops_shopsname);
@@ -97,10 +108,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		all= (TextView) headView.findViewById(R.id.shops_all);
 		up= (TextView) headView.findViewById(R.id.shops_up);
 		youhui= (TextView) headView.findViewById(R.id.shops_youhui);
-		
+
 		call = (LinearLayout) headView.findViewById(R.id.shops_call);
 		dingwei = (LinearLayout) headView.findViewById(R.id.shops_dingwei);
-		
+
 		phone = (TextView) headView.findViewById(R.id.shops_phonenum);
 		address = (TextView) headView.findViewById(R.id.shops_address);
 	}
@@ -114,8 +125,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		topView.setBack(R.drawable.back);//返回
 
 		mGridView = (ListView) this.findViewById(R.id.shops_mListView);
-//		mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
-//		mGridView.setColumns(2);
+		//		mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
+		//		mGridView.setColumns(2);
 		//		summary1= (TextView) findViewById(R.id.shops_summary1);
 		//		price1= (TextView) findViewById(R.id.shops_price1);
 		//		summary2= (TextView) findViewById(R.id.shops_summary2);
@@ -123,10 +134,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		initHeadView();
 		mGridView.addHeaderView(headView);
 		//图片下载器
-        mAbImageLoader = AbImageLoader.newInstance(mAc);
-        mAbImageLoader.setLoadingImage(R.drawable.image_loading);
-        mAbImageLoader.setErrorImage(R.drawable.image_error);
-        mAbImageLoader.setEmptyImage(R.drawable.image_empty);
+		mAbImageLoader = AbImageLoader.newInstance(mAc);
+		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader.setErrorImage(R.drawable.image_error);
+		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
 	}
 
 	private void initData() {
@@ -137,7 +148,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String id = getIntent().getStringExtra("id");
-	    String geturl = getIntent().getStringExtra("url");
+		String geturl = getIntent().getStringExtra("url");
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+id;
@@ -159,7 +170,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		intent.putExtra("url", url);
 		context.startActivity(intent);
 	}
-	
+
 	private void refreshTask(String url) {
 		// TODO Auto-generated method stub
 		httpUtil.get(url, new AbStringHttpResponseListener() {
@@ -179,7 +190,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 						if (result_code.equals("200")&&reason.equals("success")) {
 							JSONObject resultObject = jsonObject.getJSONObject("result");
 							model=gson.fromJson(resultObject.toString(),ShopsModel.class);
-							
+
+
+
+
 							mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
 							mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
 							shopsname.setText(""+model.getName());//商铺名
@@ -187,26 +201,26 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 							all.setText(""+model.getProductCount());//全部商品
 							up.setText(""+model.getNewCount());//上新
 							youhui.setText(""+model.getSpecialCount());//优惠
-							
+
 							list=model.getProductDtos();
-							
+
 							if (adapter == null) {
-//								//给每项商品设置id
-//								for (int i = 0; i < list.size(); i++) {
-//									ProductDto p = new ProductDto();
-//									p.setId(i);
-//									list.add(p);
-//								}
+								//								//给每项商品设置id
+								//								for (int i = 0; i < list.size(); i++) {
+								//									ProductDto p = new ProductDto();
+								//									p.setId(i);
+								//									list.add(p);
+								//								}
 								adapter = new ShopsAdapter(ShopsActivity.this);
 								//adapter = new ShopsAdapter(this);
 								adapter.updateData(list);
 								mGridView.setAdapter(adapter);
-//								mGridView.bindLinearLayout();
+								//								mGridView.bindLinearLayout();
 							}else {
-//								adapter.upDateList(list);
+								//								adapter.upDateList(list);
 								adapter.updateData(list);
 							}
-							
+
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -248,10 +262,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		/*mGridView.setOnCellClickListener(new OnCellClickListener() {
-			
+
 			@Override
 			public void onCellClick(int index) {
-				
+
 					System.out.println(">>>>>>>>>index"+index);
 			}
 		});*/
@@ -282,7 +296,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		});
 		//打电话
 		call.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -293,7 +307,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		});
 		//定位
 		dingwei.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();

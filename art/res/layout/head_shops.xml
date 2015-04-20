@@ -8,9 +8,23 @@
     <ImageView
         android:id="@+id/shops_img"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_loading" />
+
+    <!--
+         <ImageView
+        android:id="@+id/shops_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:maxHeight="60dp"
+        android:maxWidth="60dp"
         android:scaleType="fitXY"
         android:src="@drawable/image_loading" />
+    -->
 
     <LinearLayout
         android:id="@+id/shops_linear1"
@@ -58,7 +72,8 @@
             android:layout_marginRight="5dp"
             android:padding="10dp"
             android:src="@drawable/collection_off" />
-                <ImageView 
+
+        <ImageView
             android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
