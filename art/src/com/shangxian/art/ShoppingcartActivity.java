@@ -67,6 +67,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
 	private static ListCarAdapter adapter;
+	private boolean isFromConfirmOrderAct;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +83,14 @@ public class ShoppingcartActivity extends BaseActivity implements
 		if (isLogin()) {
 			refreshTask(url);
 		}
+		adapter = new ListCarAdapter(
+				ShoppingcartActivity.this, listCarItem);
 		// 全选点击事件
 		selecteall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if (buttonView.isPressed() && adapter != null) {
+				if (adapter != null) {
 					adapter.selectAll(selecteall.isChecked());
 					accountCar();
 				}
@@ -110,14 +113,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 			@Override
 			public void onFinish() {
-				AbDialogUtil.removeDialog(ShoppingcartActivity.this);
-				AbDialogUtil.removeDialog(ShoppingcartActivity.this);
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
+				AbDialogUtil.removeDialog(ShoppingcartActivity.this);
 				ll_nonetwork.setVisibility(View.VISIBLE);
 				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 				// imgList.clear();
@@ -165,6 +167,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
 							int length = resultObjectArray.length();
+							listStore.clear();
 							for (int i = 0; i < length; i++) {
 								JSONObject jo = resultObjectArray
 										.getJSONObject(i);
@@ -172,13 +175,15 @@ public class ShoppingcartActivity extends BaseActivity implements
 										ListCarStoreBean.class));
 							}
 							assembleData();
-							adapter = new ListCarAdapter(
-									ShoppingcartActivity.this, listCarItem);
+							adapter.initState();
+							selecteall.setChecked(false);
 							listcar.setAdapter(adapter);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					} finally {
+						AbDialogUtil.removeDialog(ShoppingcartActivity.this);
 					}
 				}
 
@@ -188,6 +193,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	private void assembleData() {
+		listCarItem.clear();
 		for (ListCarStoreBean listCarStoreBean : listStore) {
 			CarItem carItem = new CarItem(CarItem.SECTION, listCarStoreBean,
 					null, "");
@@ -280,25 +286,30 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		MyLogger.i("");
 		super.onResume();
-		topView = MainActivity.getTopView();
-		topView.setActivity(this);
-		topView.hideLeftBtn();
-		topView.hideRightBtn();
-		topView.hideCenterSearch();
-		topView.setCenterListener(null);
-		topView.setTitle("购物车");
-		topView.showTitle();
+		if (isFromConfirmOrderAct){
+			isFromConfirmOrderAct=false;
+		}else {
+			topView = MainActivity.getTopView();
+			topView.setActivity(this);
+			topView.hideLeftBtn();
+			topView.hideRightBtn();
+			topView.hideCenterSearch();
+			topView.setCenterListener(null);
+			topView.setTitle("购物车");
+			topView.showTitle();
 
-		if (isLogin() && listCarItem.size() == 0) {// 如果是登陆且购物车没有数据
-			initdata();
-		} else if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
-			listCarItem.clear();
-			adapter.notifyDataSetChanged();
-		}else{
-			initdata();
+			if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
+				listCarItem.clear();
+				selecteall.setChecked(false);
+				adapter.notifyDataSetChanged();
+			} else {
+				initdata();
+			}
+			MyLogger.i("");
 		}
+		
 	}
 
 	@Override
@@ -361,7 +372,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 			dosettlement();
 			break;
 		case R.id.iv_reload:
-			initdata();;
+			initdata();
+			;
 			break;
 		default:
 			break;
@@ -466,7 +478,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// bundle.putSerializable("car", car);
 				// intent.putExtras(bundle);
 				// intent.putExtra("from", GoodsOrder.FROMCAR);
-				startActivity(intent);
+				startActivityForResult(intent, 1);
 				// }
 
 			} else {
@@ -475,4 +487,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			MyLogger.i("");
+			isFromConfirmOrderAct = true;
+		}
+	}
 }
