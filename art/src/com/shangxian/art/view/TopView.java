@@ -288,4 +288,8 @@ public class TopView extends RelativeLayout {
 	public void setActivity(Activity curActivity){
 		this.mActivity = curActivity;
 	}
+	
+	public ImageView getRightbtn(){
+		return btn_right;
+	}
 }

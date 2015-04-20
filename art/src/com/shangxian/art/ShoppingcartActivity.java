@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +37,14 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ListCarAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CarItem;
-import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.bean.MyOrderItem;
+import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.HttpClients;
+import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
-import com.shangxian.art.view.TopView;
 
 /**
  * 购物车
@@ -52,7 +53,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnClickListener {
+		OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	private ListView listcar;
 	public static CheckBox selecteall;
 	// private static ListCarAdapter adapter;
@@ -67,6 +68,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
 	private static ListCarAdapter adapter;
+	private boolean isFromConfirmOrderAct;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,18 +78,23 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	private void initdata() {
-		httpUtil = AbHttpUtil.getInstance(this);
-		httpUtil.setTimeout(Constant.timeOut);
-		String url = Constant.BASEURL + Constant.CONTENT + Constant.CART;
+
 		if (isLogin()) {
-			refreshTask(url);
+			AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
+					"数据加载中...");
+			HttpClients.getDo(Constant.BASEURL + Constant.CONTENT
+					+ Constant.CART, this);
 		}
+		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
+		selecteall.setChecked(false);
+		accountCar();
 		// 全选点击事件
 		selecteall.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if (buttonView.isPressed() && adapter != null) {
+				if (buttonView.isPressed()&&adapter != null) {
+					//myToast("click");
 					adapter.selectAll(selecteall.isChecked());
 					accountCar();
 				}
@@ -95,99 +102,44 @@ public class ShoppingcartActivity extends BaseActivity implements
 		});
 	}
 
-	private void refreshTask(String url) {
-		AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
-				"数据加载中...");
-		// AbRequestParams params = new AbRequestParams();
-		// params.put("shopid", "1019");
-		// params.put("code", "88881110344801123456");
-		// params.put("phone", "15889936624");
-		httpUtil.get(url, new AbStringHttpResponseListener() {
-
-			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onFinish() {
-				AbDialogUtil.removeDialog(ShoppingcartActivity.this);
-				AbDialogUtil.removeDialog(ShoppingcartActivity.this);
-				mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				ll_nonetwork.setVisibility(View.VISIBLE);
-				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
-				// imgList.clear();
-				// ArrayList<String> imgs = new ArrayList<String>();
-				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-				// mDatas.setImgList(imgs);
-				// if (mDatas != null) {
-				// if (mDatas.getImgList() != null
-				// && mDatas.getImgList().size() > 0) {
-				// imgList.addAll(mDatas.getImgList());
-				// // viewPager.setVisibility(View.VISIBLE);
-				// viewPager.setOnGetView(new OnGetView() {
-				//
-				// @Override
-				// public View getView(ViewGroup container,
-				// int position) {
-				// ImageView iv = new ImageView(HomeActivity.this);
-				// Imageloader_homePager.displayImage(
-				// imgList.get(position), iv,
-				// new Handler(), null);
-				// container.addView(iv);
-				// return iv;
-				// }
-				// });
-				// viewPager.setAdapter(imgList.size());
-				// }
-				//
-				// }
-
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// AbToastUtil.showToast(HomeActivity.this, content);
-				AbLogUtil.i(ShoppingcartActivity.this, content);
-				// model.clear();
-				if (!TextUtils.isEmpty(content)) {
-					Gson gson = new Gson();
-					try {
-						JSONObject jsonObject = new JSONObject(content);
-						String result_code = jsonObject
-								.getString("result_code");
-						if (result_code.equals("200")) {
-							ll_nonetwork.setVisibility(View.GONE);
-							JSONArray resultObjectArray = jsonObject
-									.getJSONArray("result");
-							int length = resultObjectArray.length();
-							for (int i = 0; i < length; i++) {
-								JSONObject jo = resultObjectArray
-										.getJSONObject(i);
-								listStore.add(gson.fromJson(jo.toString(),
-										ListCarStoreBean.class));
-							}
-							assembleData();
-							adapter = new ListCarAdapter(
-									ShoppingcartActivity.this, listCarItem);
-							listcar.setAdapter(adapter);
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+	@Override
+	public void onResponse(String content) {
+		MyLogger.i(content);
+		AbDialogUtil.removeDialog(ShoppingcartActivity.this);
+		if (content == null) {
+			ll_nonetwork.setVisibility(View.VISIBLE);
+		}
+		Gson gson = new Gson();
+		try {
+			JSONObject jsonObject = new JSONObject(content);
+			String result_code = jsonObject.getString("result_code");
+			if (result_code.equals("200")) {
+				ll_nonetwork.setVisibility(View.GONE);
+				JSONArray resultObjectArray = jsonObject.getJSONArray("result");
+				int length = resultObjectArray.length();
+				listStore.clear();
+				for (int i = 0; i < length; i++) {
+					JSONObject jo = resultObjectArray.getJSONObject(i);
+					listStore.add(gson.fromJson(jo.toString(),
+							ListCarStoreBean.class));
 				}
-
+				assembleData();
+				adapter.initState();
+				listcar.setAdapter(adapter);
 			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			AbDialogUtil.removeDialog(ShoppingcartActivity.this);
+		}
 
-		});
 	}
 
 	private void assembleData() {
+		listCarItem.clear();
 		for (ListCarStoreBean listCarStoreBean : listStore) {
 			CarItem carItem = new CarItem(CarItem.SECTION, listCarStoreBean,
 					null, "");
@@ -251,13 +203,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 								entry.getKey())) {
 							float goodsprice = item.listCarGoodsBean
 									.getPromotionPrice();
-							price += goodsprice;
+							price += goodsprice*item.listCarGoodsBean.getQuantity();
 						}
 					}
 				}
 			}
 		}
-		allprice.setText("￥" + price + "元");
+		allprice.setText("￥ " + price);
 	}
 
 	// 设置全选是否选中
@@ -280,25 +232,33 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		MyLogger.i("");
 		super.onResume();
-		topView = MainActivity.getTopView();
-		topView.setActivity(this);
-		topView.hideLeftBtn();
-		topView.hideRightBtn();
-		topView.hideCenterSearch();
-		topView.setCenterListener(null);
-		topView.setTitle("购物车");
-		topView.showTitle();
+		if (isFromConfirmOrderAct) {
+			isFromConfirmOrderAct = false;
+		} else {
+			topView = MainActivity.getTopView();
+			topView.setActivity(this);
+			topView.hideLeftBtn();
+			topView.showRightBtn();
+			topView.setRightBtnDrawable(R.drawable.delete);
+			topView.setRightBtnListener(this);
+			topView.hideCenterSearch();
+			topView.setCenterListener(null);
+			topView.setTitle("购物车");
+			topView.showTitle();
 
-		if (isLogin() && listCarItem.size() == 0) {// 如果是登陆且购物车没有数据
-			initdata();
-		} else if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
-			listCarItem.clear();
-			adapter.notifyDataSetChanged();
-		}else{
-			initdata();
+			if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
+				listCarItem.clear();
+				selecteall.setChecked(false);
+				adapter.notifyDataSetChanged();
+			} else {
+				initdata();
+			}
+			MyLogger.i("");
+			ll_nonetwork.setVisibility(View.GONE);
 		}
+
 	}
 
 	@Override
@@ -361,7 +321,10 @@ public class ShoppingcartActivity extends BaseActivity implements
 			dosettlement();
 			break;
 		case R.id.iv_reload:
-			initdata();;
+			initdata();
+			break;
+		case R.id.btn_right:
+			myToast("delete");
 			break;
 		default:
 			break;
@@ -466,7 +429,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// bundle.putSerializable("car", car);
 				// intent.putExtras(bundle);
 				// intent.putExtra("from", GoodsOrder.FROMCAR);
-				startActivity(intent);
+				startActivityForResult(intent, 1);
 				// }
 
 			} else {
@@ -475,4 +438,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			MyLogger.i("");
+			isFromConfirmOrderAct = true;
+		}
+	}
 }

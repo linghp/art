@@ -372,7 +372,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
 		oks.setTitle(getString(R.string.share));
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-		oks.setTitleUrl("m://my.com/?arg0="+geturl);
+		oks.setTitleUrl("http://www.peoit.com/");
 		// text是分享文本，所有平台都需要这个字段
 		oks.setText("test");
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
