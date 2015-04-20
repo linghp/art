@@ -76,8 +76,9 @@
                     android:id="@+id/tv_car_allprice_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.00元"
-                    android:textSize="15sp" />
+                    android:text="￥ 0.00"
+                    android:textColor="@color/red300"
+                    android:textSize="@dimen/list_max_size" />
 
                 <TextView
                     android:id="@+id/tv_car_oldprice"
@@ -96,12 +97,17 @@
                 <Button
                     android:id="@+id/btn_settlement"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:text="去结算" />
+                    android:layout_height="30dp"
+                    android:background="@drawable/shape_circular"
+                    android:text="去结算"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/list_summary_size" />
             </RelativeLayout>
         </RelativeLayout>
 
-        <include layout="@layout/no_network" android:visibility="gone"/>
+        <include
+            layout="@layout/no_network"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

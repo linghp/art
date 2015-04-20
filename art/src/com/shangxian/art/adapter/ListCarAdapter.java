@@ -195,11 +195,12 @@ public class ListCarAdapter extends BaseAdapter {
 
 			holder.check_goods.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton arg0, boolean checked) {
+					MyLogger.i("check_goods");
 					if (checked) {
 						goodsCheced.put(item.listCarGoodsBean.getProductId(), true);
 					} else {
 						goodsCheced.put(item.listCarGoodsBean.getProductId(), false);
-						storeChecked.put(item.listCarGoodsBean.getProductId(), false);
+						storeChecked.put(item.listCarGoodsBean.getShopId(), false);
 
 					}
 					ShoppingcartActivity.setSelecteAll();
