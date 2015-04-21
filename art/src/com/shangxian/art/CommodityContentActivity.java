@@ -276,7 +276,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		oks.setSite(getString(R.string.app_name));
 		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
 		oks.setSiteUrl("http://www.peoit.com/");
-
+		oks.setImageUrl("http://www.peoit.com/");
 		// 启动分享GUI
 		oks.show(this);
 	}
