@@ -1,34 +1,46 @@
 package com.shangxian.art;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Display;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
+import com.ab.image.AbImageLoader;
 import com.ab.util.AbLogUtil;
+import com.ab.util.AbSharedUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
-import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.StarRatingView;
+import com.shangxian.art.view.TagViewPager;
+import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -39,6 +51,10 @@ import com.shangxian.art.view.TopView;
  */
 public class CommodityContentActivity extends BaseActivity implements
 		OnClickListener, HttpCilentListener {
+	private TagViewPager viewPager = null;
+	/** 轮播图地址 */
+	private List<String> imgList = new ArrayList<String>();
+	
 	private LinearLayout shangpu;
 	private ImageView commoditycontent_img, commoditycontent_shoucang;
 	private TextView commoditycontent_jieshao, commoditycontent_jiage,
@@ -50,6 +66,11 @@ public class CommodityContentActivity extends BaseActivity implements
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
 	private String shopid;
+	
+	private AbImageLoader mAbImageLoader = null;
+	
+//	RatingBar ratingbar;
+	private StarRatingView ratingbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +125,23 @@ public class CommodityContentActivity extends BaseActivity implements
 				}
 			}
 		});
+		/*ratingbar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+			
+			@Override
+			public void onRatingChanged(RatingBar ratingBar, float rating,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				
+			}
+		});*/
+		/*ratingbar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});*/
 	}
 	String geturl;
 	private void initData() {
@@ -123,6 +161,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
 		refreshTask(url);
+		
 	}
 
 	private void refreshTask(String url) {
@@ -178,6 +217,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
+//				imgList.clear();
 				AbLogUtil.i(CommodityContentActivity.this, content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -190,12 +230,47 @@ public class CommodityContentActivity extends BaseActivity implements
 									.getJSONObject("result");
 							model = gson.fromJson(jsonObject1.toString(),
 									CommodityContentModel.class);
-							MyLogger.i(model.toString());
+//							MyLogger.i(model.toString());
 							if (model != null){
 								shopid=model.getShopId()+"";
 								updateView();
 								}
+
+							imgList.addAll(model.getPhotos());
+							MyLogger.i(imgList.get(0));
+//							viewPager.setVisibility(View.VISIBLE);
+							viewPager.setOnGetView(new OnGetView() {
+								
+								@Override
+								public View getView(ViewGroup container, int position) {
+									ImageView iv = new ImageView(CommodityContentActivity.this);
+//									Imageloader_homePager.displayImage(
+//											Constant.BASEURL+imgList.get(position), iv,
+//											new Handler(), null);
+									//获取屏幕宽、高 
+									Display mDisplay= getWindowManager().getDefaultDisplay(); 
+									int width= mDisplay.getWidth();  
+									int Height= mDisplay.getHeight();
+									
+									iv.setScaleType(ImageView.ScaleType.FIT_XY); 
+									iv.setMaxWidth(width);
+									iv.setMaxHeight(Height);
+									iv.setAdjustViewBounds(true);  
+									iv.setLayoutParams(new LayoutParams(width, Height));//屏幕高度  
+
+////									//图片的下载
+							        mAbImageLoader.display(iv,Constant.BASEURL+imgList.get(position));
+									container.addView(iv);
+									return iv;
+								
+								}
+							});	
+							viewPager.setAdapter(imgList.size());
+							
 						}
+//						else {
+//							viewPager.setVisibility(View.GONE);
+//						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -207,16 +282,29 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void updateView() {
-		Imageloader_homePager.displayImage(Constant.BASEURL
-				+ model.getPhotos().get(0), commoditycontent_img,
-				new Handler(), null);// TODO Auto-generated method stub
+//		Imageloader_homePager.displayImage(Constant.BASEURL
+//				+ model.getPhotos().get(0), commoditycontent_img,
+//				new Handler(), null);// TODO Auto-generated method stub
 		commoditycontent_jieshao.setText(model.getName());
 		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
-		commoditycontent_img = (ImageView) findViewById(R.id.commoditycontent_img);
+		mAbImageLoader = AbImageLoader.newInstance(mAc);
+		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader.setErrorImage(R.drawable.image_error);
+		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
+//		commoditycontent_img = (ImageView) findViewById(R.id.commoditycontent_img);
+		viewPager = (TagViewPager) findViewById(R.id.commoditycontent_mTagViewPager);
+		/*//获取屏幕宽、高 
+		Display mDisplay= getWindowManager().getDefaultDisplay(); 
+		int width= mDisplay.getWidth();  
+		int Height= mDisplay.getHeight();
+//		viewPager.setScaleType(ImageView.ScaleType.CENTER_CROP);  
+//		viewPager.setAdjustViewBounds(true);  
+		viewPager.setLayoutParams(new LayoutParams(width, Height));//屏幕高度  
+*/		initTagViewPager();//初始化轮播VIEW
+		
 		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
@@ -224,7 +312,10 @@ public class CommodityContentActivity extends BaseActivity implements
 		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
 		// star = (StarRatingView)
 		// findViewById(R.id.commoditycontent_starRating);
-		// star.setSelectNums(1);//设置默认选中星星数
+		
+//		ratingbar = (StarRatingView) findViewById(R.id.commoditycontent_starRating);
+//		ratingbar.setSelectNums(1);//设置默认选中星星数
+		
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
@@ -234,6 +325,24 @@ public class CommodityContentActivity extends BaseActivity implements
 		topView.setTitle("商品详情");// title文字
 	}
 
+	/** 初始化轮播VIEW */
+	private void initTagViewPager() {
+		viewPager.init(R.drawable.tagvewpager_point01,
+				R.drawable.tagvewpager_point02, 14, 5, 2, 20);
+		viewPager.setAutoNext(true, 5000);
+//		AbLogUtil.e(
+//				this,
+//				"轮播图宽度"
+//						+ AbSharedUtil.getInt(CommodityContentActivity.this,
+//								Global.KEY_SCREEN_WIDTH));
+
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewPager
+				.getLayoutParams();
+		params.width = AbSharedUtil.getInt(CommodityContentActivity.this,
+				Global.KEY_SCREEN_WIDTH);
+		params.height = (int) (params.width / 2.65);
+		viewPager.setLayoutParams(params);
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

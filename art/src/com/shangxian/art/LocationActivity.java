@@ -29,14 +29,25 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.ImageUtil;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class LocationActivity extends BaseActivity {
 	private MapView mp_loc;
@@ -92,6 +103,7 @@ public class LocationActivity extends BaseActivity {
 	private List<LatLng> mNearlyLatlngs = new ArrayList<LatLng>();
 
 	private void initData() {
+		
 		Intent intent = getIntent();
 		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
 				Integer.MIN_VALUE);
@@ -262,16 +274,16 @@ public class LocationActivity extends BaseActivity {
 				markers.add((Marker) (mMap.addOverlay(ooA)));
 			}
 			mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+				@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 				@Override
 				public boolean onMarkerClick(Marker marker) {
 					mMap.hideInfoWindow();
 					final int mark = markers.indexOf(marker);
-					// myToast("点击了" + mark);
-					Button button = new Button(getApplicationContext());
-					button.setBackgroundResource(R.drawable.infowindow);
-					button.setText("测试商铺" + mark);
+					View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg, null);
+					TextView title = (TextView) view.findViewById(R.id.loct_tv_title);
+					title.setText("测试商铺"  + mark);
 					mInfoWindow = new InfoWindow(BitmapDescriptorFactory
-							.fromView(button), marker.getPosition(), -47,
+							.fromView(view), marker.getPosition(), -47,
 							new OnInfoWindowClickListener() {
 								@Override
 								public void onInfoWindowClick() {
@@ -297,14 +309,16 @@ public class LocationActivity extends BaseActivity {
 				.icon(bdShops).zIndex(9).draggable(true);
 		mMarkerShop = (Marker) (mMap.addOverlay(ooA));
 		mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			@SuppressLint("NewApi")
 			@Override
 			public boolean onMarkerClick(Marker mark) {
-				Button button = new Button(getApplicationContext());
+				/*Button button = new Button(getApplicationContext());
 				button.setText("测试商铺>");
-				button.setBackgroundResource(R.drawable.infowindow);
+				button.setBackgroundResource(R.drawable.yinying);*/
+				View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg, null);
 				LatLng ll = mark.getPosition();
 				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
-						.fromView(button), ll, -47,
+						.fromView(view), ll, -47,
 						new OnInfoWindowClickListener() {
 							@Override
 							public void onInfoWindowClick() {
