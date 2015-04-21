@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -45,6 +46,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.TopView;
 
 /**
  * 购物车
@@ -53,7 +55,7 @@ import com.shangxian.art.utils.MyLogger;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
+OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	private ListView listcar;
 	public static CheckBox selecteall;
 	// private static ListCarAdapter adapter;
@@ -69,6 +71,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
 	private static ListCarAdapter adapter;
 	private boolean isFromConfirmOrderAct;
+	
+	boolean isother = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,16 +162,19 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	private void initViews() {
-		// Intent intent = new Intent();
-
-		// topView=(TopView) findViewById(R.id.top_title);
-		// topView.setActivity(this);
-		// topView.setBack(R.drawable.back);//返回
-		// topView.hideRightBtn();
-		// topView.hideCenterSearch();
-		// topView.setCenterListener(null);
-		// topView.setTitle("购物车");
-		// topView.showTitle();
+		Intent intent = getIntent();
+		isother = intent.getBooleanExtra("isother", false);
+		System.out.println("><><><><><><><<><><>"+isother);
+		if (isother) {
+			topView = (TopView) findViewById(R.id.top_title);
+			topView.setActivity(this);
+			topView.setVisibility(View.VISIBLE);
+			topView.hideRightBtn();
+			topView.hideCenterSearch();
+			topView.setTitle("购物车");
+			topView.showTitle();
+			topView.setBack(R.drawable.back);//返回
+		}
 
 		mAbPullToRefreshView = (AbPullToRefreshView) findViewById(R.id.mPullRefreshView);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
@@ -232,7 +239,6 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	protected void onResume() {
-		MyLogger.i("");
 		super.onResume();
 		if (isFromConfirmOrderAct) {
 			isFromConfirmOrderAct = false;
@@ -258,7 +264,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 			MyLogger.i("");
 			ll_nonetwork.setVisibility(View.GONE);
 		}
-
+		
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.DialogScreen;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -251,12 +252,13 @@ public class ClassifyCommodityActivity extends BaseActivity {
 
 		// title购物车跳转
 		topView.setRightBtnListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// CommonUtil.gotoActivityForResult(ClassifyCommodityActivity.this,
-				// ShoppingcartActivity.class, 10010, false);
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("isother", true);
+				CommonUtil.gotoActivityWithDataForResult(ClassifyCommodityActivity.this, ShoppingcartActivity.class, bundle, 10086, false);
 			}
 		});
 	}

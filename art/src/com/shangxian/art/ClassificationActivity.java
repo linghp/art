@@ -29,6 +29,7 @@ import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 /**
@@ -196,6 +197,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
 			}
 		});
+		
 	}
 
 	@Override
