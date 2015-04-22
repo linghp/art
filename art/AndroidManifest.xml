@@ -68,9 +68,16 @@
         android:icon="@drawable/ainonggu"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        <!-- 测试key -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="wVx47v9LtmNLozGme6VnGfwZ" />
+        
+        <!-- 共用key -->
+        <!-- <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="dGHcYKhKixnFGtAp9yHwR2lY" /> -->
 
         <service
             android:name="com.baidu.location.f"

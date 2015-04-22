@@ -11,16 +11,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Display;
-import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -39,7 +36,6 @@ import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
-import com.shangxian.art.view.StarRatingView;
 import com.shangxian.art.view.TagViewPager;
 import com.shangxian.art.view.TagViewPager.OnGetView;
 import com.shangxian.art.view.TopView;
@@ -70,8 +66,9 @@ public class CommodityContentActivity extends BaseActivity implements
 	
 	private AbImageLoader mAbImageLoader = null;
 	
-//	RatingBar ratingbar;
-	private StarRatingView ratingbar;
+	RatingBar ratingbar;
+	float rating = 0;
+//	private StarRatingView ratingbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,23 +123,17 @@ public class CommodityContentActivity extends BaseActivity implements
 				}
 			}
 		});
-		/*ratingbar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-			
-			@Override
-			public void onRatingChanged(RatingBar ratingBar, float rating,
-					boolean fromUser) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
-		/*ratingbar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
+		topView.setRightBtnListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Bundle bundle = new Bundle();
+			bundle.putBoolean("isother", true);
+			CommonUtil.gotoActivityWithDataForResult(CommodityContentActivity.this, ShoppingcartActivity.class, bundle, 10086, false);
+		}
+	});
+		
 	}
 	String geturl;
 	private void initData() {
@@ -236,7 +227,7 @@ public class CommodityContentActivity extends BaseActivity implements
 								shopid=model.getShopId()+"";
 								updateView();
 								}
-
+							
 							imgList.addAll(model.getPhotos());
 							MyLogger.i(imgList.get(0));
 //							viewPager.setVisibility(View.VISIBLE);
@@ -280,6 +271,11 @@ public class CommodityContentActivity extends BaseActivity implements
 //				new Handler(), null);// TODO Auto-generated method stub
 		commoditycontent_jieshao.setText(model.getName());
 		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
+//		System.out.println("**************"+(float)model.getEvaluateScore());
+//		System.out.println("**************"+ (float) ((float)model.getEvaluateScore()/100*5));
+		rating = (float) ((float)model.getEvaluateScore()/100*5);
+		//设置评星星级
+		ratingbar.setRating(rating);
 	}
 
 	private void initView() {
@@ -303,19 +299,20 @@ public class CommodityContentActivity extends BaseActivity implements
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
 		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
 		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
-		// star = (StarRatingView)
-		// findViewById(R.id.commoditycontent_starRating);
 		
-//		ratingbar = (StarRatingView) findViewById(R.id.commoditycontent_starRating);
-//		ratingbar.setSelectNums(1);//设置默认选中星星数
+		ratingbar = (RatingBar) findViewById(R.id.commoditycontent_starRating);
+		
 		
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
 		topView.hideCenterSearch();
+		topView.showRightBtn();
+		topView.setRightBtnDrawable(R.drawable.shopcart);
 		topView.showTitle();
 		topView.setBack(R.drawable.back);// 返回
 		topView.setTitle("商品详情");// title文字
+		
 	}
 
 	/** 初始化轮播VIEW */

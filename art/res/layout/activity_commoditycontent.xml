@@ -64,15 +64,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <!--
-                 <ImageView
-                android:id="@+id/commoditycontent_img"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/image_loading" />
-            -->
-
             <com.shangxian.art.view.TagViewPager
                 android:id="@+id/commoditycontent_mTagViewPager"
                 android:layout_width="match_parent"
@@ -161,34 +152,23 @@
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_summary_size" />
 
-                
-                     <View
+                <!-- 评星条 -->
+
+                <View
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-               
 
-
-                
-                <!-- <com.shangxian.art.view.StarRatingView
+                <RatingBar
                     android:id="@+id/commoditycontent_starRating"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp">
-                </com.shangxian.art.view.StarRatingView> -->
-               
-                <!-- 评星条 -->
-
-                <!-- <RatingBar
-                    android:id="@+id/commoditycontent_starRating"
-                    style="?android:attr/ratingBarStyleSmall"
+                    style="@style/roomRatingBar"
+                    android:isIndicator="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
                     android:numStars="5"
-                    android:rating="1.5"
-                    android:stepSize="0.5" /> -->
+                    android:rating="5"
+                    android:stepSize="0.5" />
 
                 <ImageView
                     android:id="@+id/commoditycontent_next3"
