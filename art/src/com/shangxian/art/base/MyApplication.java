@@ -3,6 +3,7 @@ package com.shangxian.art.base;
 import android.app.Application;
 import android.util.Log;
 import android.view.LayoutInflater;
+import cn.jpush.android.api.JPushInterface;
 
 import com.ab.image.AbImageLoader;
 import com.baidu.location.BDLocation;
@@ -53,6 +54,9 @@ public class MyApplication extends Application {
 		loader.setEmptyImage(R.drawable.image_empty);
 		loader.setErrorImage(R.drawable.image_error);
 		loader.setLoadingImage(R.drawable.image_loading);
+		//推送
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 	}
 	
 	public BDLocation getMLoc(){

@@ -37,6 +37,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.StarRatingView;
 import com.shangxian.art.view.TagViewPager;
@@ -244,21 +245,13 @@ public class CommodityContentActivity extends BaseActivity implements
 								@Override
 								public View getView(ViewGroup container, int position) {
 									ImageView iv = new ImageView(CommodityContentActivity.this);
-//									Imageloader_homePager.displayImage(
-//											Constant.BASEURL+imgList.get(position), iv,
-//											new Handler(), null);
-									//获取屏幕宽、高 
-									Display mDisplay= getWindowManager().getDefaultDisplay(); 
-									int width= mDisplay.getWidth();  
-									int Height= mDisplay.getHeight();
-									
 									iv.setScaleType(ImageView.ScaleType.FIT_XY); 
-									iv.setMaxWidth(width);
-									iv.setMaxHeight(Height);
-									iv.setAdjustViewBounds(true);  
-									iv.setLayoutParams(new LayoutParams(width, Height));//屏幕高度  
+									LayoutParams layoutParams=viewPager.getLayoutParams();
+									layoutParams.width=CommonUtil.getScreenWidth(CommodityContentActivity.this);
+									layoutParams.height=layoutParams.width*2/3;
+									iv.setLayoutParams(layoutParams);
 
-////									//图片的下载
+									//图片的下载
 							        mAbImageLoader.display(iv,Constant.BASEURL+imgList.get(position));
 									container.addView(iv);
 									return iv;
