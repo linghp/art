@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -19,8 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.tencent.qzone.QZone;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
@@ -355,7 +358,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		OnekeyShare oks = new OnekeyShare();
 		// 关闭sso授权
 		oks.disableSSOWhenAuthorize();
-
+		oks.setShareContentCustomizeCallback(new ShareContentCustomizeDemo());
 		// 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
 		// oks.setNotification(R.drawable.ic_launcher,
 		// getString(R.string.app_name));
@@ -375,11 +378,26 @@ public class CommodityContentActivity extends BaseActivity implements
 		oks.setSite(getString(R.string.app_name));
 		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
 		oks.setSiteUrl("http://www.peoit.com/");
-		oks.setImageUrl("http://www.peoit.com/");
+		//oks.setImageUrl("http://www.peoit.com/");
 		// 启动分享GUI
 		oks.show(this);
 	}
 
+	/**
+	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。
+	 *本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
+	 */
+	public class ShareContentCustomizeDemo implements ShareContentCustomizeCallback {
+	 
+	        public void onShare(Platform platform, ShareParams paramsToShare) {
+	                if (QZone.NAME.equals(platform.getName())) {
+	                        //String text = platform.getContext().getString(R.string.share_content_short);
+	                        paramsToShare.setImageUrl("http://www.peoit.com/");
+	                }
+	        }
+	 
+	}
+	
 	private void dotask_addcart() {
 		String json = "{\"productId\":" + model.getId()
 				+ ",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
