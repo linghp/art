@@ -65,6 +65,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		MainActivity activity = (MainActivity) getParent();
 		topView.setLeftBtnListener(activity);
 		topView.setRightBtnListener(activity);
+		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
 	}
 	//添加数据
