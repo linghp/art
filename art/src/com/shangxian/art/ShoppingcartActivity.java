@@ -55,7 +55,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
+		OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	private ListView listcar;
 	public static CheckBox selecteall;
 	// private static ListCarAdapter adapter;
@@ -71,7 +71,7 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
 	private static ListCarAdapter adapter;
 	private boolean isFromConfirmOrderAct;
-	
+
 	boolean isother = false;
 
 	@Override
@@ -96,8 +96,8 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if (buttonView.isPressed()&&adapter != null) {
-					//myToast("click");
+				if (buttonView.isPressed() && adapter != null) {
+					// myToast("click");
 					adapter.selectAll(selecteall.isChecked());
 					accountCar();
 				}
@@ -163,7 +163,7 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	private void initViews() {
 		Intent intent = getIntent();
 		isother = intent.getBooleanExtra("isother", false);
-		System.out.println("><><><><><><><<><><>"+isother);
+		System.out.println("><><><><><><><<><><>" + isother);
 		if (isother) {
 			topView = (TopView) findViewById(R.id.top_title);
 			topView.setActivity(this);
@@ -172,7 +172,7 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 			topView.hideCenterSearch();
 			topView.setTitle("购物车");
 			topView.showTitle();
-			topView.setBack(R.drawable.back);//返回
+			topView.setBack(R.drawable.back);// 返回
 		}
 
 		mAbPullToRefreshView = (AbPullToRefreshView) findViewById(R.id.mPullRefreshView);
@@ -209,7 +209,8 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 								entry.getKey())) {
 							float goodsprice = item.listCarGoodsBean
 									.getPromotionPrice();
-							price += goodsprice*item.listCarGoodsBean.getQuantity();
+							price += goodsprice
+									* item.listCarGoodsBean.getQuantity();
 						}
 					}
 				}
@@ -263,7 +264,7 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 			MyLogger.i("");
 			ll_nonetwork.setVisibility(View.GONE);
 		}
-		
+
 	}
 
 	@Override
