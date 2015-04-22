@@ -1,7 +1,5 @@
 package com.shangxian.art.utils;
 
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.shangxian.art.R;
@@ -105,8 +105,8 @@ public class CommonUtil {
 	 *            当前活动
 	 * @param targetActivity
 	 *            目标活动
-	 * @param Code 
-	 *        int 类型数据
+	 * @param Code
+	 *            int 类型数据
 	 * @param finish
 	 *            是否结束当前活动
 	 */
@@ -155,41 +155,41 @@ public class CommonUtil {
 	 * @param refreshlistener
 	 *            数据刷新监听接口
 	 */
-	//	public static void showNetTipsView(final TipsView tipsView,
-	//			WebResponse response, OnClickListener refreshlistener) {
-	//		tipsView.setVisibility(View.VISIBLE);
+	// public static void showNetTipsView(final TipsView tipsView,
+	// WebResponse response, OnClickListener refreshlistener) {
+	// tipsView.setVisibility(View.VISIBLE);
 	//
-	//		switch (response.state) {
-	//		case WebResponse.FAIL:
-	//			tipsView.setTitle("亲，连接超时了哦！\n请检查您的网络并重新刷新数据！");
-	//			tipsView.setBtnText("刷新数据");
-	//			tipsView.setBtnListener(refreshlistener);
-	//			tipsView.setBtnVisibility(View.VISIBLE);
-	//			break;
+	// switch (response.state) {
+	// case WebResponse.FAIL:
+	// tipsView.setTitle("亲，连接超时了哦！\n请检查您的网络并重新刷新数据！");
+	// tipsView.setBtnText("刷新数据");
+	// tipsView.setBtnListener(refreshlistener);
+	// tipsView.setBtnVisibility(View.VISIBLE);
+	// break;
 	//
-	//		case WebResponse.XmlPullParserException:
-	//			tipsView.setTitle("数据解析失败！\n如果您能将错误信息反馈给我们的工程师，\n我们将为您提供更好的体验！");
-	//			tipsView.setBtnText("我要反馈！");
-	//			tipsView.setBtnListener(new OnClickListener() {
+	// case WebResponse.XmlPullParserException:
+	// tipsView.setTitle("数据解析失败！\n如果您能将错误信息反馈给我们的工程师，\n我们将为您提供更好的体验！");
+	// tipsView.setBtnText("我要反馈！");
+	// tipsView.setBtnListener(new OnClickListener() {
 	//
-	//				@Override
-	//				public void onClick(View v) {
-	//					CommonUtil.gotoActivity(tipsView.getActivity(),
-	//							FeedBackActivity.class, false);
-	//				}
-	//			});
-	//			tipsView.setBtnVisibility(View.VISIBLE);
-	//			break;
-	//		case WebResponse.NullPointerException:
-	//			tipsView.setTitle("未知的错误！错误代码：" + (String) response.responseObject);
-	//			tipsView.setBtnText("刷新数据");
-	//			tipsView.setBtnListener(refreshlistener);
-	//			tipsView.setBtnVisibility(View.VISIBLE);
-	//			break;
-	//		}
+	// @Override
+	// public void onClick(View v) {
+	// CommonUtil.gotoActivity(tipsView.getActivity(),
+	// FeedBackActivity.class, false);
+	// }
+	// });
+	// tipsView.setBtnVisibility(View.VISIBLE);
+	// break;
+	// case WebResponse.NullPointerException:
+	// tipsView.setTitle("未知的错误！错误代码：" + (String) response.responseObject);
+	// tipsView.setBtnText("刷新数据");
+	// tipsView.setBtnListener(refreshlistener);
+	// tipsView.setBtnVisibility(View.VISIBLE);
+	// break;
+	// }
 	//
-	//		tipsView.showNetworkErro();
-	//	}
+	// tipsView.showNetworkErro();
+	// }
 
 	/**
 	 * 显示数据相关提示界面
@@ -204,25 +204,25 @@ public class CommonUtil {
 	 * @param showBtn
 	 *            是否显示按钮
 	 */
-	//	public static void showDataTipsView(TipsView tipsView, String tips,
-	//			String btnText, OnClickListener refreshlistener, boolean showBtn) {
-	//		tipsView.setVisibility(View.VISIBLE);
+	// public static void showDataTipsView(TipsView tipsView, String tips,
+	// String btnText, OnClickListener refreshlistener, boolean showBtn) {
+	// tipsView.setVisibility(View.VISIBLE);
 	//
-	//		tipsView.setTitle(tips);
-	//		if (TextUtils.isEmpty(btnText)) {
-	//			tipsView.setBtnText("刷    新");
-	//		} else {
-	//			tipsView.setBtnText(btnText);
-	//		}
+	// tipsView.setTitle(tips);
+	// if (TextUtils.isEmpty(btnText)) {
+	// tipsView.setBtnText("刷    新");
+	// } else {
+	// tipsView.setBtnText(btnText);
+	// }
 	//
-	//		if (showBtn) {
-	//			tipsView.setBtnListener(refreshlistener);
-	//			tipsView.setBtnVisibility(View.VISIBLE);
-	//		} else {
-	//			tipsView.setBtnVisibility(View.GONE);
-	//		}
-	//		tipsView.showDataNull();
-	//	}
+	// if (showBtn) {
+	// tipsView.setBtnListener(refreshlistener);
+	// tipsView.setBtnVisibility(View.VISIBLE);
+	// } else {
+	// tipsView.setBtnVisibility(View.GONE);
+	// }
+	// tipsView.showDataNull();
+	// }
 
 	/**
 	 * dp转换为px
@@ -325,15 +325,32 @@ public class CommonUtil {
 	 * 
 	 * @return
 	 */
-	public static void setMargins (View v, int l, int t, int r, int b) {
+	public static void setMargins(View v, int l, int t, int r, int b) {
 		if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+			ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v
+					.getLayoutParams();
 			p.setMargins(l, t, r, b);
 			v.requestLayout();
 		}
 	}
-	
-	public static void toast(String str,Context context) {
+
+	public static void toast(String str, Context context) {
 		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+	}
+
+	// 获取屏幕的宽度
+	public static int getScreenWidth(Context context) {
+		WindowManager manager = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = manager.getDefaultDisplay();
+		return display.getWidth();
+	}
+
+	// 获取屏幕的高度
+	public static int getScreenHeight(Context context) {
+		WindowManager manager = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = manager.getDefaultDisplay();
+		return display.getHeight();
 	}
 }

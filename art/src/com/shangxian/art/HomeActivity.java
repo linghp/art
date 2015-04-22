@@ -321,6 +321,7 @@ public class HomeActivity extends BaseActivity implements
 		MainActivity activity = (MainActivity) getParent();
 		topView.setLeftBtnListener(activity);
 		topView.setRightBtnListener(activity);
+		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
 	}
 

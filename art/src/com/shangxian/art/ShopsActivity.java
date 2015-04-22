@@ -101,6 +101,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		img.setAdjustViewBounds(true);  
 		img.setMaxHeight(Height);//屏幕高度  
 		img.setMaxWidth(width);//屏幕宽度
+		
 		shopsimg = (ImageView) headView.findViewById(R.id.shops_shopsimg);
 		collectionimg = (ImageView) headView.findViewById(R.id.shops_collectionimg);
 		shopsname= (TextView) headView.findViewById(R.id.shops_shopsname);
@@ -191,10 +192,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 						if (result_code.equals("200")&&reason.equals("success")) {
 							JSONObject resultObject = jsonObject.getJSONObject("result");
 							model=gson.fromJson(resultObject.toString(),ShopsModel.class);
-
-
-
-
 							mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
 							mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
 							shopsname.setText(""+model.getName());//商铺名

@@ -29,6 +29,7 @@ import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 /**
@@ -64,6 +65,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		MainActivity activity = (MainActivity) getParent();
 		topView.setLeftBtnListener(activity);
 		topView.setRightBtnListener(activity);
+		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
 	}
 	//添加数据
@@ -196,6 +198,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
 			}
 		});
+		
 	}
 
 	@Override
