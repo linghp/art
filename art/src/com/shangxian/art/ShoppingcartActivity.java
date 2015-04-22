@@ -78,7 +78,6 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	private void initdata() {
-
 		if (isLogin()) {
 			AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
 					"数据加载中...");
