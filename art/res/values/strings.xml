@@ -31,5 +31,6 @@
 
     <string name="title_activity_pay">付款</string>
     <string name="title_activity_my_order">我的订单</string>
+    <string name="title_activity_my_concern">我的关注</string>
 
 </resources>

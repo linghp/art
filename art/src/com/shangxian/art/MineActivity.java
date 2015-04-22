@@ -145,12 +145,19 @@ public class MineActivity extends BaseActivity {
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
 			break;
 		case R.id.ll_my_item1:
+			//我的订单
 			if(isLoginAndToLogin())
 			startActivity(new Intent(this, MyOrderActivity.class));
 			break;
 		case R.id.ll_my_item2:
+			//爱农卡
 			if(isLoginAndToLogin())
 			startActivity(new Intent(this, NongHeBaoActivity.class));
+			break;
+		case R.id.ll_my_item3:
+			//我的关注
+			if(isLoginAndToLogin())
+			startActivity(new Intent(this, MyConcernActivity.class));
 			break;
 
 		default:
