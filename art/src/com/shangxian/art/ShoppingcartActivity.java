@@ -261,7 +261,6 @@ public class ShoppingcartActivity extends BaseActivity implements
 			} else {
 				initdata();
 			}
-			MyLogger.i("");
 			ll_nonetwork.setVisibility(View.GONE);
 		}
 
@@ -324,30 +323,32 @@ public class ShoppingcartActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_settlement:
-			dosettlement();
+			doSettlement();
 			break;
 		case R.id.iv_reload:
 			initdata();
 			break;
 		case R.id.btn_right:
-			myToast("delete");
+			doDelete();
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void dosettlement() {
-		int flag = 0;
+	private void doDelete() {
 		if (adapter != null) {
-			Iterator iter = adapter.getGoodsCheced().entrySet().iterator();
-			while (iter.hasNext()) {
-				Map.Entry entry = (Map.Entry) iter.next();
-				if ((Boolean) entry.getValue() == true) {
-					flag++;
-				}
+			if (selectedCount() > 0) {
+				
+			}else{
+				myToast("请选择要删除的商品");
 			}
-			if (flag > 0) {
+		}
+	}
+
+	private void doSettlement() {
+		if (adapter != null) {
+			if (selectedCount() > 0) {
 				// Map<String, Boolean> mapSelect = new HashMap<String,
 				// Boolean>();
 				// List<ListCarGoodsBean> listGoods = new
@@ -375,7 +376,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// MerCartDTO car = new MerCartDTO();
 				// car.setFstoreId(listGoods.get(0).storeId);
 				// car.setStoreName(listGoods.get(0).storeName);
-				List<CarItem> listCarItem_select = new ArrayList<CarItem>();
+				List<CarItem> listCarItem_select = new ArrayList<CarItem>();//选中的商品
 				Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
 				List<ListCarStoreBean> listStoreBean = new ArrayList<ListCarStoreBean>();
 				// 提取店铺list
@@ -442,6 +443,18 @@ public class ShoppingcartActivity extends BaseActivity implements
 				myToast("请选择要结算的商品");
 			}
 		}
+	}
+
+	private int selectedCount() {
+		int flag=0;
+		Iterator iter = adapter.getGoodsCheced().entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			if ((Boolean) entry.getValue() == true) {
+				flag++;
+			}
+		}
+		return flag;
 	}
 
 	@Override

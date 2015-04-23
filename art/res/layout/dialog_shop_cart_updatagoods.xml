@@ -2,14 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparentblack3"
     android:gravity="bottom"
     android:orientation="vertical" >
+
+    <View
+        android:id="@+id/goov_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
 
     <LinearLayout
         android:id="@+id/gool_ll_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_height="match_parent"
         android:background="@color/txt_white"
         android:orientation="vertical" >
 
@@ -30,39 +35,61 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical"
                 android:gravity="right"
-                android:paddingTop="4dp"
-                android:paddingRight="8dp" >
-                
-                <ImageView 
-                    android:onClick="chaClick"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/goods_cha_sel"/>
+                android:orientation="vertical"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/goot_tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:paddingBottom="4dp"
+                        android:text="¥100.¥100.00¥100.00¥100.00¥100.0000"
+                        android:singleLine="true"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="16sp"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="8dp" />
+
+                    <ImageView
+                        android:id="@+id/gooi_iv_cha"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/goods_cha_sel" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/goot_tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:text="¥100.00"
-                    android:layout_weight="1"
-                    android:paddingBottom="4dp"
                     android:layout_marginLeft="8dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/red500" />
-                
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:paddingBottom="4dp"
+                    android:text="¥100.00"
+                    android:textColor="@color/red500"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/goot_tv_option"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:text="红色、2.4"
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
+                    android:gravity="bottom"
                     android:paddingBottom="4dp"
-                    android:textColor="@color/grey500"
-                    android:layout_marginLeft="8dp" />
+                    android:text="红色、2.4"
+                    android:textColor="@color/grey500" />
             </LinearLayout>
         </LinearLayout>
 
@@ -75,26 +102,32 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="vertical" >
-            
-            <ListView 
+
+            <ListView
                 android:id="@+id/gool_lv_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:listSelector="@color/transparent"
                 android:divider="@color/transparent"
-                android:scrollbars="none"
-                android:dividerHeight="4dp"></ListView>
+                android:dividerHeight="4dp"
+                android:listSelector="@color/transparent"
+                android:scrollbars="none" >
+            </ListView>
         </LinearLayout>
 
-        <TextView 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/goot_tv_sub"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="确定"
-            android:textColor="@color/col_w1tow2"
             android:background="@drawable/draw_sogo_bg_sel"
             android:gravity="center"
-            android:textSize="18sp"
-            android:onClick="subClick"/>
+            android:text="确定"
+            android:textColor="@color/col_w1tow2"
+            android:textSize="18sp" />
     </LinearLayout>
+
 </LinearLayout>

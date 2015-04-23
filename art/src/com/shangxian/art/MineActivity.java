@@ -16,10 +16,11 @@ import android.widget.TextView;
 
 import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 
-public class MineActivity extends BaseActivity {
+public class MineActivity extends BaseActivity implements OnClickListener{
 	private String username_local;
 	private View ll_loginbefore,ll_loginafter;
 	private TextView tv_username;
@@ -113,7 +114,9 @@ public class MineActivity extends BaseActivity {
 		topView = MainActivity.getTopView();
 		topView.setActivity(this);
 		topView.hideLeftBtn();
-		topView.hideRightBtn();
+		topView.showRightBtn();
+		topView.setRightBtnDrawable(R.drawable.settingbuttonimage);
+		topView.setRightBtnListener(this);
 		topView.hideCenterSearch();
 		topView.setCenterListener(null);
 		topView.setTitle("我的");
@@ -141,13 +144,11 @@ public class MineActivity extends BaseActivity {
 	
 	public void doClick(View view){
 		switch (view.getId()) {
-		case R.id.iv_settingbutton:
-			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
-			break;
 		case R.id.ll_my_item1:
 			//我的订单
-			if(isLoginAndToLogin())
+			if(HttpUtils.checkNetWork(this)&&isLoginAndToLogin()){
 			startActivity(new Intent(this, MyOrderActivity.class));
+			}
 			break;
 		case R.id.ll_my_item2:
 			//爱农卡
@@ -166,6 +167,17 @@ public class MineActivity extends BaseActivity {
 			break;
 		case R.id.ll_my_item7:
 			//账户与安全
+			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_right:
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
 			break;
 		default:
