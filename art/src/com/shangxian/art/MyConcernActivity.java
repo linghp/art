@@ -88,7 +88,7 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 		adapter = new FragmentViewPagerAdp(
 				getSupportFragmentManager(), fragments);
 		mViewPager.setAdapter(adapter);
-		mViewPager.setOffscreenPageLimit(0);
+//		mViewPager.setOffscreenPageLimit(0);
 		mViewPager.setOnPageChangeListener(this);
 
 	}

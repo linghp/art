@@ -159,7 +159,15 @@ public class MineActivity extends BaseActivity {
 			if(isLoginAndToLogin())
 			startActivity(new Intent(this, MyConcernActivity.class));
 			break;
-
+		case R.id.ll_my_item4:
+			//我的消息
+			if(isLoginAndToLogin())
+			startActivity(new Intent(this, MyMessageActivity.class));
+			break;
+		case R.id.ll_my_item7:
+			//账户与安全
+			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
+			break;
 		default:
 			break;
 		}

@@ -147,6 +147,14 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".MyMessageActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".LogisticsNotifyActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".BalanceActivity"
             android:label="@string/title_activity_mine" >
         </activity>

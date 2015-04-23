@@ -13,10 +13,8 @@
         android:id="@+id/shops_mListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/white"
         android:layout_below="@id/top_title"
         android:divider="@null"
-        android:dividerHeight="10dp"
         android:scrollbars="none" />
 
 </RelativeLayout>
