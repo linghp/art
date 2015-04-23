@@ -155,9 +155,7 @@ public class ListCarAdapter extends BaseAdapter {
 //					intent.putExtra("storeId", item.listCarStoreBean.storeid);
 //					context.startActivity(intent);
 				}
-			});
-			
-			
+			});	
 		} else {
 			convertView = inflater.inflate(R.layout.list_car_goods_item, null);
 			holder.goodsName = (TextView) convertView.findViewById(R.id.car_goodsname);
