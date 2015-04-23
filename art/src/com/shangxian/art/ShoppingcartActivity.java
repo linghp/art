@@ -82,7 +82,6 @@ OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
 	}
 
 	private void initdata() {
-
 		if (isLogin()) {
 			AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
 					"数据加载中...");

@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,6 +16,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -101,6 +101,12 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		img.setAdjustViewBounds(true);  
 		img.setMaxHeight(Height);//屏幕高度  
 		img.setMaxWidth(width);//屏幕宽度
+		img.setScaleType(ImageView.ScaleType.FIT_XY); 
+		LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		layoutParams.width=CommonUtil.getScreenWidth(this);
+		layoutParams.height=layoutParams.width*2/3;
+		img.setLayoutParams(layoutParams);
+
 		
 		shopsimg = (ImageView) headView.findViewById(R.id.shops_shopsimg);
 		collectionimg = (ImageView) headView.findViewById(R.id.shops_collectionimg);
