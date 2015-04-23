@@ -129,26 +129,37 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.7"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:layout_weight="1.7" >
 
         <TextView
             android:id="@+id/car_goods_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:text="￥197.14"
-            android:textStyle="bold" />
+            android:textColor="@color/red500"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/car_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/car_goods_price"
-            android:layout_centerHorizontal="true"
             android:text="x1"
-            android:textStyle="bold" />
+            android:singleLine="true"
+            android:textColor="@color/main_col500_1"
+            android:layout_centerHorizontal="true" />
+        
+        <ImageView 
+            android:id="@+id/car_updata"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/edit"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/draw_tr_to_trb2"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -239,6 +240,7 @@ public class CommodityContentActivity extends BaseActivity implements
 								@Override
 								public View getView(ViewGroup container, int position) {
 									ImageView iv = new ImageView(CommodityContentActivity.this);
+									
 									iv.setScaleType(ImageView.ScaleType.FIT_XY); 
 									LayoutParams layoutParams=viewPager.getLayoutParams();
 									layoutParams.width=CommonUtil.getScreenWidth(CommodityContentActivity.this);

@@ -39,6 +39,7 @@ import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
@@ -155,9 +156,7 @@ public class ListCarAdapter extends BaseAdapter {
 //					intent.putExtra("storeId", item.listCarStoreBean.storeid);
 //					context.startActivity(intent);
 				}
-			});
-			
-			
+			});	
 		} else {
 			convertView = inflater.inflate(R.layout.list_car_goods_item, null);
 			holder.goodsName = (TextView) convertView.findViewById(R.id.car_goodsname);
@@ -166,6 +165,7 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.goodsNum = (TextView) convertView.findViewById(R.id.car_num);
 			holder.goodsPrice = (TextView) convertView.findViewById(R.id.car_goods_price);
 			holder.check_goods = (CheckBox) convertView.findViewById(R.id.check_goods);
+			holder.updata = (ImageView) convertView.findViewById(R.id.car_updata);
 			mAbImageLoader_goodsImg.display(holder.goodsImg,Constant.BASEURL
 					+ item.getListCarGoodsBean().getPhoto());
 			// 给控件赋值
@@ -205,6 +205,15 @@ public class ListCarAdapter extends BaseAdapter {
 					}
 					ShoppingcartActivity.setSelecteAll();
 					ListCarAdapter.this.notifyDataSetChanged();
+				}
+			});
+			
+			holder.updata.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					GoodsDialog dialog =  new GoodsDialog(context);
+					dialog.setCarGoodsItem(item);
+					dialog.show();
 				}
 			});
 
@@ -451,5 +460,6 @@ public class ListCarAdapter extends BaseAdapter {
 		public ImageView goodsDelete;
 		public String goodsid;
 		public String storeid;
+		public ImageView updata;
 	}
 }

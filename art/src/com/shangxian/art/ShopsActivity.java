@@ -93,6 +93,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 
 		img = (ImageView) headView.findViewById(R.id.shops_img);
+		//获取屏幕宽、高 
+		Display mDisplay= getWindowManager().getDefaultDisplay(); 
+		int width= mDisplay.getWidth();  
+		int Height= mDisplay.getHeight();
+		img.setScaleType(ImageView.ScaleType.FIT_CENTER);  
+		img.setAdjustViewBounds(true);  
+		img.setMaxHeight(Height);//屏幕高度  
+		img.setMaxWidth(width);//屏幕宽度
 		img.setScaleType(ImageView.ScaleType.FIT_XY); 
 		LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		layoutParams.width=CommonUtil.getScreenWidth(this);

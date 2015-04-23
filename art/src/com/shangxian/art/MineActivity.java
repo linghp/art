@@ -145,13 +145,20 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 	public void doClick(View view){
 		switch (view.getId()) {
 		case R.id.ll_my_item1:
+			//我的订单
 			if(HttpUtils.checkNetWork(this)&&isLoginAndToLogin()){
 			startActivity(new Intent(this, MyOrderActivity.class));
 			}
 			break;
 		case R.id.ll_my_item2:
+			//爱农卡
 			if(isLoginAndToLogin())
 			startActivity(new Intent(this, NongHeBaoActivity.class));
+			break;
+		case R.id.ll_my_item3:
+			//我的关注
+			if(isLoginAndToLogin())
+			startActivity(new Intent(this, MyConcernActivity.class));
 			break;
 
 		default:

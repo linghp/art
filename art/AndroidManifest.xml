@@ -143,6 +143,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".MyConcernActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".BalanceActivity"
             android:label="@string/title_activity_mine" >
         </activity>
