@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:background="@color/txt_white" >
 
     <ImageView
         android:id="@+id/item_mymessage_img"

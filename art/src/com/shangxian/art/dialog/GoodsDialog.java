@@ -104,7 +104,7 @@ public class GoodsDialog extends Dialog implements android.view.View.OnClickList
 	
 	private void upDataView() {
 		if (item != null) {
-			tv_price.setText("¥" + String.format("%。2f", item.listCarGoodsBean.getPromotionPrice()));
+			tv_price.setText("¥" + String.format("%.2f", item.listCarGoodsBean.getPromotionPrice()));
 			tv_option.setText(item.listCarGoodsBean.getSpecs());
 			tv_title.setText(item.listCarGoodsBean.getName());
 			String url = Constant.BASEURL + item.listCarGoodsBean.getPhoto();
