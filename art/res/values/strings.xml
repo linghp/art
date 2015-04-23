@@ -10,7 +10,8 @@
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
-    <string name="hotel_reservation">酒店预订</string>
+    
+    <string name="searchhint_home">搜索商铺/店铺</string>
     <string name="pay">充值</string>
     <string name="title_activity_regist">注册</string>
     <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
@@ -31,5 +32,6 @@
 
     <string name="title_activity_pay">付款</string>
     <string name="title_activity_my_order">我的订单</string>
+    
 
 </resources>
