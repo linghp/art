@@ -257,14 +257,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	private void initListener() {
 		// TODO Auto-generated method stub
-		mGridView.setOnItemClickListener(new OnItemClickListener() {
+		/*mGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>>>"+position);
 			}
-		});
+		});*/
 		/*mGridView.setOnCellClickListener(new OnCellClickListener() {
 
 			@Override
