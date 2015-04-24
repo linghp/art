@@ -12,10 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,12 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.http.AbHttpUtil;
-import com.ab.http.AbStringHttpResponseListener;
-import com.ab.task.AbTask;
-import com.ab.task.AbTaskItem;
-import com.ab.task.AbTaskListListener;
 import com.ab.util.AbDialogUtil;
-import com.ab.util.AbLogUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
@@ -40,9 +33,9 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
-import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.dialog.DeleteDialog;
+import com.shangxian.art.dialog.DeleteDialog.Delete_I;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
@@ -55,13 +48,13 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnClickListener, HttpCilentListener {
+		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I {
 	private ListView listcar;
-	public static CheckBox selecteall;
+	public CheckBox selecteall;
 	// private static ListCarAdapter adapter;
 	// private CustomProgressDialog dialog;
-	static TextView allprice;
-	private static float price;// 总价
+	private TextView allprice;
+	private float price;// 总价
 	private Button btn_settlement;
 	private AbPullToRefreshView mAbPullToRefreshView;
 	private View ll_nonetwork;
@@ -69,7 +62,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private AbHttpUtil httpUtil;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
-	private static ListCarAdapter adapter;
+	private ListCarAdapter adapter;
 	private boolean isFromConfirmOrderAct;
 
 	boolean isother = false;
@@ -85,8 +78,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 		if (isLogin()) {
 			AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
 					"数据加载中...");
-			HttpClients.getDo(Constant.BASEURL + Constant.CONTENT
-					+ Constant.CART, this);
+			requestTask();
 		}
 		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
 		selecteall.setChecked(false);
@@ -105,10 +97,15 @@ public class ShoppingcartActivity extends BaseActivity implements
 		});
 	}
 
+	private void requestTask() {
+		HttpClients.getDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
+				this);
+	}
+
 	@Override
 	public void onResponse(String content) {
 		MyLogger.i(content);
-		AbDialogUtil.removeDialog(ShoppingcartActivity.this);
+		mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (content == null) {
 			ll_nonetwork.setVisibility(View.VISIBLE);
 		}
@@ -195,7 +192,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	// 结算购物车的总价格
-	public static void accountCar() {
+	public void accountCar() {
 		// 遍历选中的商品，算出总价
 		price = 0;
 		Iterator iter1 = adapter.getGoodsCheced().entrySet().iterator();
@@ -220,7 +217,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	// 设置全选是否选中
-	public static void setSelecteAll() {
+	public void setSelecteAll() {
 		int flag = 0;
 		Iterator iter = adapter.getStoreCheced().entrySet().iterator();
 		while (iter.hasNext()) {
@@ -272,51 +269,52 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	public void refreshTask() {
-		AbLogUtil.prepareLog(this);
-		AbTask mAbTask = new AbTask();
-		final AbTaskItem item = new AbTaskItem();
-		item.setListener(new AbTaskListListener() {
-			@Override
-			public List<?> getList() {
-				List<Map<String, Object>> newList = null;
-				try {
-					Thread.sleep(1000);
-					// newList = new ArrayList<Map<String, Object>>();
-					// Map<String, Object> map = null;
-					//
-					// for (int i = 0; i < pageSize; i++) {
-					// map = new HashMap<String, Object>();
-					// map.put("itemsIcon", mPhotoList.get(i));
-					// map.put("itemsTitle", "item" + (i + 1));
-					// map.put("itemsText", "item..." + (i + 1));
-					// newList.add(map);
-					//
-					// }
-				} catch (Exception e) {
-				}
-				return newList;
-			}
-
-			@Override
-			public void update(List<?> paramList) {
-
-				// 通知Dialog
-				// mDialogFragment.loadFinish();
-				// AbLogUtil.d(NearlyActivity.this, "返回", true);
-				// List<Map<String, Object>> newList = (List<Map<String,
-				// Object>>) paramList;
-				// list.clear();
-				// if (newList != null && newList.size() > 0) {
-				// list.addAll(newList);
-				// myListViewAdapter.notifyDataSetChanged();
-				// newList.clear();
-				// }
-				mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-		});
-
-		mAbTask.execute(item);
+		requestTask();
+		// AbLogUtil.prepareLog(this);
+		// AbTask mAbTask = new AbTask();
+		// final AbTaskItem item = new AbTaskItem();
+		// item.setListener(new AbTaskListListener() {
+		// @Override
+		// public List<?> getList() {
+		// List<Map<String, Object>> newList = null;
+		// try {
+		// Thread.sleep(1000);
+		// // newList = new ArrayList<Map<String, Object>>();
+		// // Map<String, Object> map = null;
+		// //
+		// // for (int i = 0; i < pageSize; i++) {
+		// // map = new HashMap<String, Object>();
+		// // map.put("itemsIcon", mPhotoList.get(i));
+		// // map.put("itemsTitle", "item" + (i + 1));
+		// // map.put("itemsText", "item..." + (i + 1));
+		// // newList.add(map);
+		// //
+		// // }
+		// } catch (Exception e) {
+		// }
+		// return newList;
+		// }
+		//
+		// @Override
+		// public void update(List<?> paramList) {
+		//
+		// // 通知Dialog
+		// // mDialogFragment.loadFinish();
+		// // AbLogUtil.d(NearlyActivity.this, "返回", true);
+		// // List<Map<String, Object>> newList = (List<Map<String,
+		// // Object>>) paramList;
+		// // list.clear();
+		// // if (newList != null && newList.size() > 0) {
+		// // list.addAll(newList);
+		// // myListViewAdapter.notifyDataSetChanged();
+		// // newList.clear();
+		// // }
+		// mAbPullToRefreshView.onHeaderRefreshFinish();
+		// }
+		//
+		// });
+		//
+		// mAbTask.execute(item);
 	}
 
 	@Override
@@ -329,21 +327,41 @@ public class ShoppingcartActivity extends BaseActivity implements
 			initdata();
 			break;
 		case R.id.btn_right:
-			doDelete();
+			if (adapter != null && listCarItem.size() > 0) {
+				if (selectedCount() > 0) {
+					new DeleteDialog(this, this, "确定要删除所选的商品？").show();
+				} else {
+					myToast("请选择要删除的商品");
+				}
+			}
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void doDelete() {
-		if (adapter != null) {
-			if (selectedCount() > 0) {
-				
-			}else{
-				myToast("请选择要删除的商品");
-			}
-		}
+	@Override
+	public void doDelete() {
+				Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
+				Map<String, Boolean> storeCheced = adapter.getStoreCheced();
+				List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
+				for (CarItem carItem : listCarItem) {
+					if (carItem.getType() == CarItem.SECTION) {
+						if (storeCheced.get(carItem.getListCarStoreBean()
+								.getShopId())) {
+							listCarItemDelete.add(carItem);
+						}
+					} else {
+						if (goodsCheced.get(carItem.getListCarGoodsBean()
+								.getProductId())) {
+							listCarItemDelete.add(carItem);
+						}
+					}
+				}
+				listCarItem.removeAll(listCarItemDelete);
+				adapter.notifyDataSetChanged();
+				accountCar();
+				myToast("删除成功");
 	}
 
 	private void doSettlement() {
@@ -376,7 +394,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// MerCartDTO car = new MerCartDTO();
 				// car.setFstoreId(listGoods.get(0).storeId);
 				// car.setStoreName(listGoods.get(0).storeName);
-				List<CarItem> listCarItem_select = new ArrayList<CarItem>();//选中的商品
+				List<CarItem> listCarItem_select = new ArrayList<CarItem>();// 选中的商品
 				Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
 				List<ListCarStoreBean> listStoreBean = new ArrayList<ListCarStoreBean>();
 				// 提取店铺list
@@ -446,7 +464,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	}
 
 	private int selectedCount() {
-		int flag=0;
+		int flag = 0;
 		Iterator iter = adapter.getGoodsCheced().entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry entry = (Map.Entry) iter.next();

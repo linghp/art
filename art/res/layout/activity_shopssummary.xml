@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="023-55254886"
+                android:text="18696636812"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
 

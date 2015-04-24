@@ -34,5 +34,7 @@
     <string name="title_activity_my_order">我的订单</string>
     
     <string name="title_activity_my_concern">我的关注</string>
+    <string name="title_activity_my_message">我的消息</string>
+    <string name="title_activity_logisticsnotify">物流通知</string>
 
 </resources>

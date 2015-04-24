@@ -17,7 +17,7 @@
             android:id="@+id/layout_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/txt_white2"
+            android:background="@color/txt_white"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -85,7 +85,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="#cccccc" />
 
             <android.support.v4.view.ViewPager

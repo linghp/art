@@ -5,10 +5,12 @@
     android:background="@color/bg_gray"
     android:orientation="vertical"
     tools:context="com.shangxian.art.AccountSecurityActivity" >
-        <com.shangxian.art.view.TopView
-            android:id="@+id/top_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/rl_photo"
         android:layout_width="match_parent"

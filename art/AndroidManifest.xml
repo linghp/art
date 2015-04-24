@@ -6,7 +6,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="21" />
     <!-- 使用网络功能所需权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
@@ -144,6 +144,14 @@
         </activity>
         <activity
             android:name=".MyConcernActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".MyMessageActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".LogisticsNotifyActivity"
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
