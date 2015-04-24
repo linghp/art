@@ -172,4 +172,8 @@
     <color name="primary">#009688</color>
     <color name="primaryDark">#00796b</color>
     <color name="pupo_color">#fffef4</color>
+    
+    <color name="btn_press_color">#66000000</color> 
+    <color name="btn_unpress_color">#22000000</color> 
+    
 </resources>

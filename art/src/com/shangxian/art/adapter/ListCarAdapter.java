@@ -1,7 +1,6 @@
 package com.shangxian.art.adapter;
 
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,12 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Paint;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,13 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
-import com.ab.image.toolbox.ImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.ShoppingcartActivity;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
-import com.shangxian.art.bean.ListCarStoreBean;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.utils.CommonUtil;
@@ -45,7 +35,7 @@ import com.shangxian.art.utils.MyLogger;
 
 public class ListCarAdapter extends BaseAdapter {
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
-	private Context context;
+	private ShoppingcartActivity shoppingcartActivity;
 	private LayoutInflater inflater;
 	public  List<CarItem> listdata;
 	Map<String, Boolean> storeChecked = new HashMap<String, Boolean>();
@@ -53,7 +43,7 @@ public class ListCarAdapter extends BaseAdapter {
 	int num = 0;
 
 	public ListCarAdapter(Context contex, List<CarItem> listdata) {
-		this.context = contex;
+		this.shoppingcartActivity = (ShoppingcartActivity) contex;
 		this.listdata = listdata;
 		inflater = LayoutInflater.from(contex);
 		initState();
@@ -107,7 +97,7 @@ public class ListCarAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.list_car_store_item, null);
 			LinearLayout ll_item= (LinearLayout) convertView.findViewById(R.id.ll_item);
 			if(position==0){
-				CommonUtil.setMargins(ll_item, 0, CommonUtil.px2dip(context, 20), 0, 0);
+				CommonUtil.setMargins(ll_item, 0, CommonUtil.px2dip(shoppingcartActivity, 20), 0, 0);
 			}
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
@@ -132,7 +122,7 @@ public class ListCarAdapter extends BaseAdapter {
 						}
 
 					}
-					ShoppingcartActivity.setSelecteAll();
+					shoppingcartActivity.setSelecteAll();
 					ListCarAdapter.this.notifyDataSetChanged();
 				}
 			});
@@ -203,7 +193,7 @@ public class ListCarAdapter extends BaseAdapter {
 						storeChecked.put(item.listCarGoodsBean.getShopId(), false);
 
 					}
-					ShoppingcartActivity.setSelecteAll();
+					shoppingcartActivity.setSelecteAll();
 					ListCarAdapter.this.notifyDataSetChanged();
 				}
 			});
@@ -211,7 +201,7 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.updata.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					GoodsDialog dialog =  new GoodsDialog(context);
+					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity);
 					dialog.setCarGoodsItem(item);
 					dialog.show();
 				}
