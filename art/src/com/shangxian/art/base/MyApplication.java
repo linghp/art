@@ -12,6 +12,7 @@ import com.baidu.location.GeofenceClient;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.shangxian.art.R;
+import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.BaseServer;
 
@@ -44,6 +45,7 @@ public class MyApplication extends Application {
 		// Initialize ImageLoader with configuration.
 //		ImageLoader.getInstance().init(config);
 		BaseServer.toRegistContext(mInstance);
+		AliPayBase.initContext(mInstance);
 		SDKInitializer.initialize(getApplicationContext());
 		mLocationClient = new LocationClient(this.getApplicationContext());
 		mMyLocationListener = new MyLocationListener();
