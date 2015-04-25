@@ -6,7 +6,7 @@ package com.shangxian.art.alipays;
  * @author libo
  * @time 2015/4/23
  */
-public class AliPayTools {
+public class AliPayBuilder {
 	private String partner = "partner=" + "\"" + "2088811640351834" + "\"";      // 签约合作者身份ID(PID)
 	private String seller_id = "&seller_id=" + "\"" + "cqtrsy@163.com" + "\"";   // 签约卖家支付宝账号
 
@@ -49,7 +49,7 @@ public class AliPayTools {
 	 * @param good_price
 	 *            // 商品价格(不为空)
 	 */
-	private AliPayTools(String order_id, String good_name, String good_det,
+	private AliPayBuilder(String order_id, String good_name, String good_det,
 			String good_price) {
 		this.out_trade_no = "&out_trade_no=" + "\"" + order_id + "\"";
 		this.subject = "&subject=" + "\"" + good_name + "\"";
@@ -57,8 +57,8 @@ public class AliPayTools {
 		this.total_fee = "&total_fee=" + "\"" + good_price + "\"";
 	}
 	
-	public static AliPayTools createAliPayOrder(String order_id, String good_name, String good_det,String good_price){
-		return new AliPayTools(order_id, good_name, good_det, good_price);
+	public static AliPayBuilder createAliPayOrder(String order_id, String good_name, String good_det,String good_price){
+		return new AliPayBuilder(order_id, good_name, good_det, good_price);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class AliPayTools {
 	 *            // 收款账户(固定值)
 	 * @return
 	 */
-	public AliPayTools userInfo(String pid, String sel_id) {
+	public AliPayBuilder userInfo(String pid, String sel_id) {
 		this.partner = "partner=" + "\"" + pid + "\"";
 		this.seller_id = "&seller_id=" + "\"" + sel_id + "\"";
 		return this;
@@ -82,7 +82,7 @@ public class AliPayTools {
 	 * @param isBank
 	 * @return
 	 */
-	public AliPayTools isBank(boolean isBank) {
+	public AliPayBuilder isBank(boolean isBank) {
 		this.isBank = isBank;
 		return this;
 	}
@@ -93,12 +93,12 @@ public class AliPayTools {
 	 * @param url
 	 * @return
 	 */
-	public AliPayTools notify_url(String url) {
+	public AliPayBuilder notify_url(String url) {
 		this.notify_url = "&notify_url=" + "\"" + url + "\"";
 		return this;
 	}
 
-	public AliPayTools outTime(String time) {
+	public AliPayBuilder outTime(String time) {
 		this.it_b_pay = "&it_b_pay=" + "\"" + time + "\"";
 		return this;
 	}
