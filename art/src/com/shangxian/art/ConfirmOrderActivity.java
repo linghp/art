@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ab.util.AbDialogUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ListConfirmOrderAdapter;
 import com.shangxian.art.base.BaseActivity;
@@ -105,6 +106,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void dosettlement() {
+		AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
+				"请稍等...");
 		CommitOrder commitOrder=new CommitOrder();
 		commitOrder.setAddressId("1");
 		List<OrderItem> orderItems=new ArrayList<OrderItem>();
@@ -124,7 +127,6 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onResponse(String content) {
 		MyLogger.i(content);
-		if (!TextUtils.isEmpty(content)) {
 			try {
 				JSONObject jsonObject = new JSONObject(content);
 				String result_code = jsonObject
@@ -139,13 +141,16 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 						PayActivity.startThisActivity(ordernumbers, totalprice, this);
 					}
 					//myToast(jsonObject.getString("result"));
+					setResult(RESULT_OK);
+					finish();
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}catch (Exception e) {
 				e.printStackTrace();
-		}
+		}finally{
+			AbDialogUtil.removeDialog(ConfirmOrderActivity.this);
 		}
 	}
 	

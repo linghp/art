@@ -23,8 +23,9 @@
             android:layout_height="fill_parent"
             android:cacheColorHint="#00000000"
             android:divider="@null"
-            android:dividerHeight="2dp" />
-        <include layout="@layout/no_network"/>
+            android:dividerHeight="2dp"  android:visibility="gone"/>
+        <include layout="@layout/no_network"  android:visibility="gone"/>
+        <include layout="@layout/loadind_big" />
     </com.ab.view.pullview.AbPullToRefreshView>
 
 </RelativeLayout>

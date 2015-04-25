@@ -41,11 +41,14 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 public class NearlyActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
+		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener {
 	private MyApplication application;
 	private List<Map<String, Object>> list = null;
+
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mListView = null;
+	private View ll_nonetwork, loading_big;
+
 	private int currentPage = 1;
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbTitleBar mAbTitleBar = null;
@@ -57,7 +60,7 @@ public class NearlyActivity extends BaseActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setAbContentView(R.layout.pull_to_refresh_list);
+		setContentView(R.layout.pull_to_refresh_list);
 		application = (MyApplication) abApplication;
 
 		// mAbTitleBar = this.getTitleBar();
@@ -71,11 +74,7 @@ public class NearlyActivity extends BaseActivity implements
 			mPhotoList.add(Constant.BASEURL1
 					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
 		}
-
-		// 获取ListView对象
-		mAbPullToRefreshView = (AbPullToRefreshView) this
-				.findViewById(R.id.mPullRefreshView);
-		mListView = (ListView) this.findViewById(R.id.mListView);
+		initviews();
 
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
@@ -110,6 +109,14 @@ public class NearlyActivity extends BaseActivity implements
 
 	}
 
+	private void initviews() {
+		mAbPullToRefreshView = (AbPullToRefreshView) this
+				.findViewById(R.id.mPullRefreshView);
+		mListView = (ListView) this.findViewById(R.id.mListView);
+		ll_nonetwork = findViewById(R.id.ll_nonetwork);
+		loading_big = findViewById(R.id.loading_big);
+	}
+
 	@Override
 	public void onFooterLoad(AbPullToRefreshView view) {
 		loadMoreTask();
@@ -120,58 +127,57 @@ public class NearlyActivity extends BaseActivity implements
 		refreshTask();
 	}
 
-//	public void refreshTask1() {
-//		AbLogUtil.prepareLog(this);
-//		AbTask mAbTask = new AbTask();
-//		final AbTaskItem item = new AbTaskItem();
-//		item.setListener(new AbTaskListListener() {
-//			@Override
-//			public List<?> getList() {
-//				List<Map<String, Object>> newList = null;
-//				try {
-//					Thread.sleep(1000);
-//					currentPage = 1;
-//					newList = new ArrayList<Map<String, Object>>();
-//					Map<String, Object> map = null;
-//
-//					for (int i = 0; i < pageSize; i++) {
-//						map = new HashMap<String, Object>();
-//						map.put("itemsIcon", mPhotoList.get(i));
-//						map.put("itemsTitle", "item" + (i + 1));
-//						map.put("itemsText", "item..." + (i + 1));
-//						newList.add(map);
-//
-//					}
-//				} catch (Exception e) {
-//				}
-//				return newList;
-//			}
-//
-//			@Override
-//			public void update(List<?> paramList) {
-//
-//				// 通知Dialog
-//				mDialogFragment.loadFinish();
-//				AbLogUtil.d(NearlyActivity.this, "返回", true);
-//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-//				list.clear();
-//				if (newList != null && newList.size() > 0) {
-//					list.addAll(newList);
-//					myListViewAdapter.notifyDataSetChanged();
-//					newList.clear();
-//				}
-//				mAbPullToRefreshView.onHeaderRefreshFinish();
-//			}
-//
-//		});
-//
-//		mAbTask.execute(item);
-//	}
+	// public void refreshTask1() {
+	// AbLogUtil.prepareLog(this);
+	// AbTask mAbTask = new AbTask();
+	// final AbTaskItem item = new AbTaskItem();
+	// item.setListener(new AbTaskListListener() {
+	// @Override
+	// public List<?> getList() {
+	// List<Map<String, Object>> newList = null;
+	// try {
+	// Thread.sleep(1000);
+	// currentPage = 1;
+	// newList = new ArrayList<Map<String, Object>>();
+	// Map<String, Object> map = null;
+	//
+	// for (int i = 0; i < pageSize; i++) {
+	// map = new HashMap<String, Object>();
+	// map.put("itemsIcon", mPhotoList.get(i));
+	// map.put("itemsTitle", "item" + (i + 1));
+	// map.put("itemsText", "item..." + (i + 1));
+	// newList.add(map);
+	//
+	// }
+	// } catch (Exception e) {
+	// }
+	// return newList;
+	// }
+	//
+	// @Override
+	// public void update(List<?> paramList) {
+	//
+	// // 通知Dialog
+	// mDialogFragment.loadFinish();
+	// AbLogUtil.d(NearlyActivity.this, "返回", true);
+	// List<Map<String, Object>> newList = (List<Map<String, Object>>)
+	// paramList;
+	// list.clear();
+	// if (newList != null && newList.size() > 0) {
+	// list.addAll(newList);
+	// myListViewAdapter.notifyDataSetChanged();
+	// newList.clear();
+	// }
+	// mAbPullToRefreshView.onHeaderRefreshFinish();
+	// }
+	//
+	// });
+	//
+	// mAbTask.execute(item);
+	// }
 
 	private void refreshTask() {
-		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
-		AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
-				"数据加载中...");
+		String url = Constant.BASEURL + Constant.CONTENT + Constant.CATEGORYS;
 		// AbRequestParams params = new AbRequestParams();
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
@@ -184,7 +190,6 @@ public class NearlyActivity extends BaseActivity implements
 
 			@Override
 			public void onFinish() {
-				AbDialogUtil.removeDialog(NearlyActivity.this);
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
@@ -192,6 +197,7 @@ public class NearlyActivity extends BaseActivity implements
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
 				mListView.setVisibility(View.GONE);
+				ll_nonetwork.setVisibility(View.VISIBLE);
 				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 				// imgList.clear();
 				// ArrayList<String> imgs = new ArrayList<String>();
@@ -226,6 +232,7 @@ public class NearlyActivity extends BaseActivity implements
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				// model.clear();
+				mListView.setVisibility(View.VISIBLE);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
 					try {
@@ -235,27 +242,27 @@ public class NearlyActivity extends BaseActivity implements
 						if (result_code.equals("200")) {
 							mListView.setVisibility(View.VISIBLE);
 							List<Map<String, Object>> newList = null;
-								currentPage = 1;
-								newList = new ArrayList<Map<String, Object>>();
-								Map<String, Object> map = null;
+							currentPage = 1;
+							newList = new ArrayList<Map<String, Object>>();
+							Map<String, Object> map = null;
 
-								for (int i = 0; i < pageSize; i++) {
-									map = new HashMap<String, Object>();
-									map.put("itemsIcon", mPhotoList.get(i));
-									map.put("itemsTitle", "item" + (i + 1));
-									map.put("itemsText", "item..." + (i + 1));
-									newList.add(map);
+							for (int i = 0; i < pageSize; i++) {
+								map = new HashMap<String, Object>();
+								map.put("itemsIcon", mPhotoList.get(i));
+								map.put("itemsTitle", "item" + (i + 1));
+								map.put("itemsText", "item..." + (i + 1));
+								newList.add(map);
 
-								}
-								
-								AbLogUtil.d(NearlyActivity.this, "返回", true);
-								list.clear();
-								if (newList != null && newList.size() > 0) {
-									list.addAll(newList);
-									myListViewAdapter.notifyDataSetChanged();
-									newList.clear();
-								}
-								mAbPullToRefreshView.onHeaderRefreshFinish();
+							}
+
+							AbLogUtil.d(NearlyActivity.this, "返回", true);
+							list.clear();
+							if (newList != null && newList.size() > 0) {
+								list.addAll(newList);
+								myListViewAdapter.notifyDataSetChanged();
+								newList.clear();
+							}
+							mAbPullToRefreshView.onHeaderRefreshFinish();
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -340,6 +347,9 @@ public class NearlyActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_reload:
+			mListView.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.GONE);
+			loading_big.setVisibility(View.VISIBLE);
 			refreshTask();
 			break;
 		default:

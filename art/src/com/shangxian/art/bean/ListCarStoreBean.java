@@ -19,7 +19,8 @@ public class ListCarStoreBean implements Serializable{
 	@Override
 	public String toString() {
 		return "ListCarStoreBean [shopId=" + shopId + ", shopName=" + shopName
-				+ ", logo=" + logo + ", itemDtos=" + itemDtos + "]";
+				+ ", logo=" + logo + ", recommand=" + recommand + ", itemDtos="
+				+ itemDtos + "]";
 	}
 	public String getShopId() {
 		return shopId;

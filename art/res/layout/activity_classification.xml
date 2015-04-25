@@ -5,13 +5,14 @@
      >
 
     <include layout="@layout/no_network" />
+    <include layout="@layout/loadind_big" />
 
     <ListView
         android:id="@+id/classify"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
-        android:scrollbars="none" >
+        android:scrollbars="none">
     </ListView>
 
 </RelativeLayout>

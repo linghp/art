@@ -38,6 +38,7 @@ import com.shangxian.art.dialog.DeleteDialog;
 import com.shangxian.art.dialog.DeleteDialog.Delete_I;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
+import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
@@ -57,8 +58,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private float price;// 总价
 	private Button btn_settlement;
 	private AbPullToRefreshView mAbPullToRefreshView;
-	private View ll_nonetwork;
-
+	private View ll_nonetwork,loading_big,ll_refresh_empty,rl_bottom;
 	private AbHttpUtil httpUtil;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
@@ -76,8 +76,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	private void initdata() {
 		if (isLogin()) {
-			AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
-					"数据加载中...");
+			loading_big.setVisibility(View.VISIBLE);
 			requestTask();
 		}
 		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
@@ -115,6 +114,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 			String result_code = jsonObject.getString("result_code");
 			if (result_code.equals("200")) {
 				ll_nonetwork.setVisibility(View.GONE);
+				rl_bottom.setVisibility(View.VISIBLE);
 				JSONArray resultObjectArray = jsonObject.getJSONArray("result");
 				int length = resultObjectArray.length();
 				listStore.clear();
@@ -122,6 +122,11 @@ public class ShoppingcartActivity extends BaseActivity implements
 					JSONObject jo = resultObjectArray.getJSONObject(i);
 					listStore.add(gson.fromJson(jo.toString(),
 							ListCarStoreBean.class));
+				}
+				if(listStore.size()==0){//无内容显示
+					ll_refresh_empty.setVisibility(View.VISIBLE);
+				}else{
+					ll_refresh_empty.setVisibility(View.GONE);
 				}
 				assembleData();
 				adapter.initState();
@@ -133,7 +138,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			AbDialogUtil.removeDialog(ShoppingcartActivity.this);
+			loading_big.setVisibility(View.GONE);
 		}
 
 	}
@@ -178,6 +183,11 @@ public class ShoppingcartActivity extends BaseActivity implements
 		selecteall = (CheckBox) findViewById(R.id.selectall);
 		allprice = (TextView) findViewById(R.id.tv_car_allprice_value);
 		btn_settlement = (Button) findViewById(R.id.btn_settlement);
+		rl_bottom = findViewById(R.id.rl_bottom);
+		loading_big= findViewById(R.id.loading_big);
+		ll_refresh_empty= findViewById(R.id.ll_refresh_empty);
+		
+		rl_bottom.setVisibility(View.GONE);
 
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
@@ -324,7 +334,12 @@ public class ShoppingcartActivity extends BaseActivity implements
 			doSettlement();
 			break;
 		case R.id.iv_reload:
+			if(HttpUtils.checkNetWork(this)){
+			loading_big.setVisibility(View.VISIBLE);
 			initdata();
+			}else{
+				listCarItem.clear();
+			}
 			break;
 		case R.id.btn_right:
 			if (adapter != null && listCarItem.size() > 0) {
@@ -480,8 +495,12 @@ public class ShoppingcartActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
-			MyLogger.i("");
+			if(resultCode!=RESULT_OK){
+			MyLogger.i("onActivityResult");
 			isFromConfirmOrderAct = true;
+			}else{
+				isFromConfirmOrderAct=false;//当结算完成时，确认订单销毁，返回到此要刷新
+			}
 		}
 	}
 }

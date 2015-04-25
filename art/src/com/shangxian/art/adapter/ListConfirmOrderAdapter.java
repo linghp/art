@@ -7,6 +7,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -25,6 +27,7 @@ import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.MyLogger;
 
 public class ListConfirmOrderAdapter extends BaseAdapter {
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
@@ -91,11 +94,11 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder ;;
 		final ListCarStoreBean listCarStoreBean = (ListCarStoreBean) getItem(position);
+		MyLogger.i(listStoreBean.toString());
 		if(convertView==null){
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_confirmorder_item, null);
@@ -131,6 +134,7 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 			mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 					+ listCarStoreBean.getLogo());
 			holder.et_message.setText(listCarStoreBean.getRecommand());
+
 			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {
 	            public void onFocusChange(View view, boolean hasFocus) {
 	                if (!hasFocus){
@@ -138,9 +142,13 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	                   final EditText editText = (EditText) view;
 	                   // myItems.set(position, editText.getText().toString());
 						listCarStoreBean.setRecommand(editText.getText().toString());
+						MyLogger.i(editText.getText().toString());
 	                }
 	            }
 	        });
+			
+			holder.et_message.clearFocus();
+
 			
 			// 给控件赋值
 //			DisplayImageOptions options;

@@ -41,6 +41,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	private ListView list;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
+	private View ll_nonetwork,loading_big;
 	
 	private AbHttpUtil httpUtil = null;
 	@Override
@@ -87,8 +88,9 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	}
 	
 	private void requestTask() {
-		AbDialogUtil.showLoadDialog(this,
-				R.drawable.progress_circular, "数据加载中...");
+//		AbDialogUtil.showLoadDialog(this,
+//				R.drawable.progress_circular, "数据加载中...");
+		list.setVisibility(View.GONE);
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
 		AbRequestParams params = new AbRequestParams();
 		params.put("level", "all");
@@ -98,17 +100,19 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 
 			@Override
 			public void onStart() {
+				loading_big.setVisibility(View.VISIBLE);
 			}
 
 			@Override
 			public void onFinish() {
-				 AbDialogUtil.removeDialog(ClassificationActivity.this);
+				// AbDialogUtil.removeDialog(ClassificationActivity.this);
 				// mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
+				loading_big.setVisibility(View.GONE);
 				list.setVisibility(View.GONE);
 				 AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
 //				imgList.clear();
@@ -179,7 +183,8 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	private void initView() {
 		// TODO Auto-generated method stub
 		list = (ListView) findViewById(R.id.classify);
-
+		ll_nonetwork=findViewById(R.id.ll_nonetwork);
+		loading_big=findViewById(R.id.loading_big);
 	}
 
 	//事件监听

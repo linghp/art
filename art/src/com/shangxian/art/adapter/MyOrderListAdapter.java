@@ -4,8 +4,8 @@ package com.shangxian.art.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +14,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ab.image.AbImageLoader;
 import com.shangxian.art.MyOrderActivity;
+import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 
@@ -123,7 +122,8 @@ public class MyOrderListAdapter extends BaseAdapter {
 					
 					@Override
 					public void onClick(View v) {
-						CommonUtil.toast("click", context);
+						//CommonUtil.toast("click", context);
+						PayActivity.startThisActivity(null, myOrderItem.getTotalPrice(), (Activity)context);
 					}
 				});
 			}

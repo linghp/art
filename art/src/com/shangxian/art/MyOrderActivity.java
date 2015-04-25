@@ -251,7 +251,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,Htt
 				e.printStackTrace();
 			}
 		}
-
+		((MyOrder_All_Fragment)firstFragment).update();
 	}
 
 	@Override

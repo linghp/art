@@ -38,6 +38,7 @@ import com.shangxian.art.bean.HomeadsBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TagViewPager;
@@ -53,6 +54,7 @@ public class HomeActivity extends BaseActivity implements
 	// private MarqueeText tv_tips = null;
 	// private TextView tv_more = null;
 	private Button btn_check, btn_shop, btn_recorder, btn_sign;
+	private View ll_nonetwork, loading_big;
 
 	private HomeGridAdp adp = null;
 
@@ -61,7 +63,7 @@ public class HomeActivity extends BaseActivity implements
 	/** 首页广告数据 */
 	// private List<String> tipsList = new ArrayList<String>();
 	/** 首页热门礼品 */
-	private List<GoodBean> goods = new ArrayList<GoodBean>();
+	// private List<GoodBean> goods = new ArrayList<GoodBean>();
 	/** 首页数据集合 */
 	private HomeData mDatas = new HomeData();
 
@@ -79,16 +81,12 @@ public class HomeActivity extends BaseActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setAbContentView(R.layout.layout_main_home);
+		setContentView(R.layout.layout_main_home);
 
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 
-		// 获取ListView对象
-		mAbPullToRefreshView = (AbPullToRefreshView) this
-				.findViewById(R.id.mPullRefreshView);
-		mGridView = (ListView) this.findViewById(R.id.mListView);
-
+		initviews();
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
 		// 设置进度条的样式
@@ -109,124 +107,149 @@ public class HomeActivity extends BaseActivity implements
 		requestTask();
 	}
 
+	private void initviews() {
+		mAbPullToRefreshView = (AbPullToRefreshView) this
+				.findViewById(R.id.mPullRefreshView);
+		// 获取ListView对象
+		mGridView = (ListView) this.findViewById(R.id.mListView);
+		ll_nonetwork = findViewById(R.id.ll_nonetwork);
+		loading_big = findViewById(R.id.loading_big);
+	}
+
 	private void requestTask() {
-		AbDialogUtil.showLoadDialog(HomeActivity.this,
-				R.drawable.progress_circular, "数据加载中...");
-		AbRequestParams params = new AbRequestParams();
-		// params.put("shopid", "1019");
-		// params.put("code", "88881110344801123456");
-		// params.put("phone", "15889936624");
-		String url = Constant.BASEURL + Constant.CONTENT + Constant.HOME;
-		httpUtil.get(url, params, new AbStringHttpResponseListener() {
-			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onFinish() {
-				AbDialogUtil.removeDialog(HomeActivity.this);
-				mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				AbToastUtil.showToast(HomeActivity.this, error.getMessage());
-				mGridView.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// AbToastUtil.showToast(HomeActivity.this, content);
-				AbLogUtil.i(HomeActivity.this, content);
-				if (!TextUtils.isEmpty(content)) {
-					Gson gson = new Gson();
-					try {
-						JSONObject jsonObject = new JSONObject(content);
-						String result_code = jsonObject
-								.getString("result_code");
-						if (result_code.equals("200")) {
-							mGridView.setVisibility(View.VISIBLE);
-							listHomeadsBean.clear();
-							JSONArray resultObjectArray = jsonObject
-									.getJSONArray("result");
-							int length = resultObjectArray.length();
-							for (int i = 0; i < length; i++) {
-								JSONObject jo = resultObjectArray
-										.getJSONObject(i);
-								listHomeadsBean.add(gson.fromJson(
-										jo.toString(), HomeadsBean.class));
-							}
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		if (HttpUtils.checkNetWork(this)) {
+			AbRequestParams params = new AbRequestParams();
+			// params.put("shopid", "1019");
+			// params.put("code", "88881110344801123456");
+			// params.put("phone", "15889936624");
+			String url = Constant.BASEURL + Constant.CONTENT + Constant.HOME;
+			httpUtil.get(url, params, new AbStringHttpResponseListener() {
+				@Override
+				public void onStart() {
 				}
 
-				ll_mainhomehead_add.removeAllViews();
-				if (listHomeadsBean.size() > 0) {
-					int i = 0;
-					List<HomeadsBean> listHomeadsBean_three = new ArrayList<HomeadsBean>();
-					for (HomeadsBean homeadsBean : listHomeadsBean) {
-						if (homeadsBean.getSingle()) {
-							View view = mInflater.inflate(
-									R.layout.layout_main_home_item1, null);
-							Imageloader_homePager.displayImage(Constant.BASEURL
-									+ homeadsBean.getImageUrl(),
-									(ImageView) view.findViewById(R.id.iv_01),
-									new Handler(), null);
-							ll_mainhomehead_add.addView(view);
-							extracted(homeadsBean, view);
-						} else {
-							i++;
-							listHomeadsBean_three.add(homeadsBean);
-							if (i % 3 == 0) {
-								View view2 = mInflater.inflate(
-										R.layout.layout_main_home_item2, null);
-								for (int j = 0; j < listHomeadsBean_three
-										.size(); j++) {
-									if (j == 0) {
-										ImageView iv = (ImageView) view2
-												.findViewById(R.id.iv_01);
-										Imageloader_homePager.displayImage(
-												Constant.BASEURL
-														+ listHomeadsBean_three
-																.get(0)
-																.getImageUrl(),
-												iv, new Handler(), null);
-										extracted(listHomeadsBean_three.get(j),
-												iv);
-									} else if (j == 1) {
-										ImageView iv = (ImageView) view2
-												.findViewById(R.id.iv_02);
-										Imageloader_homePager.displayImage(
-												Constant.BASEURL
-														+ listHomeadsBean_three
-																.get(1)
-																.getImageUrl(),
-												iv, new Handler(), null);
-										extracted(listHomeadsBean_three.get(j),
-												iv);
-									} else if (j == 2) {
-										ImageView iv = (ImageView) view2
-												.findViewById(R.id.iv_03);
-										Imageloader_homePager.displayImage(
-												Constant.BASEURL
-														+ listHomeadsBean_three
-																.get(2)
-																.getImageUrl(),
-												iv, new Handler(), null);
-										extracted(listHomeadsBean_three.get(j),
-												iv);
-									}
+				@Override
+				public void onFinish() {
+					MyLogger.i("onFinish");
+					//loading_big.setVisibility(View.GONE);
+					mAbPullToRefreshView.onHeaderRefreshFinish();
+				}
+
+				@Override
+				public void onFailure(int statusCode, String content,
+						Throwable error) {
+					AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+					mGridView.setVisibility(View.GONE);
+					ll_nonetwork.setVisibility(View.VISIBLE);
+				}
+
+				@Override
+				public void onSuccess(int statusCode, String content) {
+					// AbToastUtil.showToast(HomeActivity.this, content);
+					AbLogUtil.i(HomeActivity.this, content);
+					if (!TextUtils.isEmpty(content)) {
+						Gson gson = new Gson();
+						try {
+							JSONObject jsonObject = new JSONObject(content);
+							String result_code = jsonObject
+									.getString("result_code");
+							if (result_code.equals("200")) {
+								//mGridView.setVisibility(View.VISIBLE);
+								listHomeadsBean.clear();
+								JSONArray resultObjectArray = jsonObject
+										.getJSONArray("result");
+								int length = resultObjectArray.length();
+								for (int i = 0; i < length; i++) {
+									JSONObject jo = resultObjectArray
+											.getJSONObject(i);
+									listHomeadsBean.add(gson.fromJson(
+											jo.toString(), HomeadsBean.class));
 								}
-								ll_mainhomehead_add.addView(view2);
-								listHomeadsBean_three.clear();
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}catch (Exception e) {
+							e.printStackTrace();
+						}finally{
+							mGridView.setVisibility(View.VISIBLE);
+						}
+					}
+
+					ll_mainhomehead_add.removeAllViews();
+					if (listHomeadsBean.size() > 0) {
+						int i = 0;
+						List<HomeadsBean> listHomeadsBean_three = new ArrayList<HomeadsBean>();
+						for (HomeadsBean homeadsBean : listHomeadsBean) {
+							if (homeadsBean.getSingle()) {
+								View view = mInflater.inflate(
+										R.layout.layout_main_home_item1, null);
+								Imageloader_homePager.displayImage(
+										Constant.BASEURL
+												+ homeadsBean.getImageUrl(),
+										(ImageView) view
+												.findViewById(R.id.iv_01),
+										new Handler(), null);
+								ll_mainhomehead_add.addView(view);
+								extracted(homeadsBean, view);
+							} else {
+								i++;
+								listHomeadsBean_three.add(homeadsBean);
+								if (i % 3 == 0) {
+									View view2 = mInflater.inflate(
+											R.layout.layout_main_home_item2,
+											null);
+									for (int j = 0; j < listHomeadsBean_three
+											.size(); j++) {
+										if (j == 0) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_01);
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(0)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										} else if (j == 1) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_02);
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(1)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										} else if (j == 2) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_03);
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(2)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										}
+									}
+									ll_mainhomehead_add.addView(view2);
+									listHomeadsBean_three.clear();
+								}
 							}
 						}
 					}
 				}
+
 				// TestBean bean = (TestBean) AbJsonUtil.fromJson(content,
 				// TestBean.class);
 				// tv_tips.setText(bean.getPname());
@@ -297,15 +320,21 @@ public class HomeActivity extends BaseActivity implements
 				// }
 				//
 				// addlayout();
-			}
 
-			private void extracted(HomeadsBean homeadsBean, View view) {
-				view.setTag(homeadsBean.getAdAction());
-				view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());
-				;
-				view.setOnClickListener(HomeActivity.this);
-			}
-		});
+				private void extracted(HomeadsBean homeadsBean, View view) {
+					view.setTag(homeadsBean.getAdAction());
+					view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());
+					view.setOnClickListener(HomeActivity.this);
+				}
+			});
+		} else if (listHomeadsBean.size() == 0) {// 如果没有网且没有缓存数据
+			mGridView.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.VISIBLE);
+			mAbPullToRefreshView.onHeaderRefreshFinish();
+		} else {// 如果没有网且有缓存数据
+			mGridView.setVisibility(View.VISIBLE);
+			mAbPullToRefreshView.onHeaderRefreshFinish();
+		}
 	}
 
 	@Override
@@ -571,9 +600,12 @@ public class HomeActivity extends BaseActivity implements
 			}
 			MyLogger.i(v.getTag() + "--" + dataurl);
 		}
-		
+
 		switch (v.getId()) {
 		case R.id.iv_reload:
+			mGridView.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.GONE);
+			loading_big.setVisibility(View.VISIBLE);
 			requestTask();
 			break;
 		default:

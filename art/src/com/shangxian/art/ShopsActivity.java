@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -101,7 +103,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		img.setAdjustViewBounds(true);  
 		img.setMaxHeight(Height);//屏幕高度  
 		img.setMaxWidth(width);//屏幕宽度 */
-		img.setScaleType(ImageView.ScaleType.FIT_XY); 
+		//img.setScaleType(ImageView.ScaleType.FIT_XY); 
 		LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		layoutParams.width=CommonUtil.getScreenWidth(this);
 		layoutParams.height=layoutParams.width*2/3;

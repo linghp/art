@@ -30,7 +30,9 @@ import com.shangxian.art.net.PayServer;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.SwitchButton;
 import com.shangxian.art.view.TopView;
-
+/**
+ * 结算付款
+ */
 public class PayActivity extends BaseActivity {
 	private TopView topView;
 	private TextView tv_paymoney, tv_realpaymoney;
