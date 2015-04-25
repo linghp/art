@@ -39,6 +39,7 @@
                 android:background="@color/txt_black3" />
 
             <EditText
+                android:id="@+id/adddeliveryaddress_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -78,6 +79,7 @@
                 android:background="@color/txt_black3" />
 
             <EditText
+                android:id="@+id/adddeliveryaddress_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,6 +119,7 @@
                 android:background="@color/txt_black3" />
 
             <EditText
+                android:id="@+id/adddeliveryaddress_youzheng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -156,6 +159,7 @@
                 android:background="@color/txt_black3" />
 
             <TextView
+                android:id="@+id/adddeliveryaddress_address_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -164,8 +168,11 @@
                 android:textSize="@dimen/list_summary_size" />
 
             <ImageView
+                android:id="@+id/adddeliveryaddress_address_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/next_level" />
         </LinearLayout>
 
@@ -193,19 +200,54 @@
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp" />
 
             <EditText
+                android:id="@+id/adddeliveryaddress_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:gravity="top"
                 android:hint="请输入详细地址"
                 android:lines="2"
-                android:gravity="top"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adddeliveryaddress_linear1"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/adddeliveryaddress_quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="取消"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
+
+        <TextView
+            android:id="@+id/adddeliveryaddress_baocun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="保存"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
     </LinearLayout>
 
 </RelativeLayout>

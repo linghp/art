@@ -3,6 +3,7 @@ package com.shangxian.art.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,6 +46,7 @@ public class DeliveryAddressAdapter extends EntityAdapter<DeliveryAddressModel>{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>>>>>>>>>>>>定位");
+				
 			}
 		});
 		

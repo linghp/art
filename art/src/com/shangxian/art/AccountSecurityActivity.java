@@ -114,12 +114,15 @@ public class AccountSecurityActivity extends BaseActivity {
 			break;
 		case R.id.ll_my_item2:
 			//修改登录密码
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, ChangePasswordActivity.class, false);
 			break;
 		case R.id.ll_my_item3:
 			//找回登录密码
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, SafetyVerificationActivity.class, false);
 			break;
 		case R.id.ll_my_item4:
 			//手机认证
+			
 			break;
 		case R.id.ll_my_item5:
 			//修改支付密码

@@ -159,6 +159,14 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".SafetyVerificationActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".LogisticsNotifyActivity"
             android:label="@string/title_activity_mine" >
         </activity>
