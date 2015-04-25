@@ -12,6 +12,7 @@ import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
+import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
@@ -34,6 +35,7 @@ public class BaseActivity extends AbActivity {
 		mAc = this;
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
+		AliPayBase.initContext(this);
 	}
 
 	protected void myToast(String str) {

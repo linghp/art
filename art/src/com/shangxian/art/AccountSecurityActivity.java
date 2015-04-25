@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
@@ -106,6 +107,31 @@ public class AccountSecurityActivity extends BaseActivity {
 		case R.id.rl_photo:
 			myToast("头像");
 			showPhotoDialog();
+			break;
+		case R.id.ll_my_item1:
+			//收获地址管理
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, DeliveryAddressActivity.class, false);
+			break;
+		case R.id.ll_my_item2:
+			//修改登录密码
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, ChangePasswordActivity.class, false);
+			break;
+		case R.id.ll_my_item3:
+			//找回登录密码
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, SafetyVerificationActivity.class, false);
+			break;
+		case R.id.ll_my_item4:
+			//手机认证
+			
+			break;
+		case R.id.ll_my_item5:
+			//修改支付密码
+			break;
+		case R.id.ll_my_item6:
+			//找回支付密码
+			break;
+		case R.id.ll_my_item7:
+			//实名认证
 			break;
 
 		default:

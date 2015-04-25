@@ -36,5 +36,11 @@
     <string name="title_activity_my_concern">我的关注</string>
     <string name="title_activity_my_message">我的消息</string>
     <string name="title_activity_logisticsnotify">物流通知</string>
+    
+    <!-- 账户与安全      设置 -->
+    <string name="title_activity_deliveryaddress">收货地址管理</string>
+    <string name="title_activity_adddeliveryaddress">添加收货地址</string>
+    <string name="title_activity_changepassword">修改登录密码</string>
+    <string name="title_activity_safetyverification">安全验证</string>
 
 </resources>
