@@ -236,7 +236,7 @@
         </activity>
         <activity android:name=".LocationActivity" >
         </activity>
-        <activity android:name=".ConfirmOrderActivity" >
+        <activity android:name=".ConfirmOrderActivity" android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
             android:name=".RegistSogoActivity"

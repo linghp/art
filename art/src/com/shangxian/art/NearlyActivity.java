@@ -240,7 +240,6 @@ public class NearlyActivity extends BaseActivity implements
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
-							mListView.setVisibility(View.VISIBLE);
 							List<Map<String, Object>> newList = null;
 							currentPage = 1;
 							newList = new ArrayList<Map<String, Object>>();

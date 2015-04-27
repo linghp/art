@@ -1,9 +1,7 @@
 package com.shangxian.art;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,20 +12,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.ab.fragment.AbDialogFragment.AbDialogOnLoadListener;
 import com.ab.fragment.AbLoadDialogFragment;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
-import com.ab.task.AbTask;
-import com.ab.task.AbTaskItem;
-import com.ab.task.AbTaskListListener;
-import com.ab.util.AbDialogUtil;
 import com.ab.util.AbLogUtil;
-import com.ab.util.AbToastUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
@@ -35,7 +28,6 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
-import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ShopsListModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
@@ -48,11 +40,12 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShopsListActivity extends BaseActivity implements
-OnHeaderRefreshListener, OnFooterLoadListener{
+OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 	private MyApplication application;
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mListView = null;
+	private View ll_nonetwork, loading_big;
 	//	private List<Map<String, Object>> list = null;
 	private ShopsListAdapter myListViewAdapter = null;
 	private AbLoadDialogFragment mDialogFragment = null;
@@ -92,7 +85,8 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		mListView = (ListView) this.findViewById(R.id.mListView);
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
-		mAbPullToRefreshView.setOnFooterLoadListener(this);
+		//mAbPullToRefreshView.setOnFooterLoadListener(this);
+		mAbPullToRefreshView.setLoadMoreEnable(false);
 
 		// 设置进度条的样式
 		mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
@@ -100,15 +94,15 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-
-
+		ll_nonetwork = findViewById(R.id.ll_nonetwork);
+		loading_big = findViewById(R.id.loading_big);
 	}
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
-		//		String geturl = getIntent().getStringExtra("url");
+		String geturl = getIntent().getStringExtra("url");
 
-		url = Constant.BASEURL + Constant.CONTENT + "/1/shops";//第一条数据地址
+		url = Constant.BASEURL + Constant.CONTENT + geturl;
 
 		model = new ArrayList<ShopsListModel>();
 		refreshTask(url);
@@ -190,15 +184,15 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 
 			@Override
 			public void onFailure(int arg0, String arg1, Throwable arg2) {
-				// TODO Auto-generated method stub
-
+				mListView.setVisibility(View.GONE);
+				ll_nonetwork.setVisibility(View.VISIBLE);
 			}
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {
 				// TODO Auto-generated method stub
 				AbLogUtil.i(ShopsListActivity.this, arg1);
-				//				System.out.println(">>>>>>>>>>请求到的数据"+arg1);
+				mListView.setVisibility(View.VISIBLE);
 				//解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -226,6 +220,20 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_reload:
+			mListView.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.GONE);
+			loading_big.setVisibility(View.VISIBLE);
+			initData();
+			break;
+		default:
+			break;
+		}
 	}
 //		AbLogUtil.prepareLog(this);
 //		AbTask mAbTask = new AbTask();
