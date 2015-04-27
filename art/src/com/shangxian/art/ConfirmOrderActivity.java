@@ -9,10 +9,11 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,6 +58,24 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private void listener() {
 		findViewById(R.id.tv_settlement).setOnClickListener(this);
+		listview.setOnScrollListener(new OnScrollListener() {//为了edittext能够焦点
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if(scrollState==SCROLL_STATE_TOUCH_SCROLL){
+					view.requestFocus();
+				}else{
+					view.clearFocus();
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	private void initdata() {
@@ -81,6 +100,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		topView.setTitle(getString(R.string.title_activity_confirm_order));
 		
 		listview=(ListView) findViewById(R.id.listview);
+		listview.setItemsCanFocus(true);
 		tv_car_allprice_value=(TextView) findViewById(R.id.tv_car_allprice_value);
 		
 		initHeadView();

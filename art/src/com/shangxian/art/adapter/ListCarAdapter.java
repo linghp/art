@@ -63,6 +63,7 @@ public class ListCarAdapter extends BaseAdapter {
 	}
 
 	public void initState() {
+		clearState();
 		for (int i = 0; i < listdata.size(); i++) {
 			CarItem item = listdata.get(i);
 			if (item.type == CarItem.SECTION) {
@@ -73,6 +74,11 @@ public class ListCarAdapter extends BaseAdapter {
 		}
 	}
 
+	public void clearState(){
+		storeChecked.clear();
+		goodsCheced.clear();
+	}
+	
 	public int getCount() {
 		return listdata.size();
 	}
@@ -134,7 +140,7 @@ public class ListCarAdapter extends BaseAdapter {
 				}
 			}
 			//MyLogger.i(storeChecked.toString());
-			if (flag == list.size() || storeChecked.get(item.listCarStoreBean.getShopId()) == true) {
+			if (flag == list.size() || (storeChecked.get(item.listCarStoreBean.getShopId())!=null&&storeChecked.get(item.listCarStoreBean.getShopId()) == true)) {
 				holder.check_store.setChecked(true);
 			} else {
 				holder.check_store.setChecked(false);

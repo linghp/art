@@ -94,11 +94,13 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+//	private int selectIndex = -1;//当前item的位置
+//	private int currentSelection = 0;//偏移量
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder ;;
 		final ListCarStoreBean listCarStoreBean = (ListCarStoreBean) getItem(position);
-		MyLogger.i(listStoreBean.toString());
+		//MyLogger.i(listStoreBean.toString());
 		if(convertView==null){
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_confirmorder_item, null);
@@ -147,9 +149,21 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 	            }
 	        });
 			
-			holder.et_message.clearFocus();
-
-			
+//			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {		
+//				  @Override
+//				  public void onFocusChange(View view, boolean arg1) {
+//				  
+//				    if(arg1==false){
+//				      selectIndex = position;
+//				      currentSelection = ((EditText)view).getSelectionStart();
+//				      MyLogger.i("Item位置："+position +", 焦点位置："+currentSelection);
+//				    }
+//				  }
+//				});
+//			if(position == selectIndex){
+//				holder.et_message.requestFocus();        
+//				holder.et_message.setSelection(currentSelection);
+//			}
 			// 给控件赋值
 //			DisplayImageOptions options;
 //			options = new DisplayImageOptions.Builder().cacheInMemory(true)// 是否緩存都內存中
