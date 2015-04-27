@@ -167,6 +167,14 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".PhoneValidateActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".IDCationActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".LogisticsNotifyActivity"
             android:label="@string/title_activity_mine" >
         </activity>
