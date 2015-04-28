@@ -148,6 +148,9 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.ll_tab4:
 			//结算中心
+			Bundle bundle = new Bundle();
+			bundle.putBoolean("isjiesuan", true);
+			CommonUtil.gotoActivityWithData(MineActivity.this, MerchandiseControlActivity.class, bundle, false);
 			break;
 		case R.id.ll_my_item1:
 			//我的订单

@@ -49,7 +49,7 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();//显示title
-		topView.setTitle("商品类别维护");
+		topView.setTitle("商品类别");
 		topView.setBack(R.drawable.back);//返回
 
 		list = (SlidingListView) findViewById(R.id.shangpinweihu_list);

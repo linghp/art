@@ -30,7 +30,7 @@ import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
- * 设置
+ * 设置(账户与安全)
  * @author Administrator
  *
  */
