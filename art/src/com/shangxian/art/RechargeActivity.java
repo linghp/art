@@ -1,6 +1,7 @@
 package com.shangxian.art;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -8,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shangxian.art.alipays.AliPayBase.OnPayListener;
+import com.shangxian.art.alipays.AliPayServer;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
-public class RechargeActivity extends BaseActivity{
+public class RechargeActivity extends BaseActivity implements OnPayListener{
 
-	EditText money;
+	EditText et_money;
 	ImageView zhifubao,yinhangka;
 	LinearLayout zhifubaolinear,yinhangkalinear;
 	TextView quxiao,queren;
@@ -38,7 +42,7 @@ public class RechargeActivity extends BaseActivity{
 		topView.setTitle("充值");
 		topView.setBack(R.drawable.back);//返回
 
-		money = (EditText) findViewById(R.id.recharge_balance);
+		et_money = (EditText) findViewById(R.id.recharge_balance);
 
 		zhifubao = (ImageView) findViewById(R.id.recharge_zhifubao);
 		yinhangka = (ImageView) findViewById(R.id.recharge_yinhangka);
@@ -87,9 +91,30 @@ public class RechargeActivity extends BaseActivity{
 			//确认
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				String money=et_money.getText().toString().trim();
+				if(!TextUtils.isEmpty(money)&&money.charAt(0)>='0'&&money.charAt(0)<='9'){
+				AliPayServer.toRecharge("充值", "充值", money, RechargeActivity.this);
+				}else{
+					myToast("请输入充值金额或检查格式");
+				}
 			}
 		});
+	}
+
+	@Override
+	public void onSuccess(String res) {
+		
+	}
+
+	@Override
+	public void onFailed(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void on8000() {
+		// TODO Auto-generated method stub
+		
 	}
 }
