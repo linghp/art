@@ -28,7 +28,6 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 	
 	private String userphoto_filename;
 	
-	private LinearLayout shangpinguanli;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,14 +47,7 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		
-		shangpinguanli.setOnClickListener(new OnClickListener() {
-			//跳转到商品管理
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
-			}
-		});
+		
 	}
 
 	private void initView() {
@@ -63,7 +55,6 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 		ll_loginafter=findViewById(R.id.ll_loginafter);
 		user_head=(ImageView) findViewById(R.id.user_head);
 		
-		shangpinguanli = (LinearLayout) findViewById(R.id.ll_tab1);//商品管理
 		changeview();
 	}
 
@@ -144,6 +135,23 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 	
 	public void doClick(View view){
 		switch (view.getId()) {
+		
+		case R.id.ll_tab1:
+			//商品管理
+			CommonUtil.gotoActivity(MineActivity.this, MerchandiseControlActivity.class, false);
+			break;
+		case R.id.ll_tab2:
+			//订单管理
+			break;
+		case R.id.ll_tab3:
+			//商铺管理
+			break;
+		case R.id.ll_tab4:
+			//结算中心
+			Bundle bundle = new Bundle();
+			bundle.putBoolean("isjiesuan", true);
+			CommonUtil.gotoActivityWithData(MineActivity.this, MerchandiseControlActivity.class, bundle, false);
+			break;
 		case R.id.ll_my_item1:
 			//我的订单
 			if(HttpUtils.checkNetWork(this)&&isLoginAndToLogin()){
@@ -165,9 +173,21 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 			if(isLoginAndToLogin())
 			startActivity(new Intent(this, MyMessageActivity.class));
 			break;
+		case R.id.ll_my_item5:
+			//我的预付
+			break;
+		case R.id.ll_my_item6:
+			//商品评价
+			break;
 		case R.id.ll_my_item7:
 			//账户与安全
 			startActivityForResult((new Intent(this, AccountSecurityActivity.class)),2);
+			break;
+		case R.id.ll_my_item8:
+			//退货/售后
+			break;
+		case R.id.ll_my_item9:
+			//意见反馈
 			break;
 		default:
 			break;

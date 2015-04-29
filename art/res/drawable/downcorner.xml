@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- 背景白  左边圆角 -->
+    <!-- 背景白  下边圆角 -->
     <solid android:color="@color/txt_white" />
     <!-- 填充 -->
     <stroke
@@ -10,8 +10,8 @@
 
     <corners
         android:bottomLeftRadius="10dp"
-        android:bottomRightRadius="0dp"
-        android:topLeftRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:topLeftRadius="0dp"
         android:topRightRadius="0dp" />
     <!-- 圆角 -->
 

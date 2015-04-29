@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
         android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
         android:background="@color/txt_white"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="10dp" >
 
@@ -32,10 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:focusable="true"
-            android:focusableInTouchMode="true" >
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
             <EditText
                 android:id="@+id/safetverification_yanzhengma"
@@ -59,6 +59,57 @@
                 android:padding="5dp"
                 android:text="获取验证码"
                 android:textColor="@color/txt_whitetoback"
+                android:textSize="@dimen/list_title_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/safetverification_zhi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/txt_black3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="安全问题"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/safetverification_question"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:drawableRight="@drawable/next_level"
+                android:padding="5dp"
+                android:text="父亲的姓名"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/txt_black3" />
+
+            <EditText
+                android:id="@+id/safetverification_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入安全问题的答案"
+                android:padding="5dp"
+                android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
     </LinearLayout>

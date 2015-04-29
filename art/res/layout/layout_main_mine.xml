@@ -64,8 +64,8 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="5dp"
                         android:onClick="doClick"
-                        android:visibility="gone"
-                        android:src="@drawable/settingbuttonimage" />
+                        android:src="@drawable/settingbuttonimage"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -122,7 +122,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -143,7 +145,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -164,7 +168,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -185,7 +191,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
