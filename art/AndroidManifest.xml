@@ -222,6 +222,14 @@
             android:name=".SearchActivity"
             android:label="@string/title_activity_mine" >
         </activity>
+        <activity 
+            android:name=".BenQiJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity 
+            android:name=".JieSuanLiShiActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_classification" >

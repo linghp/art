@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white2" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/benqijiesuan_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:background="@color/txt_white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="当前应结算总金额"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/benqijiesuan_parice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="520.10"
+            android:textColor="@color/txt_red"
+            android:textSize="40dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/benqijiesuan_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/benqijiesuan_linear1"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="账户余额"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/benqijiesuan_remainder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="￥520.10"
+                android:textColor="@color/txt_red"
+                android:textSize="@dimen/list_title_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="结算时间"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/benqijiesuan_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="2015-4-29"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="结算类型"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:id="@+id/benqijiesuan_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="定期结算"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_title_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
