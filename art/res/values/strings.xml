@@ -10,7 +10,6 @@
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
-    
     <string name="searchhint_home">搜索商铺/店铺</string>
     <string name="pay">充值</string>
     <string name="title_activity_regist">注册</string>
@@ -29,14 +28,12 @@
     <string name="need_newpassword">请输新密码</string>
     <string name="need_newpasswordconfirm">请输确认新密码</string>
     <string name="passworddifferent">密码不一致，请重输</string>
-
     <string name="title_activity_pay">付款</string>
     <string name="title_activity_my_order">我的订单</string>
-    
     <string name="title_activity_my_concern">我的关注</string>
     <string name="title_activity_my_message">我的消息</string>
     <string name="title_activity_logisticsnotify">物流通知</string>
-    
+
     <!-- 账户与安全      设置 -->
     <string name="title_activity_deliveryaddress">收货地址管理</string>
     <string name="title_activity_adddeliveryaddress">添加收货地址</string>
@@ -44,5 +41,12 @@
     <string name="title_activity_safetyverification">安全验证</string>
     <string name="title_activity_phonevalidate">设置新手机</string>
     <string name="title_activity_idcation">实名认证</string>
+
+    <!-- 评论 -->
+    <string name="text_all_comment">全部(%d)</string>
+    <string name="text_bad_comment">差评(%d)</string>
+    <string name="text_good_comment">好评(%d)</string>
+    <string name="text_neutral_comment">中评(%d)</string>
+    <string name="title_activity_comment">评论</string>
 
 </resources>

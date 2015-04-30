@@ -48,19 +48,18 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- sharesdk -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    
+
     <!-- 推送 -->
-      <!-- Required 自定义用来收发消息的相关权限 -->               
+    <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="com.shangxian.art.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-  
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.shangxian.art.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>  
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".base.MyApplication"
@@ -68,16 +67,18 @@
         android:icon="@drawable/ainonggu"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
+
         <!-- 测试key -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="wVx47v9LtmNLozGme6VnGfwZ" />
-        
+
         <!-- 共用key -->
-        <!-- <meta-data
+        <!--
+             <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="dGHcYKhKixnFGtAp9yHwR2lY" /> -->
+            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
+        -->
 
         <service
             android:name="com.baidu.location.f"
@@ -252,7 +253,9 @@
         </activity>
         <activity android:name=".LocationActivity" >
         </activity>
-        <activity android:name=".ConfirmOrderActivity" android:windowSoftInputMode="stateHidden|adjustPan">
+        <activity
+            android:name=".ConfirmOrderActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
         </activity>
         <activity
             android:name=".RegistSogoActivity"
@@ -280,7 +283,7 @@
             <!--
             	AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter
             	的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 
-            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
+            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
             -->
             <meta-data
                 android:name="AuthorizeAdapter"
@@ -291,11 +294,11 @@
             	的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。 
             	开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
             	
-            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
+            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
             -->
             <!--
             	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
-            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
+            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
             -->
             <intent-filter>
                 <data android:scheme="db-7janx53ilz11gbs" />
@@ -309,7 +312,7 @@
             <!--
             	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
             	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
+            	则分享结束以后不能得到正确的回调
             -->
             <intent-filter>
                 <data android:scheme="tencent100371282" />
@@ -328,84 +331,105 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        
+
         <!-- 极光推送 -->
-                <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden" >
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.shangxian.art" />
             </intent-filter>
         </activity>
-        <!-- Required  SDK核心功能-->
+        <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" >
         </service>
- 
-        
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-                
             </intent-filter>
         </service>
-        
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true" >
-            <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+            <intent-filter android:priority="1000" >
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+ <!-- Required  显示通知栏 -->
                 <category android:name="com.shangxian.art" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
-             <!-- Optional -->
+            <!-- Optional -->
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
-        
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-        
-        <!-- User defined.    用户自定义的广播接收器-->
+        <!-- User defined.    用户自定义的广播接收器 -->
         <receiver
-            android:name="com.shangxian.art.receiver.MyPushReceiver"
-            android:enabled="true">
+            android:name=".receiver.MyPushReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> Required  用户注册SDK的intent
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />  
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> Required  用户接收SDK消息的intent
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> Required  用户接收SDK通知栏信息的intent
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> Required  用户打开自定义通知栏的intent
-                <action android:name="cn.jpush.android.intent.CONNECTION" />接收网络变化 连接/断开 since 1.6.3
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+ Required  用户注册SDK的intent
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+ Required  用户接收SDK消息的intent
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+ Required  用户接收SDK通知栏信息的intent
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+ Required  用户打开自定义通知栏的intent
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+接收网络变化 连接/断开 since 1.6.3
                 <category android:name="com.shangxian.art" />
             </intent-filter>
         </receiver>
- 
-        
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="9b3c36406fb9a5112b901325" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="9b3c36406fb9a5112b901325" />
+ <!-- </>值来自开发者平台取得的AppKey -->
+
+
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
+        
+        
+        <activity
+            android:name=".CommentActivity"
+            android:label="@string/title_activity_comment" >
+        </activity>
     </application>
 
 </manifest>

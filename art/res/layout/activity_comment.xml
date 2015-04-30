@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout android:layout_below="@id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                style="@style/filter_comment_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" android:clickable="true" android:focusable="true">
+
+                <TextView
+                    android:id="@+id/txt_all_comment_count"
+                    style="@style/txt_filter_comment_title"/>
+
+                <TextView
+                    android:id="@+id/txt_good_comment_count"
+                    style="@style/txt_filter_comment_title" />
+
+                <TextView
+                    android:id="@+id/txt_neutral_comment_count"
+                    style="@style/txt_filter_comment_title" />
+
+                <TextView
+                    android:id="@+id/txt_bad_comment_count"
+                    style="@style/txt_filter_comment_title"
+                    android:layout_marginRight="0.0dip" />
+            </LinearLayout>
+
+            <ListView android:focusable="false"
+                android:id="@+id/list_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:cacheColorHint="@color/transparent"
+                android:divider="@null"
+                android:dividerHeight="1.0dip"
+                android:listSelector="@color/transparent"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/refresh_empty"
+            android:visibility="gone" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/loadind_big"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</RelativeLayout>
