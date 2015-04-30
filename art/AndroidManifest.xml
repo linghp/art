@@ -95,6 +95,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+            
+        </activity>
+        <activity android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+            
+        </activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
@@ -221,6 +233,14 @@
         </activity>
         <activity
             android:name=".SearchActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity 
+            android:name=".BenQiJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity 
+            android:name=".JieSuanLiShiActivity"
             android:label="@string/title_activity_mine" >
         </activity>
         <activity

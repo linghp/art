@@ -44,6 +44,7 @@ public class AliPayServer extends AliPayBase{
 		String order = AliPayBuilder.createAliPayOrder(order_id, good_name, good_det, good_price).toSign();
 		pay(order, null);
 	}
+
 	
 	/**
 	 * 支付宝充值

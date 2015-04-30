@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shangxian.art.alipays.AliPayServer;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.PayOrderInfo;
@@ -30,6 +31,7 @@ import com.shangxian.art.net.PayServer;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.SwitchButton;
 import com.shangxian.art.view.TopView;
+
 /**
  * 结算付款
  */
@@ -54,9 +56,11 @@ public class PayActivity extends BaseActivity {
 	private TextView tv_bi;
 	private TextView tv_yuan;
 	private double lastMon = Double.MIN_VALUE;
-	private String type = "ALB_ALY";//默认:爱农币+爱农元
+	private String type = "ALB_ALY"; // 默认:爱农币+爱农元
 	private float price;
-	
+
+	private double onlineMon = 0.00;
+
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			int what = msg.what;
@@ -69,49 +73,55 @@ public class PayActivity extends BaseActivity {
 			double mon = Double.MIN_VALUE;
 			try {
 				mon = Double.parseDouble(money);
-				//myToast("handler" + mon +" >>> money==" + money + " >>> isBi ===" + isBi + " >>>> isYuan ==" + isYuan);
+				// myToast("handler" + mon +" >>> money==" + money +
+				// " >>> isBi ===" + isBi + " >>>> isYuan ==" + isYuan);
 				if (mon > 100000000) {
 					myToast("超出最大交易金额");
 					et_scan.setText(String.format("%.2f", lastMon));
 				} else {
 					lastMon = mon;
-					//et_scan.setText(text);
+					// et_scan.setText(text);
 					if (mon != Double.MIN_VALUE && !mAccount.isNull()) {
 						if (isBi && !isYuan) {
 							type = "ALB";
 							if (mon > mAccount.getAlb()) {
-								tv_realpaymoney.setText("¥ " + String.format("%.2f",
-										mon - mAccount.getAlb()));
+								onlineMon = mon - mAccount.getAlb();
+								tv_realpaymoney.setText("¥ "
+										+ String.format("%.2f", onlineMon));
 							} else {
+								onlineMon = 0.00;
 								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && isYuan) {
 							type = "ALY";
 							if (mon > mAccount.getAly()) {
-								tv_realpaymoney.setText("¥ " + String.format("%.2f",
-										mon - mAccount.getAly()));
+								onlineMon = mon - mAccount.getAly();
+								tv_realpaymoney.setText("¥ "
+										+ String.format("%.2f", onlineMon));
 							} else {
+								onlineMon = 0.00;
 								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (isBi && isYuan) {
 							type = "ALB_ALY";
 							if (mon > (mAccount.getAly() + mAccount.getAlb())) {
-								tv_realpaymoney.setText("¥ " + String.format(
-										"%.2f",
-										mon - mAccount.getAly()
-												- mAccount.getAlb()));
+								onlineMon = mon - mAccount.getAly()
+										- mAccount.getAlb();
+								tv_realpaymoney.setText("¥ "
+										+ String.format("%.2f", onlineMon));
 							} else {
+								onlineMon = 0.00;
 								tv_realpaymoney.setText("¥ 0.00");
 							}
 						}
 						if (!isBi && !isYuan) {
-							tv_realpaymoney.setText("¥ " + String.format(
-									"%.2f",
-									mon));
+							onlineMon = mon;
+							tv_realpaymoney.setText("¥ "
+									+ String.format("%.2f", mon));
 						}
-					} 
+					}
 				}
 			} catch (Exception e) {
 				myToast("输入支付金额格式错误");
@@ -121,7 +131,7 @@ public class PayActivity extends BaseActivity {
 			}
 		};
 	};
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,7 +146,8 @@ public class PayActivity extends BaseActivity {
 		if (totalprice != 0) {
 			isOrder = true;
 			price = totalprice;
-			orderids = (List<String>) getIntent().getSerializableExtra("orderids");
+			orderids = (List<String>) getIntent().getSerializableExtra(
+					"orderids");
 			if (orderids != null) {
 				MyLogger.i(orderids.toString());
 			}
@@ -159,8 +170,8 @@ public class PayActivity extends BaseActivity {
 		ll_money = (LinearLayout) findViewById(R.id.payl_ll_money);
 		ll_scan = (LinearLayout) findViewById(R.id.payl_ll_scan);
 		et_scan = (EditText) findViewById(R.id.paye_et_scan);
-		
-		//et_scan.setFocusable(true);
+
+		// et_scan.setFocusable(true);
 		// 改变topbar
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
@@ -204,7 +215,7 @@ public class PayActivity extends BaseActivity {
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-				handler.sendEmptyMessage(0);
+					handler.sendEmptyMessage(0);
 				}
 			}, 200);
 		} else {
@@ -224,7 +235,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isBi = isChecked;
 				handler.sendEmptyMessage(0);
-				//myToast("isBi === " + isBi);
+				// myToast("isBi === " + isBi);
 			}
 		});
 		sb_yuan.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -233,7 +244,7 @@ public class PayActivity extends BaseActivity {
 					boolean isChecked) {
 				isYuan = isChecked;
 				handler.sendEmptyMessage(0);
-				//myToast("isYuan === " + isYuan);
+				// myToast("isYuan === " + isYuan);
 			}
 		});
 
@@ -281,10 +292,10 @@ public class PayActivity extends BaseActivity {
 		});
 	}
 
-	public static void startThisActivity(List<String> orderids, float totalprice,
-			Activity mAc) {
+	public static void startThisActivity(List<String> orderids,
+			float totalprice, Activity mAc) {
 		Intent intent = new Intent(mAc, PayActivity.class);
-		intent.putExtra("orderids", (Serializable)orderids);
+		intent.putExtra("orderids", (Serializable) orderids);
 		intent.putExtra("totalprice", totalprice);
 		mAc.startActivityForResult(intent, 1000);
 	}
@@ -301,12 +312,14 @@ public class PayActivity extends BaseActivity {
 			break;
 		case R.id.payl_ll_zhi:
 			// myToast("支付宝功能暂未开通");
-			// TODO: ------------------------------- -----------------------------------
+			// TODO: -------------------------------
+			// -----------------------------------
 			cb_zhi.setChecked(!isZhi);
 			break;
 		case R.id.payl_ll_yin:
 			// myToast("银行卡支付暂未开通");
-			// TODO: ------------------------------- --------------------------------------
+			// TODO: -------------------------------
+			// --------------------------------------
 			cb_yin.setChecked(!isYin);
 			break;
 		}
@@ -328,7 +341,7 @@ public class PayActivity extends BaseActivity {
 			dialog.setOnScanedListener(new OnScanedListener() {
 				@Override
 				public void onScan(String pass) {
-					//myToast(pass);
+					// myToast(pass);
 					if (isOrder) {
 						PayOrderInfo info = new PayOrderInfo();
 						info.setAmount((int) (lastMon));
@@ -344,23 +357,24 @@ public class PayActivity extends BaseActivity {
 									data.putExtra("pay_order_res", true);
 									setResult(RESULT_OK, data);
 									finish();
-								} else { 
-									myToast("支付失败");
-								}
-							}
-						});
-					} else {
-						PayServer.toPayment(pass, 3, (int) (lastMon), type, new OnPaymentListener() {
-							@Override
-							public void onPayment(String res) {
-								if (res.equals("true")) {
-									myToast("支付成功");
-									finish();
 								} else {
 									myToast("支付失败");
 								}
 							}
 						});
+					} else {
+						PayServer.toPayment(pass, 3, (int) (lastMon), type,
+								new OnPaymentListener() {
+									@Override
+									public void onPayment(String res) {
+										if (res.equals("true")) {
+											myToast("支付成功");
+											finish();
+										} else {
+											myToast("支付失败");
+										}
+									}
+								});
 					}
 				}
 			});
@@ -369,14 +383,48 @@ public class PayActivity extends BaseActivity {
 	}
 
 	private boolean match() {
+		if (onlineMon > 0  && !isZhi) {
+			toAlipay();
+			return false;
+		}
 		if (lastMon == Double.MIN_VALUE) {
 			myToast("请输入支付金额");
 			return false;
 		}
-		if (!isBi && !isYuan) {
-			myToast("请选择支付方式(注:在线支付暂未开通)");
+		if (!isBi && !isYuan && !isZhi) {
+			myToast("请选择支付方式(注:在线支付暂只支持支付宝)");
 			return false;
 		}
+		if (isBi) {
+
+		}
 		return true;
+	}
+	
+	/**
+	 * 支付宝支付
+	 * 
+	 */
+	private void toAlipay() {
+		if (isZhi) {
+			AliPayServer.toPay("baidbfiabdiufbiabdsfb", "测试商品", "测试商品1",
+					"0.01",
+					new com.shangxian.art.alipays.AliPayBase.OnPayListener() {
+						@Override
+						public void onSuccess(String res) {
+							myToast("支付成功");
+						}
+
+						@Override
+						public void onFailed(String msg) {
+							myToast("支付失败");
+						}
+
+						@Override
+						public void on8000() {
+							myToast("等待支付结果确认");
+						}
+					});
+		}
 	}
 }

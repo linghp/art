@@ -83,7 +83,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.benqijiesuan:
 			//本期结算
-			
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, BenQiJieSuanActivity.class, false);
 			break;
 		case R.id.jinjijiesuan:
 			//紧急结算
@@ -91,7 +91,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.lishichaxun:
 			//结算历史查询
-			
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
 			break;
 		default:
 			break;
