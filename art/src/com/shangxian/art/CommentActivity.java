@@ -148,9 +148,7 @@ public class CommentActivity extends BaseActivity implements
 		neutral_str = getString(R.string.text_neutral_comment);
 		bad_str = getString(R.string.text_bad_comment);
 		commentListAdapter = new CommentListAdapter(this, list,
-				R.layout.item_list, new String[] { "itemsIcon", "itemsTitle",
-						"itemsText" }, new int[] { R.id.itemsIcon,
-						R.id.itemsTitle, R.id.itemsText, R.id.items_bottom });
+				R.layout.item_commentlist);
 		listView.setAdapter(commentListAdapter);
 	}
 
