@@ -372,6 +372,9 @@ OnClickListener, HttpCilentListener {
 		case R.id.tv_share:
 			CommonUtil.showShare(this, "test", "http://www.peoit.com/", "http://www.peoit.com/");
 			break;
+		case R.id.ll_comment:
+			CommentActivity.startThisActivity("", this);
+			break;
 
 		default:
 			break;

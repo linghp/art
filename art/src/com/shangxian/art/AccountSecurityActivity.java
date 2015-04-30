@@ -30,7 +30,7 @@ import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
- * 设置
+ * 设置(账户与安全)
  * @author Administrator
  *
  */
@@ -122,16 +122,23 @@ public class AccountSecurityActivity extends BaseActivity {
 			break;
 		case R.id.ll_my_item4:
 			//手机认证
-			
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, PhoneValidateActivity.class, false);
 			break;
 		case R.id.ll_my_item5:
 			//修改支付密码
+			Bundle bundle = new Bundle();
+			bundle.putBoolean("iszhifu", true);
+			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, ChangePasswordActivity.class, bundle, false);
 			break;
 		case R.id.ll_my_item6:
 			//找回支付密码
+			Bundle bundle1 = new Bundle();
+			bundle1.putBoolean("iszhifu", true);
+			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, SafetyVerificationActivity.class, bundle1, false);
 			break;
 		case R.id.ll_my_item7:
 			//实名认证
+			CommonUtil.gotoActivity(AccountSecurityActivity.this, IDCationActivity.class, false);
 			break;
 
 		default:

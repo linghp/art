@@ -64,8 +64,8 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="5dp"
                         android:onClick="doClick"
-                        android:visibility="gone"
-                        android:src="@drawable/settingbuttonimage" />
+                        android:src="@drawable/settingbuttonimage"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -122,7 +122,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -143,7 +145,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -164,7 +168,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -185,7 +191,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:gravity="center"
+                            android:onClick="doClick"
                             android:orientation="vertical" >
 
                             <View
@@ -395,6 +403,7 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:onClick="doClick"
+                    android:visibility="gone"
                     android:orientation="horizontal" >
 
                     <View
@@ -418,10 +427,10 @@
                         android:background="@drawable/next_level" />
                 </LinearLayout>
 
-                <View
+                <!-- <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/gray" />
+                    android:background="@color/gray" /> -->
 
                 <LinearLayout
                     android:id="@+id/ll_my_item6"
@@ -539,7 +548,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="退货/售后"
+                        android:text="退款订单"
                         android:textSize="@dimen/list_title_size" />
 
                     <View

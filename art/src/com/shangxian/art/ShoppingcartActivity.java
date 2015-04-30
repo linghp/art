@@ -58,7 +58,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private float price;// 总价
 	private Button btn_settlement;
 	private AbPullToRefreshView mAbPullToRefreshView;
-	private View ll_nonetwork,loading_big,ll_refresh_empty,rl_bottom;
+	private View ll_nonetwork, loading_big, ll_refresh_empty, rl_bottom;
 	private AbHttpUtil httpUtil;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
@@ -123,14 +123,15 @@ public class ShoppingcartActivity extends BaseActivity implements
 					listStore.add(gson.fromJson(jo.toString(),
 							ListCarStoreBean.class));
 				}
-				if(listStore.size()==0){//无内容显示
+				if (listStore.size() == 0) {// 无内容显示
 					ll_refresh_empty.setVisibility(View.VISIBLE);
-				}else{
+				} else {
 					ll_refresh_empty.setVisibility(View.GONE);
 				}
 				assembleData();
 				adapter.initState();
 				listcar.setAdapter(adapter);
+				setSelecteAll();
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -184,9 +185,9 @@ public class ShoppingcartActivity extends BaseActivity implements
 		allprice = (TextView) findViewById(R.id.tv_car_allprice_value);
 		btn_settlement = (Button) findViewById(R.id.btn_settlement);
 		rl_bottom = findViewById(R.id.rl_bottom);
-		loading_big= findViewById(R.id.loading_big);
-		ll_refresh_empty= findViewById(R.id.ll_refresh_empty);
-		
+		loading_big = findViewById(R.id.loading_big);
+		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);
+
 		rl_bottom.setVisibility(View.GONE);
 
 		// 设置监听器
@@ -236,7 +237,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 				flag++;
 			}
 		}
-		if (flag == adapter.getStoreCheced().size()) {
+		MyLogger.i(adapter.getStoreCheced().toString());
+		if (flag == adapter.getStoreCheced().size()&&flag>0) {
 			selecteall.setChecked(true);
 		} else {
 			selecteall.setChecked(false);
@@ -334,10 +336,10 @@ public class ShoppingcartActivity extends BaseActivity implements
 			doSettlement();
 			break;
 		case R.id.iv_reload:
-			if(HttpUtils.checkNetWork(this)){
-			loading_big.setVisibility(View.VISIBLE);
-			initdata();
-			}else{
+			if (HttpUtils.checkNetWork(this)) {
+				loading_big.setVisibility(View.VISIBLE);
+				initdata();
+			} else {
 				listCarItem.clear();
 			}
 			break;
@@ -357,26 +359,26 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	public void doDelete() {
-				Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
-				Map<String, Boolean> storeCheced = adapter.getStoreCheced();
-				List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
-				for (CarItem carItem : listCarItem) {
-					if (carItem.getType() == CarItem.SECTION) {
-						if (storeCheced.get(carItem.getListCarStoreBean()
-								.getShopId())) {
-							listCarItemDelete.add(carItem);
-						}
-					} else {
-						if (goodsCheced.get(carItem.getListCarGoodsBean()
-								.getProductId())) {
-							listCarItemDelete.add(carItem);
-						}
-					}
+		Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
+		Map<String, Boolean> storeCheced = adapter.getStoreCheced();
+		List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
+		for (CarItem carItem : listCarItem) {
+			if (carItem.getType() == CarItem.SECTION) {
+				if (storeCheced.get(carItem.getListCarStoreBean().getShopId())) {
+					listCarItemDelete.add(carItem);
 				}
-				listCarItem.removeAll(listCarItemDelete);
-				adapter.notifyDataSetChanged();
-				accountCar();
-				myToast("删除成功");
+			} else {
+				if (goodsCheced.get(carItem.getListCarGoodsBean()
+						.getProductId())) {
+					listCarItemDelete.add(carItem);
+				}
+			}
+		}
+		listCarItem.removeAll(listCarItemDelete);
+		adapter.initState();
+		adapter.notifyDataSetChanged();
+		setSelecteAll();
+		myToast("删除成功");
 	}
 
 	private void doSettlement() {
@@ -495,11 +497,11 @@ public class ShoppingcartActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
-			if(resultCode!=RESULT_OK){
-			MyLogger.i("onActivityResult");
-			isFromConfirmOrderAct = true;
-			}else{
-				isFromConfirmOrderAct=false;//当结算完成时，确认订单销毁，返回到此要刷新
+			if (resultCode != RESULT_OK) {
+				MyLogger.i("onActivityResult");
+				isFromConfirmOrderAct = true;
+			} else {
+				isFromConfirmOrderAct = false;// 当结算完成时，确认订单销毁，返回到此要刷新
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -45,5 +45,28 @@
         <item name="android:indeterminateDuration">500</item>
         <item name="android:minWidth">44.0dip</item>
         <item name="android:minHeight">44.0dip</item>
+    </style>
+    
+    <!-- 评论 -->
+    <style name="txt_filter_comment_title">
+        <item name="android:textSize">13.0sp</item>
+        <item name="android:text">全部</item>
+        <item name="android:textColor">@color/comment_level_title</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/comment_level_title</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">30.0dip</item>
+        <item name="android:layout_marginRight">6.0dip</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:focusable">true</item>
+    </style>
+        <style name="filter_comment_layout">
+        <item name="android:paddingLeft">16.0dip</item>
+        <item name="android:paddingTop">12.0dip</item>
+        <item name="android:paddingRight">16.0dip</item>
+        <item name="android:paddingBottom">12.0dip</item>
     </style>
 </resources>

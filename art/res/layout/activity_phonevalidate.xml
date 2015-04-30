@@ -9,14 +9,121 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/adddeliveryaddress_linear1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/phonevalidate_txt1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
+        android:layout_marginTop="10dp"
+        android:background="@color/txt_white2"
+        android:padding="10dp"
+        android:text="设置新的手机号"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_title_size" />
+
+    <LinearLayout
+        android:id="@+id/phonevalidate_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phonevalidate_txt1"
         android:background="@color/txt_white"
-        android:orientation="vertical" >
-        
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <EditText
+            android:id="@+id/phonevalidate_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="请输入新的手机号码"
+            android:padding="5dp"
+            android:numeric="integer"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/phonevalidate_txt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phonevalidate_linear1"
+        android:background="@color/txt_white2"
+        android:padding="10dp"
+        android:text="新手机号码验证"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_title_size" />
+
+    <LinearLayout
+        android:id="@+id/phonevalidate_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phonevalidate_txt2"
+        android:background="@color/txt_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/phonevalidate_yanzhengma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="短信验证码"
+            android:numeric="integer"
+            android:padding="5dp"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/phonevalidate_huoqu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="获取验证码"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phonevalidate_linear2"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/phonevalidate_quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="取消"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
+
+        <TextView
+            android:id="@+id/phonevalidate_baocun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="保存"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
     </LinearLayout>
 
 </RelativeLayout>

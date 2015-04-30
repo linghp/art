@@ -12,71 +12,83 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/merchandisecontrol_linear1"
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/txt_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_below="@id/top_title"
-        android:padding="10dp" >
+        android:visibility="visible" >
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/merchandisecontrol_linear1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/commoditycatesmaintenance" />
+            android:layout_marginTop="10dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:text="商品类别维护"
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/list_title_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/commoditycatesmaintenance" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/next_level" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/merchandisecontrol_linear2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/merchandisecontrol_linear1"
-        android:layout_marginTop="1dp"
-        android:background="@color/txt_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="商品类别"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/distributiontypemaintenance" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/merchandisecontrol_linear2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:text="配送类别维护"
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/list_title_size" />
+            android:layout_below="@id/merchandisecontrol_linear1"
+            android:layout_marginTop="1dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/next_level" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/distributiontypemaintenance" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="配送类别维护"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+        <!--
     <LinearLayout
         android:id="@+id/merchandisecontrol_linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/merchandisecontrol_linear2"
         android:layout_marginTop="1dp"
+        android:onClick="onclick"
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -101,36 +113,144 @@
             android:layout_height="wrap_content"
             android:src="@drawable/next_level" />
     </LinearLayout>
+        -->
+
+        <LinearLayout
+            android:id="@+id/merchandisecontrol_linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/merchandisecontrol_linear2"
+            android:layout_marginTop="1dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/thesearchofgoods" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="搜索商品"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/merchandisecontrol_linear4"
+        android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/merchandisecontrol_linear3"
-        android:layout_marginTop="1dp"
-        android:background="@color/txt_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:orientation="vertical"
+        android:layout_below="@id/top_title"
+        android:visibility="gone" >
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/benqijiesuan"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/thesearchofgoods" />
+            android:layout_below="@id/top_title"
+            android:layout_marginTop="10dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:text="搜索商品"
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/list_title_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/thetimingofsettlement" />
 
-        <ImageView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="本期结算"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jinjijiesuan"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/next_level" />
+            android:layout_below="@id/merchandisecontrol_linear1"
+            android:layout_marginTop="1dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/emergencysettlement" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="紧急结算"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lishichaxun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/merchandisecontrol_linear2"
+            android:layout_marginTop="1dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/thesettlementhistoryinquiry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="结算历史查询"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
     </LinearLayout>
-    
+
 </RelativeLayout>

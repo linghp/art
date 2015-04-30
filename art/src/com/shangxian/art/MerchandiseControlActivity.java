@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,11 +13,14 @@ import com.shangxian.art.view.TopView;
 /**
  * 商品管理（登陆成功后）
  * @author Administrator
- *
+ * 结算中心
+ * isjiesuan = true
+ * 
  */
 public class MerchandiseControlActivity extends BaseActivity{
-	private LinearLayout shangpin,peisong,tianjia,sousuo;
+	private LinearLayout linear1,linear2;
 
+	boolean isjiesuan =  false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,14 +40,18 @@ public class MerchandiseControlActivity extends BaseActivity{
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();
 		topView.setTitle("商品管理");
-	
 		topView.setBack(R.drawable.back);//返回
-		
-		shangpin = (LinearLayout) findViewById(R.id.merchandisecontrol_linear1);
-		peisong = (LinearLayout) findViewById(R.id.merchandisecontrol_linear2);
-		tianjia = (LinearLayout) findViewById(R.id.merchandisecontrol_linear3);
-		sousuo = (LinearLayout) findViewById(R.id.merchandisecontrol_linear4);
 
+		linear1 = (LinearLayout) findViewById(R.id.linear1);
+		linear2 = (LinearLayout) findViewById(R.id.linear2);
+		
+		Intent intent = getIntent();
+		isjiesuan = intent.getBooleanExtra("isjiesuan", false);
+		if (isjiesuan == true) {
+			topView.setTitle("商户结算");
+			linear1.setVisibility(View.GONE);
+			linear2.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void initData() {
@@ -52,41 +60,43 @@ public class MerchandiseControlActivity extends BaseActivity{
 	}
 
 	private void listener() {
-		// TODO Auto-generated method stub
-		shangpin.setOnClickListener(new OnClickListener() {
+		
+	}
+	
+	public void onclick(View v) {
+		switch (v.getId()) {
+		case R.id.merchandisecontrol_linear1:
+			//商品类别
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, ShangPinWeiHuActivity.class, false);
+			break;
+		case R.id.merchandisecontrol_linear2:
+			//配送类别维护
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, DeliveryServiceActivity.class, false);
+			break;
+		/*case R.id.merchandisecontrol_linear3:
+		 *   //添加商品
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, AddGoodsActivity.class, false);
+			break;*/
+		case R.id.merchandisecontrol_linear4:
+			//搜索商品
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, SearchActivity.class, false);
+			break;
+		case R.id.benqijiesuan:
+			//本期结算
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, BenQiJieSuanActivity.class, false);
+			break;
+		case R.id.jinjijiesuan:
+			//紧急结算
+			
+			break;
+		case R.id.lishichaxun:
+			//结算历史查询
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
+			break;
+		default:
+			break;
+		}
 
-			@Override
-			public void onClick(View v) {
-				CommonUtil.gotoActivity(MerchandiseControlActivity.this, ShangPinWeiHuActivity.class, false);
-			}
-		});
-		peisong.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-//				myToast("配送类别维护");
-				CommonUtil.gotoActivity(MerchandiseControlActivity.this, DeliveryServiceActivity.class, false);
-			}
-		});
-		tianjia.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-//				myToast("添加商品");
-				CommonUtil.gotoActivity(MerchandiseControlActivity.this, AddGoodsActivity.class, false);
-			}
-		});
-		sousuo.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-//				myToast("搜索商品");
-				CommonUtil.gotoActivity(MerchandiseControlActivity.this, SearchActivity.class, false);
-			}
-		});
 	}
 
 }

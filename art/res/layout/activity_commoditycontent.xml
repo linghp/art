@@ -110,9 +110,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/txt_white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                android:gravity="center_vertical" >
+                android:padding="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -140,11 +140,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/txt_white"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal"
                 android:padding="10dp" >
 
@@ -231,20 +234,22 @@
                             android:id="@+id/commoditycontent_address"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门" />
 
-                       <!--  <View
+                        <!--
+                             <View
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" /> -->
+                            android:layout_weight="1" />
+                        -->
 
                         <View
                             android:layout_width="1dp"
                             android:layout_height="20dp"
-                            android:background="@color/txt_black3"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginLeft="10dp" />
+                            android:background="@color/txt_black3" />
 
                         <ImageView
                             android:id="@+id/commoditycontent_call"

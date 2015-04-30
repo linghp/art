@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/txt_white2" >
+     >
 
     <com.shangxian.art.view.TopView
         android:id="@+id/top_title"
@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/top_title"
-        android:background="@color/bg_gray" >
+         >
 
         <ListView
             android:id="@+id/mListView"

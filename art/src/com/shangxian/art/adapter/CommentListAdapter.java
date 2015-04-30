@@ -26,7 +26,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 
 
-public class ImageListAdapter extends BaseAdapter{
+public class CommentListAdapter extends BaseAdapter{
 	
 	private static String TAG = "ImageListAdapter";
   
@@ -52,7 +52,7 @@ public class ImageListAdapter extends BaseAdapter{
     * @param from Map中的key
     * @param to view的id
     */
-    public ImageListAdapter(Context context, List data,
+    public CommentListAdapter(Context context, List data,
             int resource, String[] from, int[] to){
     	this.mContext = context;
     	this.mData = data;
