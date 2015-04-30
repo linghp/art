@@ -105,6 +105,7 @@ public class ListCarAdapter extends BaseAdapter {
 			if(position==0){
 				CommonUtil.setMargins(ll_item, 0, CommonUtil.px2dip(shoppingcartActivity, 20), 0, 0);
 			}
+			
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView.findViewById(R.id.car_storename);
 			holder.check_store = (CheckBox) convertView.findViewById(R.id.check_store);
