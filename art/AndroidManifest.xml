@@ -228,6 +228,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity 
+            android:name=".JinJiJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity 
             android:name=".JieSuanLiShiActivity"
             android:label="@string/title_activity_mine" >
         </activity>
