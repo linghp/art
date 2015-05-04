@@ -9,11 +9,15 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.Telephony.Mms.Rate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,7 @@ import com.shangxian.art.NearlyActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 
 
 public class CommentListAdapter extends BaseAdapter{
@@ -37,10 +42,6 @@ public class CommentListAdapter extends BaseAdapter{
     private int mResource;
     //列表展现的数据
     private List mData;
-    //Map中的key
-    private String[] mFrom;
-    //view的id
-    private int[] mTo;
     //图片下载器
     private AbImageLoader mAbImageLoader = null;
     
@@ -53,12 +54,10 @@ public class CommentListAdapter extends BaseAdapter{
     * @param to view的id
     */
     public CommentListAdapter(Context context, List data,
-            int resource, String[] from, int[] to){
+            int resource){
     	this.mContext = context;
     	this.mData = data;
     	this.mResource = resource;
-    	this.mFrom = from;
-    	this.mTo = to;
         //用于将xml转为View
         this.mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //图片下载器
@@ -92,30 +91,33 @@ public class CommentListAdapter extends BaseAdapter{
 	           convertView = mInflater.inflate(mResource, parent, false);
           }
           
-          ImageView itemsIcon = AbViewHolder.get(convertView, mTo[0]);
-          TextView itemsTitle = AbViewHolder.get(convertView, mTo[1]);
-          TextView itemsText = AbViewHolder.get(convertView, mTo[2]);
-          TextView items_bottom = AbViewHolder.get(convertView, mTo[3]);
-          items_bottom.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//Toast.makeText(mContext, "location", 0).show();
-				//TODO:========================= 传递参数
-				Bundle bundle = new Bundle();
-				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_NEARLY_LOC);
-				CommonUtil.gotoActivityWithData((Activity) mContext, LocationActivity.class, bundle, false);
-			}
-		});
+          ImageView itemsIcon = AbViewHolder.get(convertView, R.id.itemsIcon);
+          TextView tv_reviewername = AbViewHolder.get(convertView, R.id.tv_reviewername);
+          TextView tv_commentcontent = AbViewHolder.get(convertView, R.id.tv_commentcontent);
+          RatingBar ratingBar=AbViewHolder.get(convertView, R.id.ratingbar);
+          LinearLayout ll_itemsImage=AbViewHolder.get(convertView, R.id.ll_itemsImage);
+          TextView tv_date = AbViewHolder.get(convertView, R.id.tv_date);
+          ratingBar.setRating(4.2f);
 		  //获取该行的数据
           final Map<String, Object>  obj = (Map<String, Object>)mData.get(position);
           String imageUrl = (String)obj.get("itemsIcon");
 //          itemsTitle.setText((String)obj.get("itemsTitle"));
 //          itemsText.setText((String)obj.get("itemsText"));
           //设置加载中的View
-          mAbImageLoader.setLoadingView(convertView.findViewById(R.id.progressBar));
+//          mAbImageLoader.setLoadingView(convertView.findViewById(R.id.progressBar));
           //图片的下载
           mAbImageLoader.display(itemsIcon,imageUrl);
-          
+          ll_itemsImage.setVisibility(View.VISIBLE);
+          ll_itemsImage.removeAllViews();
+          for (int i = 0; i < 3; i++) {
+              LayoutParams layoutParams=new LayoutParams(CommonUtil.dip2px(mContext, 40), CommonUtil.dip2px(mContext, 40));
+			ImageView imageView=new ImageView(mContext);
+			imageView.setLayoutParams(layoutParams);
+			CommonUtil.setMargins(imageView, 0, 0, 10, 0);
+			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+			mAbImageLoader.display(imageView,((Map<String, Object>)mData.get(i)).get("itemsIcon")+"");
+			ll_itemsImage.addView(imageView);
+		}
           return convertView;
     }
     

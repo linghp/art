@@ -46,10 +46,9 @@
                 android:id="@+id/list_comment"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/white"
                 android:cacheColorHint="@color/transparent"
                 android:divider="@null"
-                android:dividerHeight="1.0dip"
+                android:dividerHeight="4.0dip"
                 android:listSelector="@color/transparent"
                 android:scrollbars="none" />
         </LinearLayout>
