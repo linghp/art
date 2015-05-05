@@ -69,16 +69,15 @@
         android:theme="@style/AppTheme" >
 
         <!-- 测试key -->
-        <meta-data
+<!--         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="wVx47v9LtmNLozGme6VnGfwZ" />
+            android:value="wVx47v9LtmNLozGme6VnGfwZ" /> -->
 
         <!-- 共用key -->
-        <!--
+        
              <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
-        -->
+            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
 
         <service
             android:name="com.baidu.location.f"
