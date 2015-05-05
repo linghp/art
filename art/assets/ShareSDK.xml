@@ -56,23 +56,23 @@
         AppKey = "6cd639a9277c"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
        <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <!-- 发布的 -->
-<!--     <SinaWeibo
+    <SinaWeibo
         Id="1"
         SortId="1"
         AppKey="1244669314"
         AppSecret="e1059dd6edf6ba7ddf1e33b9ac3f291d"
         RedirectUrl="http://www.weibo.com"
         ShareByAppClient="true"
-        Enable="true" /> -->
+        Enable="true" />
     <!-- 测试的 -->
-    <SinaWeibo
+<!--     <SinaWeibo
         Id="1"
         SortId="1"
         AppKey="2357233671"
         AppSecret="ef4683542a3d9c80d7aa6d5ee99b72de"
         RedirectUrl="http://www.weibo.com"
         ShareByAppClient="true"
-        Enable="true" />
+        Enable="true" /> -->
 
     <TencentWeibo
         Id="2" 
@@ -104,25 +104,25 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
 	<!-- 发布的 -->
-<!--     <Wechat
-        Id="4"
-        SortId="4"
-        AppId="wxc653a07041cb2f64"
-        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
-        BypassApproval="false"
-        Enable="true" />
-    
-    <WechatMoments
-        Id="5"
-        SortId="5"
-        AppId="wxc653a07041cb2f64"
-        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
-        BypassApproval="false"
-        Enable="true" /> -->
-        <!-- 测试的 -->
     <Wechat
         Id="4"
         SortId="4"
+        AppId="wxc653a07041cb2f64"
+        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
+        BypassApproval="false"
+        Enable="true" />
+    
+    <WechatMoments
+        Id="5"
+        SortId="5"
+        AppId="wxc653a07041cb2f64"
+        AppSecret="35dcb7f4e9fbefac5ab2b73055fc6377"
+        BypassApproval="false"
+        Enable="true" />
+        <!-- 测试的 -->
+<!--     <Wechat
+        Id="4"
+        SortId="4"
         AppId="wxe506ae25018900a2"
         AppSecret="ed5cb99a4551abdae164d581de004f18"
         BypassApproval="false"
@@ -134,7 +134,7 @@
         AppId="wxe506ae25018900a2"
         AppSecret="ed5cb99a4551abdae164d581de004f18"
         BypassApproval="false"
-        Enable="true" />
+        Enable="true" /> -->
         
 	<WechatFavorite
         Id="6"
