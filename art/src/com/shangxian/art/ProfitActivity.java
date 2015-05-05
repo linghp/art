@@ -25,9 +25,8 @@ public class ProfitActivity extends BaseActivity{
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();//显示title
-		topView.setTitle("收益");
+		topView.setTitle("农合宝");
 		topView.setBack(R.drawable.back);//返回
-		
 		allprice = (TextView) findViewById(R.id.profit_allprice);//总金额
 		pingjun = (TextView) findViewById(R.id.profit_pingjun);//平均收益率
 		today = (TextView) findViewById(R.id.profit_today);//今日收益
