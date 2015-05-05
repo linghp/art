@@ -103,14 +103,14 @@
                     android:layout_height="wrap_content"
                     android:text="63"
                     android:textColor="@color/txt_black"
-                    android:textSize="@dimen/list_title_size" />
+                    android:textSize="@dimen/list_price_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="全部商品"
                     android:textColor="@color/txt_black2"
-                    android:textSize="@dimen/list_summary_size" />
+                    android:textSize="@dimen/list_min_size" />
             </LinearLayout>
 
             <View
@@ -131,14 +131,14 @@
                     android:layout_height="wrap_content"
                     android:text="3"
                     android:textColor="@color/txt_black"
-                    android:textSize="@dimen/list_title_size" />
+                    android:textSize="@dimen/list_price_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上新"
                     android:textColor="@color/txt_black2"
-                    android:textSize="@dimen/list_summary_size" />
+                    android:textSize="@dimen/list_min_size" />
             </LinearLayout>
 
             <View
@@ -159,14 +159,14 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/txt_black"
-                    android:textSize="@dimen/list_title_size" />
+                    android:textSize="@dimen/list_price_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="优惠"
                     android:textColor="@color/txt_black2"
-                    android:textSize="@dimen/list_summary_size" />
+                    android:textSize="@dimen/list_min_size" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

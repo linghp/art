@@ -77,7 +77,7 @@
         <!--
              <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
+            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
         -->
 
         <service
@@ -95,17 +95,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.alipay.sdk.app.H5PayActivity"
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind">
-            
+            android:screenOrientation="behind" >
         </activity>
-        <activity android:name="com.alipay.sdk.auth.AuthActivity"
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind">
-            
+            android:screenOrientation="behind" >
         </activity>
         <activity
             android:name=".HomeActivity"
@@ -235,15 +235,23 @@
             android:name=".SearchActivity"
             android:label="@string/title_activity_mine" >
         </activity>
-        <activity 
+        <activity
             android:name=".BenQiJieSuanActivity"
             android:label="@string/title_activity_mine" >
         </activity>
-        <activity 
+        <activity
             android:name=".JinJiJieSuanActivity"
             android:label="@string/title_activity_mine" >
         </activity>
-        <activity 
+        <activity
+            android:name=".AskJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".YiJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".JieSuanLiShiActivity"
             android:label="@string/title_activity_mine" >
         </activity>
@@ -299,7 +307,7 @@
             <!--
             	AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter
             	的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 
-            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
+            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
             -->
             <meta-data
                 android:name="AuthorizeAdapter"
@@ -310,11 +318,11 @@
             	的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。 
             	开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
             	
-            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
+            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
             -->
             <!--
             	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
-            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
+            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
             -->
             <intent-filter>
                 <data android:scheme="db-7janx53ilz11gbs" />
@@ -328,7 +336,7 @@
             <!--
             	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
             	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
+            	则分享结束以后不能得到正确的回调
             -->
             <intent-filter>
                 <data android:scheme="tencent100371282" />
@@ -385,7 +393,7 @@
             android:enabled="true" >
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
- <!-- Required  显示通知栏 -->
+                <!-- Required  显示通知栏 -->
                 <category android:name="com.shangxian.art" />
             </intent-filter>
             <intent-filter>
@@ -408,16 +416,16 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
- Required  用户注册SDK的intent
+                <!-- Required  用户注册SDK的intent -->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
- Required  用户接收SDK消息的intent
+                <!-- Required  用户接收SDK消息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
- Required  用户接收SDK通知栏信息的intent
+                <!-- Required  用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
- Required  用户打开自定义通知栏的intent
+                <!-- Required  用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
-接收网络变化 连接/断开 since 1.6.3
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.shangxian.art" />
             </intent-filter>
         </receiver>
@@ -428,7 +436,7 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="9b3c36406fb9a5112b901325" />
- <!-- </>值来自开发者平台取得的AppKey -->
+        <!-- </>值来自开发者平台取得的AppKey -->
 
 
         <!-- alipay sdk begin -->
@@ -440,8 +448,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <!-- alipay sdk end -->
-        
-        
+
         <activity
             android:name=".CommentActivity"
             android:label="@string/title_activity_comment" >

@@ -1,27 +1,24 @@
 package com.shangxian.art;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
- * 紧急结算
+ * 
  * @author Administrator
  *
  */
-public class JinJiJieSuanActivity extends BaseActivity{
+public class YiJieSuanActivity extends BaseActivity{
 
-	private TextView shenqing; 
+	TextView num,price,jindu,jiesuantime,name,phone,shenqingtime,chexiao,chaxun;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_jinjijiesuan);
+		setContentView(R.layout.activity_yishenqing);
 		initView();
 		initData();
 		initListener();
@@ -35,23 +32,17 @@ public class JinJiJieSuanActivity extends BaseActivity{
 		topView.showTitle();
 		topView.setTitle("紧急结算");
 		topView.setBack(R.drawable.back);//返回
-		shenqing = (TextView) findViewById(R.id.jinjijiesuan_btn);
+		
+		
 	}
 
 	private void initData() {
-		
+		// TODO Auto-generated method stub
 		
 	}
 
 	private void initListener() {
-		shenqing.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//myToast("功能暂未开放");
-				CommonUtil.gotoActivity(JinJiJieSuanActivity.this, AskJieSuanActivity.class, false);
-			}
-		});
+		// TODO Auto-generated method stub
 		
 	}
 }
