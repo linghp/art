@@ -1,37 +1,40 @@
 package com.shangxian.art;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.view.TopView;
 
-public class ProfitActivity extends BaseActivity{
-	TextView allprice,pingjun,today,yestoday,all;
+/**
+ * 紧急结算
+ * @author Administrator
+ *
+ */
+public class JinJiJieSuanActivity extends BaseActivity{
+
+	private TextView shenqing; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_profit);
+		setContentView(R.layout.activity_jinjijiesuan);
 		initView();
 		initData();
 		initListener();
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
 		topView=(TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
-		topView.showTitle();//显示title
-		topView.setTitle("农合宝");
+		topView.showTitle();
+		topView.setTitle("紧急结算");
 		topView.setBack(R.drawable.back);//返回
-		allprice = (TextView) findViewById(R.id.profit_allprice);//总金额
-		pingjun = (TextView) findViewById(R.id.profit_pingjun);//平均收益率
-		today = (TextView) findViewById(R.id.profit_today);//今日收益
-		yestoday = (TextView) findViewById(R.id.profit_yesterday);//昨日收益
-		all = (TextView) findViewById(R.id.profit_all);//累计收益
+		shenqing = (TextView) findViewById(R.id.jinjijiesuan_btn);
 	}
 
 	private void initData() {
@@ -40,7 +43,14 @@ public class ProfitActivity extends BaseActivity{
 	}
 
 	private void initListener() {
-		// TODO Auto-generated method stub
+		shenqing.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				myToast("功能暂未开放");
+				
+			}
+		});
 		
 	}
 }

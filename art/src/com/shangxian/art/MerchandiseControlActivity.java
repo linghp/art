@@ -87,7 +87,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.jinjijiesuan:
 			//紧急结算
-			
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JinJiJieSuanActivity.class, false);
 			break;
 		case R.id.lishichaxun:
 			//结算历史查询
