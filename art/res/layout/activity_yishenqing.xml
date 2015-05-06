@@ -35,6 +35,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="54545648454"
@@ -65,6 +66,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="500.00"
@@ -89,6 +91,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_jindu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="处理中(请耐心等待)"
@@ -113,6 +116,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015-2-8"
@@ -137,6 +141,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="张三"
@@ -161,6 +166,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="159741543"
@@ -185,6 +191,7 @@
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/yishenqing_time1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015-5-5 15:30"
@@ -201,7 +208,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/askjiesuan_quxiao"
+            android:id="@+id/yishenqing_chexiao"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -214,7 +221,7 @@
             android:textSize="@dimen/button_txt_size" />
 
         <TextView
-            android:id="@+id/askjiesuan_baocun"
+            android:id="@+id/yishenqing_jinduchaxun"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

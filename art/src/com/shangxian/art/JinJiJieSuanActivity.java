@@ -48,7 +48,6 @@ public class JinJiJieSuanActivity extends BaseActivity{
 			
 			@Override
 			public void onClick(View v) {
-				//myToast("功能暂未开放");
 				CommonUtil.gotoActivity(JinJiJieSuanActivity.this, AskJieSuanActivity.class, false);
 			}
 		});
