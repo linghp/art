@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -38,7 +39,7 @@ public class JinJiJieSuanActivity extends BaseActivity{
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -47,8 +48,7 @@ public class JinJiJieSuanActivity extends BaseActivity{
 			
 			@Override
 			public void onClick(View v) {
-				myToast("功能暂未开放");
-				
+				CommonUtil.gotoActivity(JinJiJieSuanActivity.this, AskJieSuanActivity.class, false);
 			}
 		});
 		
