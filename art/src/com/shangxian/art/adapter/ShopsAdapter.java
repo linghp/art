@@ -23,16 +23,16 @@ import com.shangxian.art.utils.MyLogger;
 public class ShopsAdapter extends AdapterBase<ProductDto>{
 	Context mContext;
 	//图片下载器
-    private AbImageLoader mAbImageLoader = null;
-	
+	private AbImageLoader mAbImageLoader = null;
+
 	public ShopsAdapter(Context context) {
 		//this.mList = mList;
 		this.mContext = context;
 		//图片下载器
-        mAbImageLoader = AbImageLoader.newInstance(context);
-        mAbImageLoader.setLoadingImage(R.drawable.image_loading);
-        mAbImageLoader.setErrorImage(R.drawable.image_error);
-        mAbImageLoader.setEmptyImage(R.drawable.image_empty);
+		mAbImageLoader = AbImageLoader.newInstance(context);
+		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader.setErrorImage(R.drawable.image_error);
+		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
 	}
 	@Override
 	protected View getExView(int position, View convertView, ViewGroup parent) {
@@ -40,12 +40,12 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_shops, null);
 			holder = new SubViewHolder();
-			
+
 			holder.ll_first = (LinearLayout) convertView.findViewById(R.id.item_shops_linear1);
 			holder.title = (TextView) convertView.findViewById(R.id.item_shops_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_shops_img);
 			holder.price = (TextView) convertView.findViewById(R.id.item_shops_price);
-			
+
 			holder.ll_second = (LinearLayout) convertView.findViewById(R.id.item_shops_linear2);
 			holder.title1 = (TextView) convertView.findViewById(R.id.item_shops_summary1);
 			holder.img1 = (ImageView) convertView.findViewById(R.id.item_shops_img1);
@@ -53,37 +53,37 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			convertView.setTag(holder);
 		}else {
 			holder = (SubViewHolder) convertView.getTag();
-			
+
 		}
-//		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.img
-//				.getLayoutParams();
-//		params.width = (AbSharedUtil.getInt(mContext,
-//				Global.KEY_SCREEN_WIDTH) - 9 * 4 - 5 * 4) / 2;
-		
+		//		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.img
+		//				.getLayoutParams();
+		//		params.width = (AbSharedUtil.getInt(mContext,
+		//				Global.KEY_SCREEN_WIDTH) - 9 * 4 - 5 * 4) / 2;
+
 		mApplication.getLoader().display(holder.img, Constant.BASEURL+getListData().get(position * 2).getPhoto());
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getPrice()+""))
-			holder.price.setText(getListData().get(position * 2).getPrice()+"");//金额
+			holder.price.setText("¥"+getListData().get(position * 2).getPrice());//金额
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getName()))
 			holder.title.setText(getListData().get(position * 2).getName());//name
-//		holder.ll_first.setOnClickListener(new OnClick(getListData().get(position * 2)
-//				.getId()));//左边的点击
+		//		holder.ll_first.setOnClickListener(new OnClick(getListData().get(position * 2)
+		//				.getId()));//左边的点击
 		if (getListData().size() > (position * 2 + 1)) {
 			holder.ll_second.setVisibility(View.VISIBLE);
-			
+
 			mApplication.getLoader().display(holder.img1, Constant.BASEURL+getListData().get(position * 2 + 1)
 					.getPhoto());
 			if (!TextUtils.isEmpty(getListData().get(position * 2 + 1).getPrice()+""))
-				holder.price1.setText(getListData().get(position * 2 + 1)
-						.getPrice()+"");
+				holder.price1.setText("¥"+getListData().get(position * 2 + 1)
+						.getPrice());
 			if (!TextUtils.isEmpty(getListData().get(position * 2 + 1).getName()))
 				holder.title1.setText(getListData().get(position * 2 + 1)
 						.getName());
-//			holder.ll_second.setOnClickListener(new OnClick(getListData().get(
-//					position * 2 + 1).getId()));
+			//			holder.ll_second.setOnClickListener(new OnClick(getListData().get(
+			//					position * 2 + 1).getId()));
 		} else {
 			holder.ll_second.setVisibility(View.INVISIBLE);
 		}
-		
+
 		return convertView;
 	}
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/jinjijiesuan_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:padding="50dp"
+        android:src="@drawable/emergencyimage" />
+
+    <TextView
+        android:id="@+id/jinjijiesuan_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jinjijiesuan_img"
+        android:layout_centerHorizontal="true"
+        android:text="没有正在进行的紧急结算"
+        android:textColor="@color/txt_black1"
+        android:textSize="@dimen/list_max_size" />
+
+    <TextView
+        android:id="@+id/jinjijiesuan_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jinjijiesuan_txt"
+        android:background="@drawable/btn_btn"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:layout_margin="20dp"
+        android:text="申请紧急结算"
+        android:textColor="@color/txt_whitetoback"
+        android:textSize="@dimen/button_txt_size" />
+
+</RelativeLayout>

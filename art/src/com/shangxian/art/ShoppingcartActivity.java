@@ -39,6 +39,7 @@ import com.shangxian.art.dialog.DeleteDialog.Delete_I;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.net.HttpUtils;
+import com.shangxian.art.net.NetWorkHelper;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
@@ -78,6 +79,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 		if (isLogin()) {
 			loading_big.setVisibility(View.VISIBLE);
 			requestTask();
+		}else{
+			loading_big.setVisibility(View.GONE);
 		}
 		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
 		selecteall.setChecked(false);
@@ -238,7 +241,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 			}
 		}
 		MyLogger.i(adapter.getStoreCheced().toString());
-		if (flag == adapter.getStoreCheced().size()&&flag>0) {
+		if (flag == adapter.getStoreCheced().size() && flag > 0) {
 			selecteall.setChecked(true);
 		} else {
 			selecteall.setChecked(false);
@@ -262,15 +265,20 @@ public class ShoppingcartActivity extends BaseActivity implements
 			topView.setCenterListener(null);
 			topView.setTitle("购物车");
 			topView.showTitle();
-
-			if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
-				listCarItem.clear();
-				selecteall.setChecked(false);
-				adapter.notifyDataSetChanged();
+			if (NetWorkHelper.checkNetState(this)) {
+				loading_big.setVisibility(View.VISIBLE);
+				if (!isLogin() && listCarItem.size() > 0) {// 如果是没有登陆且购物车有数据，清空
+					listCarItem.clear();
+					selecteall.setChecked(false);
+					adapter.notifyDataSetChanged();
+				} else {
+					initdata();
+				}
+				ll_nonetwork.setVisibility(View.GONE);
 			} else {
-				initdata();
+				ll_nonetwork.setVisibility(View.VISIBLE);
+				loading_big.setVisibility(View.GONE);
 			}
-			ll_nonetwork.setVisibility(View.GONE);
 		}
 
 	}

@@ -71,7 +71,7 @@ public class NongHeBaoActivity extends BaseActivity{
 			}
 		});
 		profit.setOnClickListener(new OnClickListener() {
-			//收益
+			//农合宝
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub

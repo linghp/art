@@ -197,8 +197,8 @@
 
                 <ImageView
                     android:id="@+id/commoditycontent_dianpuimg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/image_loading" />
 
                 <LinearLayout
@@ -214,6 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="新鲜果水果专卖店"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/txt_black"
                         android:textSize="@dimen/list_summary_size" />
 
