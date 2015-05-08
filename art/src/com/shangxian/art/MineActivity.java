@@ -16,6 +16,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 
 public class MineActivity extends BaseActivity implements OnClickListener{
 	private String username_local;
@@ -29,8 +30,6 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main_mine);
-		userphoto_filename = LocalUserInfo.getInstance(this)
-                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
 		initView();
 		initListener();
 	}
@@ -52,7 +51,6 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 		ll_loginafter=findViewById(R.id.ll_loginafter);
 		user_head=(ImageView) findViewById(R.id.user_head);
 		
-		changeview();
 	}
 
 	private void changeview() {
@@ -73,7 +71,7 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		changeview();
+		//changeview();
 	}
 	
 	@Override
@@ -90,6 +88,10 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 		topView.setCenterListener(null);
 		topView.setTitle("我的");
 		topView.showTitle();
+		
+		userphoto_filename = LocalUserInfo.getInstance(this)
+                .getUserInfo(LocalUserInfo.USERPHOTO_FILENAME);
+		changeview();
 		//显示头像
 		if(isLogin()){
         String userphoto_filename_temp = LocalUserInfo.getInstance(this)
@@ -109,6 +111,13 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 		}else{
 			user_head.setImageResource(R.drawable.defaultloginheader);
 		}
+	}
+	
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		MyLogger.i("onStop");
 	}
 	
 	public void doClick(View view){

@@ -383,20 +383,17 @@ public class PayActivity extends BaseActivity {
 	}
 
 	private boolean match() {
-		if (onlineMon > 0  && !isZhi) {
-			toAlipay();
-			return false;
-		}
 		if (lastMon == Double.MIN_VALUE) {
 			myToast("请输入支付金额");
+			return false;
+		}
+		if (onlineMon > 0  && isZhi) {
+			toAlipay(isBi || isYuan);
 			return false;
 		}
 		if (!isBi && !isYuan && !isZhi) {
 			myToast("请选择支付方式(注:在线支付暂只支持支付宝)");
 			return false;
-		}
-		if (isBi) {
-
 		}
 		return true;
 	}
@@ -405,14 +402,17 @@ public class PayActivity extends BaseActivity {
 	 * 支付宝支付
 	 * 
 	 */
-	private void toAlipay() {
+	private void toAlipay(final boolean isToOkPay) {
 		if (isZhi) {
-			AliPayServer.toPay("baidbfiabdiufbiabdsfb", "测试商品", "测试商品1",
-					"0.01",
+			AliPayServer.toPay(null, "测试商品", "测试商品1",
+					onlineMon + "",
 					new com.shangxian.art.alipays.AliPayBase.OnPayListener() {
 						@Override
 						public void onSuccess(String res) {
 							myToast("支付成功");
+							if (isToOkPay) {
+								okToPay();
+							}
 						}
 
 						@Override

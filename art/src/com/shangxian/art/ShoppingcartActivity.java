@@ -79,6 +79,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 		if (isLogin()) {
 			loading_big.setVisibility(View.VISIBLE);
 			requestTask();
+		}else{
+			loading_big.setVisibility(View.GONE);
 		}
 		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
 		selecteall.setChecked(false);
