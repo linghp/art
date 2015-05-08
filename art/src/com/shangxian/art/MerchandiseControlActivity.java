@@ -18,9 +18,10 @@ import com.shangxian.art.view.TopView;
  * 
  */
 public class MerchandiseControlActivity extends BaseActivity{
-	private LinearLayout linear1,linear2;
+	private LinearLayout linear1,linear2,linear3;
 
 	boolean isjiesuan =  false;
+	boolean isshangpu =  false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -31,7 +32,6 @@ public class MerchandiseControlActivity extends BaseActivity{
 		listener();
 	}
 
-	
 	private void initView() {
 		// TODO Auto-generated method stub
 		topView=(TopView) findViewById(R.id.top_title);
@@ -44,13 +44,25 @@ public class MerchandiseControlActivity extends BaseActivity{
 
 		linear1 = (LinearLayout) findViewById(R.id.linear1);
 		linear2 = (LinearLayout) findViewById(R.id.linear2);
+		linear3 = (LinearLayout) findViewById(R.id.linear3);
 		
+		//结算中心
 		Intent intent = getIntent();
 		isjiesuan = intent.getBooleanExtra("isjiesuan", false);
 		if (isjiesuan == true) {
 			topView.setTitle("商户结算");
 			linear1.setVisibility(View.GONE);
 			linear2.setVisibility(View.VISIBLE);
+			linear3.setVisibility(View.GONE);
+		}
+		//商铺管理
+		Intent intent1 = getIntent();
+		isjiesuan = intent1.getBooleanExtra("isshangpu", false);
+		if (isjiesuan == true) {
+			topView.setTitle("商铺管理");
+			linear1.setVisibility(View.GONE);
+			linear2.setVisibility(View.GONE);
+			linear3.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -92,6 +104,14 @@ public class MerchandiseControlActivity extends BaseActivity{
 		case R.id.lishichaxun:
 			//结算历史查询
 			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
+			break;
+		case R.id.shangpuxinxi:
+			//商铺信息
+//			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JinJiJieSuanActivity.class, false);
+			break;
+		case R.id.caozuoyuan:
+			//操作员管理
+//			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
 			break;
 		default:
 			break;
