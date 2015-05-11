@@ -176,7 +176,7 @@ public class IDCationActivity extends BaseActivity{
 				Bitmap bitmap = BitmapFactory.decodeFile(imagelocaldir
 						+ imageName);
 				photo1.setImageBitmap(bitmap);
-				updatePhotoInServer(imageName);
+//				updatePhotoInServer(imageName);
 				break;
 
 			}
@@ -184,6 +184,7 @@ public class IDCationActivity extends BaseActivity{
 
 		}
 	}
+	//显示到头像
 	private void updatePhotoInServer(final String image) {
 		LocalUserInfo.getInstance(this).setUserInfo(
 				LocalUserInfo.USERPHOTO_FILENAME, image);
