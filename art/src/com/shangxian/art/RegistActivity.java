@@ -5,6 +5,7 @@ import com.shangxian.art.view.TopView;
 
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout ll_li3;
 	private Animation anim_right_in;
 	private Animation anim_left_out;
+	private String phone;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		ll_li1 = (LinearLayout) findViewById(R.id.regl_ll_li1);
 		ll_li2 = (LinearLayout) findViewById(R.id.regl_ll_li2);
 		ll_li3 = (LinearLayout) findViewById(R.id.regl_ll_li3);
-		
+		iv_check.setSelected(isCheck);
 		showView(TI1);
 	}
 	
@@ -129,7 +131,15 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if (v == tv_getyan) {
-			showView(TI2);
+			if (matchsPhone()) {
+				if (isCheck) {
+					showView(TI2);
+				} else {
+					myToast("请阅读爱农宝用户协议");
+				}
+			} else {
+				myToast("您输入的手机号为无效手机号");
+			}
 		} else if (v == tv_read) {
 			
 		} else if (v == tv_toyan) {
@@ -137,7 +147,26 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		} else if (v == tv_toregist) {
 			
 		} else if (v == iv_check) {
-			
+			check();
 		}
+	}
+	
+	private boolean isCheck = true;
+	private void check() {
+		isCheck = !isCheck;
+		iv_check.setSelected(isCheck);
+	}
+
+	/**
+	 * 验证手机号
+	 * @return
+	 */
+	private boolean matchsPhone() {
+		phone = et_phone.getText().toString();
+		if (TextUtils.isEmpty(phone)) {
+			myToast("请输入您的手机号");
+			return false;
+		}
+		return phone.matches("^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$");
 	}
 }

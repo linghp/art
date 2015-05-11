@@ -44,7 +44,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		public void handleMessage(android.os.Message msg) {
 			user = et_user.getText().toString();
 			pass = et_pass.getText().toString();
-			
 			if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass)) {
 				showView(CAN_LOGIN);
 			} else {
