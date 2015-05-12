@@ -102,7 +102,6 @@ public class LocationActivity extends BaseActivity {
 	private List<LatLng> mNearlyLatlngs = new ArrayList<LatLng>();
 
 	private void initData() {
-		
 		Intent intent = getIntent();
 		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
 				Integer.MIN_VALUE);

@@ -54,11 +54,12 @@ OnClickListener, HttpCilentListener {
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
 
-	private ImageView dingwei,call,next,shopsimg;
+	private ImageView call,next,shopsimg;
 	private ImageView commoditycontent_shoucang;
 	private TextView commoditycontent_jieshao, commoditycontent_jiage,
 	commoditycontent_jiarugouwuche,address,guige,dianpu;
-
+	private LinearLayout dingwei,shangpu;
+	
 	// 判断是否收藏
 	boolean iscollection = false;
 
@@ -107,6 +108,14 @@ OnClickListener, HttpCilentListener {
 				ShopsActivity.startThisActivity(shopid, CommodityContentActivity.this);
 			}
 		});
+		shangpu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				ShopsActivity.startThisActivity(shopid, CommodityContentActivity.this);
+			}
+		});
 		dingwei.setOnClickListener(new OnClickListener() {
 			//跳转到定位
 			@Override
@@ -127,7 +136,7 @@ OnClickListener, HttpCilentListener {
 			}
 		});
 		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
-
+			//收藏
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
@@ -145,13 +154,13 @@ OnClickListener, HttpCilentListener {
 			}
 		});
 		topView.setRightBtnListener(new OnClickListener() {
-
+			//title右按钮（购物车）   跳转到购物车
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Bundle bundle = new Bundle();
 				bundle.putBoolean("isother", true);
-				CommonUtil.gotoActivityWithDataForResult(CommodityContentActivity.this, ShoppingcartActivity.class, bundle, 10086, false);
+				CommonUtil.gotoActivityWithData(CommodityContentActivity.this, ShoppingcartActivity.class, bundle, false);;
 			}
 		});
 		
@@ -175,8 +184,8 @@ OnClickListener, HttpCilentListener {
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
+		MyLogger.i(url);
 		refreshTask(url);
-
 	}
 
 	private void refreshTask(String url) {
@@ -293,7 +302,7 @@ OnClickListener, HttpCilentListener {
 		//		Imageloader_homePager.displayImage(Constant.BASEURL
 		//				+ model.getPhotos().get(0), commoditycontent_img,
 		//				new Handler(), null);// TODO Auto-generated method stub
-		commoditycontent_jieshao.setText(model.getName());
+		commoditycontent_jieshao.setText(model.getName().toString().trim());
 		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
 //		guige.setText(model.get);//规格
 		dianpu.setText(model.getShopName());
@@ -326,10 +335,12 @@ OnClickListener, HttpCilentListener {
 		 guige = (TextView) findViewById(R.id.commoditycontent_guige);
 		 dianpu = (TextView) findViewById(R.id.commoditycontent_shopstxt);
 		 shopsimg = (ImageView) findViewById(R.id.commoditycontent_dianpuimg);
-		 dingwei = (ImageView) findViewById(R.id.commoditycontent_dingwei);
+		 dingwei = (LinearLayout) findViewById(R.id.commoditycontent_dingwei);
 		 call = (ImageView) findViewById(R.id.commoditycontent_call);
 		 next = (ImageView) findViewById(R.id.commoditycontent_next4);
 		 address = (TextView) findViewById(R.id.commoditycontent_address);
+		 shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
+		 
 
 		 topView = (TopView) findViewById(R.id.top_title);
 		 topView.setActivity(this);

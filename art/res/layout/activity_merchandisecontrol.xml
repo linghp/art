@@ -252,5 +252,76 @@
                 android:src="@drawable/next_level" />
         </LinearLayout>
     </LinearLayout>
+<LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/top_title"
+        android:visibility="gone" >
 
+        <LinearLayout
+            android:id="@+id/shangpuxinxi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_title"
+            android:layout_marginTop="10dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/storesinformatinmaintenance" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="商铺信息维护"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/caozuoyuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/merchandisecontrol_linear1"
+            android:layout_marginTop="1dp"
+            android:onClick="onclick"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/operatormanagement" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="操作员管理"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_level" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

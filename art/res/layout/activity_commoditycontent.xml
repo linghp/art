@@ -88,9 +88,9 @@
                     android:id="@+id/commoditycontent_jieshao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginRight="40dp"
-                    android:layout_toLeftOf="@id/commoditycontent_next1"
-                    android:text="新鲜菠萝/葡萄/香蕉/苹果果篮出售 特价出售赶快抢购"
+                    android:text="新鲜菠萝/葡萄/香"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_summary_size" />
 
@@ -213,8 +213,8 @@
                         android:id="@+id/commoditycontent_shopstxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="新鲜果水果专卖店"
                         android:layout_marginLeft="5dp"
+                        android:text="新鲜果水果专卖店"
                         android:textColor="@color/txt_black"
                         android:textSize="@dimen/list_summary_size" />
 
@@ -225,19 +225,25 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
-                        <ImageView
+                        <LinearLayout
                             android:id="@+id/commoditycontent_dingwei"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/fourth_tab" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" >
 
-                        <TextView
-                            android:id="@+id/commoditycontent_address"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/fourth_tab" />
 
+                            <TextView
+                                android:id="@+id/commoditycontent_address"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门" />
+                        </LinearLayout>
                         <!--
                              <View
                             android:layout_width="wrap_content"
