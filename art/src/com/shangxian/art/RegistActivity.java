@@ -1,6 +1,11 @@
 package com.shangxian.art;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.net.HttpUtils;
+import com.shangxian.art.net.RegisterServer;
+import com.shangxian.art.net.RegisterServer.OnHttpResultListener;
 import com.shangxian.art.view.TopView;
 
 import android.support.v7.app.ActionBarActivity;
@@ -18,8 +23,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class RegistActivity extends BaseActivity implements OnClickListener{
+public class RegistActivity extends BaseActivity implements OnClickListener,
+		OnHttpResultListener {
 
 	private EditText et_repass;
 	private EditText et_pass;
@@ -37,7 +44,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout ll_li3;
 	private Animation anim_right_in;
 	private Animation anim_left_out;
-	private String phone;
+	private String phone, captcha, pass, repass;
+	private boolean isregister;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,49 +57,51 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initDate() {
-		anim_right_in = AnimationUtils.loadAnimation(this, R.anim.anim_right_in);
-		anim_left_out = AnimationUtils.loadAnimation(this, R.anim.anim_left_out);
+		anim_right_in = AnimationUtils
+				.loadAnimation(this, R.anim.anim_right_in);
+		anim_left_out = AnimationUtils
+				.loadAnimation(this, R.anim.anim_left_out);
 	}
-	
+
 	private void initView() {
-		//改变topbar
-		topView=(TopView) findViewById(R.id.top_title);
+		// 改变topbar
+		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn();
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_activity_regist));
-		
+
 		tv_ti = (TextView) findViewById(R.id.regt_tv_ti1);
 		tv_getyan = (TextView) findViewById(R.id.regt_tv_getyan);
 		tv_phone = (TextView) findViewById(R.id.regt_tv_phone);
 		tv_read = (TextView) findViewById(R.id.regt_tv_read);
 		tv_toregist = (TextView) findViewById(R.id.regt_tv_toregist);
 		tv_toyan = (TextView) findViewById(R.id.regt_tv_toyan);
-		
+
 		iv_check = (ImageView) findViewById(R.id.regi_iv_ch);
-		
+
 		et_phone = (EditText) findViewById(R.id.rege_et_phone);
 		et_yan = (EditText) findViewById(R.id.rege_et_yan);
 		et_pass = (EditText) findViewById(R.id.rege_et_pass);
 		et_repass = (EditText) findViewById(R.id.rege_et_repass);
-		
+
 		ll_li1 = (LinearLayout) findViewById(R.id.regl_ll_li1);
 		ll_li2 = (LinearLayout) findViewById(R.id.regl_ll_li2);
 		ll_li3 = (LinearLayout) findViewById(R.id.regl_ll_li3);
 		iv_check.setSelected(isCheck);
 		showView(TI1);
 	}
-	
+
 	private static final int TI1 = 1001;
 	private static final int TI2 = 1002;
 	private static final int TI3 = 1003;
 	private static final String TIT1 = "<font color=\"#259b24\">1  输入手机号</font> <font color=\"#de212121\"> > 2  输入验证码 > 3  设置密码</font>";
 	private static final String TIT2 = "<font color=\"#de212121\">1  输入手机号  > </font> <font color=\"#259b24\">2  输入验证码 </font> <font color=\"#de212121\"> > 3  设置密码</font>";
 	private static final String TIT3 = "<font color=\"#de212121\">1  输入手机号  > </font> <font color=\"#de212121\">2  输入验证码  > </font> <font color=\"#259b24\">3  设置密码</font>";
-	
-	private void showView(int show){
+
+	private void showView(int show) {
 		switch (show) {
 		case TI1:
 			tv_ti.setText(Html.fromHtml(TIT1));
@@ -120,11 +130,11 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 
 	private void initListener() {
 		tv_getyan.setOnClickListener(this);
-		//tv_phone.setOnClickListener(this);
+		// tv_phone.setOnClickListener(this);
 		tv_read.setOnClickListener(this);
 		tv_toregist.setOnClickListener(this);
 		tv_toyan.setOnClickListener(this);
-		
+
 		iv_check.setOnClickListener(this);
 	}
 
@@ -133,7 +143,10 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		if (v == tv_getyan) {
 			if (matchsPhone()) {
 				if (isCheck) {
-					showView(TI2);
+					if (HttpUtils.checkNetWork(this)) {
+						RegisterServer.toRegidter1(phone, this);
+						showView(TI2);
+					}
 				} else {
 					myToast("请阅读爱农宝用户协议");
 				}
@@ -141,17 +154,28 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 				myToast("您输入的手机号为无效手机号");
 			}
 		} else if (v == tv_read) {
-			
+
 		} else if (v == tv_toyan) {
-			showView(TI3);
+			if (matchsCaptcha()) {
+				if (HttpUtils.checkNetWork(this)) {
+					RegisterServer.toRegidter2(phone, captcha,this);
+					showView(TI3);
+				}
+			}
 		} else if (v == tv_toregist) {
-			
+			if (matchsPassword()) {
+				if (HttpUtils.checkNetWork(this)) {
+					RegisterServer.toRegidter3(phone,captcha,pass,repass, this);
+					showView(TI3);
+				}
+			}
 		} else if (v == iv_check) {
 			check();
 		}
 	}
-	
+
 	private boolean isCheck = true;
+
 	private void check() {
 		isCheck = !isCheck;
 		iv_check.setSelected(isCheck);
@@ -159,14 +183,64 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 
 	/**
 	 * 验证手机号
+	 * 
 	 * @return
 	 */
 	private boolean matchsPhone() {
-		phone = et_phone.getText().toString();
+		phone = et_phone.getText().toString().trim();
 		if (TextUtils.isEmpty(phone)) {
 			myToast("请输入您的手机号");
 			return false;
 		}
 		return phone.matches("^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$");
+	}
+
+	/**
+	 * 验证验证码
+	 * 
+	 * @return
+	 */
+	private boolean matchsCaptcha() {
+		captcha = et_yan.getText().toString().trim();
+		if (TextUtils.isEmpty(captcha)) {
+			myToast("请输入您的验证码");
+			return false;
+		}
+		return captcha.matches("[0-9]{6}$");
+	}
+
+	/**
+	 * 验证密码
+	 * 
+	 * @return
+	 */
+	private boolean matchsPassword() {
+		pass = et_pass.getText().toString().trim();
+		repass = et_repass.getText().toString().trim();
+		if (TextUtils.isEmpty(pass)) {
+			myToast("请输入您的设置密码");
+			return false;
+		}
+		if (TextUtils.isEmpty(repass)) {
+			myToast("请输入您的确认密码");
+			return false;
+		}
+		if (!pass.equals(repass)) {
+			myToast("两次输入的密码不一致");
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void onHttpResult(CommonBean info) {
+		if (info != null) {
+			if(isregister){
+			
+			}else{
+				myToast(info.getResult());
+			}
+		}
 	}
 }

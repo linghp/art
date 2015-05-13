@@ -282,15 +282,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
-                android:orientation="vertical" >
+                android:orientation="vertical"  android:clickable="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -357,9 +353,8 @@
                 <WebView
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"  android:focusable="false"/>
             </LinearLayout>
-        </ScrollView>
     </com.shangxian.art.view.ScrollViewContainer>
 
 </RelativeLayout>

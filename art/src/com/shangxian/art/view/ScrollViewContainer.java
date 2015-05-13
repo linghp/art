@@ -3,6 +3,8 @@ package com.shangxian.art.view;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.shangxian.art.utils.MyLogger;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -124,97 +128,96 @@ public class ScrollViewContainer extends RelativeLayout {
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		switch (ev.getActionMasked()) {
-		case MotionEvent.ACTION_DOWN:
-			if (vt == null)
-				vt = VelocityTracker.obtain();
-			else
-				vt.clear();
-			mLastY = ev.getY();
-			vt.addMovement(ev);
-			mEvents = 0;
-			break;
-		case MotionEvent.ACTION_POINTER_DOWN:
-		case MotionEvent.ACTION_POINTER_UP:
-			// 多一只手指按下或抬起时舍弃将要到来的第一个事件move，防止多点拖拽的bug
-			mEvents = -1;
-			break;
-		case MotionEvent.ACTION_MOVE:
-			vt.addMovement(ev);
-			Log.i("ACTION_MOVE", mMoveLen + "--" + canPullUp + "--"
-					+ mCurrentViewIndex + "--" + mEvents);
-			if (canPullUp && mCurrentViewIndex == 0 && mEvents == 0) {
-				// Log.i("ACTION_MOVE", mMoveLen+"");
-				mMoveLen += (ev.getY() - mLastY);
-				// 防止上下越界
-				if (mMoveLen > 0) {
-					mMoveLen = 0;
-					mCurrentViewIndex = 0;
-				} else if (mMoveLen < -mViewHeight) {
-					mMoveLen = -mViewHeight;
-					mCurrentViewIndex = 1;
-
-				}
-				if (mMoveLen < -8) {
-					// 防止事件冲突
-					ev.setAction(MotionEvent.ACTION_CANCEL);
-				}
-			} else if (canPullDown && mCurrentViewIndex == 1 && mEvents == 0) {
-				mMoveLen += (ev.getY() - mLastY);
-				// 防止上下越界
-				if (mMoveLen < -mViewHeight) {
-					mMoveLen = -mViewHeight;
-					mCurrentViewIndex = 1;
-				} else if (mMoveLen > 0) {
-					mMoveLen = 0;
-					mCurrentViewIndex = 0;
-				}
-				if (mMoveLen > 8 - mViewHeight) {
-					// 防止事件冲突
-					ev.setAction(MotionEvent.ACTION_CANCEL);
-				}
-			} else
-				mEvents++;
-			mLastY = ev.getY();
-			requestLayout();
-			break;
-		case MotionEvent.ACTION_UP:
-			mLastY = ev.getY();
-			vt.addMovement(ev);
-			vt.computeCurrentVelocity(700);
-			// 获取Y方向的速度
-			float mYV = vt.getYVelocity();
-			if (mMoveLen == 0 || mMoveLen == -mViewHeight)
-				break;
-			if (Math.abs(mYV) < 500) {
-				// 速度小于一定值的时候当作静止释放，这时候两个View往哪移动取决于滑动的距离
-				if (mMoveLen <= -mViewHeight / 2) {
-					state = AUTO_UP;
-				} else if (mMoveLen > -mViewHeight / 2) {
-					state = AUTO_DOWN;
-				}
-			} else {
-				// 抬起手指时速度方向决定两个View往哪移动
-				if (mYV < 0)
-					state = AUTO_UP;
-				else
-					state = AUTO_DOWN;
-			}
-			mTimer.schedule(2);
-			try {
-				vt.recycle();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-
-		}
 		try {
+			switch (ev.getActionMasked()) {
+			case MotionEvent.ACTION_DOWN:
+				if (vt == null)
+					vt = VelocityTracker.obtain();
+				else
+					vt.clear();
+				mLastY = ev.getY();
+				vt.addMovement(ev);
+				mEvents = 0;
+				break;
+			case MotionEvent.ACTION_POINTER_DOWN:
+			case MotionEvent.ACTION_POINTER_UP:
+				// 多一只手指按下或抬起时舍弃将要到来的第一个事件move，防止多点拖拽的bug
+				mEvents = -1;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				vt.addMovement(ev);
+				Log.i("ACTION_MOVE", mMoveLen + "--" + canPullDown + "--"
+						+ mCurrentViewIndex + "--" + mEvents);
+				if (canPullUp && mCurrentViewIndex == 0 && mEvents == 0) {
+					// Log.i("ACTION_MOVE", mMoveLen+"");
+					mMoveLen += (ev.getY() - mLastY);
+					// 防止上下越界
+					if (mMoveLen > 0) {
+						mMoveLen = 0;
+						mCurrentViewIndex = 0;
+					} else if (mMoveLen < -mViewHeight) {
+						mMoveLen = -mViewHeight;
+						mCurrentViewIndex = 1;
+
+					}
+					if (mMoveLen < -8) {
+						// 防止事件冲突
+						ev.setAction(MotionEvent.ACTION_CANCEL);
+					}
+				} else if (canPullDown && mCurrentViewIndex == 1
+						&& mEvents == 0) {
+					mMoveLen += (ev.getY() - mLastY);
+					// 防止上下越界
+					if (mMoveLen < -mViewHeight) {
+						mMoveLen = -mViewHeight;
+						mCurrentViewIndex = 1;
+					} else if (mMoveLen > 0) {
+						mMoveLen = 0;
+						mCurrentViewIndex = 0;
+					}
+					if (mMoveLen > 8 - mViewHeight) {
+						// 防止事件冲突
+						ev.setAction(MotionEvent.ACTION_CANCEL);
+					}
+				} else
+					mEvents++;
+				mLastY = ev.getY();
+				requestLayout();
+				break;
+			case MotionEvent.ACTION_UP:
+				mLastY = ev.getY();
+				vt.addMovement(ev);
+				vt.computeCurrentVelocity(700);
+				// 获取Y方向的速度
+				float mYV = vt.getYVelocity();
+				if (mMoveLen == 0 || mMoveLen == -mViewHeight)
+					break;
+				if (Math.abs(mYV) < 500) {
+					// 速度小于一定值的时候当作静止释放，这时候两个View往哪移动取决于滑动的距离
+					if (mMoveLen <= -mViewHeight / 2) {
+						state = AUTO_UP;
+					} else if (mMoveLen > -mViewHeight / 2) {
+						state = AUTO_DOWN;
+					}
+				} else {
+					// 抬起手指时速度方向决定两个View往哪移动
+					if (mYV < 0)
+						state = AUTO_UP;
+					else
+						state = AUTO_DOWN;
+				}
+				mTimer.schedule(2);
+				vt.recycle();
+				break;
+
+			}
+
 			super.dispatchTouchEvent(ev);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return true;
 	}
 
@@ -238,6 +241,20 @@ public class ScrollViewContainer extends RelativeLayout {
 			mViewWidth = getMeasuredWidth();
 			topView = getChildAt(0);
 			bottomView = getChildAt(1);
+			LinearLayout ll = (LinearLayout) bottomView;
+			WebView wv = (WebView) ll.getChildAt(2);
+			wv.setOnTouchListener(new OnTouchListener() {
+
+				@Override
+				public boolean onTouch(View arg0, MotionEvent arg1) {
+					MyLogger.i("wv.setOnTouchListener", "--");
+					if (arg0.getScrollY() == 0 && mCurrentViewIndex == 1)
+						canPullDown = true;
+					else
+						canPullDown = false;
+					return false;
+				}
+			});
 			bottomView.setOnTouchListener(bottomViewTouchListener);
 			topView.setOnTouchListener(topViewTouchListener);
 		}
@@ -264,8 +281,9 @@ public class ScrollViewContainer extends RelativeLayout {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			ScrollView sv = (ScrollView) v;
-			if (sv.getScrollY() == 0 && mCurrentViewIndex == 1)
+
+			// MyLogger.i("bottomViewTouchListener",wv.getScrollY()+"--"+mCurrentViewIndex);
+			if (mCurrentViewIndex == 1)
 				canPullDown = true;
 			else
 				canPullDown = false;

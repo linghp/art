@@ -183,7 +183,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/login_btn_sel"
                     android:gravity="center"
-                    android:text="获取验证码"
+                    android:text="提交验证码"
                     android:textColor="@color/col_w1tow2"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -236,7 +236,7 @@
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:background="@color/transparent"
-                        android:hint="设置密码"
+                        android:hint="确认密码"
                         android:inputType="textPassword"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"

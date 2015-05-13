@@ -41,6 +41,9 @@ public class BaseServer {
 	protected static final String NET_ACCOUNT = HOST + "account";// 首页广告列表
 	protected static final String NET_PAYMENT = HOST + "payment";// 直接支付
 	protected static final String NET_PAY_ORDER = HOST + "pay";// 订单支付
+	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
+	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
+	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 
 	/**
 	 * 
@@ -155,6 +158,51 @@ public class BaseServer {
 							e.printStackTrace();
 							l.onHttp(null);
 						}
+					}
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 原生的数据，不要解析
+	 * @param url
+	 * @param params
+	 * @param l
+	 */
+	protected static void toPost2(String url, AbRequestParams params,
+			final OnHttpListener l) {
+		System.out.println(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				+ url);
+		mAbHttpUtil.post(url, params, new AbStringHttpResponseListener() {
+			@Override
+			public void onStart() {
+			}
+			
+			@Override
+			public void onFinish() {
+			}
+			
+			@Override
+			public void onFailure(int code, String res, Throwable t) {
+				System.out
+				.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
+						+ res);
+				if (l != null) {
+					l.onHttp(null);
+				}
+			}
+			
+			@Override
+			public void onSuccess(int code, String res) {
+				System.out
+				.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+						+ res);
+				if (l != null) {
+					if (code != 200) {
+						l.onHttp(null);
+					} else {
+								l.onHttp(res);
 					}
 				}
 			}
