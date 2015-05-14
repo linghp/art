@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
 import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.utils.MyLogger;
 
 public class RegisterServer extends BaseServer {
@@ -76,7 +77,10 @@ public class RegisterServer extends BaseServer {
 							int result_code = json.getInt("result_code");
 							if (result_code == 200) {
 								String rest = json.getString("result");
-								
+								UserInfo userInfo=gson.fromJson(res, UserInfo.class);
+								if(commonBean!=null){
+									commonBean.setObject(userInfo);
+								}
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();

@@ -3,6 +3,7 @@ package com.shangxian.art;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.net.RegisterServer;
 import com.shangxian.art.net.RegisterServer.OnHttpResultListener;
@@ -45,7 +46,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 	private Animation anim_right_in;
 	private Animation anim_left_out;
 	private String phone, captcha, pass, repass;
-	private boolean isregister;
+	private int currentStep = 1;// 现在的步骤
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 			ll_li2.startAnimation(anim_right_in);
 			ll_li2.setVisibility(View.VISIBLE);
 			ll_li3.setVisibility(View.GONE);
+			currentStep = 2;
 			break;
 		case TI3:
 			tv_ti.setText(Html.fromHtml(TIT3));
@@ -124,6 +126,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 			ll_li2.setVisibility(View.GONE);
 			ll_li3.startAnimation(anim_right_in);
 			ll_li3.setVisibility(View.VISIBLE);
+			currentStep = 3;
 			break;
 		}
 	}
@@ -145,28 +148,24 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 				if (isCheck) {
 					if (HttpUtils.checkNetWork(this)) {
 						RegisterServer.toRegidter1(phone, this);
-						showView(TI2);
 					}
 				} else {
 					myToast("请阅读爱农宝用户协议");
 				}
-			} else {
-				myToast("您输入的手机号为无效手机号");
 			}
 		} else if (v == tv_read) {
 
 		} else if (v == tv_toyan) {
 			if (matchsCaptcha()) {
 				if (HttpUtils.checkNetWork(this)) {
-					RegisterServer.toRegidter2(phone, captcha,this);
-					showView(TI3);
+					RegisterServer.toRegidter2(phone, captcha, this);
 				}
 			}
 		} else if (v == tv_toregist) {
 			if (matchsPassword()) {
 				if (HttpUtils.checkNetWork(this)) {
-					RegisterServer.toRegidter3(phone,captcha,pass,repass, this);
-					showView(TI3);
+					RegisterServer.toRegidter3(phone, captcha, pass, repass,
+							this);
 				}
 			}
 		} else if (v == iv_check) {
@@ -192,7 +191,11 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 			myToast("请输入您的手机号");
 			return false;
 		}
-		return phone.matches("^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$");
+		if (!phone.matches("^1[3|4|5|7|8][0-9]{9}$")) {
+			myToast("您输入的手机号为无效手机号");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -206,7 +209,11 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 			myToast("请输入您的验证码");
 			return false;
 		}
-		return captcha.matches("[0-9]{6}$");
+		if (!captcha.matches("[0-9]{6}$")) {
+			myToast("您输入的验证码格式不对");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -236,11 +243,32 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onHttpResult(CommonBean info) {
 		if (info != null) {
-			if(isregister){
-			
+			if (info.getReason().equals("success")) {
+				if (currentStep == 1) {
+					showView(TI2);
+				} else if (currentStep == 2) {
+					showView(TI3);
+				} else {
+					if (info.getObject() != null) {
+						UserInfo userInfo = (UserInfo) info.getObject();
+						if (userInfo != null) {
+							myToast("注册成功");
+							share.putUser(userInfo);
+							share.put(Constant.PRE_LOGIN_USERNAME,
+									userInfo.getPhoneNumber());
+							share.put(Constant.PRE_LOGIN_LASTTIME,
+									System.currentTimeMillis());
+							share.put(Constant.PRE_LOGIN_STATE, true);
+						}
+					}
+					finish();
+				}
+				myToast(info.getResult());
 			}else{
 				myToast(info.getResult());
 			}
+		}else{
+			myToast("服务器错误");
 		}
 	}
 }

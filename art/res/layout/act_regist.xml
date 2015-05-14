@@ -167,9 +167,10 @@
                     android:layout_margin="16dp"
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="请输入验证码"
-                    android:inputType="phone"
                     android:paddingLeft="15dp"
                     android:singleLine="true"
+                    android:inputType="number"
+                    android:maxLength="6"
                     android:textColor="@color/txt_black1"
                     android:textColorHint="@color/txt_black2"
                     android:textSize="18sp" />
