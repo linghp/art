@@ -36,6 +36,11 @@ import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 我的订单
+ * @author Administrator
+ *
+ */
 public class MyOrderActivity extends BaseActivity implements OnClickListener,HttpCilentListener,OnPageChangeListener{
 	private TopView topView;
     private ViewPager  mViewPager;

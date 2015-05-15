@@ -11,7 +11,7 @@ public class Constant {
 	public static final String CART = "/cart";//购物车
 	public static final String ORDER = "/order";//下订单
 	public static final String ORDERS = "/orders";//我的订单
-//	public static final String SHOPSLIST = "/1/shops";//
+//	public static final String SHOPSLIST = "/1/shops";
 	
 	
 	

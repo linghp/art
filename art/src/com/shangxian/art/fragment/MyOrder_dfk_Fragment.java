@@ -17,6 +17,11 @@ import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.utils.MyLogger;
 
+/**
+ * 我的订单——待付款
+ * @author Administrator
+ *
+ */
 public class MyOrder_dfk_Fragment extends Fragment {
 
 	private View view;

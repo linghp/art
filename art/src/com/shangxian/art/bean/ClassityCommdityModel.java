@@ -79,5 +79,13 @@ public class ClassityCommdityModel implements Serializable{
 	public void set_new(Boolean _new) {
 		this._new = _new;
 	}
+	@Override
+	public String toString() {
+		return "ClassityCommdityModel [categoryId=" + categoryId + ", id=" + id
+				+ ", photo=" + photo + ", name=" + name + ", reDetails="
+				+ reDetails + ", originalPrice=" + originalPrice
+				+ ", promotionPrice=" + promotionPrice + ", shopId=" + shopId
+				+ ", _new=" + _new + "]";
+	}
 	
 }

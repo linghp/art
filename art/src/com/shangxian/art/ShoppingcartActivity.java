@@ -24,7 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.http.AbHttpUtil;
-import com.ab.util.AbDialogUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
