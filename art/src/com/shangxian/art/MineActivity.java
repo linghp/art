@@ -137,7 +137,7 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 			CommonUtil.gotoActivityWithData(MineActivity.this, MerchandiseControlActivity.class, bundle1, false);
 			break;
 		case R.id.ll_tab4:
-			//结算中心
+			//结算中心224592
 			Bundle bundle = new Bundle();
 			bundle.putBoolean("isjiesuan", true);
 			CommonUtil.gotoActivityWithData(MineActivity.this, MerchandiseControlActivity.class, bundle, false);

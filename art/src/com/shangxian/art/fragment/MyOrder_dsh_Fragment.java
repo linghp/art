@@ -28,6 +28,11 @@ import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 
+/**
+ * 我的订单——待收货
+ * @author Administrator
+ *
+ */
 public class MyOrder_dsh_Fragment extends Fragment {
 
 	private View view;

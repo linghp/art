@@ -1,8 +1,5 @@
 package com.shangxian.art.adapter;
-/**
- * 分类adapter
- * 
- */
+
 import java.util.List;
 
 import android.app.Activity;
@@ -14,12 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shangxian.art.R;
-import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.constant.Global;
-
+/**
+ * 分类adapter
+ * 
+ */
 public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 
 	public ClassityCommodiyAdp(Activity mAc, int layoutId,
@@ -27,7 +25,7 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 		super(mAc, layoutId, dates);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public View initView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
@@ -39,7 +37,7 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 			holder.summary = (TextView) convertView.findViewById(R.id.item_commodity_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_commodity_img);
 			holder.price = (TextView) convertView.findViewById(R.id.item_commodity_price);
-//			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
+			//			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder) convertView.getTag();
@@ -56,6 +54,6 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 	public static class ViewHolder{
 		TextView title,summary,price;
 		ImageView img;
-//		ImageView shop;
+		//		ImageView shop;
 	}
 }

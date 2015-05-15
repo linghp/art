@@ -201,7 +201,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
-		MyLogger.i(url);
+		System.out.println(">>>>>>>>>>>url"+url);
 		refreshTask(url);
 
 		webView.loadUrl("http://baidu.com");
@@ -339,7 +339,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
 		// guige.setText(model.get);//规格
 		dianpu.setText(model.getShopName());
-		// address.setText(model.get);//地址
+		 address.setText(model.getShopAddress());//地址
 		// 图片的下载
 		mAbImageLoader
 				.display(shopsimg, Constant.BASEURL + model.getShopLogo());
