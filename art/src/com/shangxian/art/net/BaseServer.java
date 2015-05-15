@@ -21,6 +21,7 @@ import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 
 /**
  * 联网基类
@@ -181,6 +182,7 @@ public class BaseServer {
 			
 			@Override
 			public void onFinish() {
+				MyLogger.i("onFinish");
 			}
 			
 			@Override

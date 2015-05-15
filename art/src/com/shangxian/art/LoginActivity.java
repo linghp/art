@@ -60,6 +60,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		initListener();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(isLogin()){
+			finish();
+		}
+	}
+	
 	public void initDate() {
 		anim_r = AnimationUtils.loadAnimation(this, R.anim.rotating);
 		anim_r.setInterpolator(new LinearInterpolator());

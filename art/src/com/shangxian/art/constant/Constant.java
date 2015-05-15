@@ -7,7 +7,7 @@ public class Constant {
 	public static final String BASEURL = "http://www.ainonggu666.com";
 	public static final String CONTENT = "/api";
 	public static final String HOME = "/ads";//动态布局的数据
-	public static final String CATEGORYS = "/categorys";//动态布局的数据
+	public static final String CATEGORYS = "/categorys";//分类
 	public static final String CART = "/cart";//购物车
 	public static final String ORDER = "/order";//下订单
 	public static final String ORDERS = "/orders";//我的订单
@@ -62,4 +62,7 @@ public class Constant {
  	 */
  	public static final int MAP_SHOPS_2_LOC = 0x00001000;
  	public static final int MAP_NEARLY_LOC = 0x00001001;
+ 	
+ 	public static String[] ioc_instal_pkg=null;
+    public static final long TIME_DELAY_GUIDE = 1000;
 }

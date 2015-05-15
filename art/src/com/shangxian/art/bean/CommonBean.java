@@ -37,6 +37,11 @@ public class CommonBean <T>implements Serializable{
 	public void setResult(String result) {
 		this.result = result;
 	}
+	@Override
+	public String toString() {
+		return "CommonBean [result_code=" + result_code + ", reason=" + reason
+				+ ", result=" + result + ", object=" + object + "]";
+	}
 
 	
 }

@@ -63,6 +63,7 @@ public class RegisterServer extends BaseServer {
 		params.put("captcha", captcha);
 		params.put("password", pass);
 		params.put("rePassword", repass);
+		MyLogger.i(phonenumber+"--"+captcha+"--"+pass+"--"+repass);
 		toPost2(NET_REGIST,params, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
@@ -71,16 +72,16 @@ public class RegisterServer extends BaseServer {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResult(null);
 					} else {
-						CommonBean commonBean=getCommonBean(res);
+						CommonBean commonBean=new CommonBean<UserInfo>();
 						try {
 							JSONObject json = new JSONObject(res);
 							int result_code = json.getInt("result_code");
 							if (result_code == 200) {
 								String rest = json.getString("result");
-								UserInfo userInfo=gson.fromJson(res, UserInfo.class);
-								if(commonBean!=null){
-									commonBean.setObject(userInfo);
-								}
+								UserInfo userInfo=gson.fromJson(rest, UserInfo.class);
+								commonBean.setResult_code("200");
+								commonBean.setReason("success");
+							    commonBean.setObject(userInfo);
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
