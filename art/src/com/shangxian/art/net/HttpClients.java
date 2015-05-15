@@ -73,7 +73,8 @@ public class HttpClients {
 					HttpPost postMethod = new HttpPost(baseUrl);
 					postMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("User_Token", user_token + "");
+						postMethod.addHeader("User-Token", user_token + "");
+						MyLogger.i("user-token--"+user_token);
 					}
 					if (!TextUtils.isEmpty(json)) {
 						StringEntity se = new StringEntity(json.trim());
@@ -152,7 +153,7 @@ public class HttpClients {
 					HttpGet postMethod = new HttpGet(baseUrl);
 					postMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("User_Token", user_token + "");
+						postMethod.addHeader("User-Token", user_token + "");
 					}
 					// 将参数填入POST
 					// Entity中
@@ -228,7 +229,7 @@ public class HttpClients {
 					HttpPost postMethod = new HttpPost(baseUrl);
 					//postMethod.setHeader("Content-Type", "application/json");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("user_token", user_token + "");
+						postMethod.addHeader("User-Token", user_token + "");
 					}
 					/*StringEntity se = new StringEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
 					postMethod.setEntity(se);*/

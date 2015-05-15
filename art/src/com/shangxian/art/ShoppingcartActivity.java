@@ -216,7 +216,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				for (int i = 0; i < adapter.listdata.size(); i++) {
 					CarItem item = adapter.listdata.get(i);
 					if (item.type == CarItem.ITEM) {
-						if (item.listCarGoodsBean.getProductId().equals(
+						if (item.listCarGoodsBean.getCartItemId().equals(
 								entry.getKey())) {
 							float goodsprice = item.listCarGoodsBean
 									.getPromotionPrice();
@@ -377,7 +377,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				}
 			} else {
 				if (goodsCheced.get(carItem.getListCarGoodsBean()
-						.getProductId())) {
+						.getCartItemId())) {
 					listCarItemDelete.add(carItem);
 				}
 			}
@@ -430,7 +430,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 						listCarStoreBean = carItem.getListCarStoreBean();
 					} else {
 						if (goodsCheced.get(carItem.getListCarGoodsBean()
-								.getProductId())) {
+								.getCartItemId())) {
 							listCarItem_select.add(carItem);
 							linkedHashMap.put(carItem.getListCarGoodsBean()
 									.getShopId(), listCarStoreBean);
