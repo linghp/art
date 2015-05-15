@@ -14,6 +14,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.shangxian.art.R;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.ioc.IocContainer;
 import com.shangxian.art.net.BaseServer;
 
 
@@ -33,6 +34,7 @@ public class MyApplication extends Application {
 		mInstance = this;
 		Global.mInflater = LayoutInflater.from(this);
 		Global.mContext = this;
+		IocContainer.getShare().initApplication(mInstance);
 
 //		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 //				getApplicationContext())

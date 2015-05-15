@@ -12,6 +12,13 @@ import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.bean.UserInfo;
 
 public class UserServer extends BaseServer {
+	/**
+	 * 登录
+	 * 
+	 * @param username //用户名
+	 * @param password //密码
+	 * @param l
+	 */
 	public static void toLogin(String username, String password, final OnLoginListener l) {
 		AbRequestParams params = new AbRequestParams();
 		params.put("username", username);
@@ -35,5 +42,8 @@ public class UserServer extends BaseServer {
 		Type type = new TypeToken<UserInfo>(){}.getType();
 		UserInfo info = gson.fromJson(res, type);
 		return info;
+		
 	}
+	
+	//public static void to
 }

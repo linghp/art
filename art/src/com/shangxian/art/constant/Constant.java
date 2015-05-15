@@ -62,4 +62,7 @@ public class Constant {
  	 */
  	public static final int MAP_SHOPS_2_LOC = 0x00001000;
  	public static final int MAP_NEARLY_LOC = 0x00001001;
+ 	
+ 	public static String[] ioc_instal_pkg=null;
+    public static final long TIME_DELAY_GUIDE = 1000;
 }
