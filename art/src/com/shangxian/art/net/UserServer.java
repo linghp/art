@@ -21,7 +21,7 @@ public class UserServer extends BaseServer {
 	 */
 	public static void toLogin(String username, String password, final OnLoginListener l) {
 		AbRequestParams params = new AbRequestParams();
-		params.put("username", username);
+		params.put("phoneNumber", username);
 		params.put("password", password);
 		toPost(NET_LOGIN, params, new OnHttpListener() {
 			@Override

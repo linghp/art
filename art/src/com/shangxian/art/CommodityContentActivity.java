@@ -8,13 +8,18 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -49,15 +54,19 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-OnClickListener, HttpCilentListener {
+		OnClickListener, HttpCilentListener {
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
 
-	private ImageView dingwei,call,next,shopsimg;
+	private ImageView call, next, shopsimg;
 	private ImageView commoditycontent_shoucang;
 	private TextView commoditycontent_jieshao, commoditycontent_jiage,
-	commoditycontent_jiarugouwuche,address,guige,dianpu;
+			commoditycontent_jiarugouwuche, address, guige, dianpu;
+	private TextView tv_first, tv_second;
+	private ImageView img_first, img_second;
+	private LinearLayout dingwei, shangpu;
+	private WebView webView;
 
 	// 判断是否收藏
 	boolean iscollection = false;
@@ -70,7 +79,8 @@ OnClickListener, HttpCilentListener {
 
 	RatingBar ratingbar;
 	float rating = 0;
-	//	private StarRatingView ratingbar;
+
+	// private StarRatingView ratingbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,47 +107,61 @@ OnClickListener, HttpCilentListener {
 
 	private void listener() {
 		commoditycontent_jiarugouwuche.setOnClickListener(this);
+		tv_first.setOnClickListener(this);
+		tv_second.setOnClickListener(this);
 		next.setOnClickListener(new OnClickListener() {
-			//跳转到商铺
+			// 跳转到商铺
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//				CommonUtil.gotoActivity(CommodityContentActivity.this,
-				//						ShopsActivity.class, false);
-				ShopsActivity.startThisActivity(shopid, CommodityContentActivity.this);
+				// CommonUtil.gotoActivity(CommodityContentActivity.this,
+				// ShopsActivity.class, false);
+				ShopsActivity.startThisActivity(shopid,
+						CommodityContentActivity.this);
+			}
+		});
+		shangpu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				ShopsActivity.startThisActivity(shopid,
+						CommodityContentActivity.this);
 			}
 		});
 		dingwei.setOnClickListener(new OnClickListener() {
-			//跳转到定位
+			// 跳转到定位
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-				CommonUtil.gotoActivityWithData(CommodityContentActivity.this, LocationActivity.class, bundle, false);
-				
+				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+						LocationActivity.class, bundle, false);
+
 			}
 		});
 		call.setOnClickListener(new OnClickListener() {
-			//跳转到打电话
+			// 跳转到打电话
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+"18696636812"));
+				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+						+ "18696636812"));
 				startActivity(intent);
 			}
 		});
 		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
-
+			// 收藏
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
 					if (!iscollection) {
 						commoditycontent_shoucang
-						.setImageResource(R.drawable.collection_on);
+								.setImageResource(R.drawable.collection_on);
 						myToast("已收藏");
 					} else {
 						commoditycontent_shoucang
-						.setImageResource(R.drawable.collection_off);
+								.setImageResource(R.drawable.collection_off);
 						myToast("取消收藏");
 					}
 					iscollection = !iscollection;
@@ -145,38 +169,51 @@ OnClickListener, HttpCilentListener {
 			}
 		});
 		topView.setRightBtnListener(new OnClickListener() {
-
+			// title右按钮（购物车） 跳转到购物车
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Bundle bundle = new Bundle();
 				bundle.putBoolean("isother", true);
-				CommonUtil.gotoActivityWithDataForResult(CommodityContentActivity.this, ShoppingcartActivity.class, bundle, 10086, false);
+				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+						ShoppingcartActivity.class, bundle, false);
+				;
 			}
 		});
-		
-		
 
 	}
+
 	String geturl;
+
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String id = getIntent().getStringExtra("id");
 		geturl = getIntent().getStringExtra("url");
-		//		if (TextUtils.isEmpty(geturl)) {
-		//			// 获取网页数据test
-		//			Uri uri = getIntent().getData();
-		//			geturl = uri.getQueryParameter("arg0");
-		//		}
+		// if (TextUtils.isEmpty(geturl)) {
+		// // 获取网页数据test
+		// Uri uri = getIntent().getData();
+		// geturl = uri.getQueryParameter("arg0");
+		// }
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/product" + "/" + id;
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
+		MyLogger.i(url);
 		refreshTask(url);
 
+		webView.loadUrl("http://baidu.com");
+		webView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				// TODO Auto-generated method stub
+				// 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+				view.loadUrl(url);
+				return true;
+			}
+		});
 	}
 
 	private void refreshTask(String url) {
@@ -232,7 +269,7 @@ OnClickListener, HttpCilentListener {
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
-				//				imgList.clear();
+				// imgList.clear();
 				AbLogUtil.i(CommodityContentActivity.this, content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -245,40 +282,45 @@ OnClickListener, HttpCilentListener {
 									.getJSONObject("result");
 							model = gson.fromJson(jsonObject1.toString(),
 									CommodityContentModel.class);
-							//							MyLogger.i(model.toString());
-							if (model != null){
-								shopid=model.getShopId()+"";
+							// MyLogger.i(model.toString());
+							if (model != null) {
+								shopid = model.getShopId() + "";
 								updateView();
 							}
 
 							imgList.addAll(model.getPhotos());
 							MyLogger.i(imgList.get(0));
-							//							viewPager.setVisibility(View.VISIBLE);
+							// viewPager.setVisibility(View.VISIBLE);
 							viewPager.setOnGetView(new OnGetView() {
 
 								@Override
-								public View getView(ViewGroup container, int position) {
-									ImageView iv = new ImageView(CommodityContentActivity.this);
+								public View getView(ViewGroup container,
+										int position) {
+									ImageView iv = new ImageView(
+											CommodityContentActivity.this);
 
-									iv.setScaleType(ImageView.ScaleType.FIT_XY); 
-									LayoutParams layoutParams=viewPager.getLayoutParams();
-									layoutParams.width=CommonUtil.getScreenWidth(CommodityContentActivity.this);
-									layoutParams.height=layoutParams.width*2/3;
+									iv.setScaleType(ImageView.ScaleType.FIT_XY);
+									LayoutParams layoutParams = viewPager
+											.getLayoutParams();
+									layoutParams.width = CommonUtil
+											.getScreenWidth(CommodityContentActivity.this);
+									layoutParams.height = layoutParams.width * 2 / 3;
 									iv.setLayoutParams(layoutParams);
 
-									//图片的下载
-									mAbImageLoader.display(iv,Constant.BASEURL+imgList.get(position));
+									// 图片的下载
+									mAbImageLoader.display(iv, Constant.BASEURL
+											+ imgList.get(position));
 									container.addView(iv);
 									return iv;
 
 								}
-							});	
+							});
 							viewPager.setAdapter(imgList.size());
 
 						}
-						//						else {
-						//							viewPager.setVisibility(View.GONE);
-						//						}
+						// else {
+						// viewPager.setVisibility(View.GONE);
+						// }
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -290,20 +332,22 @@ OnClickListener, HttpCilentListener {
 	}
 
 	private void updateView() {
-		//		Imageloader_homePager.displayImage(Constant.BASEURL
-		//				+ model.getPhotos().get(0), commoditycontent_img,
-		//				new Handler(), null);// TODO Auto-generated method stub
-		commoditycontent_jieshao.setText(model.getName());
+		// Imageloader_homePager.displayImage(Constant.BASEURL
+		// + model.getPhotos().get(0), commoditycontent_img,
+		// new Handler(), null);// TODO Auto-generated method stub
+		commoditycontent_jieshao.setText(model.getName().toString().trim());
 		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
-//		guige.setText(model.get);//规格
+		// guige.setText(model.get);//规格
 		dianpu.setText(model.getShopName());
-//		address.setText(model.get);//地址
-		//图片的下载
-		mAbImageLoader.display(shopsimg,Constant.BASEURL+model.getShopLogo());
-		//		System.out.println("**************"+(float)model.getEvaluateScore());
-		//		System.out.println("**************"+ (float) ((float)model.getEvaluateScore()/100*5));
-		rating = (float) ((float)model.getEvaluateScore()/100*5);
-		//设置评星星级
+		// address.setText(model.get);//地址
+		// 图片的下载
+		mAbImageLoader
+				.display(shopsimg, Constant.BASEURL + model.getShopLogo());
+		// System.out.println("**************"+(float)model.getEvaluateScore());
+		// System.out.println("**************"+ (float)
+		// ((float)model.getEvaluateScore()/100*5));
+		rating = (float) ((float) model.getEvaluateScore() / 100 * 5);
+		// 设置评星星级
 		ratingbar.setRating(rating);
 	}
 
@@ -312,34 +356,43 @@ OnClickListener, HttpCilentListener {
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
-		//		commoditycontent_img = (ImageView) findViewById(R.id.commoditycontent_img);
+		// commoditycontent_img = (ImageView)
+		// findViewById(R.id.commoditycontent_img);
 		viewPager = (TagViewPager) findViewById(R.id.commoditycontent_mTagViewPager);
-		initTagViewPager();//初始化轮播VIEW
+		initTagViewPager();// 初始化轮播VIEW
 
-		 commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
-		 commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
-		 commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
-		 commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
+		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
+		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
+		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
+		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
 
-		 ratingbar = (RatingBar) findViewById(R.id.commoditycontent_starRating);
+		ratingbar = (RatingBar) findViewById(R.id.commoditycontent_starRating);
 
-		 guige = (TextView) findViewById(R.id.commoditycontent_guige);
-		 dianpu = (TextView) findViewById(R.id.commoditycontent_shopstxt);
-		 shopsimg = (ImageView) findViewById(R.id.commoditycontent_dianpuimg);
-		 dingwei = (ImageView) findViewById(R.id.commoditycontent_dingwei);
-		 call = (ImageView) findViewById(R.id.commoditycontent_call);
-		 next = (ImageView) findViewById(R.id.commoditycontent_next4);
-		 address = (TextView) findViewById(R.id.commoditycontent_address);
+		guige = (TextView) findViewById(R.id.commoditycontent_guige);
+		dianpu = (TextView) findViewById(R.id.commoditycontent_shopstxt);
+		shopsimg = (ImageView) findViewById(R.id.commoditycontent_dianpuimg);
+		dingwei = (LinearLayout) findViewById(R.id.commoditycontent_dingwei);
+		call = (ImageView) findViewById(R.id.commoditycontent_call);
+		next = (ImageView) findViewById(R.id.commoditycontent_next4);
+		address = (TextView) findViewById(R.id.commoditycontent_address);
+		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
+		webView = (WebView) findViewById(R.id.webView);
+		tv_first = (TextView) findViewById(R.id.text_one);
+		tv_second = (TextView) findViewById(R.id.text_two);
+		img_first = (ImageView) findViewById(R.id.image_one);
+		img_second = (ImageView) findViewById(R.id.image_two);
 
-		 topView = (TopView) findViewById(R.id.top_title);
-		 topView.setActivity(this);
-		 topView.hideRightBtn_invisible();
-		 topView.hideCenterSearch();
-		 topView.showRightBtn();
-		 topView.setRightBtnDrawable(R.drawable.shopcart);
-		 topView.showTitle();
-		 topView.setBack(R.drawable.back);// 返回
-		 topView.setTitle("商品详情");// title文字
+		webView.getSettings().setJavaScriptEnabled(true);
+
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn_invisible();
+		topView.hideCenterSearch();
+		topView.showRightBtn();
+		topView.setRightBtnDrawable(R.drawable.shopcart);
+		topView.showTitle();
+		topView.setBack(R.drawable.back);// 返回
+		topView.setTitle("商品详情");// title文字
 
 	}
 
@@ -348,11 +401,11 @@ OnClickListener, HttpCilentListener {
 		viewPager.init(R.drawable.tagvewpager_point01,
 				R.drawable.tagvewpager_point02, 14, 5, 2, 20);
 		viewPager.setAutoNext(true, 5000);
-		//		AbLogUtil.e(
-		//				this,
-		//				"轮播图宽度"
-		//						+ AbSharedUtil.getInt(CommodityContentActivity.this,
-		//								Global.KEY_SCREEN_WIDTH));
+		// AbLogUtil.e(
+		// this,
+		// "轮播图宽度"
+		// + AbSharedUtil.getInt(CommodityContentActivity.this,
+		// Global.KEY_SCREEN_WIDTH));
 
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewPager
 				.getLayoutParams();
@@ -361,6 +414,7 @@ OnClickListener, HttpCilentListener {
 		params.height = (int) (params.width / 2.65);
 		viewPager.setLayoutParams(params);
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -370,27 +424,55 @@ OnClickListener, HttpCilentListener {
 			}
 			break;
 		case R.id.tv_share:
-			CommonUtil.showShare(this, "test", "http://www.peoit.com/", "http://www.peoit.com/");
+			CommonUtil.showShare(this, "test", "http://www.peoit.com/",
+					"http://www.peoit.com/");
 			break;
 		case R.id.ll_comment:
 			CommentActivity.startThisActivity("", this);
 			break;
-
+		case R.id.text_one:
+			setBackground_slide(0);
+			break;
+		case R.id.text_two:
+			setBackground_slide(1);
+			break;
 		default:
 			break;
 		}
 	}
 
+	private void setBackground_slide(int position) {
+		img_first.setBackgroundResource(R.color.transparent);
+		img_second.setBackgroundResource(R.color.transparent);
 
+		tv_first.setTextColor(Color.parseColor("#333333"));
+		tv_second.setTextColor(Color.parseColor("#333333"));
+
+		switch (position) {
+		case 0:
+			img_first.setBackgroundResource(R.color.blue);
+			tv_first.setTextColor(getResources().getColor(R.color.blue));
+			webView.loadUrl("http://baidu.com");
+			break;
+		case 1:
+			img_second.setBackgroundResource(R.color.blue);
+			tv_second.setTextColor(getResources().getColor(R.color.blue));
+			webView.loadUrl("http://www.taobao.com/");
+			break;
+		}
+	}
+
+	
 	/**
-	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。
-	 *本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
+	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。 本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
 	 */
-	public class ShareContentCustomizeDemo implements ShareContentCustomizeCallback {
+	public class ShareContentCustomizeDemo implements
+			ShareContentCustomizeCallback {
 
 		public void onShare(Platform platform, ShareParams paramsToShare) {
 			if (QZone.NAME.equals(platform.getName())) {
-				//String text = platform.getContext().getString(R.string.share_content_short);
+				// String text =
+				// platform.getContext().getString(R.string.share_content_short);
 				paramsToShare.setImageUrl("http://www.peoit.com/");
 			}
 		}

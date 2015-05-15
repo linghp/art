@@ -60,6 +60,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		initListener();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(isLogin()){
+			finish();
+		}
+	}
+	
 	public void initDate() {
 		anim_r = AnimationUtils.loadAnimation(this, R.anim.rotating);
 		anim_r.setInterpolator(new LinearInterpolator());
@@ -194,7 +202,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								+ info.toString());
 						share.putUser(info);
 						share.put(Constant.PRE_LOGIN_USERNAME, user);
-						share.put(Constant.PRE_LOGIN_PASSWORD, pass);
+						//share.put(Constant.PRE_LOGIN_PASSWORD, pass);
 						share.put(Constant.PRE_LOGIN_LASTTIME,
 								System.currentTimeMillis());
 						share.put(Constant.PRE_LOGIN_STATE, true);

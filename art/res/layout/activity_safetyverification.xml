@@ -8,7 +8,6 @@
         android:id="@+id/top_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <LinearLayout
         android:id="@+id/safetyverification_linear1"
         android:layout_width="match_parent"
