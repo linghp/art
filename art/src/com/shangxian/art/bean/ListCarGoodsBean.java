@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class ListCarGoodsBean implements Serializable{
 
+	private String cartItemId;
 	private String productId;
 	private String name;
 	private String shopId;
@@ -59,12 +60,18 @@ public class ListCarGoodsBean implements Serializable{
 	public void setPromotionPrice(float promotionPrice) {
 		this.promotionPrice = promotionPrice;
 	}
+	public String getCartItemId() {
+		return cartItemId;
+	}
+	public void setCartItemId(String cartItemId) {
+		this.cartItemId = cartItemId;
+	}
 	@Override
 	public String toString() {
-		return "ListCarGoodsBean [productId=" + productId + ", name=" + name
-				+ ", shopId=" + shopId + ", specs=" + specs + ", photo="
-				+ photo + ", quantity=" + quantity + ", promotionPrice="
-				+ promotionPrice + "]";
+		return "ListCarGoodsBean [cartItemId=" + cartItemId + ", productId="
+				+ productId + ", name=" + name + ", shopId=" + shopId
+				+ ", specs=" + specs + ", photo=" + photo + ", quantity="
+				+ quantity + ", promotionPrice=" + promotionPrice + "]";
 	}
 	
 

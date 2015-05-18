@@ -282,7 +282,7 @@ public class CommodityContentActivity extends BaseActivity implements
 									.getJSONObject("result");
 							model = gson.fromJson(jsonObject1.toString(),
 									CommodityContentModel.class);
-							// MyLogger.i(model.toString());
+							 MyLogger.i(model.toString());
 							if (model != null) {
 								shopid = model.getShopId() + "";
 								updateView();
@@ -480,9 +480,15 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void dotask_addcart() {
+		Gson gson=new Gson();
+		String jsonsepcs=gson.toJson(model.getSpecs());
+		//服务器有问题 暂时改成这种格式
+		jsonsepcs=jsonsepcs.replace("[", "");
+		jsonsepcs=jsonsepcs.replace("]", "");
+		
 		String json = "{\"productId\":" + model.getId()
-				+ ",\"sepcs\":\"颜色:红\",\"buyCount\":2}";
-		// MyLogger.i(json);
+				+ ",\"sepcs\":"+jsonsepcs+",\"buyCount\":"+1+"}";
+		 MyLogger.i(json);
 		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
 				json, this);
 	}
