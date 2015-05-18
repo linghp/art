@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/shops_shopsimg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:src="@drawable/alipaypayment" />
 
             <LinearLayout
@@ -182,7 +182,7 @@
 
         <LinearLayout
             android:id="@+id/shops_call"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
@@ -210,7 +210,7 @@
 
         <LinearLayout
             android:id="@+id/shops_dingwei"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
