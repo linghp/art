@@ -76,6 +76,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	//图片下载器
 	private AbImageLoader mAbImageLoader = null;
+	
+	private String shopid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -200,31 +202,35 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 						if (result_code.equals("200")&&reason.equals("success")) {
 							JSONObject resultObject = jsonObject.getJSONObject("result");
 							model=gson.fromJson(resultObject.toString(),ShopsModel.class);
-							mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
-							mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
-							shopsname.setText(""+model.getName());//商铺名
-							guanzu.setText(model.getNoticeCount()+"人关注");//关注
-							all.setText(""+model.getProductCount());//全部商品
-							up.setText(""+model.getNewCount());//上新
-							youhui.setText(""+model.getSpecialCount());//优惠
+							if (model != null) {
+								shopid = model.getId() + "";
+								mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
+								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
+								shopsname.setText(""+model.getName());//商铺名
+								guanzu.setText(model.getNoticeCount()+"人关注");//关注
+								all.setText(""+model.getProductCount());//全部商品
+								up.setText(""+model.getNewCount());//上新
+								youhui.setText(""+model.getSpecialCount());//优惠
+								phone.setText(model.getShopPhoneNumber());//电话
+								address.setText(model.getShopAddress());//地址
+								list=model.getProductDtos();
 
-							list=model.getProductDtos();
-
-							if (adapter == null) {
-								//								//给每项商品设置id
-								//								for (int i = 0; i < list.size(); i++) {
-								//									ProductDto p = new ProductDto();
-								//									p.setId(i);
-								//									list.add(p);
-								//								}
-								adapter = new ShopsAdapter(ShopsActivity.this);
-								//adapter = new ShopsAdapter(this);
-								adapter.updateData(list);
-								mGridView.setAdapter(adapter);
-								//								mGridView.bindLinearLayout();
-							}else {
-								//								adapter.upDateList(list);
-								adapter.updateData(list);
+								if (adapter == null) {
+									//								//给每项商品设置id
+									//								for (int i = 0; i < list.size(); i++) {
+									//									ProductDto p = new ProductDto();
+									//									p.setId(i);
+									//									list.add(p);
+									//								}
+									adapter = new ShopsAdapter(ShopsActivity.this);
+									//adapter = new ShopsAdapter(this);
+									adapter.updateData(list);
+									mGridView.setAdapter(adapter);
+									//								mGridView.bindLinearLayout();
+								}else {
+									//								adapter.upDateList(list);
+									adapter.updateData(list);
+								}
 							}
 
 						}
@@ -361,12 +367,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		jianjie.setOnClickListener(new OnClickListener() {
-
+			//跳转到商铺简介
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				CommonUtil.gotoActivity(ShopsActivity.this, ShopsSummaryActivity.class, false);
+				
+				ShopsSummaryActivity.startThisActivity(shopid, ShopsActivity.this);
+//				CommonUtil.gotoActivity(ShopsActivity.this, ShopsSummaryActivity.class, false);
 			}
 		});
 
