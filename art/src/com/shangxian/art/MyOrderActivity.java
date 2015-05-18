@@ -220,26 +220,37 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,Htt
 					if (jsonObject.getString("reason").equals("success")) {
 						String json = jsonObject.getString("result");
 						Gson gson = new Gson();
-						MyOrderItem_all myOrderItem_all = gson.fromJson(
-								"{\"result\":" + json + "}",
+						MyOrderItem_all myOrderItem_all = gson.fromJson(json,
 								MyOrderItem_all.class);
 						MyLogger.i(myOrderItem_all.toString());
 						if (myOrderItem_all != null) {
-							for (LinkedHashMap<String, MyOrderItem> lhp_myOrderItem : myOrderItem_all
-									.getResult()) {
-								for (MyOrderItem myOrderItem : lhp_myOrderItem.values()) {
-									String status=myOrderItem.getStatus();
-									myOrderItem.stateValue=map_orderStateValue.get(status);
-									mOrderItems.add(myOrderItem);
-									if(status.equals(orderState[1])){//待付款
-										mOrderItems_dfk.add(myOrderItem);
-									}else if(status.equals(orderState[2])){//待发货
-										mOrderItems_dfh.add(myOrderItem);
-									}else if(status.equals(orderState[3])){//待收货
-										mOrderItems_dsh.add(myOrderItem);
-									}
-								}
+//							for (LinkedHashMap<String, MyOrderItem> lhp_myOrderItem : myOrderItem_all
+//									.getResult()) {
+//								for (MyOrderItem myOrderItem : lhp_myOrderItem.values()) {
+//									String status=myOrderItem.getStatus();
+//									myOrderItem.stateValue=map_orderStateValue.get(status);
+//									mOrderItems.add(myOrderItem);
+//									if(status.equals(orderState[1])){//待付款
+//										mOrderItems_dfk.add(myOrderItem);
+//									}else if(status.equals(orderState[2])){//待发货
+//										mOrderItems_dfh.add(myOrderItem);
+//									}else if(status.equals(orderState[3])){//待收货
+//										mOrderItems_dsh.add(myOrderItem);
+//									}
+//								}
+//							}
+							for (MyOrderItem myOrderItem : myOrderItem_all.getData()) {
+							String status=myOrderItem.getStatus();
+							myOrderItem.stateValue=map_orderStateValue.get(status);
+							mOrderItems.add(myOrderItem);
+							if(status.equals(orderState[1])){//待付款
+								mOrderItems_dfk.add(myOrderItem);
+							}else if(status.equals(orderState[2])){//待发货
+								mOrderItems_dfh.add(myOrderItem);
+							}else if(status.equals(orderState[3])){//待收货
+								mOrderItems_dsh.add(myOrderItem);
 							}
+						}
 //							List<MyOrderItem> myOrderItems_temp=(List<MyOrderItem>) (myOrderItem_all
 //									.getResult().get(0).values());
 							MyLogger.i(mOrderItems_dfk.size()+"");

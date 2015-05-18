@@ -3,6 +3,7 @@ package com.shangxian.art.bean;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,15 +16,15 @@ public class CommodityContentModel implements Serializable{
 	@Expose
 	private String name;
 	@Expose
-	private Integer originalPrice;
+	private float originalPrice;
 	@Expose
-	private Integer promotionPrice;
+	private float promotionPrice;
 	@Expose
 	private Integer categoryId;
 	@Expose
 	private String categoryName;
 	@Expose
-	private HashMap<String, List<String>> specs;
+	private Map<String, List<String>> specs;
 	@Expose
 	private Integer sellerId;
 	@Expose
@@ -69,13 +70,13 @@ public class CommodityContentModel implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getOriginalPrice() {
+	public float getOriginalPrice() {
 		return originalPrice;
 	}
 	public void setOriginalPrice(Integer originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-	public Integer getPromotionPrice() {
+	public float getPromotionPrice() {
 		return promotionPrice;
 	}
 	public void setPromotionPrice(Integer promotionPrice) {
@@ -93,7 +94,7 @@ public class CommodityContentModel implements Serializable{
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public HashMap<String, List<String>> getSpecs() {
+	public Map<String, List<String>> getSpecs() {
 		return specs;
 	}
 	public void setSpecs(HashMap<String, List<String>> specs) {

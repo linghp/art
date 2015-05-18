@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CommitOrder implements Serializable {
 	private String addressId;
-	private List<OrderItem> orderItems;
+	private List<OrderItem> cartItems;
 
 	public String getAddressId() {
 		return addressId;
@@ -22,17 +22,17 @@ public class CommitOrder implements Serializable {
 	}
 
 	public List<OrderItem> getOrderItems() {
-		return orderItems;
+		return cartItems;
 	}
 
 	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
+		this.cartItems = orderItems;
 	}
 
 	@Override
 	public String toString() {
 		return "CommitOrder [addressId=" + addressId + ", orderItems="
-				+ orderItems + "]";
+				+ cartItems + "]";
 	}
 
 }
