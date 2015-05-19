@@ -9,176 +9,188 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/shopssummary_linear1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/top_title"
-        android:background="@color/txt_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:scrollbars="none" >
 
-        <ImageView
-            android:id="@+id/shopssummary_shopsimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_loading" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/shopssummary_shopsname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="云南神奇水果专卖店"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_title_size" />
-
-            <TextView
-               	android:id="@+id/shopssummary_guanzu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.0万关注"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_min_size" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/shopssummary_linear2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shopssummary_linear1"
-        android:layout_marginTop="20dp"
-        android:background="@color/txt_white"
-        android:orientation="vertical" >
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
+            android:layout_height="match_parent" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/shopssummary_linear1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="掌柜名"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
+                android:background="@color/txt_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
 
-            <TextView
-                android:id="@+id/shopssummary_zhanggui"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/shopssummary_shopsimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_loading" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/shopssummary_shopsname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="云南神奇水果专卖店"
+                        android:textColor="@color/txt_black2"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <TextView
+                        android:id="@+id/shopssummary_guanzu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0人关注"
+                        android:textColor="@color/txt_black2"
+                        android:textSize="@dimen/list_min_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shopssummary_linear2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="yang~洋"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
+                android:layout_below="@id/shopssummary_linear1"
+                android:layout_marginTop="20dp"
+                android:background="@color/txt_white"
+                android:orientation="vertical" >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/txt_black3" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="掌柜名"
+                        android:textColor="@color/txt_black2"
+                        android:textSize="@dimen/list_summary_size" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/shopssummary_zhanggui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="yang~洋"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="@dimen/list_summary_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/txt_black3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="电    话"
+                        android:textColor="@color/txt_black2"
+                        android:textSize="@dimen/list_summary_size" />
+
+                    <TextView
+                        android:id="@+id/shopssummary_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="18696636812"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="@dimen/list_summary_size" />
+
+                    <ImageView
+                        android:id="@+id/shopssummary_phoneimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:padding="5dp"
+                        android:src="@drawable/call_btn" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/txt_black3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地    址"
+                        android:textColor="@color/txt_black2"
+                        android:textSize="@dimen/list_summary_size" />
+
+                    <TextView
+                        android:id="@+id/shopssummary_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="重庆市沙坪坝区沙中路225号"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="@dimen/list_summary_size" />
+
+                    <ImageView
+                        android:id="@+id/shopssummary_addressimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:padding="5dp"
+                        android:src="@drawable/fourth_tab" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shopssummary_linear3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="电    话"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
+                android:layout_below="@id/shopssummary_linear2"
+                android:layout_marginTop="20dp"
+                android:background="@color/txt_white"
+                android:orientation="vertical"
+                android:padding="10dp" >
 
-            <TextView
-                android:id="@+id/shopssummary_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:text="18696636812"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-
-            <ImageView
-                android:id="@+id/shopssummary_phoneimg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/call_btn"
-                android:padding="5dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/txt_black3" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="地    址"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
-
-            <TextView
-                android:id="@+id/shopssummary_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:text="重庆市沙坪坝区沙中路225号"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-
-            <ImageView
-                android:id="@+id/shopssummary_addressimg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/fourth_tab"
-                android:padding="5dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/shopssummary_linear3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shopssummary_linear2"
-        android:layout_marginTop="20dp"
-        android:background="@color/txt_white"
-        android:orientation="vertical"
-        android:padding="10dp" >
-        <TextView
-            android:id="@+id/shopssummary_summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_min_size" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/shopssummary_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇云南神奇水果专卖店真神奇"
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_min_size" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

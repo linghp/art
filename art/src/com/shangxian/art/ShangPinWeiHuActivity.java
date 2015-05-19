@@ -67,8 +67,8 @@ public class ShangPinWeiHuActivity extends BaseActivity{
 			m.setTitle("特价美食"+ (1+i));
 			model.add(m);
 		}
-		adapter = new SearchAdapter(this, R.layout.item_search, model);
-		list.setAdapter(adapter);
+//		adapter = new SearchAdapter(this, R.layout.item_search, model);
+//		list.setAdapter(adapter);
 	}
 
 	private void listener() {

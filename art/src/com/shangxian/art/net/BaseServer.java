@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.ab.http.AbBinaryHttpResponseListener;
@@ -16,6 +17,7 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
+import com.shangxian.art.base.DataTools;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
@@ -46,6 +48,7 @@ public class BaseServer {
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 	protected static final String NET_ORDERS =HOST + "orders";//我的订单
+	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 
 	/**
 	 * 
@@ -57,6 +60,7 @@ public class BaseServer {
 	private static Context mContext;
 	protected static Gson gson = new Gson();
 	protected static UserInfo curUser;
+	protected static DataTools tools = DataTools.newInstance();
 
 	public static void toRegistContext(Context mContext) {
 		BaseServer.mContext = mContext;
@@ -126,9 +130,8 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out
-						.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
-								+ res);
+				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
 				}
@@ -165,9 +168,10 @@ public class BaseServer {
 			}
 		});
 	}
-	
+
 	/**
 	 * 原生的数据，不要解析
+	 * 
 	 * @param url
 	 * @param params
 	 * @param l
@@ -180,32 +184,31 @@ public class BaseServer {
 			@Override
 			public void onStart() {
 			}
-			
+
 			@Override
 			public void onFinish() {
 				MyLogger.i("onFinish");
 			}
-			
+
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out
-				.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
-						+ res);
+				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
 				}
 			}
-			
+
 			@Override
 			public void onSuccess(int code, String res) {
 				System.out
-				.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-						+ res);
+						.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					if (code != 200) {
 						l.onHttp(null);
 					} else {
-								l.onHttp(res);
+						l.onHttp(res);
 					}
 				}
 			}
@@ -218,15 +221,15 @@ public class BaseServer {
 			json = "";
 		} else {
 			System.out
-			.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-					+ json);
+					.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+							+ json);
 		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				System.out
-				.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-						+ res);
+						.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					// l.onHttp(res);
 					try {
@@ -318,7 +321,7 @@ public class BaseServer {
 	public interface OnPaymentListener {
 		void onPayment(String res);
 	}
-	
+
 	public interface OnPayListener {
 		void onPayment(boolean res);
 	}
