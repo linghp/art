@@ -1,7 +1,10 @@
 package com.shangxian.art.net;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -47,8 +50,10 @@ public class BaseServer {
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
-	protected static final String NET_ORDERS =HOST + "orders";//我的订单
+	protected static final String NET_ORDERS = HOST + "orders";// 我的订单
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
+	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "send"; // 发送验证码
+	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/password"; //设置支付密码
 
 	/**
 	 * 
@@ -251,8 +256,8 @@ public class BaseServer {
 		});
 	}
 
-	protected static void toPostWithToken(String url, List<BasicNameValuePair> pairs,
-			final OnHttpListener l) {
+	protected static void toPostWithToken(String url,
+			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {
 			pairs = new ArrayList<BasicNameValuePair>();
 		}
@@ -279,6 +284,21 @@ public class BaseServer {
 			}
 		});
 	}
+	protected static void toPostWithToken2(String url,
+			List<BasicNameValuePair> pairs, final OnHttpListener l) {
+		if (pairs == null) {
+			pairs = new ArrayList<BasicNameValuePair>();
+		}
+		HttpClients.toPost(url, pairs, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					l.onHttp(res);
+				}
+			}
+		});
+	}
 
 	protected static void toFile(String url, AbRequestParams params,
 			final OnHttpListener l) {
@@ -296,6 +316,50 @@ public class BaseServer {
 			@Override
 			public void onFailure(int arg0, String arg1, Throwable arg2) {
 
+			}
+		});
+	}
+
+	protected static void toGet2(String uri, Map<String, String> map,
+			final OnHttpListener l) {
+		StringBuilder sb = new StringBuilder(uri);
+		// 如果参数不为空
+		if (map != null && map.isEmpty()) {
+			if (map != null && !map.isEmpty()) {
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					// Post方式提交参数的话，不能省略内容类型与长度
+					try {
+						sb.append(entry.getKey())
+								.append('=')
+								.append(URLEncoder.encode(entry.getValue(), "UTF-8"))
+								.append('&');
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+				}
+				sb.deleteCharAt(sb.length() - 1);
+			}
+		}
+		HttpClients.getDo(sb.toString(), new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code ================="
+								+ result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
+				}	
 			}
 		});
 	}

@@ -101,6 +101,8 @@ public class UserInfo implements Serializable {
 	public void setScalePhoto(String scalePhoto) {
 		this.scalePhoto = scalePhoto;
 	}
+	
+	
 
 	@Override
 	public String toString() {
