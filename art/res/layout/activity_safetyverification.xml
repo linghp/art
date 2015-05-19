@@ -8,6 +8,7 @@
         android:id="@+id/top_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <LinearLayout
         android:id="@+id/safetyverification_linear1"
         android:layout_width="match_parent"
@@ -17,13 +18,12 @@
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="8dp" >
 
         <TextView
-            android:id="@+id/safetverification_num"
+            android:id="@+id/saft_tv_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请输入186****6812收到的短信验证码"
             android:textColor="@color/txt_black"
             android:textSize="@dimen/list_title_size" />
 
@@ -37,7 +37,7 @@
             android:orientation="horizontal" >
 
             <EditText
-                android:id="@+id/safetverification_yanzhengma"
+                android:id="@+id/safe_et_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -45,19 +45,19 @@
                 android:background="@drawable/regist_et_bg_sel"
                 android:hint="短信验证码"
                 android:numeric="integer"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
-                android:id="@+id/safetverification_huoqu"
-                android:layout_width="wrap_content"
+                android:id="@+id/saft_tv_code"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_btn"
                 android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:text="获取验证码"
-                android:textColor="@color/txt_whitetoback"
+                android:padding="10dp"
+                android:text="验证码"
+                android:textColor="@color/col_safe"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
 
@@ -111,21 +111,105 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/changepassword_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_title"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_pass_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="设置支付密码"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_title_size" />
+
+            <EditText
+                android:id="@+id/safe_et_old"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入当前支付密码"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size" />
+
+            <EditText
+                android:id="@+id/safe_et_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="新的登录密码"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/safe_et_renew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="新的支付密码"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_title_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="密码由6-20位英文字母、数字或符号组成"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/changepassword_linear1"
+            android:layout_marginTop="48dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp" >
+
+            <TextView
+                android:id="@+id/saft_tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/soge_not_bg_sel"
+                android:gravity="center_horizontal"
+                android:padding="8dp"
+                android:text="取消"
+                android:textColor="@color/txt_whitetoback"
+                android:textSize="@dimen/button_txt_size"
+                android:onClick="doClick" />
+
+            <TextView
+                android:id="@+id/saft_tv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/soge_next_bg_sel"
+                android:gravity="center_horizontal"
+                android:padding="8dp"
+                android:text="保存"
+                android:textColor="@color/txt_whitetoback"
+                android:textSize="@dimen/button_txt_size" />
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/safetverification_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/safetyverification_linear1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/btn_btn"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:text="下一步"
-        android:textColor="@color/txt_whitetoback"
-        android:textSize="@dimen/button_txt_size" />
-
 </RelativeLayout>
