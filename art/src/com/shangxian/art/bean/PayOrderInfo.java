@@ -16,7 +16,6 @@ public class PayOrderInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<String> orderNumber;
-	private int amount;
 	private String payPassword;
 	private String payType;
 
@@ -24,11 +23,10 @@ public class PayOrderInfo implements Serializable{
 		super();
 	}
 
-	public PayOrderInfo(List<String> orderNumber, int amount,
+	public PayOrderInfo(List<String> orderNumber,
 			String payPassword, String payType) {
 		super();
 		this.orderNumber = orderNumber;
-		this.amount = amount;
 		this.payPassword = payPassword;
 		this.payType = payType;
 	}
@@ -41,13 +39,6 @@ public class PayOrderInfo implements Serializable{
 		this.orderNumber = orderNumber;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
 
 	public String getPayPassword() {
 		return payPassword;
@@ -67,8 +58,7 @@ public class PayOrderInfo implements Serializable{
 
 	@Override
 	public String toString() {
-		return "PayOrderInfo [orderNumber=" + orderNumber + ", amount="
-				+ amount + ", payPassword=" + payPassword + ", payType="
+		return "PayOrderInfo [orderNumber=" + orderNumber +  ", payPassword=" + payPassword + ", payType="
 				+ payType + "]";
 	}
 

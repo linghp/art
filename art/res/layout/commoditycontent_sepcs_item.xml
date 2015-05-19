@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:f="http://schemas.android.com/apk/res/com.shangxian.art"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/list_title_size"
+        android:text="TextView" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <com.shangxian.art.view.FlowLayout
+        android:id="@+id/vg_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         f:horizontalSpacing="4dip"
+            f:verticalSpacing="4dip"
+        >
+    </com.shangxian.art.view.FlowLayout>
+
+</LinearLayout>

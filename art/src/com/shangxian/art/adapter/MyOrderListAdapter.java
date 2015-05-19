@@ -97,7 +97,7 @@ public class MyOrderListAdapter extends BaseAdapter {
 				//final ViewHolder holder1 = new ViewHolder();
 				ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 				goodsNum.setText("x"+productItemDto.getQuantity());
-				goodsPrice.setText("￥"+productItemDto.getPrice());
+				goodsPrice.setText("￥"+CommonUtil.priceConversion(productItemDto.getPrice()));
 			    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 				mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 						+ productItemDto.getProductSacle());
@@ -106,7 +106,7 @@ public class MyOrderListAdapter extends BaseAdapter {
 			holder.storeName.setText(myOrderItem.getShopName());
 			holder.tv_state.setText(myOrderItem.stateValue);
 			holder.tv_allquantity.setText("共"+myOrderItem.getTotalQuantity()+"件商品");
-			holder.tv_payment.setText("￥"+myOrderItem.getTotalPrice());
+			holder.tv_payment.setText("￥"+CommonUtil.priceConversion(myOrderItem.getTotalPrice()));
 	        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 					+ myOrderItem.getShopLogo());
 			}
@@ -123,7 +123,9 @@ public class MyOrderListAdapter extends BaseAdapter {
 					@Override
 					public void onClick(View v) {
 						//CommonUtil.toast("click", context);
-						PayActivity.startThisActivity(null, myOrderItem.getTotalPrice(), (Activity)context);
+						List<String> ordernumber=new ArrayList<String>();
+						ordernumber.add(myOrderItem.getOrderNumber());
+						PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), (Activity)context);
 					}
 				});
 			}

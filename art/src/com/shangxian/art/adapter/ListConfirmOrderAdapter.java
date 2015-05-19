@@ -27,13 +27,14 @@ import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 public class ListConfirmOrderAdapter extends BaseAdapter {
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
 	private LayoutInflater inflater;
-	private List<ListCarStoreBean> listStoreBean=new ArrayList<ListCarStoreBean>();
+	private List<ListCarStoreBean> listStoreBean=new ArrayList<ListCarStoreBean>();//此变量没有多少用，可以用hashmapGoodsBeans代替，暂不修改
 	private HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans=new HashMap<String, List<ListCarGoodsBean>>();
 
 	public ListConfirmOrderAdapter(Context contex, List<ListCarStoreBean> listStoreBean,HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans) {
@@ -127,7 +128,7 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 				//final ViewHolder holder1 = new ViewHolder();
 				ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 				goodsNum.setText("x"+listCarGoodsBean.getQuantity());
-				goodsPrice.setText("￥"+listCarGoodsBean.getPromotionPrice());
+				goodsPrice.setText("￥"+CommonUtil.priceConversion(listCarGoodsBean.getPromotionPrice()));
 			    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 				mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 						+ listCarGoodsBean.getPhoto());

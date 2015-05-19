@@ -1,6 +1,7 @@
 package com.shangxian.art.bean;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -10,42 +11,47 @@ import java.util.List;
  *
  */
 public class OrderItem implements Serializable{
-	private String productId;
-	private String specs;
-	private int quantity;
-	private String recommand;
+	private String shopId;
+	private List<String> cartOrderItemId;
+	private String guestMessage;
 	
-	public OrderItem(String productId, String specs, int quantity,
-			String recommand) {
+	public OrderItem(String shopId, List<String> cartOrderItemId,
+			String guestMessage) {
 		super();
-		this.productId = productId;
-		this.specs = specs;
-		this.quantity = quantity;
-		this.recommand = recommand;
+		this.shopId = shopId;
+		this.cartOrderItemId = cartOrderItemId;
+		this.guestMessage = guestMessage;
 	}
-	public String getProductId() {
-		return productId;
+
+	public String getShopId() {
+		return shopId;
 	}
-	public void setProductId(String productId) {
-		this.productId = productId;
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
-	public String getSpecs() {
-		return specs;
+
+	public List<String> getCartOrderItemId() {
+		return cartOrderItemId;
 	}
-	public void setSpecs(String specs) {
-		this.specs = specs;
+
+	public void setCartOrderItemId(List<String> cartOrderItemId) {
+		this.cartOrderItemId = cartOrderItemId;
 	}
-	public int getQuantity() {
-		return quantity;
+
+	public String getGuestMessage() {
+		return guestMessage;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+
+	public void setGuestMessage(String guestMessage) {
+		this.guestMessage = guestMessage;
 	}
-	public String getRecommand() {
-		return recommand;
+
+	@Override
+	public String toString() {
+		return "OrderItem [shopId=" + shopId + ", cartOrderItemId="
+				+ cartOrderItemId + ", guestMessage=" + guestMessage + "]";
 	}
-	public void setRecommand(String recommand) {
-		this.recommand = recommand;
-	}
+
 	
 }

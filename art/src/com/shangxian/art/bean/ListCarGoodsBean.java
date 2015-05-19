@@ -1,6 +1,8 @@
 package com.shangxian.art.bean;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商品bean
@@ -13,11 +15,26 @@ public class ListCarGoodsBean implements Serializable{
 	private String productId;
 	private String name;
 	private String shopId;
-	private String specs;
+	private Map<String, List<String>> specs;
+	private Map<String, String> selectedSpec;
 	private String photo;
 	private int quantity;
 	private float promotionPrice;
 	
+	public Map<String, List<String>> getSpecs() {
+		return specs;
+	}
+	public void setSpecs(Map<String, List<String>> specs) {
+		this.specs = specs;
+	}
+
+	
+	public Map<String, String> getSelectedSpec() {
+		return selectedSpec;
+	}
+	public void setSelectedSpec(Map<String, String> selectedSpec) {
+		this.selectedSpec = selectedSpec;
+	}
 	public String getProductId() {
 		return productId;
 	}
@@ -36,12 +53,7 @@ public class ListCarGoodsBean implements Serializable{
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
 	}
-	public String getSpecs() {
-		return specs;
-	}
-	public void setSpecs(String specs) {
-		this.specs = specs;
-	}
+
 	public String getPhoto() {
 		return photo;
 	}
@@ -70,8 +82,9 @@ public class ListCarGoodsBean implements Serializable{
 	public String toString() {
 		return "ListCarGoodsBean [cartItemId=" + cartItemId + ", productId="
 				+ productId + ", name=" + name + ", shopId=" + shopId
-				+ ", specs=" + specs + ", photo=" + photo + ", quantity="
-				+ quantity + ", promotionPrice=" + promotionPrice + "]";
+				+ ", specs=" + specs + ", selectedSpec=" + selectedSpec
+				+ ", photo=" + photo + ", quantity=" + quantity
+				+ ", promotionPrice=" + promotionPrice + "]";
 	}
 	
 

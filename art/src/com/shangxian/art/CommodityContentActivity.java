@@ -12,10 +12,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
@@ -32,13 +30,14 @@ import cn.sharesdk.tencent.qzone.QZone;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.image.AbImageLoader;
-import com.ab.util.AbLogUtil;
 import com.ab.util.AbSharedUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.dialog.GoodsDialog;
+import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -54,7 +53,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-		OnClickListener, HttpCilentListener {
+		OnClickListener, HttpCilentListener,GoodsDialogConfirmListener {
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
@@ -79,7 +78,6 @@ public class CommodityContentActivity extends BaseActivity implements
 
 	RatingBar ratingbar;
 	float rating = 0;
-
 	// private StarRatingView ratingbar;
 
 	@Override
@@ -270,7 +268,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				// imgList.clear();
-				AbLogUtil.i(CommodityContentActivity.this, content);
+				MyLogger.i(content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
 					try {
@@ -282,14 +280,14 @@ public class CommodityContentActivity extends BaseActivity implements
 									.getJSONObject("result");
 							model = gson.fromJson(jsonObject1.toString(),
 									CommodityContentModel.class);
-							 MyLogger.i(model.toString());
+							// MyLogger.i(model.toString());
 							if (model != null) {
 								shopid = model.getShopId() + "";
 								updateView();
 							}
 
 							imgList.addAll(model.getPhotos());
-							MyLogger.i(imgList.get(0));
+							//MyLogger.i(imgList.get(0));
 							// viewPager.setVisibility(View.VISIBLE);
 							viewPager.setOnGetView(new OnGetView() {
 
@@ -336,7 +334,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// + model.getPhotos().get(0), commoditycontent_img,
 		// new Handler(), null);// TODO Auto-generated method stub
 		commoditycontent_jieshao.setText(model.getName().toString().trim());
-		commoditycontent_jiage.setText("￥" + model.getPromotionPrice());
+		commoditycontent_jiage.setText("￥" + CommonUtil.priceConversion(model.getPromotionPrice()));
 		// guige.setText(model.get);//规格
 		dianpu.setText(model.getShopName());
 		 address.setText(model.getShopAddress());//地址
@@ -480,17 +478,9 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void dotask_addcart() {
-		Gson gson=new Gson();
-		String jsonsepcs=gson.toJson(model.getSpecs());
-		//服务器有问题 暂时改成这种格式
-		jsonsepcs=jsonsepcs.replace("[", "");
-		jsonsepcs=jsonsepcs.replace("]", "");
-		
-		String json = "{\"productId\":" + model.getId()
-				+ ",\"sepcs\":"+jsonsepcs+",\"buyCount\":"+1+"}";
-		 MyLogger.i(json);
-		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
-				json, this);
+		GoodsDialog dialog =  new GoodsDialog(this,this);
+		dialog.setCommodityContent(model);
+		dialog.show();
 	}
 
 	@Override
@@ -509,5 +499,11 @@ public class CommodityContentActivity extends BaseActivity implements
 			}
 		}
 
+	}
+
+	@Override
+	public void goodsDialogConfirm(String json) {
+		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
+				json, this);
 	}
 }

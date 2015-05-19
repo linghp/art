@@ -3,6 +3,8 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +85,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		tv_car_allprice_value.setText("￥" + totalprice + "元");
 		listStoreBean=(List<ListCarStoreBean>) getIntent().getSerializableExtra("listCarItem_stores");
 		hashmapGoodsBeans=(HashMap<String, List<ListCarGoodsBean>>) getIntent().getSerializableExtra("mapCarItem_goods");
+		MyLogger.i(listStoreBean.toString());
+		MyLogger.i(hashmapGoodsBeans.toString());
+		
 		if(listStoreBean!=null&&hashmapGoodsBeans!=null){
 		listadapter=new ListConfirmOrderAdapter(this, listStoreBean,hashmapGoodsBeans);
 		}
@@ -131,11 +136,26 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		CommitOrder commitOrder=new CommitOrder();
 		commitOrder.setAddressId("1");
 		List<OrderItem> orderItems=new ArrayList<OrderItem>();
-		for (List<ListCarGoodsBean> listCarGoodsBeans : hashmapGoodsBeans.values()) {
-			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
-				OrderItem orderItem=new OrderItem(listCarGoodsBean.getProductId(), listCarGoodsBean.getSpecs(), listCarGoodsBean.getQuantity(), "");
-				orderItems.add(orderItem);
+//		for (List<ListCarGoodsBean> listCarGoodsBeans : hashmapGoodsBeans.values()) {
+//			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
+//				String selectedSpec="";
+//				Map<String, String> selectedSpecMap=listCarGoodsBean.getSelectedSpec();
+//				for (Entry<String,String> listCarGoodsBean2 : selectedSpecMap.entrySet()) {
+//				selectedSpec=listCarGoodsBean2.getValue();
+//			}
+//				OrderItem orderItem=new OrderItem(listCarGoodsBean.getShopId(), selectedSpec, listCarGoodsBean.getQuantity(), "");
+//				orderItems.add(orderItem);
+//			}
+//		}
+		for (Entry<String, List<ListCarGoodsBean>> entry : hashmapGoodsBeans.entrySet()) {
+			String shopid=entry.getKey();
+			 List<ListCarGoodsBean> listCarGoodsBeans=entry.getValue();
+			 List<String> cartOrderItemId=new ArrayList<String>();
+			 for (ListCarGoodsBean listCarGoodsBean2 : listCarGoodsBeans) {
+				 cartOrderItemId.add(listCarGoodsBean2.getCartItemId());
 			}
+			 OrderItem orderItem=new OrderItem(shopid,cartOrderItemId, "");
+			 orderItems.add(orderItem);
 		}
 		commitOrder.setOrderItems(orderItems);
 		Gson gson=new Gson();

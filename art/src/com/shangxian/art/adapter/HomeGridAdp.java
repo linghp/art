@@ -16,6 +16,7 @@ import com.ab.util.AbToastUtil;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.GoodBean;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.utils.MyLogger;
 
 public class HomeGridAdp extends AdapterBase<GoodBean> {
 
@@ -64,6 +65,7 @@ public class HomeGridAdp extends AdapterBase<GoodBean> {
 
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getPrice()))
 			holder.tv_price_left.setText(getListData().get(position * 2).getPrice());
+		//MyLogger.i(getListData().toString());
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getContent()))
 			holder.tv_title_left.setText(getListData().get(position * 2).getContent());
 
