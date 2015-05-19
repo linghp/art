@@ -91,7 +91,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;*/
 		case R.id.merchandisecontrol_linear4:
 			//搜索商品
-			CommonUtil.gotoActivity(MerchandiseControlActivity.this, SearchActivity.class, false);
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, SearchsActivity.class, false);
 			break;
 		case R.id.benqijiesuan:
 			//本期结算

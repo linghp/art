@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="@color/txt_white"
+    android:orientation="horizontal"
+    android:padding="8dp" >
+
+    <com.shangxian.art.view.CircleImageView1
+        android:id="@+id/searchs_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/image_loading" />
+
+    <TextView
+        android:id="@+id/searchs_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="特价美食"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/list_title_size" />
+
+    <TextView
+        android:id="@+id/searchs_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:text="2015-04-01"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/list_title_size" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/next_level"
+        android:layout_marginRight="8dp" />
+
+</LinearLayout>
