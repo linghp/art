@@ -18,6 +18,7 @@ import com.ab.util.AbToastUtil;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 public class ShopsAdapter extends AdapterBase<ProductDto>{
@@ -62,7 +63,7 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 
 		mApplication.getLoader().display(holder.img, Constant.BASEURL+getListData().get(position * 2).getPhoto());
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getPrice()+""))
-			holder.price.setText("¥"+getListData().get(position * 2).getPrice());//金额
+			holder.price.setText("¥"+CommonUtil.priceConversion(getListData().get(position * 2).getPrice()));//金额
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getName()))
 			holder.title.setText(getListData().get(position * 2).getName());//name
 		//		holder.ll_first.setOnClickListener(new OnClick(getListData().get(position * 2)
@@ -73,8 +74,8 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			mApplication.getLoader().display(holder.img1, Constant.BASEURL+getListData().get(position * 2 + 1)
 					.getPhoto());
 			if (!TextUtils.isEmpty(getListData().get(position * 2 + 1).getPrice()+""))
-				holder.price1.setText("¥"+getListData().get(position * 2 + 1)
-						.getPrice());
+				holder.price1.setText("¥"+CommonUtil.priceConversion(getListData().get(position * 2 + 1)
+						.getPrice()));
 			if (!TextUtils.isEmpty(getListData().get(position * 2 + 1).getName()))
 				holder.title1.setText(getListData().get(position * 2 + 1)
 						.getName());

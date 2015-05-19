@@ -29,6 +29,11 @@ import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 
+/**
+ * 我的订单——全部
+ * @author Administrator
+ *
+ */
 public class MyOrder_All_Fragment extends Fragment {
 
 	private View view;
@@ -40,7 +45,6 @@ public class MyOrder_All_Fragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MyLogger.i("");
 	}
 
 	public MyOrder_All_Fragment(List<MyOrderItem> mOrderItems) {

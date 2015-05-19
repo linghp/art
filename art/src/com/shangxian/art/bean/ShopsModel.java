@@ -26,7 +26,15 @@ public class ShopsModel implements Serializable{
 	@Expose
 	private Integer specialCount;//优惠
 	@Expose
+	private String shopPhoneNumber;
+	@Expose
+	private List<Double> lag = new ArrayList<Double>();
+	@Expose
+	private String shopAddress;
+	@Expose
 	private List<ProductDto> productDtos = new ArrayList<ProductDto>();
+	@Expose
+	private Boolean attened;
 	public Integer getId() {
 		return id;
 	}
@@ -81,11 +89,35 @@ public class ShopsModel implements Serializable{
 	public void setSpecialCount(Integer specialCount) {
 		this.specialCount = specialCount;
 	}
+	public String getShopPhoneNumber() {
+		return shopPhoneNumber;
+	}
+	public void setShopPhoneNumber(String shopPhoneNumber) {
+		this.shopPhoneNumber = shopPhoneNumber;
+	}
+	public List<Double> getLag() {
+		return lag;
+	}
+	public void setLag(List<Double> lag) {
+		this.lag = lag;
+	}
+	public String getShopAddress() {
+		return shopAddress;
+	}
+	public void setShopAddress(String shopAddress) {
+		this.shopAddress = shopAddress;
+	}
 	public List<ProductDto> getProductDtos() {
 		return productDtos;
 	}
 	public void setProductDtos(List<ProductDto> productDtos) {
 		this.productDtos = productDtos;
+	}
+	public Boolean getAttened() {
+		return attened;
+	}
+	public void setAttened(Boolean attened) {
+		this.attened = attened;
 	}
 	@Override
 	public String toString() {
@@ -93,9 +125,10 @@ public class ShopsModel implements Serializable{
 				+ ", indexLogo=" + indexLogo + ", logo=" + logo
 				+ ", noticeCount=" + noticeCount + ", productCount="
 				+ productCount + ", newCount=" + newCount + ", specialCount="
-				+ specialCount + ", productDtos=" + productDtos + "]";
+				+ specialCount + ", shopPhoneNumber=" + shopPhoneNumber
+				+ ", lag=" + lag + ", shopAddress=" + shopAddress
+				+ ", productDtos=" + productDtos + ", attened=" + attened + "]";
 	}
 	
-
-
+	
 }

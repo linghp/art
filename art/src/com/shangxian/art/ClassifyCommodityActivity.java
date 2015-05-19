@@ -3,18 +3,15 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -27,8 +24,8 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassityCommodiyAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.bean.ClassityCommdityResultModel;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.dialog.DialogScreen;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
@@ -106,9 +103,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 		}
 		model = new ArrayList<ClassityCommdityModel>();
 		refreshTask(url);
-		adapter = new ClassityCommodiyAdp(this,
-				R.layout.item_classitycommodity, model);
-		list.setAdapter(adapter);
+		
 	}
 
 	private void refreshTask(String url) {
@@ -166,7 +161,6 @@ public class ClassifyCommodityActivity extends BaseActivity {
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				//请求
 				AbLogUtil.i(ClassifyCommodityActivity.this, content);
-//				System.out.println(">>>>>>>>>>>>>>>content"+content);
 				model.clear();
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -175,15 +169,14 @@ public class ClassifyCommodityActivity extends BaseActivity {
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
-							JSONArray resultObjectArray = jsonObject
-									.getJSONArray("result");
-							int length = resultObjectArray.length();
-							for (int i = 0; i < length; i++) {
-								JSONObject jo = resultObjectArray
-										.getJSONObject(i);
-								model.add(gson.fromJson(jo.toString(),
-										ClassityCommdityModel.class));
-							}
+							String str=jsonObject.getString("result");
+							ClassityCommdityResultModel classityCommdityResultModel=gson.fromJson(str, ClassityCommdityResultModel.class);
+							model = classityCommdityResultModel.getData();
+
+							System.out.println("<><><><>model<><><<>"+model);
+							adapter = new ClassityCommodiyAdp(ClassifyCommodityActivity.this,
+									R.layout.item_classitycommodity, model);
+							list.setAdapter(adapter);
 							adapter.notifyDataSetChanged();
 						}
 					} catch (JSONException e) {

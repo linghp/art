@@ -30,10 +30,11 @@ import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.GoodsDialog;
+import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
-public class ListCarAdapter extends BaseAdapter {
+public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmListener{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private ShoppingcartActivity shoppingcartActivity;
 	private LayoutInflater inflater;
@@ -69,7 +70,7 @@ public class ListCarAdapter extends BaseAdapter {
 			if (item.type == CarItem.SECTION) {
 				storeChecked.put(item.listCarStoreBean.getShopId(), false);
 			} else {
-				goodsCheced.put(item.listCarGoodsBean.getProductId(), false);
+				goodsCheced.put(item.listCarGoodsBean.getCartItemId(), false);
 			}
 		}
 	}
@@ -120,12 +121,12 @@ public class ListCarAdapter extends BaseAdapter {
 					if (cheched) {
 						storeChecked.put(item.listCarStoreBean.getShopId(), true);
 						for (int i = 0; i < list.size(); i++) {
-							goodsCheced.put(list.get(i).getProductId(), true);
+							goodsCheced.put(list.get(i).getCartItemId(), true);
 						}
 					} else {
 						storeChecked.put(item.listCarStoreBean.getShopId(), false);
 						for (int i = 0; i < list.size(); i++) {
-							goodsCheced.put(list.get(i).getProductId(), false);
+							goodsCheced.put(list.get(i).getCartItemId(), false);
 						}
 
 					}
@@ -136,7 +137,7 @@ public class ListCarAdapter extends BaseAdapter {
 
 			int flag = 0;
 			for (int i = 0; i < list.size(); i++) {
-				if (goodsCheced.get(list.get(i).getProductId()) != null && goodsCheced.get(list.get(i).getProductId()) == true) {
+				if (goodsCheced.get(list.get(i).getCartItemId()) != null && goodsCheced.get(list.get(i).getCartItemId()) == true) {
 					flag++;
 				}
 			}
@@ -183,20 +184,20 @@ public class ListCarAdapter extends BaseAdapter {
 //				holder.goodsOldPrice.setVisibility(View.GONE);
 //			}
 			//holder.goodsOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.getPromotionPrice());
-			holder.goodsid = item.listCarGoodsBean.getProductId();
+			holder.goodsPrice.setText("￥"+CommonUtil.priceConversion(item.listCarGoodsBean.getPromotionPrice()));
+			//holder.goodsid = item.listCarGoodsBean.getCartItemId();
 
-			if (goodsCheced.get(item.listCarGoodsBean.getProductId()) != null) {
-				holder.check_goods.setChecked(goodsCheced.get(item.listCarGoodsBean.getProductId()));
+			if (goodsCheced.get(item.listCarGoodsBean.getCartItemId()) != null) {
+				holder.check_goods.setChecked(goodsCheced.get(item.listCarGoodsBean.getCartItemId()));
 			}
 
 			holder.check_goods.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton arg0, boolean checked) {
 					MyLogger.i("check_goods");
 					if (checked) {
-						goodsCheced.put(item.listCarGoodsBean.getProductId(), true);
+						goodsCheced.put(item.listCarGoodsBean.getCartItemId(), true);
 					} else {
-						goodsCheced.put(item.listCarGoodsBean.getProductId(), false);
+						goodsCheced.put(item.listCarGoodsBean.getCartItemId(), false);
 						storeChecked.put(item.listCarGoodsBean.getShopId(), false);
 
 					}
@@ -208,7 +209,7 @@ public class ListCarAdapter extends BaseAdapter {
 			holder.updata.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity);
+					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity,ListCarAdapter.this);
 					dialog.setCarGoodsItem(item);
 					dialog.show();
 				}
@@ -345,7 +346,7 @@ public class ListCarAdapter extends BaseAdapter {
 			if (listdata.get(i).type == CarItem.SECTION) {
 				storeChecked.put(listdata.get(i).listCarStoreBean.getShopId(), checked);
 			} else {
-				goodsCheced.put(listdata.get(i).listCarGoodsBean.getProductId(), checked);
+				goodsCheced.put(listdata.get(i).listCarGoodsBean.getCartItemId(), checked);
 			}
 		}
 		ListCarAdapter.this.notifyDataSetChanged();
@@ -458,5 +459,11 @@ public class ListCarAdapter extends BaseAdapter {
 		public String goodsid;
 		public String storeid;
 		public ImageView updata;
+	}
+
+	@Override
+	public void goodsDialogConfirm(String str) {
+		// TODO Auto-generated method stub
+		
 	}
 }

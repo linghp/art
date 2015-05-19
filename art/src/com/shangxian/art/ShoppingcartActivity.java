@@ -24,7 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.http.AbHttpUtil;
-import com.ab.util.AbDialogUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
@@ -40,6 +39,7 @@ import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.net.NetWorkHelper;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
@@ -216,7 +216,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				for (int i = 0; i < adapter.listdata.size(); i++) {
 					CarItem item = adapter.listdata.get(i);
 					if (item.type == CarItem.ITEM) {
-						if (item.listCarGoodsBean.getProductId().equals(
+						if (item.listCarGoodsBean.getCartItemId().equals(
 								entry.getKey())) {
 							float goodsprice = item.listCarGoodsBean
 									.getPromotionPrice();
@@ -227,7 +227,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				}
 			}
 		}
-		allprice.setText("￥ " + price);
+		allprice.setText("￥ " +CommonUtil.priceConversion(price));
 	}
 
 	// 设置全选是否选中
@@ -369,19 +369,44 @@ public class ShoppingcartActivity extends BaseActivity implements
 	public void doDelete() {
 		Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
 		Map<String, Boolean> storeCheced = adapter.getStoreCheced();
-		List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
+		final List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
+		List<String> cartItemIds=new ArrayList<String>();
 		for (CarItem carItem : listCarItem) {
 			if (carItem.getType() == CarItem.SECTION) {
 				if (storeCheced.get(carItem.getListCarStoreBean().getShopId())) {
 					listCarItemDelete.add(carItem);
 				}
 			} else {
-				if (goodsCheced.get(carItem.getListCarGoodsBean()
-						.getProductId())) {
+				ListCarGoodsBean listCarGoodsBean=carItem.getListCarGoodsBean();
+				if (goodsCheced.get(listCarGoodsBean.getCartItemId())) {
 					listCarItemDelete.add(carItem);
+					cartItemIds.add(listCarGoodsBean.getCartItemId());
 				}
 			}
 		}
+		Gson gson=new Gson();
+		String json=gson.toJson(cartItemIds);
+		MyLogger.i(json);
+		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.DELCART, json, new HttpCilentListener() {
+			
+			@Override
+			public void onResponse(String res) {
+				MyLogger.i(res);
+				try {
+					JSONObject jsonObject = new JSONObject(res);
+					String result_code = jsonObject.getString("result_code");
+					if (result_code.equals("200")) {
+						doDeleteNext(listCarItemDelete);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					myToast("删除失败");
+				} 
+			}
+		});
+	}
+	
+	private void doDeleteNext(List<CarItem> listCarItemDelete) {
 		listCarItem.removeAll(listCarItemDelete);
 		adapter.initState();
 		adapter.notifyDataSetChanged();
@@ -430,7 +455,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 						listCarStoreBean = carItem.getListCarStoreBean();
 					} else {
 						if (goodsCheced.get(carItem.getListCarGoodsBean()
-								.getProductId())) {
+								.getCartItemId())) {
 							listCarItem_select.add(carItem);
 							linkedHashMap.put(carItem.getListCarGoodsBean()
 									.getShopId(), listCarStoreBean);
@@ -470,7 +495,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// }
 
 				Intent intent = new Intent(this, ConfirmOrderActivity.class);
-				intent.putExtra("totalprice", price);
+				intent.putExtra("totalprice", CommonUtil.priceConversion(price));
 				intent.putExtra("mapCarItem_goods",
 						(Serializable) hashmapGoodsBeans);
 				intent.putExtra("listCarItem_stores",

@@ -344,7 +344,7 @@ public class PayActivity extends BaseActivity {
 					// myToast(pass);
 					if (isOrder) {
 						PayOrderInfo info = new PayOrderInfo();
-						info.setAmount((int) (lastMon));
+						//info.setAmount((int) (lastMon));
 						info.setOrderNumber(orderids);
 						info.setPayPassword(pass);
 						info.setPayType(type);

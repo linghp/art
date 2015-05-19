@@ -44,22 +44,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical" >
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
 
                     <TextView
                         android:id="@+id/goot_tv_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:layout_weight="1"
-                        android:paddingBottom="4dp"
-                        android:text="¥100.¥100.00¥100.00¥100.00¥100.0000"
-                        android:singleLine="true"
-                        android:textColor="@color/txt_black1"
-                        android:textSize="16sp"
                         android:gravity="center_vertical"
-                        android:layout_marginRight="8dp" />
+                        android:paddingBottom="4dp"
+                        android:singleLine="true"
+                        android:text="¥100.¥100.00¥100.00¥100.00¥100.0000"
+                        android:textColor="@color/txt_black1"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/gooi_iv_cha"
@@ -98,26 +98,22 @@
             android:layout_height="1dp"
             android:background="@color/main_col300_3" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical" >
 
-            <ListView
-                android:id="@+id/gool_lv_option"
+            <LinearLayout
+                android:id="@+id/ll_options_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@color/transparent"
-                android:dividerHeight="4dp"
-                android:listSelector="@color/transparent"
-                android:scrollbars="none" >
-            </ListView>
-        </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                android:layout_marginLeft="@dimen/home_itemmargin"
+                android:layout_marginRight="@dimen/home_itemmargin"
+                android:layout_marginTop="@dimen/home_itemmargin"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/goot_tv_sub"

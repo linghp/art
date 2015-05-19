@@ -1,5 +1,6 @@
 package com.shangxian.art.utils;
 
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -406,5 +407,12 @@ public class CommonUtil {
 	                }
 	        }
 	 
+	}
+	
+	//价格除以100
+	public static float priceConversion(float price) {
+		DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+		String str=decimalFormat.format(price/100);
+		return Float.parseFloat(str);
 	}
 }
