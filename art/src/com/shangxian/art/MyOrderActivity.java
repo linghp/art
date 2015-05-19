@@ -145,7 +145,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,Htt
 		adapter = new FragmentViewPagerAdp(
 				getSupportFragmentManager(), fragments);
 		mViewPager.setAdapter(adapter);
-		mViewPager.setOffscreenPageLimit(3);
+		//mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setOnPageChangeListener(this);
 	}
 

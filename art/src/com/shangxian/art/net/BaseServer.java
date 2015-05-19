@@ -45,6 +45,7 @@ public class BaseServer {
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
+	protected static final String NET_ORDERS =HOST + "orders";//我的订单
 
 	/**
 	 * 
@@ -247,7 +248,7 @@ public class BaseServer {
 		});
 	}
 
-	protected static void toPost(String url, List<BasicNameValuePair> pairs,
+	protected static void toPostWithToken(String url, List<BasicNameValuePair> pairs,
 			final OnHttpListener l) {
 		if (pairs == null) {
 			pairs = new ArrayList<BasicNameValuePair>();

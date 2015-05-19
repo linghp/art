@@ -236,9 +236,9 @@ public class HttpClients {
 					 postMethod.setEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
 					// 将参数填入POST
 					// Entity中
-					MyLogger.i("respone:" + postMethod.toString());
 					// 执行POST方法
 					HttpResponse response = httpClient.execute(postMethod);
+					MyLogger.i("respone:" + response);
 					if (TextUtils.isEmpty(response.toString())
 							|| response.getStatusLine().getStatusCode() != 200) {
 						int s = response.getStatusLine().getStatusCode();

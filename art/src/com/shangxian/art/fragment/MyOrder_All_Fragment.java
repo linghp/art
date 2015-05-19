@@ -70,6 +70,21 @@ public class MyOrder_All_Fragment extends Fragment {
 		initMainView();
 		return view;
 	}
+	@Override
+	public void onPause() {
+		MyLogger.i("");
+		super.onPause();
+	}
+	@Override
+	public void onStop() {
+		MyLogger.i("");
+		super.onStop();
+	}
+	@Override
+	public void onResume() {
+		MyLogger.i("");
+		super.onResume();
+	}
 	
 	public void update() {
 		if(tv_empty!=null)
