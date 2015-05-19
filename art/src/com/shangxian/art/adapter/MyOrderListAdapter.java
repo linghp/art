@@ -22,9 +22,12 @@ import com.shangxian.art.R;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.MyOrderServer;
+import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
+import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.utils.CommonUtil;
 
-public class MyOrderListAdapter extends BaseAdapter {
+public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
 	private LayoutInflater inflater;
@@ -102,20 +105,23 @@ public class MyOrderListAdapter extends BaseAdapter {
 				mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 						+ productItemDto.getProductSacle());
 			}
+			
 			if(myOrderItem!=null){
 			holder.storeName.setText(myOrderItem.getShopName());
-			holder.tv_state.setText(myOrderItem.stateValue);
+			holder.tv_state.setText(MyOrderActivity.map_orderStateValue.get(myOrderItem.getStatus()));
 			holder.tv_allquantity.setText("共"+myOrderItem.getTotalQuantity()+"件商品");
 			holder.tv_payment.setText("￥"+CommonUtil.priceConversion(myOrderItem.getTotalPrice()));
 	        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 					+ myOrderItem.getShopLogo());
-			}
-			if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])){
+			if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])){//根据status显示item下面的按钮
+				holder.tv_01.setText("取消订单");
+				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
 						CommonUtil.toast("click", context);
+						MyOrderServer.toCancelOrder(myOrderItem, MyOrderListAdapter.this);
 					}
 				});
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +134,19 @@ public class MyOrderListAdapter extends BaseAdapter {
 						PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), (Activity)context);
 					}
 				});
+			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[7])){
+				holder.tv_02.setOnClickListener(null);
+				holder.tv_02.setVisibility(View.GONE);
+				holder.tv_01.setText("删除订单");
+				holder.tv_01.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						CommonUtil.toast("click", context);
+						MyOrderServer.toDelOrder(myOrderItem, MyOrderListAdapter.this);
+					}
+				});
+			}
 			}
 		return convertView;
 	}
@@ -148,5 +167,28 @@ public class MyOrderListAdapter extends BaseAdapter {
 		public TextView tv_02;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
+	}
+
+	@Override
+	public void onHttpResultCancelOrder(MyOrderItem myOrderItem) {
+		if(myOrderItem!=null){
+			this.notifyDataSetChanged();
+			((MyOrderActivity)context).updateData();
+			CommonUtil.toast("取消成功", context);
+		}else{
+			CommonUtil.toast("取消失败", context);
+		}
+	}
+
+	@Override
+	public void onHttpResultDelOrder(MyOrderItem myOrderItem) {
+		if(myOrderItem!=null){
+			myOrderItems.remove(myOrderItem);
+			this.notifyDataSetChanged();
+			((MyOrderActivity)context).updateData();
+			CommonUtil.toast("删除成功", context);
+		}else{
+			CommonUtil.toast("删除失败", context);
+		}
 	}
 }
