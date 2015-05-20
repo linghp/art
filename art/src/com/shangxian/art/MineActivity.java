@@ -18,6 +18,11 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 
+/**
+ * 我的
+ * @author Administrator
+ *
+ */
 public class MineActivity extends BaseActivity implements OnClickListener{
 	private String username_local;
 	private View ll_loginbefore,ll_loginafter;

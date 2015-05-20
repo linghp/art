@@ -50,7 +50,9 @@ public class BaseServer {
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
-	protected static final String NET_ORDERS = HOST + "orders";// 我的订单
+	protected static final String NET_ORDERS =HOST + "orders/";//我的订单
+	protected static final String NET_CANCELORDER =HOST +  "/order/cancel/";//取消订单
+	protected static final String NET_DELORDER = HOST + "/order/del/";//删除订单
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
 	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "send"; // 发送验证码
@@ -267,6 +269,32 @@ public class BaseServer {
 			pairs = new ArrayList<BasicNameValuePair>();
 		}
 		HttpClients.toPost(url, pairs, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code ================="
+								+ result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
+				}
+			}
+		});
+	}
+	
+	protected static void toGet(String url,
+			final OnHttpListener l) {
+		HttpClients.getDo(url,  new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				if (l != null) {

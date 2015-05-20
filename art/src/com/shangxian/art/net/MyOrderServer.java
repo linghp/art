@@ -19,9 +19,28 @@ public class MyOrderServer extends BaseServer {
 		void onHttpResult(MyOrderItem_all myOrderItemAll);
 	}
 
-	public static void toGetOrder(String status,
-			final OnHttpResultListener l) {
-		toPostWithToken(NET_ORDERS+status, null, new OnHttpListener() {
+	/*
+	 * 返回下一页监听
+	 */
+	public interface OnHttpResultMoreListener {
+		void onHttpResultMore(MyOrderItem_all myOrderItemAll);
+	}
+
+	/*
+	 * 返回取消订单监听
+	 */
+	public interface OnHttpResultCancelOrderListener {
+		void onHttpResultCancelOrder(MyOrderItem myOrderItem);
+	}
+	/*
+	 * 返回删除订单监听
+	 */
+	public interface OnHttpResultDelOrderListener {
+		void onHttpResultDelOrder(MyOrderItem myOrderItem);
+	}
+
+	public static void toGetOrder(String status, final OnHttpResultListener l) {
+		toPostJson(NET_ORDERS + status, "{}", new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				MyLogger.i(res);
@@ -35,27 +54,100 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
-	
-	protected static MyOrderItem_all getMyOrderItemAll(String content) {
-		MyOrderItem_all myOrderItem_all=null;
-		try {
-			JSONObject jsonObject = new JSONObject(content);
-			String result_code = jsonObject.getString("result_code");
-			if (result_code.equals("200")) {
-				if (jsonObject.getString("reason").equals("success")) {
-					String json = jsonObject.getString("result");
-					Gson gson = new Gson();
-					 myOrderItem_all = gson.fromJson(json,
-							MyOrderItem_all.class);
-					MyLogger.i(myOrderItem_all.toString());
+
+	/**
+	 * 获取下一页
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toGetOrderMore(String status, String json,
+			final OnHttpResultMoreListener l) {
+		toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultMore(null);
+					} else {
+						l.onHttpResultMore(getMyOrderItemAll(res));
+					}
 				}
 			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (Exception e) {
+		});
+	}
+
+	protected static MyOrderItem_all getMyOrderItemAll(String content) {
+		MyOrderItem_all myOrderItem_all = null;
+		try {
+			Gson gson = new Gson();
+			myOrderItem_all = gson.fromJson(content, MyOrderItem_all.class);
+			MyLogger.i(myOrderItem_all.toString());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return myOrderItem_all;
+	}
+
+	/**
+	 * 取消订单
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toCancelOrder(final MyOrderItem myOrderItem,
+			final OnHttpResultCancelOrderListener l) {
+		toGet(NET_CANCELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultCancelOrder(null);
+					} else {
+						l.onHttpResultCancelOrder(getMyOrderItem(myOrderItem,res));
+					}
+				}
+			}
+		});
+	}
+	/**
+	 * 删除订单
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toDelOrder(final MyOrderItem myOrderItem,
+			final OnHttpResultDelOrderListener l) {
+		toGet(NET_DELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultDelOrder(null);
+					} else {
+						l.onHttpResultDelOrder(getMyOrderItem(myOrderItem,res));
+					}
+				}
+			}
+		});
+	}
+	
+	private static MyOrderItem getMyOrderItem(MyOrderItem myOrderItem,String content) {
+		MyOrderItem myOrderItem2 = null;
+		try {
+			Gson gson = new Gson();
+			myOrderItem2 = gson.fromJson(content, MyOrderItem.class);
+			MyLogger.i(myOrderItem2.toString());
+			myOrderItem.setStatus(myOrderItem2.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return myOrderItem2;
 	}
 }

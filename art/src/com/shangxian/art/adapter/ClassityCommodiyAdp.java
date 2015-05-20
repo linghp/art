@@ -14,6 +14,7 @@ import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 /**
  * 分类adapter
  * 
@@ -44,7 +45,8 @@ public class ClassityCommodiyAdp extends EntityAdapter<ClassityCommdityModel>{
 		}
 		holder.title.setText(dates.get(position).getName());
 		holder.summary.setText(dates.get(position).getReDetails());
-		holder.price.setText(dates.get(position).getPromotionPrice()+"");
+//		holder.price.setText(dates.get(position).getPromotionPrice()+"");
+		holder.price.setText(CommonUtil.priceConversion((float)dates.get(position).getPromotionPrice())+"");
 		Imageloader_homePager.displayImage(Constant.BASEURL
 				+ dates.get(position).getPhoto(),
 				holder.img,

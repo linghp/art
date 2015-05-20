@@ -9,18 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
+        android:text="抱歉，没有找到相关订单"
         android:textSize="@dimen/list_title_size"
-        android:text="抱歉，没有找到相关订单" />
+        android:visibility="gone" />
 
-    <ListView 
-        android:id="@+id/lv_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="8dp"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-        android:scrollbars="none"
-        android:smoothScrollbar="true" />
+    <com.ab.view.pullview.AbPullToRefreshView
+        android:id="@+id/mPullRefreshView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/lv_action"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="8dp"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
+            android:smoothScrollbar="true" />
+    </com.ab.view.pullview.AbPullToRefreshView>
+
+    <ProgressBar
+        android:id="@+id/progress_order"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

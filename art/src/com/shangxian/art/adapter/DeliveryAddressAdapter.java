@@ -37,9 +37,10 @@ public class DeliveryAddressAdapter extends EntityAdapter<DeliveryAddressModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.name.setText("收货人："+dates.get(position).getName());
-		holder.num.setText(dates.get(position).getNum());
-		holder.address.setText("收货地址："+dates.get(position).getAddress());
+		holder.name.setText("收货人："+dates.get(position).getReceiverName());//收货人
+		holder.num.setText(dates.get(position).getReceiverTel()+"");//电话
+		holder.address.setText("收货地址："+dates.get(position).getDeliveryAddress());//收货地址
+		
 		holder.dingwei.setOnClickListener(new OnClickListener() {
 			
 			@Override
