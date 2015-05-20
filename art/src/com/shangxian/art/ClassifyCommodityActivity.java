@@ -172,8 +172,6 @@ public class ClassifyCommodityActivity extends BaseActivity {
 							String str=jsonObject.getString("result");
 							ClassityCommdityResultModel classityCommdityResultModel=gson.fromJson(str, ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
-
-							System.out.println("<><><><>model<><><<>"+model);
 							adapter = new ClassityCommodiyAdp(ClassifyCommodityActivity.this,
 									R.layout.item_classitycommodity, model);
 							list.setAdapter(adapter);

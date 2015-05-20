@@ -57,7 +57,6 @@
                 android:id="@+id/item_deliveryaddress_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="2"
                 android:text="收货地址:重庆市沙坪坝区沙中路23号通江大道xxxxxxx"
                 android:textColor="@color/txt_black2"
                 android:textSize="@dimen/list_summary_size" />

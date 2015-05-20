@@ -35,6 +35,11 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 评论
+ * @author Administrator
+ *
+ */
 public class CommentActivity extends BaseActivity implements
 		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener {
 	private ListView listView;
