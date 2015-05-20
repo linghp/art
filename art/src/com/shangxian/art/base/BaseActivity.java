@@ -1,6 +1,9 @@
 package com.shangxian.art.base;
 
+import android.R.bool;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +15,9 @@ import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
+import com.shangxian.art.SafetyVerificationActivity;
 import com.shangxian.art.alipays.AliPayBase;
+import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
@@ -25,12 +30,14 @@ public class BaseActivity extends AbActivity {
 	protected BaseActivity mAc;
 	protected MyApplication app;
 	protected AbHttpUtil httpUtil;
-	
+	protected UserInfo curUserInfo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		MyLogger.i(getClass().getSimpleName());
 		share = LocalUserInfo.getInstance(this);
+		curUserInfo = share.getUser();
 		app = MyApplication.getInstance();
 		mAc = this;
 		httpUtil = AbHttpUtil.getInstance(this);
@@ -41,8 +48,8 @@ public class BaseActivity extends AbActivity {
 	protected void myToast(String str) {
 		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 	}
-	
-	//触摸其他区域，输入法界面消失
+
+	// 触摸其他区域，输入法界面消失
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -61,11 +68,11 @@ public class BaseActivity extends AbActivity {
 		}
 		return onTouchEvent(ev);
 	}
-	
-	public  boolean isShouldHideInput(View v, MotionEvent event) {
+
+	public boolean isShouldHideInput(View v, MotionEvent event) {
 		if (v != null && (v instanceof EditText)) {
 			int[] leftTop = { 0, 0 };
-			//获取输入框当前的location位置
+			// 获取输入框当前的location位置
 			v.getLocationInWindow(leftTop);
 			int left = leftTop[0];
 			int top = leftTop[1];
@@ -81,17 +88,42 @@ public class BaseActivity extends AbActivity {
 		}
 		return false;
 	}
-	
-	protected boolean isLogin(){
+
+	protected boolean isLogin() {
 		return share.getBoolean(Constant.PRE_LOGIN_STATE, false);
 	}
-	
-	protected boolean isLoginAndToLogin(){
+
+	protected boolean isLoginAndToLogin() {
 		if (share.getBoolean(Constant.PRE_LOGIN_STATE, false)) {
 			return true;
 		} else {
 			CommonUtil.gotoActivity(mAc, LoginActivity.class, false);
 			return false;
 		}
+	}
+
+	protected boolean isPayed(boolean isShowDialog) {
+		if (isShowDialog && !curUserInfo.isPayed()) {
+			final AlertDialog dialog = new AlertDialog.Builder(mAc).setTitle("提示")
+					.setMessage("系统检查您尚未设置支付密码，为提升您的用户体验，请尽快设置!")
+					.setNegativeButton("去设置", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							Bundle bundle = new Bundle();
+							bundle.putInt(Constant.INT_SAFE_PAY_NEW, 1);
+							CommonUtil.gotoActivityWithData(mAc, SafetyVerificationActivity.class, bundle, false);
+						}
+					})
+					.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.create();
+			dialog.show();
+		}
+		return curUserInfo.isPayed();
 	}
 }

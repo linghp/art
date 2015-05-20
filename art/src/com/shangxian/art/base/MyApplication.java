@@ -11,10 +11,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.GeofenceClient;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.shangxian.art.R;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Global;
-import com.shangxian.art.ioc.IocContainer;
 import com.shangxian.art.net.BaseServer;
 
 
@@ -34,7 +37,7 @@ public class MyApplication extends Application {
 		mInstance = this;
 		Global.mInflater = LayoutInflater.from(this);
 		Global.mContext = this;
-		IocContainer.getShare().initApplication(mInstance);
+		DataTools.newInstance().initApplication(mInstance);
 
 //		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 //				getApplicationContext())
@@ -54,6 +57,9 @@ public class MyApplication extends Application {
 		mLocationClient.registerLocationListener(mMyLocationListener);
 		mGeofenceClient = new GeofenceClient(getApplicationContext());
 		mLocationClient.start();
+		
+		initImageLoader();
+		
 		loader = AbImageLoader.newInstance(this);
 		loader.setEmptyImage(R.drawable.image_empty);
 		loader.setErrorImage(R.drawable.image_error);
@@ -63,6 +69,38 @@ public class MyApplication extends Application {
         JPushInterface.init(this);     		// 初始化 JPush
 	}
 	
+	private void initImageLoader() {
+		 ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+	                mInstance)
+	                // .memoryCacheExtraOptions(480, 800) // max width, max
+	                // height，即保存的每个缓存文件的最大长宽
+	                // .discCacheExtraOptions(480, 800, CompressFormat.JPEG, 75,
+	                // null) // Can slow ImageLoader, use it carefully (Better don't
+	                // use it)设置缓存的详细信息，最好不要设置这个
+	                .threadPoolSize(5)
+	                        // 线程池内加载的数量
+	                .threadPriority(Thread.NORM_PRIORITY - 1)
+	                .denyCacheImageMultipleSizesInMemory()
+	                        // .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 *
+	                        // 1024)) // You can pass your own memory cache
+	                        // implementation你可以通过自己的内存缓存实现
+	                .memoryCacheSize(3 * 1024 * 1024)
+	                .discCacheSize(50 * 1024 * 1024)
+	                .discCacheFileNameGenerator(new Md5FileNameGenerator())// 将保存的时候的URI名称用MD5
+	                        // 加密
+	                         //.discCacheFileNameGenerator(new HashCodeFileNameGenerator())//将保存的时候的URI名称用HASHCODE加密
+	                .tasksProcessingOrder(QueueProcessingType.LIFO)
+	                        // .discCacheFileCount(100) //缓存的File数量
+	                        //.discCache(new UnlimitedDiscCache(cacheDir))// 自定义缓存路径
+	                        // .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+	                        // .imageDownloader(new BaseImageDownloader(context, 5 * 1000,
+	                        // 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)超时时间
+	                .writeDebugLogs() // Remove for release app
+	                .build();
+	        // Initialize ImageLoader with configuration.
+	        ImageLoader.getInstance().init(config);// 全局初始化此配置
+	}
+
 	public BDLocation getMLoc(){
 		return mloc;
 	}

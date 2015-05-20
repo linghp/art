@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
+import com.shangxian.art.utils.MyLogger;
 
 /**
  * 我的订单
@@ -16,12 +17,11 @@ public class MyOrderItem implements Serializable {
 	@Expose
 	private String addressId;
 	@Expose
-	private String orderNumber;
+	public String orderNumber;
 	@Expose
 	private String status;
-	public String stateValue;
 	@Expose
-	private Integer shopId;
+	public String shopId;
 	@Expose
 	private String shopName;
 	@Expose
@@ -52,10 +52,10 @@ public class MyOrderItem implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Integer getShopId() {
+	public String getShopId() {
 		return shopId;
 	}
-	public void setShopId(Integer shopId) {
+	public void setShopId(String shopId) {
 		this.shopId = shopId;
 	}
 	public String getShopName() {
@@ -104,6 +104,22 @@ public class MyOrderItem implements Serializable {
 				+ ", createDate=" + createDate + "]";
 	}
 
-
+@Override
+public boolean equals(Object o) {
+	if (o == null || !(o instanceof MyOrderItem)) {
+		return false;
+	} else {
+		MyOrderItem bean = (MyOrderItem) o;
+//		MyLogger.i(bean.orderNumber+"$$$$$"+orderNumber);
+//		MyLogger.i(bean.shopId+"$$$$$"+shopId);
+//		MyLogger.i((bean.orderNumber.trim().equals(orderNumber.trim()) &&bean.equals(shopId))+"");
+		if (bean.orderNumber.equals(orderNumber) &&bean.shopId.equals(shopId)) {
+			MyLogger.i("");
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
 
 }

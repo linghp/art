@@ -13,15 +13,15 @@ import android.widget.TextView;
 
 import com.shangxian.art.R;
 import com.shangxian.art.bean.SearchModel;
+import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.utils.TimeUtil;
 import com.shangxian.art.view.LinearSlidingLayout;
 import com.shangxian.art.view.SlidingListView;
 
-public class SearchAdapter extends EntityAdapter<SearchModel>{
+public class SearchAdapter extends EntityAdapter<SearchProductInfo>{
 
-	public SearchAdapter(Activity mAc, int layoutId, List<SearchModel> dates) {
+	public SearchAdapter(Activity mAc, int layoutId, List<SearchProductInfo> dates) {
 		super(mAc, layoutId, dates);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -39,24 +39,7 @@ public class SearchAdapter extends EntityAdapter<SearchModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getTitle());
-		holder.time.setText(TimeUtil.getCurrentData());
 		
-		ImageView delete = (ImageView) convertView.findViewById(R.id.item_delete);
-		delete.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-//				LinearSlidingLayout slidingLayout = (LinearSlidingLayout) mAc.get;
-				LinearSlidingLayout selectView = (LinearSlidingLayout) parent.getChildAt(position);
-				if(selectView != null){
-					selectView.scrollWithoutDelay();
-				}
-				dates.remove(position);
-				notifyDataSetChanged();
-			}
-		});
 		return convertView;
 	}
 	public static class ViewHolder{

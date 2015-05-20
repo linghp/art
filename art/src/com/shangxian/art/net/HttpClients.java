@@ -42,7 +42,7 @@ public class HttpClients {
 
 	// 含有3个线程的线程池
 	private static final ExecutorService executorService = Executors
-			.newFixedThreadPool(3);
+			.newFixedThreadPool(10);
 
 	// post请求
 	public static void postDo(final String baseUrl, final String json,
@@ -61,6 +61,7 @@ public class HttpClients {
 				}
 			};
 		};
+		MyLogger.i("URL:"+baseUrl+"         JSON:"+json);
 		// final String user_token = ParkApplication.getPrefer().getString(
 		// Constants.USER_TOKEN, null);
 		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
@@ -82,7 +83,6 @@ public class HttpClients {
 					}
 					// 将参数填入POST
 					// Entity中
-					MyLogger.i("respone:" + postMethod.toString());
 					// 执行POST方法
 					HttpResponse response = httpClient.execute(postMethod);
 					if (TextUtils.isEmpty(response.toString())
@@ -236,9 +236,9 @@ public class HttpClients {
 					 postMethod.setEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
 					// 将参数填入POST
 					// Entity中
-					MyLogger.i("respone:" + postMethod.toString());
 					// 执行POST方法
 					HttpResponse response = httpClient.execute(postMethod);
+					MyLogger.i("respone:" + response);
 					if (TextUtils.isEmpty(response.toString())
 							|| response.getStatusLine().getStatusCode() != 200) {
 						int s = response.getStatusLine().getStatusCode();

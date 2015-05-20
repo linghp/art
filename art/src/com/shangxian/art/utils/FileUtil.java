@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
-import com.shangxian.art.ioc.IocContainer;
 
 
 public class FileUtil {
@@ -26,8 +25,8 @@ public class FileUtil {
 	 * 
 	 * @return
 	 */
-	public static File getDir() {
-		Context context = IocContainer.getShare().getApplicationContext();
+	public static File getDir(Context context) {
+		//Context context = IocContainer.getShare().getApplicationContext();
 		String packname = context.getPackageName();
 		String name = packname.substring(packname.lastIndexOf(".") + 1,
 				packname.length());
@@ -48,8 +47,8 @@ public class FileUtil {
 	 * 
 	 * @return
 	 */
-	public static File getCacheDir() {
-		File file = new File(getDir().getAbsolutePath() + "/cache");
+	public static File getCacheDir(Context context) {
+		File file = new File(getDir(context).getAbsolutePath() + "/cache");
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -61,8 +60,8 @@ public class FileUtil {
 	 * 
 	 * @return
 	 */
-	public static File getImageDir() {
-		File file = new File(getDir().getAbsolutePath() + "/image");
+	public static File getImageDir(Context context) {
+		File file = new File(getDir(context).getAbsolutePath() + "/image");
 		file.mkdirs();
 		return file;
 	}

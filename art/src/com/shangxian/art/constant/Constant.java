@@ -66,4 +66,16 @@ public class Constant {
  	
  	public static String[] ioc_instal_pkg=null;
     public static final long TIME_DELAY_GUIDE = 1000;
+    
+    /**
+     * 
+     * -------------------------------------- 获取数据 ----------------------------------------------------
+     */
+    public static final String DATA_SEARCH_PRODUCT = "data_search_product";
+    
+    /**
+     * 
+     * ----------------------------------------- activity 跳转 Intent传值相关 (INT) -----------------------------------------------------
+     */
+    public static final String INT_SAFE_PAY_NEW = "new_safe_paye";
 }

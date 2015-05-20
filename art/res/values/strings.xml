@@ -48,5 +48,6 @@
     <string name="text_good_comment">好评(%d)</string>
     <string name="text_neutral_comment">中评(%d)</string>
     <string name="title_activity_comment">评论</string>
+    <string name="title_activity_searchs">SearchsActivity</string>
 
 </resources>

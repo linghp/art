@@ -42,6 +42,44 @@ public abstract class EntityAdapter<T> extends BaseAdapter{
         this.dates = dates;
         notifyDataSetChanged();
     }
+    
+    public void addHeadDataList(List<T> datas){
+        if (datas == null || datas.size() == 0){
+            return;
+        }
+        if (dates == null){
+            dates = new ArrayList<T>();
+        }
+        if (dates.size() == 0){
+            dates.addAll(datas);
+        } else {
+            for (int i = datas.size() - 1; i >= 0; i++) {
+                if (!dates.contains(datas.get(i))){
+                    dates.add(0, datas.get(i));
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addFootDataList(List<T> datas){
+        if (datas == null || datas.size() == 0){
+            return;
+        }
+        if (dates == null){
+            dates = new ArrayList<T>();
+        }
+        if (dates.size() == 0){
+            dates.addAll(datas);
+        } else {
+             for (int i = 0; i < datas.size(); i++) {
+                if (!dates.contains(datas.get(i))){
+                    dates.add(datas.get(i));
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     protected void changData(int postition, T t){
         dates.remove(postition);

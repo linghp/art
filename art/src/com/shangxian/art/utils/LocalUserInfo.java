@@ -179,6 +179,7 @@ public class LocalUserInfo {
 		put(Constant.PRE_USER_NICKNAME, user.getNickName());
 		put(Constant.PRE_USER_PHONENUMBER, user.getPhoneNumber());
 		put(Constant.PRE_USER_SCALEPHOTO, user.getScalePhoto());
+		put("payed", user.isPayed());
 	}
 	
 	/**
@@ -191,6 +192,7 @@ public class LocalUserInfo {
 				getString(Constant.PRE_USER_NICKNAME),
 				getString(Constant.PRE_USER_PHONENUMBER),
 				getString(Constant.PRE_USER_SCALEPHOTO));
+		info.setPayed(getBoolean("payed", false));
 		return info;
 	}
 }

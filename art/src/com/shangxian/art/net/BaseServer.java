@@ -1,13 +1,17 @@
 package com.shangxian.art.net;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.ab.http.AbBinaryHttpResponseListener;
@@ -16,6 +20,7 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
+import com.shangxian.art.base.DataTools;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
@@ -45,6 +50,12 @@ public class BaseServer {
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
+	protected static final String NET_ORDERS =HOST + "orders/";//我的订单
+	protected static final String NET_CANCELORDER =HOST +  "/order/cancel/";//取消订单
+	protected static final String NET_DELORDER = HOST + "/order/del/";//删除订单
+	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
+	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "send"; // 发送验证码
+	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/password"; //设置支付密码
 
 	/**
 	 * 
@@ -56,6 +67,7 @@ public class BaseServer {
 	private static Context mContext;
 	protected static Gson gson = new Gson();
 	protected static UserInfo curUser;
+	protected static DataTools tools = DataTools.newInstance();
 
 	public static void toRegistContext(Context mContext) {
 		BaseServer.mContext = mContext;
@@ -125,9 +137,8 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out
-						.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
-								+ res);
+				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
 				}
@@ -164,9 +175,10 @@ public class BaseServer {
 			}
 		});
 	}
-	
+
 	/**
 	 * 原生的数据，不要解析
+	 * 
 	 * @param url
 	 * @param params
 	 * @param l
@@ -179,32 +191,31 @@ public class BaseServer {
 			@Override
 			public void onStart() {
 			}
-			
+
 			@Override
 			public void onFinish() {
 				MyLogger.i("onFinish");
 			}
-			
+
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out
-				.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  " + code + "  >>>>>>>>>>>>>>>>>>> "
-						+ res);
+				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
 				}
 			}
-			
+
 			@Override
 			public void onSuccess(int code, String res) {
 				System.out
-				.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-						+ res);
+						.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					if (code != 200) {
 						l.onHttp(null);
 					} else {
-								l.onHttp(res);
+						l.onHttp(res);
 					}
 				}
 			}
@@ -217,15 +228,15 @@ public class BaseServer {
 			json = "";
 		} else {
 			System.out
-			.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-					+ json);
+					.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+							+ json);
 		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				System.out
-				.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
-						+ res);
+						.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+								+ res);
 				if (l != null) {
 					// l.onHttp(res);
 					try {
@@ -247,8 +258,8 @@ public class BaseServer {
 		});
 	}
 
-	protected static void toPost(String url, List<BasicNameValuePair> pairs,
-			final OnHttpListener l) {
+	protected static void toPostWithToken(String url,
+			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {
 			pairs = new ArrayList<BasicNameValuePair>();
 		}
@@ -275,6 +286,47 @@ public class BaseServer {
 			}
 		});
 	}
+	
+	protected static void toGet(String url,
+			final OnHttpListener l) {
+		HttpClients.getDo(url,  new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code ================="
+								+ result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
+				}
+			}
+		});
+	}
+	protected static void toPostWithToken2(String url,
+			List<BasicNameValuePair> pairs, final OnHttpListener l) {
+		if (pairs == null) {
+			pairs = new ArrayList<BasicNameValuePair>();
+		}
+		HttpClients.toPost(url, pairs, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					l.onHttp(res);
+				}
+			}
+		});
+	}
 
 	protected static void toFile(String url, AbRequestParams params,
 			final OnHttpListener l) {
@@ -292,6 +344,50 @@ public class BaseServer {
 			@Override
 			public void onFailure(int arg0, String arg1, Throwable arg2) {
 
+			}
+		});
+	}
+
+	protected static void toGet2(String uri, Map<String, String> map,
+			final OnHttpListener l) {
+		StringBuilder sb = new StringBuilder(uri);
+		// 如果参数不为空
+		if (map != null && map.isEmpty()) {
+			if (map != null && !map.isEmpty()) {
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					// Post方式提交参数的话，不能省略内容类型与长度
+					try {
+						sb.append(entry.getKey())
+								.append('=')
+								.append(URLEncoder.encode(entry.getValue(), "UTF-8"))
+								.append('&');
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+				}
+				sb.deleteCharAt(sb.length() - 1);
+			}
+		}
+		HttpClients.getDo(sb.toString(), new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					// l.onHttp(res);
+					try {
+						JSONObject json = new JSONObject(res);
+						int result_code = json.getInt("result_code");
+						System.out.println("result_code ================="
+								+ result_code);
+						if (result_code == 200) {
+							l.onHttp(json.getString("result"));
+						} else {
+							l.onHttp(null);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onHttp(null);
+					}
+				}	
 			}
 		});
 	}
@@ -317,7 +413,7 @@ public class BaseServer {
 	public interface OnPaymentListener {
 		void onPayment(String res);
 	}
-	
+
 	public interface OnPayListener {
 		void onPayment(boolean res);
 	}

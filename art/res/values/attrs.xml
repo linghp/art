@@ -16,6 +16,11 @@
         <attr name="rows" format="integer" />
         <attr name="columns" format="integer" />
     </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
     <!-- 流布局 商品详情对话框 -->
     <declare-styleable name="FlowLayout">
         <attr name="horizontalSpacing" format="dimension" />
