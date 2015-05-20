@@ -16,12 +16,17 @@ import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsAdapter extends EntityAdapter<ListCarGoodsBean> {
-
+	private boolean isShop = true;
+	
 	public SearchsAdapter(Activity mAc, int layoutId,
 			List<ListCarGoodsBean> dates) {
 		super(mAc, layoutId, dates);
 	}
 
+	public void setToSearch(boolean isShop){
+		this.isShop = isShop;
+	}
+	
 	@Override
 	public View initView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
@@ -36,9 +41,9 @@ public class SearchsAdapter extends EntityAdapter<ListCarGoodsBean> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		ListCarGoodsBean bean = getItem(position);
-		holder.title.setText(bean.getName());
+		holder.title.setText(isShop ? bean.getShopName() : bean.getName());
 		holder.time.setVisibility(View.INVISIBLE);
-		ImageLoader.getInstance().displayImage(Constant.BASEURL + bean.getPhoto(), holder.icon, Options.getListOptions());
+		ImageLoader.getInstance().displayImage(Constant.BASEURL + (isShop ? bean.getLogo() : bean.getPhoto()), holder.icon, Options.getListOptions());
 		return convertView;
 	}
 	

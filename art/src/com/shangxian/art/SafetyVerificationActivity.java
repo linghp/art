@@ -202,6 +202,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 								dialog.dismiss();
 								if (isNew) {
 									myToast("支付密码设置成功");
+									share.put("payed", true);
 									finish();
 								} else {
 									myToast("支付密码设置失败");

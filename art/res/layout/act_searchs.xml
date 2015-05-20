@@ -7,6 +7,7 @@
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
+        android:background="@color/grey200"
         android:layout_height="48dp" >
 
         <ImageView
@@ -20,6 +21,7 @@
             android:src="@drawable/back1" />
 
         <LinearLayout
+            android:id="@+id/ll_scan"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
@@ -32,7 +34,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_group"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
                 android:background="@drawable/search_bg_spinner"
@@ -42,6 +44,7 @@
                 android:paddingRight="6dp" >
 
                 <TextView
+                    android:id="@+id/tv_sear"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
@@ -49,6 +52,13 @@
                     android:text="商铺"
                     android:textColor="@color/txt_white1"
                     android:textSize="14sp" />
+                
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/abc_spinner_mtrl_am_alpha"/>
             </LinearLayout>
 
             <EditText
