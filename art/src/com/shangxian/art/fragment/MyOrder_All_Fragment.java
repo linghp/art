@@ -3,10 +3,13 @@ package com.shangxian.art.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import com.shangxian.art.MyOrderActivity;
+import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.bean.MyOrderItem;
@@ -32,7 +37,7 @@ import com.shangxian.art.utils.MyLogger;
  */
 public class MyOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
-		OnHeaderRefreshListener, OnFooterLoadListener {
+		OnHeaderRefreshListener, OnFooterLoadListener,OnItemClickListener {
 	private View view;
 	private TextView tv_empty;
 	private ListView listView;
@@ -83,14 +88,26 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		MyLogger.i("");
 		initMainView();
 		initListener();
-		getData();
+		//getData();
 		return view;
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		if(status.equals("")){
+			((MyOrderActivity)getActivity()).initDateFirstFragment();  
+			
+			
+		}
+	}
+	
 	private void initListener() {
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
 		mAbPullToRefreshView.setOnFooterLoadListener(this);
+		listView.setOnItemClickListener(this);
 	}
 
 	public void getData() {
@@ -200,5 +217,12 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		String json = "{\"skip\":" + skip + ",\"pageSize\":" + pageSize
 				+ "}";
 		MyOrderServer.toGetOrderMore(status, json, this);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MyLogger.i("onItemClick");
+		MyOrderDetailsActivity.startThisActivity(mOrderItems.get(position).getOrderNumber(), getActivity());
 	}
 }

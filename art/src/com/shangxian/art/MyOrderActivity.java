@@ -66,6 +66,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	public static String[] orderState={"PENDING","SUBMITTED","PAID","SHIPPING","COMPLETED","ORDER_RETURNING","EVALUATE","CANCELLED"};
 	private String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +79,11 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
         if (savedInstanceState != null) {
            // mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
         }
+	}
+	@Override
+	protected void onStart() {
+		//((MyOrder_All_Fragment)firstFragment).getData();
+		super.onStart();
 	}
 	
 	private void listener() {
@@ -93,14 +99,18 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		}
 	}
 
-	public void updateData(){
-		MyLogger.i(""+currentPosion);
-		for (int i = 0; i < fragments.size(); i++) {
-			if(currentPosion!=i){
-				((MyOrder_All_Fragment)fragments.get(i)).getData();
-			}
-		}
+	public void initDateFirstFragment(){
+		((MyOrder_All_Fragment)firstFragment).getData();
 	}
+	
+//	public void updateData(){
+//		MyLogger.i(""+currentPosion);
+//		for (int i = 0; i < fragments.size(); i++) {
+//			if(currentPosion!=i){
+//				((MyOrder_All_Fragment)fragments.get(i)).getData();
+//			}
+//		}
+//	}
 	
 	private void initViews() {
 
@@ -136,10 +146,10 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		fragments = new ArrayList<Fragment>();
 		firstFragment = new MyOrder_All_Fragment("");
 		secondFragment = new MyOrder_All_Fragment(orderState[1]);
-//		thirdFragment = new MyOrder_All_Fragment(orderState[2]);
-//		fourthFragment = new MyOrder_All_Fragment(orderState[3]);
-		thirdFragment = new MyOrder_dfh_Fragment();
-		fourthFragment = new MyOrder_dsh_Fragment();
+		thirdFragment = new MyOrder_All_Fragment(orderState[2]);
+		fourthFragment = new MyOrder_All_Fragment(orderState[3]);
+//		thirdFragment = new MyOrder_dfh_Fragment();
+//		fourthFragment = new MyOrder_dsh_Fragment();
 
 		fragments.add(0, firstFragment);
 		fragments.add(1, secondFragment);
@@ -224,6 +234,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	@Override
 	public void onPageSelected(int position) {
 		currentPosion=position;
+		((MyOrder_All_Fragment)fragments.get(position)).getData();
 		setBackground_slide(position);
 	}
 

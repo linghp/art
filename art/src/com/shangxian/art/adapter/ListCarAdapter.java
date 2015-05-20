@@ -164,6 +164,7 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 			holder.goodsPrice = (TextView) convertView.findViewById(R.id.car_goods_price);
 			holder.check_goods = (CheckBox) convertView.findViewById(R.id.check_goods);
 			holder.updata = (ImageView) convertView.findViewById(R.id.car_updata);
+			holder.updata.setVisibility(View.VISIBLE);
 			mAbImageLoader_goodsImg.display(holder.goodsImg,Constant.BASEURL
 					+ item.getListCarGoodsBean().getPhoto());
 			// 给控件赋值

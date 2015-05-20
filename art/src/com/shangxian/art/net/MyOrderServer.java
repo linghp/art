@@ -1,12 +1,9 @@
 package com.shangxian.art.net;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.text.TextUtils;
 
-import com.ab.http.AbRequestParams;
 import com.google.gson.Gson;
+import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.utils.MyLogger;
@@ -26,6 +23,12 @@ public class MyOrderServer extends BaseServer {
 		void onHttpResultMore(MyOrderItem_all myOrderItemAll);
 	}
 
+	/*
+	 * 返回订单详情监听
+	 */
+	public interface OnHttpResultOrderDetailsListener {
+		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean);
+	}
 	/*
 	 * 返回取消订单监听
 	 */
@@ -91,6 +94,41 @@ public class MyOrderServer extends BaseServer {
 		return myOrderItem_all;
 	}
 
+	/**
+	 * 订单详情
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toGetOrderDetails(String ordernumber,
+			final OnHttpResultOrderDetailsListener l) {
+		toGet(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultOrderDetails(null);
+					} else {
+						l.onHttpResultOrderDetails(getMyOrderOrderDetails(res));
+					}
+				}
+			}
+
+			private MyOrderDetailBean getMyOrderOrderDetails(String res) {
+				MyOrderDetailBean myOrderDetailBean=null;
+				try {
+					Gson gson = new Gson();
+					myOrderDetailBean = gson.fromJson(res, MyOrderDetailBean.class);
+					MyLogger.i(myOrderDetailBean.toString());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return myOrderDetailBean;
+			}
+		});
+	}
 	/**
 	 * 取消订单
 	 * 

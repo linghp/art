@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +32,7 @@ public class BaseActivity extends AbActivity {
 	protected MyApplication app;
 	protected AbHttpUtil httpUtil;
 	protected UserInfo curUserInfo;
+	protected LayoutInflater inflater;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class BaseActivity extends AbActivity {
 		share = LocalUserInfo.getInstance(this);
 		curUserInfo = share.getUser();
 		app = MyApplication.getInstance();
+		inflater = LayoutInflater.from(this);
 		mAc = this;
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
