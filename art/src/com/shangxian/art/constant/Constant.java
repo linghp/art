@@ -80,4 +80,7 @@ public class Constant {
      * ----------------------------------------- activity 跳转 Intent传值相关 (INT) -----------------------------------------------------
      */
     public static final String INT_SAFE_PAY_NEW = "new_safe_paye";
+    public static final String INT_SEARCH_TO = "int_search_to";
+    public static final int INT_SEARCH_SHOP = 0x00001005;
+    public static final int INT_SEARCH_GOODS = 0x00001006;
 }

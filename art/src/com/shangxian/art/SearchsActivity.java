@@ -2,13 +2,19 @@ package com.shangxian.art;
 
 import java.util.List;
 
+import m.framework.utils.Utils;
+
 import com.shangxian.art.adapter.SearchsAdapter;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.base.DataTools;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.SearchProductInfo;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.SearchServer;
 import com.shangxian.art.net.SearchServer.OnSearchProductListener;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,11 +22,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 public class SearchsActivity extends BaseActivity {
-	private SearchModel curModel = SearchModel.normal;
+	private SearchModel curModel = SearchModel.shop;
 	private ImageView iv_back;
 	private ImageView iv_search;
 	private EditText et_sreach;
@@ -37,9 +45,18 @@ public class SearchsActivity extends BaseActivity {
 	private LinearLayout ll_noData;
 	private LinearLayout ll_loading;
 	private TextView tv_m;
+	private LinearLayout ll_scan;
+	private LinearLayout popuv;
+	private LinearLayout ll_shop;
+	private LinearLayout ll_goods;
+	private PopupWindow popu;
+	private TextView tv_sea;
+	private boolean isChangModel;
 
 	public enum SearchModel {
-		product, shop, all, normal
+		product, 
+		shop, 
+		all, 
 	}
 
 	@Override
@@ -48,22 +65,32 @@ public class SearchsActivity extends BaseActivity {
 		setContentView(R.layout.act_searchs);
 		initData();
 		initView();
+		
 		listener();
 	}
 
 	private void initData() {
-
+		if (getIntent().getIntExtra(Constant.INT_SEARCH_TO, Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
+			curModel = SearchModel.shop;
+		} else if (getIntent().getIntExtra(Constant.INT_SEARCH_TO, Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
+			curModel = SearchModel.product;
+		} else {
+			curModel = SearchModel.shop;
+		}
 	}
 
 	private void initView() {
 		iv_back = (ImageView) findViewById(R.id.iv_back);
 		iv_search = (ImageView) findViewById(R.id.iv_search);
+		
+		tv_sea = (TextView) findViewById(R.id.tv_sear);
 
 		et_sreach = (EditText) findViewById(R.id.et_search);
 
 		ll_group = (LinearLayout) findViewById(R.id.ll_group);
 		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
 		ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
+		ll_scan = (LinearLayout) findViewById(R.id.ll_scan);
 
 		lv_info = (ListView) findViewById(R.id.lv_info);
 		addFoot();
@@ -71,9 +98,46 @@ public class SearchsActivity extends BaseActivity {
 				info == null ? null : info.getData());
 		lv_info.setAdapter(searchsAdapter);
 
+		initPopuWindow();
 		changeUi(UiModel.normal);
+		if (curModel == SearchModel.shop) {
+			changeUi(UiModel.shop);
+		} else {
+			changeUi(UiModel.goods);
+		}
 	}
 
+	@SuppressWarnings("deprecation")
+	private void initPopuWindow() {
+		popuv = (LinearLayout) getLayoutInflater().inflate(R.layout.search_popu, null); 
+		ll_shop = (LinearLayout) popuv.findViewById(R.id.popu_shop);
+		ll_goods = (LinearLayout) popuv.findViewById(R.id.popu_goods);
+		popu = new PopupWindow(popuv, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+		
+		popu.setTouchable(true);
+		popu.setOutsideTouchable(true);
+		// 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景  
+        popu.setBackgroundDrawable(new BitmapDrawable());
+        
+        popu.getContentView().setFocusableInTouchMode(true);
+        popu.getContentView().setFocusable(true);
+        
+        ll_goods.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				changeUi(UiModel.goods);
+				popu.dismiss();
+			}
+		});
+        ll_shop.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				changeUi(UiModel.shop);
+				popu.dismiss();
+			}
+		});
+	}
+	
 	private void addFoot() {
 		footLayout = (LinearLayout) getLayoutInflater().inflate(
 				R.layout.search_loadmore, null);
@@ -95,8 +159,8 @@ public class SearchsActivity extends BaseActivity {
 	}
 
 	private void loadSearch() {
-		SearchServer.onSearchProduct(scan_info, "0", "10",
-				"{'createDate': 'asc'}", new OnSearchProductListener() {
+		SearchServer.onSearchProduct(scan_info, "0", "10", curModel == SearchModel.shop
+				, new OnSearchProductListener() {
 					@Override
 					public void onSearch(SearchProductInfo product) {
 						if (!product.isNull()) {
@@ -117,7 +181,7 @@ public class SearchsActivity extends BaseActivity {
 
 	private void loadMore() {
 		SearchServer.onSearchProduct(scan_info, info.getStart() + "",
-				info.getPageSize() + "", "{'createDate': 'asc'}",
+				info.getPageSize() + "", curModel == SearchModel.shop,
 				new OnSearchProductListener() {
 					@Override
 					public void onSearch(SearchProductInfo product) {
@@ -147,7 +211,8 @@ public class SearchsActivity extends BaseActivity {
 				if (TextUtils.isEmpty(scan)) {
 					myToast("请输入搜索条件");
 				} else {
-					if (!scan.equals(scan_info)) {
+					if (!scan.equals(scan_info) || isChangModel) {
+						isChangModel = !isChangModel;
 						scan_info = scan;
 						changeUi(UiModel.loading);
 						loadSearch();
@@ -155,12 +220,26 @@ public class SearchsActivity extends BaseActivity {
 				}
 			}
 		});
+		ll_group.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				popu.showAsDropDown(ll_scan, - Utils.dipToPx(mAc,  8), 0);
+			}
+		});
 	}
 
 	public enum UiModel {
-		footerToLoad, footerLoading, footerNoMore, loading, noData, normal, showData
+		footerToLoad, 
+		footerLoading, 
+		footerNoMore, 
+		loading, 
+		noData, 
+		normal, 
+		showData,
+		shop,
+		goods
 	}
-
+	
 	private void changeUi(UiModel m) {
 		switch (m) {
 		case footerToLoad:
@@ -200,6 +279,20 @@ public class SearchsActivity extends BaseActivity {
 			ll_loading.setVisibility(View.GONE);
 			ll_noData.setVisibility(View.GONE);
 			lv_info.setVisibility(View.VISIBLE);
+			break;
+		case shop:
+			tv_sea.setText("商铺");
+			ll_shop.setSelected(true);
+			ll_goods.setSelected(false);
+			curModel = SearchModel.shop;
+			isChangModel = true;
+			break;
+		case goods:
+			tv_sea.setText("商品");
+			ll_goods.setSelected(true);
+			ll_shop.setSelected(false);
+			curModel = SearchModel.product;
+			isChangModel = true;
 			break;
 		}
 	}

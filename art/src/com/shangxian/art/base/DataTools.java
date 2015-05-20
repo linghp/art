@@ -21,8 +21,8 @@ public class DataTools {
 	
 	//屏幕相关
 	private DisplayMetrics metrics;
-	private static int w_screeen;
-	private static int h_screeen;
+	public static int w_screeen;
+	public static int h_screeen;
 	
 	private DataTools(){
 		datas = new HashMap<String, Serializable>();
