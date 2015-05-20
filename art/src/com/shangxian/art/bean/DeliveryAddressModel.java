@@ -2,33 +2,58 @@ package com.shangxian.art.bean;
 
 import java.io.Serializable;
 
-public class DeliveryAddressModel implements Serializable{
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-	private String name;
-	private String num;
-	private String address;
-	public String getName() {
-		return name;
+public class DeliveryAddressModel implements Serializable{
+	@Expose
+	private Integer id;
+	@Expose
+	private String deliveryAddress;
+	@Expose
+	private String receiverName;
+	@Expose
+	private String receiverTel;
+	@SerializedName("default")
+	@Expose
+	private Boolean _default;
+	public Integer getId() {
+		return id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getNum() {
-		return num;
+	public String getDeliveryAddress() {
+		return deliveryAddress;
 	}
-	public void setNum(String num) {
-		this.num = num;
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
 	}
-	public String getAddress() {
-		return address;
+	public String getReceiverName() {
+		return receiverName;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+	public String getReceiverTel() {
+		return receiverTel;
+	}
+	public void setReceiverTel(String receiverTel) {
+		this.receiverTel = receiverTel;
+	}
+	public Boolean get_default() {
+		return _default;
+	}
+	public void set_default(Boolean _default) {
+		this._default = _default;
 	}
 	@Override
 	public String toString() {
-		return "DeliveryAddressModel [name=" + name + ", num=" + num
-				+ ", address=" + address + "]";
+		return "DeliveryAddressModel [id=" + id + ", deliveryAddress="
+				+ deliveryAddress + ", receiverName=" + receiverName
+				+ ", receiverTel=" + receiverTel + ", _default=" + _default
+				+ "]";
 	}
-	
+
+
 }

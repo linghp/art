@@ -163,6 +163,8 @@
     <color name="transparentblack2">#65000000</color><!--黑色透明 -->
     <color name="transparentblack3">#42000000</color><!--黑色透明 -->
     <color name="transparentblack4">#20000000</color><!--黑色透明 -->
+    <color name="transparentblack5">#12000000</color><!--黑色透明 -->
+    
     <color name="transparentwhite1">#8affffff</color><!--白色透明 -->
     <color name="transparentwhite2">#65ffffff</color><!--白色透明 -->
     <color name="transparentwhite3">#42ffffff</color><!--白色透明 -->

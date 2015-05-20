@@ -9,10 +9,11 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 商品bean
+ * 
  * @author Administrator
  *
  */
-public class ListCarGoodsBean implements Serializable{
+public class ListCarGoodsBean implements Serializable {
 
 	/**
 	 * 
@@ -40,13 +41,13 @@ public class ListCarGoodsBean implements Serializable{
 
 	@Expose
 	private Map<String, List<String>> specs;
-    private Map<String, String> selectedSpec;
+	private Map<String, String> selectedSpec;
 	@Expose
 	private String photo; // 图片路径
 
 	@Expose
 	private int quantity; // 数量
-		@Expose
+	@Expose
 	private float promotionPrice; // 促销价
 
 	@Expose
@@ -58,12 +59,40 @@ public class ListCarGoodsBean implements Serializable{
 	@SerializedName("new")
 	@Expose
 	private Boolean _new; // 是否是最新
-	
+
 	@Expose
 	private Integer id;
 
+	/**
+	 * 搜索商铺 添加时间 5/20
+	 */
+	@Expose
+	private String shopName;
 
-	
+	@Expose
+	private String logo;
+
+	@Expose
+	private String subTitle;
+
+	@Expose
+	private Integer price;
+
+	/**
+	 * 关注商品列表 添加时间 5/20
+	 */
+	@Expose
+	private String productPhoto;
+
+	@Expose
+	private String productName;
+
+	/**
+	 * 关注商铺列表 添加时间 5/20
+	 */
+	@Expose
+	private String shopLogo; // 商铺关注图片
+
 	public String getProductId() {
 		return productId;
 	}
@@ -87,7 +116,6 @@ public class ListCarGoodsBean implements Serializable{
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
 	}
-
 
 	public Map<String, List<String>> getSpecs() {
 		return specs;
@@ -169,20 +197,69 @@ public class ListCarGoodsBean implements Serializable{
 		this._new = _new;
 	}
 
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public String getProductPhoto() {
+		return productPhoto;
+	}
+
+	public void setProductPhoto(String productPhoto) {
+		this.productPhoto = productPhoto;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof ListCarGoodsBean)) {
 			return false;
 		} else {
 			ListCarGoodsBean bean = (ListCarGoodsBean) o;
-			if (bean.id == id && bean.categoryId == categoryId && bean.shopId == shopId && bean.productId == productId) {
+			if (bean.id == id && bean.categoryId == categoryId
+					&& bean.shopId == shopId && bean.productId == productId) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ListCarGoodsBean [cartItemId=" + cartItemId + ", categoryId="
@@ -191,6 +268,9 @@ public class ListCarGoodsBean implements Serializable{
 				+ selectedSpec + ", photo=" + photo + ", quantity=" + quantity
 				+ ", promotionPrice=" + promotionPrice + ", reDetails="
 				+ reDetails + ", originalPrice=" + originalPrice + ", _new="
-				+ _new + ", id=" + id + "]";
+				+ _new + ", id=" + id + ", shopName=" + shopName + ", logo="
+				+ logo + ", subTitle=" + subTitle + ", price=" + price
+				+ ", productPhoto=" + productPhoto + ", productName="
+				+ productName + "]";
 	}
 }
