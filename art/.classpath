@@ -8,6 +8,5 @@
 	<classpathentry exported="true" kind="lib" path="libs/alipaysdk.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/alipayutdid.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/alipaysecsdk.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/android-support-v13.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

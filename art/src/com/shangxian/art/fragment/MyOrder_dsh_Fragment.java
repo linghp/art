@@ -29,7 +29,7 @@ import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 
 /**
- * 我的订单——待收货
+ * 我的订单——待收货   暂时不用了
  * @author Administrator
  *
  */

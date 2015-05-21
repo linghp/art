@@ -215,7 +215,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp" >
 
-            <LinearLayout
+            <com.shangxian.art.view.MyLinearlayout
                 android:id="@+id/payl_ll_zhi"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -227,9 +227,9 @@
                     android:id="@+id/payc_cb_zhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/check_sel"
+                    android:button="@drawable/check_sel" 
                     android:checked="true"
-                    android:focusable="false" />
+                     />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -243,14 +243,14 @@
                     android:layout_marginLeft="5dp"
                     android:text="支付宝支付"
                     android:textSize="@dimen/list_summary_size" />
-            </LinearLayout>
+            </com.shangxian.art.view.MyLinearlayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <com.shangxian.art.view.MyLinearlayout
                 android:id="@+id/payl_ll_yin"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -259,11 +259,11 @@
                 android:orientation="horizontal" >
 
                 <CheckBox
-                    android:id="@+id/payc_cb_yin"
+                    android:id="@+id/payc_cb_yin" 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/check_sel"
-                    android:focusable="false" />
+                     />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -277,7 +277,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="银行卡/信用卡支付"
                     android:textSize="@dimen/list_summary_size" />
-            </LinearLayout>
+            </com.shangxian.art.view.MyLinearlayout>
         </LinearLayout>
 
         <LinearLayout

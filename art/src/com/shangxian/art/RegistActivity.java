@@ -117,6 +117,15 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 			ll_li2.startAnimation(anim_right_in);
 			ll_li2.setVisibility(View.VISIBLE);
 			ll_li3.setVisibility(View.GONE);
+			//变成136****1111
+			char[] phones=phone.toCharArray();
+			for (int i = 0; i < phones.length; i++) {
+				if(i>2&&i<7){
+					phones[i]='*';
+				}
+			}
+			String phonestar=new String(phones);
+			((TextView)findViewById(R.id.regt_tv_phone)).setText(String.format(getString(R.string.text_register2_phone), phonestar));
 			currentStep = 2;
 			break;
 		case TI3:

@@ -113,8 +113,12 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 			holder.tv_payment.setText("￥"+CommonUtil.priceConversion(myOrderItem.getTotalPrice()));
 	        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 					+ myOrderItem.getShopLogo());
-			if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])){//根据status显示item下面的按钮
+	        
+	        //根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
+			if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])){//待付款
 				holder.tv_01.setText("取消订单");
+				holder.tv_02.setText("付款");
+				holder.tv_01.setVisibility(View.VISIBLE);
 				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
 					
@@ -134,10 +138,10 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 						PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), (Activity)context);
 					}
 				});
-			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[7])){
-				holder.tv_02.setOnClickListener(null);
-				holder.tv_02.setVisibility(View.GONE);
+			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[7])){//已取消交易
 				holder.tv_01.setText("删除订单");
+				holder.tv_01.setVisibility(View.VISIBLE);
+				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
@@ -146,7 +150,20 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 						MyOrderServer.toDelOrder(myOrderItem, MyOrderListAdapter.this);
 					}
 				});
+			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])){//待发货
+				holder.tv_02.setText("退款");
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.VISIBLE);
+				holder.tv_02.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						CommonUtil.toast("click", context);
+					}
+				});
 			}
+			
+			
 			}
 		return convertView;
 	}

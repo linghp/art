@@ -42,7 +42,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private TopView topView;
 	private ListView listview;
 	private TextView tv_car_allprice_value;
-	private View headView = null;
+	private View headView;
+	private View rl_address ;
 	
 	private ListConfirmOrderAdapter listadapter;
 	private List<ListCarStoreBean> listStoreBean;
@@ -110,6 +111,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		
 		initHeadView();
 		listview.addHeaderView(headView);
+		rl_address=findViewById(R.id.rl_address);
+		rl_address.setOnClickListener(this);
 	}
 	
 	private void initHeadView() {
@@ -123,6 +126,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		case R.id.tv_settlement:
 			dosettlement();
 			//myToast("去结算");
+			break;
+		case R.id.rl_address:
+			myToast("待完善中...");
 			break;
 
 		default:

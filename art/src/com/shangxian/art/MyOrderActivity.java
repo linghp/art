@@ -64,16 +64,19 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 //	@"未提交",@"PENDING",@"待付款",@"SUBMITTED",@"待发货",@"PAID",@"待收货",@"SHIPPING",@"已完成交易"
 //	,@"COMPLETED",@"退款中",@"ORDER_RETURNING",@"待评价",@"EVALUATE",@"已取消交易",@"CANCELLED"
 	public static String[] orderState={"PENDING","SUBMITTED","PAID","SHIPPING","COMPLETED","ORDER_RETURNING","EVALUATE","CANCELLED"};
-	private String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
+	public static String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
-	
+	static{
+		for (int i = 0; i < orderState.length; i++) {
+			map_orderStateValue.put(orderState[i], orderStateValue[i]);
+		}
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_order);
 		
 		initViews();
-		initdata();
 		listener();
 		initViewPager();
         if (savedInstanceState != null) {
@@ -91,12 +94,6 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		tv_second.setOnClickListener(this);
 		tv_three.setOnClickListener(this);
 		tv_four.setOnClickListener(this);
-	}
-
-	private void initdata() {
-		for (int i = 0; i < orderState.length; i++) {
-			map_orderStateValue.put(orderState[i], orderStateValue[i]);
-		}
 	}
 
 	public void initDateFirstFragment(){

@@ -8,24 +8,27 @@ import java.util.Map.Entry;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.image.AbImageLoader;
 import com.google.gson.Gson;
+import com.shangxian.art.MainActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.CommodityContentModel;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
@@ -41,13 +44,18 @@ public class GoodsDialog extends Dialog implements
 	private Animation anim_in;
 	private Animation anim_out;
 	private ImageView iv_cha;
+
+	private Button bt01, bt02;
+	private EditText edt;
+	private int num = 0;// 数量
+
 	private Context context;
 
 	private CarItem item;
 	private TextView tv_title;
 	private AbImageLoader mAbImageLoader;
 
-	//商品详情模块
+	// 商品详情模块
 	private CommodityContentModel commodityContentModel;
 	private GoodsDialogConfirmListener confirmListener;
 	private String json;
@@ -56,10 +64,11 @@ public class GoodsDialog extends Dialog implements
 		void goodsDialogConfirm(String str);
 	}
 
-	public GoodsDialog(Context context,GoodsDialogConfirmListener confirmListener) {
+	public GoodsDialog(Context context,
+			GoodsDialogConfirmListener confirmListener) {
 		super(context, android.R.style.Theme_Translucent);
 		this.context = context;
-		this.confirmListener=confirmListener;
+		this.confirmListener = confirmListener;
 		init();
 	}
 
@@ -128,13 +137,20 @@ public class GoodsDialog extends Dialog implements
 
 		ll_options_add = (LinearLayout) findViewById(R.id.ll_options_add);
 
+		bt01 = (Button) findViewById(R.id.addbt);
+		bt02 = (Button) findViewById(R.id.subbt);
+		edt = (EditText) findViewById(R.id.edt);
+		bt01.setTag("+");
+		bt02.setTag("-");
+
 		upDataView();
 	}
 
 	private void upDataView() {
 		if (item != null) {
-			tv_price.setText("¥"+ CommonUtil.priceConversion(
-							item.listCarGoodsBean.getPromotionPrice()));
+			tv_price.setText("¥"
+					+ CommonUtil.priceConversion(item.listCarGoodsBean
+							.getPromotionPrice()));
 			// tv_option.setText(item.listCarGoodsBean.getSpecs());
 			tv_title.setText(item.listCarGoodsBean.getName());
 			String url = Constant.BASEURL + item.listCarGoodsBean.getPhoto();
@@ -144,39 +160,39 @@ public class GoodsDialog extends Dialog implements
 					.getSpecs();
 
 			tv_price.setText("¥  "
-					+ CommonUtil.priceConversion(
-							commodityContentModel.getPromotionPrice()));
+					+ CommonUtil.priceConversion(commodityContentModel
+							.getPromotionPrice()));
 			// tv_option.setText(item.listCarGoodsBean.getSpecs());
 			tv_title.setText(commodityContentModel.getName());
 			String url = Constant.BASEURL
 					+ commodityContentModel.getPhotos().get(0);
 			mAbImageLoader.display(iv_icon, url);
-			 List<String> specStrs=new ArrayList<String>();
+			List<String> specStrs = new ArrayList<String>();
 			for (Entry<String, List<String>> listCarGoodsBean2 : specMap
 					.entrySet()) {
-				 specStrs.add(listCarGoodsBean2.getKey());
+				specStrs.add(listCarGoodsBean2.getKey());
 				// selectedSpec=listCarGoodsBean2.getValue();
 				View view = LayoutInflater.from(context).inflate(
 						R.layout.commoditycontent_sepcs_item, null);
 				((TextView) view.findViewById(R.id.textView1))
 						.setText(listCarGoodsBean2.getKey());
-				//添加属性值
-				ViewGroup vg_ad=(ViewGroup) view.findViewById(R.id.vg_add);
-				List<String> listvalues=listCarGoodsBean2.getValue();
+				// 添加属性值
+				ViewGroup vg_ad = (ViewGroup) view.findViewById(R.id.vg_add);
+				List<String> listvalues = listCarGoodsBean2.getValue();
 				for (String str : listvalues) {
-					TextView textView =new TextView(context);
+					TextView textView = new TextView(context);
 					textView.setText(str);
-					//textView.setBackgroundResource(R.drawable.reslib_item_bg);
-					//textView.setTag("");
+					// textView.setBackgroundResource(R.drawable.reslib_item_bg);
+					// textView.setTag("");
 					textView.setTextSize(14);
 					vg_ad.addView(textView);
 				}
-				
+
 				ll_options_add.addView(view);
 			}
-			String specStr="";
+			String specStr = "";
 			for (String str : specStrs) {
-				specStr=specStr+str+"  ";
+				specStr = specStr + str + "  ";
 			}
 			tv_option.setText("请选择  " + specStr);
 		}
@@ -185,6 +201,83 @@ public class GoodsDialog extends Dialog implements
 	private void initListener() {
 		iv_cha.setOnClickListener(this);
 		tv_sub.setOnClickListener(this);
+		bt01.setOnClickListener(new OnButtonClickListener());
+		bt02.setOnClickListener(new OnButtonClickListener());
+		edt.addTextChangedListener(new OnTextChangeListener());
+	}
+
+	/**
+	 * 加减按钮事件监听器
+	 * 
+	 *
+	 */
+	class OnButtonClickListener implements android.view.View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			String numString = edt.getText().toString();
+			if (numString == null || numString.equals("")) {
+				num = 0;
+				edt.setText("0");
+			} else {
+				if (v.getTag().equals("-")) {
+					if (++num < 0) // 先加，再判断
+					{
+						num--;
+						Toast.makeText(context, "请输入一个大于0的数字",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						edt.setText(String.valueOf(num));
+					}
+				} else if (v.getTag().equals("+")) {
+					if (--num < 0) // 先减，再判断
+					{
+						num++;
+						Toast.makeText(context, "请输入一个大于0的数字",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						edt.setText(String.valueOf(num));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * EditText输入变化事件监听器
+	 */
+	class OnTextChangeListener implements TextWatcher {
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			String numString = s.toString();
+			if (numString == null || numString.equals("")) {
+				num = 0;
+			} else {
+				int numInt = Integer.parseInt(numString);
+				if (numInt < 0) {
+					Toast.makeText(context, "请输入一个大于0的数字", Toast.LENGTH_SHORT)
+							.show();
+				} else {
+					// 设置EditText光标位置 为文本末端
+					edt.setSelection(edt.getText().toString().length());
+					num = numInt;
+				}
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+
+		}
+
 	}
 
 	@Override
@@ -192,16 +285,23 @@ public class GoodsDialog extends Dialog implements
 		if (v == iv_cha) {
 			dismiss();
 		} else if (tv_sub == v) {
-			Gson gson=new Gson();
-			String jsonsepcs=gson.toJson(commodityContentModel.getSpecs());
-			//服务器有问题 暂时改成这种格式
-			jsonsepcs=jsonsepcs.replace("[", "");
-			jsonsepcs=jsonsepcs.replace("]", "");
-			json = "{\"productId\":" + commodityContentModel.getId()
-					+ ",\"sepcs\":"+jsonsepcs+",\"buyCount\":"+1+"}";
-			MyLogger.i(json);
-           confirmListener.goodsDialogConfirm(json);
-           dismiss();
+			try {
+				Gson gson = new Gson();
+				String jsonsepcs = gson
+						.toJson(commodityContentModel.getSpecs());
+				// 服务器有问题 暂时改成这种格式
+				jsonsepcs = jsonsepcs.replace("[", "");
+				jsonsepcs = jsonsepcs.replace("]", "");
+				json = "{\"productId\":" + commodityContentModel.getId()
+						+ ",\"sepcs\":" + jsonsepcs + ",\"buyCount\":" + 1
+						+ "}";
+				MyLogger.i(json);
+				confirmListener.goodsDialogConfirm(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dismiss();
 		}
 	}
 

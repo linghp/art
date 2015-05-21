@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
@@ -24,7 +25,6 @@ import com.shangxian.art.utils.MyLogger;
  *
  */
 public class MineActivity extends BaseActivity implements OnClickListener{
-	private String username_local;
 	private View ll_loginbefore,ll_loginafter;
 	private TextView tv_username;
 	private ImageView user_head;
@@ -63,7 +63,7 @@ public class MineActivity extends BaseActivity implements OnClickListener{
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
 			tv_username=(TextView) findViewById(R.id.tv_username);
-			tv_username.setText(username_local);
+			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
 		}else{
 			ll_loginbefore.setVisibility(View.VISIBLE);
 			ll_loginafter.setVisibility(View.GONE);

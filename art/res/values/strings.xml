@@ -50,7 +50,7 @@
     <string name="title_activity_comment">评论</string>
     
     <string name="title_activity_searchs">SearchsActivity</string>
-    
+    <string name="text_register2_phone">验证码短信已发送到%s</string>
      <!-- 订单详情 -->
     <string name="title_activity_my_order_details">订单详情</string>
     <string name="text_order_Price">订单金额(含运费)：￥%s</string>

@@ -18,7 +18,7 @@ import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.utils.MyLogger;
 
 /**
- * 我的订单——待付款
+ * 我的订单——待付款   暂时不用了
  * @author Administrator
  *
  */

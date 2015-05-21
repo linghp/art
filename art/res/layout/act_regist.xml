@@ -158,7 +158,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="验证码短信已发送到150***6981" />
+                    android:text="验证码短信已发送到" />
 
                 <EditText
                     android:id="@+id/rege_et_yan"

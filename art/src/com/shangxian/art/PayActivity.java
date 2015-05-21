@@ -357,6 +357,9 @@ public class PayActivity extends BaseActivity {
 									data.putExtra("pay_order_res", true);
 									setResult(RESULT_OK, data);
 									finish();
+									if(orderids.size()==1){
+									MyOrderDetailsActivity.startThisActivity(orderids.get(0), PayActivity.this);
+									}
 								} else {
 									myToast("支付失败");
 								}

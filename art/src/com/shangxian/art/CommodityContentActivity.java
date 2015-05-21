@@ -208,7 +208,6 @@ public class CommodityContentActivity extends BaseActivity implements
 				bundle.putBoolean("isother", true);
 				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
 						ShoppingcartActivity.class, bundle, false);
-				;
 			}
 		});
 
@@ -245,43 +244,43 @@ public class CommodityContentActivity extends BaseActivity implements
 		});
 	}
 
-	private void refreshTask_detail(String url) {
-		// AbRequestParams params = new AbRequestParams();
-		// params.put("shopid", "1019");
-		// params.put("code", "88881110344801123456");
-		// params.put("phone", "15889936624");
-		httpUtil.get(url, new AbStringHttpResponseListener() {
-
-			@Override
-			public void onStart() {
-				MyLogger.i("");
-			}
-
-			@Override
-			public void onFinish() {
-				MyLogger.i("");
-				// AbDialogUtil.removeDialog(HomeActivity.this);
-				// mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				MyLogger.i(content);
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// AbToastUtil.showToast(HomeActivity.this, content);
-				// imgList.clear();
-				MyLogger.i(content);
-				if (!TextUtils.isEmpty(content)) {
-					webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
-				}
-
-			}
-		});
-	}
+//	private void refreshTask_detail(String url) {
+//		// AbRequestParams params = new AbRequestParams();
+//		// params.put("shopid", "1019");
+//		// params.put("code", "88881110344801123456");
+//		// params.put("phone", "15889936624");
+//		httpUtil.get(url, new AbStringHttpResponseListener() {
+//
+//			@Override
+//			public void onStart() {
+//				MyLogger.i("");
+//			}
+//
+//			@Override
+//			public void onFinish() {
+//				MyLogger.i("");
+//				// AbDialogUtil.removeDialog(HomeActivity.this);
+//				// mAbPullToRefreshView.onHeaderRefreshFinish();
+//			}
+//
+//			@Override
+//			public void onFailure(int statusCode, String content,
+//					Throwable error) {
+//				MyLogger.i(content);
+//			}
+//
+//			@Override
+//			public void onSuccess(int statusCode, String content) {
+//				// AbToastUtil.showToast(HomeActivity.this, content);
+//				// imgList.clear();
+//				MyLogger.i(content);
+//				if (!TextUtils.isEmpty(content)) {
+//					webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
+//				}
+//
+//			}
+//		});
+//	}
 	
 	
 	private void refreshTask(String url) {
@@ -387,7 +386,8 @@ public class CommodityContentActivity extends BaseActivity implements
              //商品详情
 							String url_detail = Constant.BASEURL + Constant.CONTENT + String.format(Constant.GOODSDETAIL, model.getId());
 							MyLogger.i(url_detail);
-							refreshTask_detail(url_detail);
+							//refreshTask_detail(url_detail);
+							webView.loadUrl(url_detail);
 						}
 						// else {
 						// viewPager.setVisibility(View.GONE);
@@ -493,7 +493,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.commoditycontent_jiarugouwuche:
+		case R.id.commoditycontent_jiarugouwuche://加入购物车
 			if (isLoginAndToLogin()) {
 				dotask_addcart();
 			}

@@ -111,6 +111,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="4dp"
+            android:textColor="@color/white"
             android:text="付款" />
     </LinearLayout>
 

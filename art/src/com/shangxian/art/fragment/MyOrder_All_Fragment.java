@@ -30,14 +30,14 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 /**
- * 我的订单——全部
+ * 我的订单——全部以及其他状态（待付款，待发货等）
  * 
- * @author Administrator
+ * @author ling
  *
  */
 public class MyOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
-		OnHeaderRefreshListener, OnFooterLoadListener,OnItemClickListener {
+		OnHeaderRefreshListener, OnFooterLoadListener,OnItemClickListener { 
 	private View view;
 	private TextView tv_empty;
 	private ListView listView;
