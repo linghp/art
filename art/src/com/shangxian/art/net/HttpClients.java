@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,6 +32,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.BaseServer.OnHttpListener;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 
@@ -62,7 +66,7 @@ public class HttpClients {
 				}
 			};
 		};
-		MyLogger.i("URL:"+baseUrl+"         JSON:"+json);
+		MyLogger.i("URL:" + baseUrl + "         JSON:" + json);
 		// final String user_token = ParkApplication.getPrefer().getString(
 		// Constants.USER_TOKEN, null);
 		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
@@ -73,13 +77,14 @@ public class HttpClients {
 			public void run() {
 				try {
 					HttpPost postMethod = new HttpPost(baseUrl);
-					postMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
+					postMethod.setHeader("Content-Type",
+							"application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("User-Token", user_token + "");
-						MyLogger.i("user-token--"+user_token);
+						MyLogger.i("user-token--" + user_token);
 					}
 					if (!TextUtils.isEmpty(json)) {
-						StringEntity se = new StringEntity(json.trim(),"UTF-8");
+						StringEntity se = new StringEntity(json.trim(), "UTF-8");
 						postMethod.setEntity(se);
 					}
 					// 将参数填入POST
@@ -125,9 +130,9 @@ public class HttpClients {
 			}
 		});
 	}
+
 	// get请求
-	public static void getDo(final String baseUrl,
-			final HttpCilentListener l) {
+	public static void getDo(final String baseUrl, final HttpCilentListener l) {
 		final Handler postHandler = new Handler() {
 			public void handleMessage(android.os.Message msg) {
 				int what = msg.what;
@@ -152,7 +157,8 @@ public class HttpClients {
 			public void run() {
 				try {
 					HttpGet postMethod = new HttpGet(baseUrl);
-					postMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
+					postMethod.setHeader("Content-Type",
+							"application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("User-Token", user_token + "");
 					}
@@ -200,10 +206,9 @@ public class HttpClients {
 			}
 		});
 	}
-	
+
 	// get请求
-	public static void delDo(final String baseUrl, 
-			final HttpCilentListener l) {
+	public static void delDo(final String baseUrl, final HttpCilentListener l) {
 		final Handler postHandler = new Handler() {
 			public void handleMessage(android.os.Message msg) {
 				int what = msg.what;
@@ -228,8 +233,9 @@ public class HttpClients {
 			public void run() {
 				try {
 					HttpDelete delete = new HttpDelete(baseUrl);
-					//HttpGet postMethod = new HttpGet(baseUrl);
-					delete.setHeader("Content-Type", "application/json;charset=UTF-8");
+					// HttpGet postMethod = new HttpGet(baseUrl);
+					delete.setHeader("Content-Type",
+							"application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
 						delete.addHeader("User-Token", user_token + "");
 					}
@@ -305,13 +311,17 @@ public class HttpClients {
 			public void run() {
 				try {
 					HttpPost postMethod = new HttpPost(baseUrl);
-					//postMethod.setHeader("Content-Type", "application/json");
+					// postMethod.setHeader("Content-Type", "application/json");
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("User-Token", user_token + "");
 					}
-					/*StringEntity se = new StringEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
-					postMethod.setEntity(se);*/
-					 postMethod.setEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
+					/*
+					 * StringEntity se = new StringEntity(new
+					 * UrlEncodedFormEntity(pairs, "utf-8"));
+					 * postMethod.setEntity(se);
+					 */
+					postMethod.setEntity(new UrlEncodedFormEntity(pairs,
+							"utf-8"));
 					// 将参数填入POST
 					// Entity中
 					// 执行POST方法
@@ -352,6 +362,73 @@ public class HttpClients {
 				} catch (IOException e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public static void toDel(final String baseUrl, final HttpCilentListener l) {
+		final Handler handler = new Handler() {
+			public void handleMessage(android.os.Message msg) {
+				int what = msg.what;
+				switch (what) {
+				case FAIL:
+					l.onResponse(null);
+					break;
+				case SUCCESS:
+					String res = (String) msg.obj;
+					l.onResponse(res);
+					break;
+				}
+			};
+		};
+		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
+				Constant.PRE_USER_ID, Integer.MIN_VALUE);
+		executorService.submit(new Runnable() {
+			@Override
+			public void run() {
+				URL url = null;
+				try {
+					url = new URL(baseUrl);
+				} catch (MalformedURLException exception) {
+					exception.printStackTrace();
+				}
+				HttpURLConnection httpURLConnection = null;
+				try {
+					httpURLConnection = (HttpURLConnection) url
+							.openConnection();
+					httpURLConnection.setDoInput(true);
+					httpURLConnection.setInstanceFollowRedirects(false);
+					httpURLConnection.setRequestMethod("DELETE");
+					httpURLConnection.setRequestProperty("Content-Type",
+							"application/x-www-form-urlencoded");
+					if (user_token != Integer.MIN_VALUE)
+						httpURLConnection.addRequestProperty("User-Token",
+								user_token + "");
+					httpURLConnection.setRequestProperty("charset", "utf-8");
+					httpURLConnection.setUseCaches(false);
+					BufferedReader br = new BufferedReader(
+							new InputStreamReader(httpURLConnection
+									.getInputStream()));
+					String line, responseText = "";
+					while ((line = br.readLine()) != null) {
+						System.out.println("LINE: " + line);
+						responseText += line;
+					}
+					if (br != null) {
+						br.close();
+					}
+					Message msg = new Message();
+					msg.what = SUCCESS;
+					msg.obj = responseText;
+					handler.sendMessage(msg);
+				} catch (IOException exception) {
+					exception.printStackTrace();
+					handler.sendEmptyMessage(FAIL);
+				} finally {
+					if (httpURLConnection != null) {
+						httpURLConnection.disconnect();
+					}
 				}
 			}
 		});

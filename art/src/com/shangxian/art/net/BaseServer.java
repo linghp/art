@@ -57,14 +57,21 @@ public class BaseServer {
 	
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
-	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "send"; // 发送验证码
-	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/password"; //设置支付密码
+	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "user/password/captcha"; // 发送验证码
+	protected static final String NET_LOGIN_PASSWORD_SENDCODE = HOST + "send"; //发送支付密码验证码
+	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/payPassword?action=new"; //设置支付密码
+	protected static final String NET_NEW_LOGIN_PASSWORD = HOST + "user/password"; //设置新的登录密码
+	protected static final String NET_UPDATA_LOGIN_PASSWORD = HOST + "user/password"; //修改新的登录密码
+	protected static final String NET_UPDATA_PAYPASSWORD = HOST + "user/password"; //修改新的登录密码
+	
 	protected static final String NET_FOLLOW_PRODUCT = HOST + "aat/product";  //添加商品关注
 	protected static final String NET_FOLLOW_SHOP = HOST + "aat/shop";  //添加商铺关注
 	protected static final String NET_FOLLOW_PRODUCT_DEL = HOST + "aat/product/";  //删除商品关注
 	protected static final String NET_FOLLOW_SHOP_DEL = HOST + "aat/shop/";  //删除商铺关注
 	public static final String NET_FOLLOW_PRODUCT_LIST = HOST + "aats?type=product"; //获取产品关注列表 
 	public static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; //获取商铺关注列表
+	
+	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto";
 
 	/**
 	 * 
@@ -321,6 +328,7 @@ public class BaseServer {
 			}
 		});
 	}
+	
 	protected static void toPostWithToken2(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {
@@ -333,26 +341,6 @@ public class BaseServer {
 					// l.onHttp(res);
 					l.onHttp(res);
 				}
-			}
-		});
-	}
-
-	protected static void toFile(String url, AbRequestParams params,
-			final OnHttpListener l) {
-		mAbHttpUtil.post(url, params, new AbFileHttpResponseListener() {
-			@Override
-			public void onStart() {
-
-			}
-
-			@Override
-			public void onFinish() {
-
-			}
-
-			@Override
-			public void onFailure(int arg0, String arg1, Throwable arg2) {
-
 			}
 		});
 	}
@@ -402,7 +390,7 @@ public class BaseServer {
 	}
 
 	protected void toDel(String url, final OnHttpListener l){
-		HttpClients.delDo(url, new HttpCilentListener() {
+		HttpClients.toDel(url, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				if (l != null) {
