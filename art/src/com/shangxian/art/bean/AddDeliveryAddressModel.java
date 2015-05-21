@@ -3,17 +3,27 @@ package com.shangxian.art.bean;
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class AddDeliveryAddressModel implements Serializable{
 
+	@Expose
+	private Integer id;
 	@Expose
 	private String deliveryAddress;
 	@Expose
 	private String receiverName;
 	@Expose
 	private String receiverTel;
+	@SerializedName("default")
 	@Expose
-	private Boolean isDefault;
+	private Boolean _default;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getDeliveryAddress() {
 		return deliveryAddress;
 	}
@@ -32,18 +42,18 @@ public class AddDeliveryAddressModel implements Serializable{
 	public void setReceiverTel(String receiverTel) {
 		this.receiverTel = receiverTel;
 	}
-	public Boolean getIsDefault() {
-		return isDefault;
+	public Boolean get_default() {
+		return _default;
 	}
-	public void setIsDefault(Boolean isDefault) {
-		this.isDefault = isDefault;
+	public void set_default(Boolean _default) {
+		this._default = _default;
 	}
 	@Override
 	public String toString() {
-		return "AddDeliveryAddressModel [deliveryAddress=" + deliveryAddress
-				+ ", receiverName=" + receiverName + ", receiverTel="
-				+ receiverTel + ", isDefault=" + isDefault + "]";
+		return "AddDeliveryAddressModel [id=" + id + ", deliveryAddress="
+				+ deliveryAddress + ", receiverName=" + receiverName
+				+ ", receiverTel=" + receiverTel + ", _default=" + _default
+				+ "]";
 	}
-	
-	
+
 }

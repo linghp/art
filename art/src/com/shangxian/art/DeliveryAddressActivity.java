@@ -1,6 +1,5 @@
 package com.shangxian.art;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,8 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
@@ -38,6 +36,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private ListView listview;
 	private List<DeliveryAddressModel>list;
 	private DeliveryAddressAdapter adapter;
+	
+	Boolean isfromConfirmOrder = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -59,20 +59,13 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 	}
 	private void initData() {
-		list = new ArrayList<DeliveryAddressModel>();
-		/*for (int i = 0; i < 5; i++) {
-			DeliveryAddressModel model = new DeliveryAddressModel();
-			model.setName("小明"+i);
-			model.setNum("1869663681"+i);
-			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
-			list.add(model);
-		}*/
-		String url = "";
-		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-		refreshTask(url);
+		
+		Intent intent = new Intent();
+		intent.getBooleanExtra("isfromConfirmOrder", false);
 	}
 	private void refreshTask(String url) {
 		HttpClients.getDo(url, new HttpCilentListener() {
+
 
 			@Override
 			public void onResponse(String res) {
@@ -103,6 +96,23 @@ public class DeliveryAddressActivity extends BaseActivity{
 		});
 
 	}
+
+	@Override
+	protected void onResume() {
+		list = new ArrayList<DeliveryAddressModel>();
+		/*for (int i = 0; i < 5; i++) {
+			DeliveryAddressModel model = new DeliveryAddressModel();
+			model.setName("小明"+i);
+			model.setNum("1869663681"+i);
+			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
+			list.add(model);
+		}*/
+		String url = "";
+		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+		refreshTask(url);
+
+		super.onResume();
+	}
 	private void initListener() {
 		topView.setRightBtnListener(new OnClickListener() {
 			//title添加收货地址
@@ -118,7 +128,17 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//				CommonUtil.gotoActivity(DeliveryAddressActivity.this, .class, false);
+				if (isfromConfirmOrder != false) {
+					//确认订单
+					
+				}else {
+					//修改地址 
+					Bundle bundle = new Bundle();
+//					bundle.putBoolean("isRevise", true);
+//					bundle.putInt("id", list.get(position).getId());
+					bundle.putSerializable("DeliveryAddressModel", list.get(position));
+					CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
+				}
 			}
 		});
 
