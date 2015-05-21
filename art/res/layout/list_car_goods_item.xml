@@ -157,6 +157,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/edit"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/draw_tr_to_trb2"/>

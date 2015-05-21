@@ -43,7 +43,7 @@ public class HttpClients {
 
 	// 含有3个线程的线程池
 	private static final ExecutorService executorService = Executors
-			.newFixedThreadPool(10);
+			.newFixedThreadPool(20);
 
 	// post请求
 	public static void postDo(final String baseUrl, final String json,
@@ -79,7 +79,7 @@ public class HttpClients {
 						MyLogger.i("user-token--"+user_token);
 					}
 					if (!TextUtils.isEmpty(json)) {
-						StringEntity se = new StringEntity(json.trim());
+						StringEntity se = new StringEntity(json.trim(),"UTF-8");
 						postMethod.setEntity(se);
 					}
 					// 将参数填入POST

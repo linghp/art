@@ -120,7 +120,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					
 					@Override
 					public void onClick(View v) {
-						CommonUtil.toast("click", context);
+						//CommonUtil.toast("click", context);
 						MyOrderServer.toCancelOrder(myOrderItem, MyOrderListAdapter.this);
 					}
 				});
@@ -142,7 +142,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					
 					@Override
 					public void onClick(View v) {
-						CommonUtil.toast("click", context);
+						//CommonUtil.toast("click", context);
 						MyOrderServer.toDelOrder(myOrderItem, MyOrderListAdapter.this);
 					}
 				});
@@ -173,7 +173,6 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 	public void onHttpResultCancelOrder(MyOrderItem myOrderItem) {
 		if(myOrderItem!=null){
 			this.notifyDataSetChanged();
-			((MyOrderActivity)context).updateData();
 			CommonUtil.toast("取消成功", context);
 		}else{
 			CommonUtil.toast("取消失败", context);
@@ -185,7 +184,6 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 		if(myOrderItem!=null){
 			myOrderItems.remove(myOrderItem);
 			this.notifyDataSetChanged();
-			((MyOrderActivity)context).updateData();
 			CommonUtil.toast("删除成功", context);
 		}else{
 			CommonUtil.toast("删除失败", context);

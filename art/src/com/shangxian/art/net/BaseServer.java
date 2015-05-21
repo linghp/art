@@ -51,8 +51,10 @@ public class BaseServer {
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 	protected static final String NET_ORDERS =HOST + "orders/";//我的订单
-	protected static final String NET_CANCELORDER =HOST +  "/order/cancel/";//取消订单
-	protected static final String NET_DELORDER = HOST + "/order/del/";//删除订单
+	protected static final String NET_CANCELORDER =HOST +  "order/cancel/";//取消订单
+	protected static final String NET_DELORDER = HOST + "order/del/";//删除订单
+	protected static final String NET_ORDERDETAILS = HOST + "order/details?orderNumber=";//订单详情
+	
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
 	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "send"; // 发送验证码
