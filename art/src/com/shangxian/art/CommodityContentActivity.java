@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,8 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
+import com.shangxian.art.net.FollowServer;
+import com.shangxian.art.net.FollowServer.OnFollowListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -53,7 +56,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-		OnClickListener, HttpCilentListener,GoodsDialogConfirmListener {
+		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener {
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
@@ -68,7 +71,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	private WebView webView;
 
 	// 判断是否收藏
-	boolean iscollection = false;
+	//boolean iscollection = false;
 
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
@@ -78,14 +81,13 @@ public class CommodityContentActivity extends BaseActivity implements
 
 	RatingBar ratingbar;
 	float rating = 0;
+
 	// private StarRatingView ratingbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_commoditycontent);
-
 		initView();
 		initData();
 		listener();
@@ -153,16 +155,47 @@ public class CommodityContentActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
-					if (!iscollection) {
-						commoditycontent_shoucang
-								.setImageResource(R.drawable.collection_on);
-						myToast("已收藏");
+					// if (!iscollection) {
+					// commoditycontent_shoucang
+					// .setImageResource(R.drawable.collection_on);
+					// myToast("已收藏");
+					// } else {
+					// commoditycontent_shoucang
+					// .setImageResource(R.drawable.collection_off);
+					// myToast("取消收藏");
+					// }
+					// iscollection = !iscollection;
+					if (model == null) {
+						commoditycontent_shoucang.setSelected(false);
+						myToast("关注失败！");
 					} else {
-						commoditycontent_shoucang
-								.setImageResource(R.drawable.collection_off);
-						myToast("取消收藏");
+						commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
+						if (!commoditycontent_shoucang.isSelected()) {
+							new FollowServer().toDelFollowGoods(model.getCategoryId(), false, new OnFollowListener(){
+								@Override
+								public void onFollow(boolean isFollow) {
+									if (!isFollow) {
+										myToast("取消关注失败");
+										commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
+									} else {
+										myToast("关注成功");
+									}
+								}
+							});
+						} else {
+							new FollowServer().toFollowGoods(model.getCategoryId(), new OnFollowListener() {
+								@Override
+								public void onFollow(boolean isFollow) {
+									if (!isFollow) {
+										myToast("关注失败");
+										commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
+									} else {
+										myToast("关注成功");
+									}
+								}
+							});
+						}
 					}
-					iscollection = !iscollection;
 				}
 			}
 		});
@@ -199,7 +232,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
-		System.out.println(">>>>>>>>>>>url"+url);
+		System.out.println(">>>>>>>>>>>url" + url);
 		refreshTask(url);
 
 		webView.loadUrl("http://baidu.com");
@@ -287,7 +320,7 @@ public class CommodityContentActivity extends BaseActivity implements
 							}
 
 							imgList.addAll(model.getPhotos());
-							//MyLogger.i(imgList.get(0));
+							// MyLogger.i(imgList.get(0));
 							// viewPager.setVisibility(View.VISIBLE);
 							viewPager.setOnGetView(new OnGetView() {
 
@@ -334,10 +367,11 @@ public class CommodityContentActivity extends BaseActivity implements
 		// + model.getPhotos().get(0), commoditycontent_img,
 		// new Handler(), null);// TODO Auto-generated method stub
 		commoditycontent_jieshao.setText(model.getName().toString().trim());
-		commoditycontent_jiage.setText("￥" + CommonUtil.priceConversion(model.getPromotionPrice()));
+		commoditycontent_jiage.setText("￥"
+				+ CommonUtil.priceConversion(model.getPromotionPrice()));
 		// guige.setText(model.get);//规格
 		dianpu.setText(model.getShopName());
-		 address.setText(model.getShopAddress());//地址
+		address.setText(model.getShopAddress());// 地址
 		// 图片的下载
 		mAbImageLoader
 				.display(shopsimg, Constant.BASEURL + model.getShopLogo());
@@ -345,6 +379,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// System.out.println("**************"+ (float)
 		// ((float)model.getEvaluateScore()/100*5));
 		rating = (float) ((float) model.getEvaluateScore() / 100 * 5);
+		commoditycontent_shoucang.setSelected(model.getAttened());
 		// 设置评星星级
 		ratingbar.setRating(rating);
 	}
@@ -391,6 +426,8 @@ public class CommodityContentActivity extends BaseActivity implements
 		topView.showTitle();
 		topView.setBack(R.drawable.back);// 返回
 		topView.setTitle("商品详情");// title文字
+		
+		if (!isLogin()) commoditycontent_shoucang.setSelected(false);
 
 	}
 
@@ -460,7 +497,6 @@ public class CommodityContentActivity extends BaseActivity implements
 		}
 	}
 
-	
 	/**
 	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。 本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
 	 */
@@ -478,7 +514,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void dotask_addcart() {
-		GoodsDialog dialog =  new GoodsDialog(this,this);
+		GoodsDialog dialog = new GoodsDialog(this, this);
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}

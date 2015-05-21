@@ -8,7 +8,7 @@ import java.util.Map;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CommodityContentModel implements Serializable{
+public class CommodityContentModel implements Serializable {
 	@Expose
 	private Integer id;
 	@Expose
@@ -46,138 +46,204 @@ public class CommodityContentModel implements Serializable{
 	@Expose
 	private String shopAddress;
 	@Expose
-	private List<String> photos ;
+	private List<String> photos;
 	@Expose
 	private Integer evaluateScore;
 	@SerializedName("new")
 	@Expose
 	private Boolean _new;
+
+	@Expose
+	private Boolean attened;
+
 	public Integer getId() {
 		return id;
 	}
+
+	public Boolean getAttened() {
+		return attened;
+	}
+
+	public void setAttened(Boolean attened) {
+		this.attened = attened;
+	}
+
+	public void setOriginalPrice(float originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
+	public void setPromotionPrice(float promotionPrice) {
+		this.promotionPrice = promotionPrice;
+	}
+
+	public void setSpecs(Map<String, List<String>> specs) {
+		this.specs = specs;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getProductNumber() {
 		return productNumber;
 	}
+
 	public void setProductNumber(String productNumber) {
 		this.productNumber = productNumber;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public float getOriginalPrice() {
 		return originalPrice;
 	}
+
 	public void setOriginalPrice(Integer originalPrice) {
 		this.originalPrice = originalPrice;
 	}
+
 	public float getPromotionPrice() {
 		return promotionPrice;
 	}
+
 	public void setPromotionPrice(Integer promotionPrice) {
 		this.promotionPrice = promotionPrice;
 	}
+
 	public Integer getCategoryId() {
 		return categoryId;
 	}
+
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
 	public Map<String, List<String>> getSpecs() {
 		return specs;
 	}
+
 	public void setSpecs(HashMap<String, List<String>> specs) {
 		this.specs = specs;
 	}
+
 	public Integer getSellerId() {
 		return sellerId;
 	}
+
 	public void setSellerId(Integer sellerId) {
 		this.sellerId = sellerId;
 	}
+
 	public String getSellerName() {
 		return sellerName;
 	}
+
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
 	}
+
 	public Integer getShopId() {
 		return shopId;
 	}
+
 	public void setShopId(Integer shopId) {
 		this.shopId = shopId;
 	}
+
 	public String getShopName() {
 		return shopName;
 	}
+
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
+
 	public String getShopLogo() {
 		return shopLogo;
 	}
+
 	public void setShopLogo(String shopLogo) {
 		this.shopLogo = shopLogo;
 	}
+
 	public String getShopPhoneNumber() {
 		return shopPhoneNumber;
 	}
+
 	public void setShopPhoneNumber(String shopPhoneNumber) {
 		this.shopPhoneNumber = shopPhoneNumber;
 	}
+
 	public Integer getInventories() {
 		return inventories;
 	}
+
 	public void setInventories(Integer inventories) {
 		this.inventories = inventories;
 	}
+
 	public HashMap<String, List<String>> getProductOptions() {
 		return productOptions;
 	}
+
 	public void setProductOptions(HashMap<String, List<String>> productOptions) {
 		this.productOptions = productOptions;
 	}
+
 	public String getDetails() {
 		return details;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
 	public String getShopAddress() {
 		return shopAddress;
 	}
+
 	public void setShopAddress(String shopAddress) {
 		this.shopAddress = shopAddress;
 	}
+
 	public List<String> getPhotos() {
 		return photos;
 	}
+
 	public void setPhotos(List<String> photos) {
 		this.photos = photos;
 	}
+
 	public Integer getEvaluateScore() {
 		return evaluateScore;
 	}
+
 	public void setEvaluateScore(Integer evaluateScore) {
 		this.evaluateScore = evaluateScore;
 	}
+
 	public Boolean get_new() {
 		return _new;
 	}
+
 	public void set_new(Boolean _new) {
 		this._new = _new;
 	}
+
 	@Override
 	public String toString() {
 		return "CommodityContentModel [id=" + id + ", productNumber="
@@ -193,5 +259,5 @@ public class CommodityContentModel implements Serializable{
 				+ ", photos=" + photos + ", evaluateScore=" + evaluateScore
 				+ ", _new=" + _new + "]";
 	}
-	
+
 }

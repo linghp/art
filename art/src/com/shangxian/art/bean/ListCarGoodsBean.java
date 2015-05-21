@@ -15,6 +15,14 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ListCarGoodsBean implements Serializable {
 
+	public String getShopLogo() {
+		return shopLogo;
+	}
+
+	public void setShopLogo(String shopLogo) {
+		this.shopLogo = shopLogo;
+	}
+
 	/**
 	 * 
 	 */

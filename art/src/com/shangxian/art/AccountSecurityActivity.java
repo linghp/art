@@ -108,9 +108,11 @@ public class AccountSecurityActivity extends BaseActivity {
 			break;
 		case R.id.ll_my_item5:
 			//修改支付密码
-			Bundle bundle = new Bundle();
-			bundle.putBoolean("iszhifu", true);
-			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, ChangePasswordActivity.class, bundle, false);
+			if (isPayed(true)) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("iszhifu", true);
+				CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, ChangePasswordActivity.class, bundle, false);
+			}
 			break;
 		case R.id.ll_my_item6:
 			//找回支付密码

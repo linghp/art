@@ -59,8 +59,10 @@ public class BaseServer {
 	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/password"; //设置支付密码
 	protected static final String NET_FOLLOW_PRODUCT = HOST + "aat/product";  //添加商品关注
 	protected static final String NET_FOLLOW_SHOP = HOST + "aat/shop";  //添加商铺关注
-	protected static final String NET_FOLLOW_PRODUCT_LIST = HOST + "aats?type=product"; //获取产品关注列表 
-	protected static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; //获取商铺关注列表
+	protected static final String NET_FOLLOW_PRODUCT_DEL = HOST + "aat/product/";  //删除商品关注
+	protected static final String NET_FOLLOW_SHOP_DEL = HOST + "aat/shop/";  //删除商铺关注
+	public static final String NET_FOLLOW_PRODUCT_LIST = HOST + "aats?type=product"; //获取产品关注列表 
+	public static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; //获取商铺关注列表
 
 	/**
 	 * 
@@ -397,6 +399,18 @@ public class BaseServer {
 		});
 	}
 
+	protected void toDel(String url, final OnHttpListener l){
+		HttpClients.delDo(url, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+					l.onHttp(res);
+				}
+			}
+		});
+	}
+	
+	
 	protected interface OnHttpListener {
 		void onHttp(String res);
 	}

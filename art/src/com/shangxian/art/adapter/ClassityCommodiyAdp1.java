@@ -10,23 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassityCommdityModel;
-import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.Options;
 /**
  * 分类adapter
  * 
  */
-public class ClassityCommodiyAdp extends EntityAdapter<ListCarGoodsBean>{
+public class ClassityCommodiyAdp1 extends EntityAdapter<ClassityCommdityModel>{
 
-	public ClassityCommodiyAdp(Activity mAc, int layoutId,
-			List<ListCarGoodsBean> dates) {
+	public ClassityCommodiyAdp1(Activity mAc, int layoutId,
+			List<ClassityCommdityModel> dates) {
 		super(mAc, layoutId, dates);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -40,19 +38,24 @@ public class ClassityCommodiyAdp extends EntityAdapter<ListCarGoodsBean>{
 			holder.summary = (TextView) convertView.findViewById(R.id.item_commodity_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_commodity_img);
 			holder.price = (TextView) convertView.findViewById(R.id.item_commodity_price);
-			//holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
+			//			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getProductName());
-		//holder.summary.setText(dates.get(position).getReDetails());
-		holder.price.setText(CommonUtil.priceConversion((float)dates.get(position).getPrice())+"");
-		ImageLoader.getInstance().displayImage(Constant.BASEURL + getItem(position).getProductPhoto(), holder.img, Options.getListOptions());
+		holder.title.setText(dates.get(position).getName());
+		holder.summary.setText(dates.get(position).getReDetails());
+//		holder.price.setText(dates.get(position).getPromotionPrice()+"");
+		holder.price.setText(CommonUtil.priceConversion((float)dates.get(position).getPromotionPrice())+"");
+		Imageloader_homePager.displayImage(Constant.BASEURL
+				+ dates.get(position).getPhoto(),
+				holder.img,
+				new Handler(), null);
 		return convertView;
 	}
 	public static class ViewHolder{
 		TextView title,summary,price;
 		ImageView img;
+		//		ImageView shop;
 	}
 }
