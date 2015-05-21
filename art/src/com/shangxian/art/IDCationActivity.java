@@ -22,6 +22,10 @@ import android.widget.TextView;
 
 import com.ab.util.AbFileUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.photo.PhotoHelper;
+import com.shangxian.art.photo.PhotoHelper.ImageCallBack;
+import com.shangxian.art.photo.PhotoOptions;
+import com.shangxian.art.photo.PhotoUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
@@ -41,6 +45,8 @@ public class IDCationActivity extends BaseActivity{
 	private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
 	private static final int PHOTO_REQUEST_CUT = 3;// 结果
 	TextView btn;
+	
+	PhotoHelper photoHelper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -118,6 +124,12 @@ public class IDCationActivity extends BaseActivity{
 		TextView tv_paizhao = (TextView) window.findViewById(R.id.tv_content1);
 		tv_paizhao.setText("拍照");
 		tv_paizhao.setOnClickListener(new View.OnClickListener() {
+
+			/*@Override
+			public void onClick(View v) {
+				photoHelper = new PhotoHelper(new PhotoOptions(mAc).isCrop(false));
+				photoHelper.toNativePhoto();
+			}*/
 			@SuppressLint("SdCardPath")
 			public void onClick(View v) {
 
@@ -129,6 +141,7 @@ public class IDCationActivity extends BaseActivity{
 				startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
 				dlg.cancel();
 			}
+			
 		});
 		TextView tv_xiangce = (TextView) window.findViewById(R.id.tv_content2);
 		tv_xiangce.setText("相册");
@@ -151,6 +164,14 @@ public class IDCationActivity extends BaseActivity{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// MyLogger.i("onActivityResult");
 		if (resultCode == RESULT_OK) {
+			/*photoHelper.imageCallBack(requestCode, data, new ImageCallBack() {
+				
+				@Override
+				public void onCallBack(String imageUrl, Bitmap bitmap) {
+					photo1.setImageBitmap(PhotoUtil.zoomBitmap(mAc, bitmap));
+					
+				}
+			});*/
 			switch (requestCode) {
 			case PHOTO_REQUEST_TAKEPHOTO:
 
@@ -180,6 +201,7 @@ public class IDCationActivity extends BaseActivity{
 				break;
 
 			}
+
 			super.onActivityResult(requestCode, resultCode, data);
 
 		}

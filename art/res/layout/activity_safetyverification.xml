@@ -28,6 +28,7 @@
             android:textSize="@dimen/list_title_size" />
 
         <LinearLayout
+            android:id="@+id/safl_ll_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -172,8 +173,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="密码由6-20位英文字母、数字或符号组成"
-                android:textColor="@color/txt_black2"
+                android:text="注 :密码由6-20位英文字母、数字或符号组成"
+                android:textColor="@color/red300"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
 

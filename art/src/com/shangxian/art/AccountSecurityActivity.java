@@ -1,14 +1,16 @@
 package com.shangxian.art;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,15 +24,26 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ab.http.AbFileHttpResponseListener;
 import com.ab.util.AbFileUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.FileServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.TopView;
 
 /**
  * 设置(账户与安全)
+ * 
  * @author Administrator
  *
  */
@@ -56,13 +69,7 @@ public class AccountSecurityActivity extends BaseActivity {
 		imageName = LocalUserInfo.getInstance(this).getUserInfo(
 				LocalUserInfo.USERPHOTO_FILENAME);
 		if (!TextUtils.isEmpty(imageName)) {
-			File file = new File(imagelocaldir, imageName);
-			// 从文件中找
-			if (file.exists()) {
-				// Log.i("aaaa", "image exists in file" + filename);
-				iv_photo.setImageBitmap(BitmapFactory.decodeFile(imagelocaldir
-						+ imageName));
-			}
+			ImageLoader.getInstance().displayImage(Constant.BASEURL + imageName, iv_photo, Options.getListOptions());
 		}
 	}
 
@@ -78,7 +85,6 @@ public class AccountSecurityActivity extends BaseActivity {
 		topView.setTitle(getString(R.string.title_activity_accountsecurity));
 	}
 
-
 	public void doClick(View view) {
 		switch (view.getId()) {
 		case R.id.tv_logout:
@@ -91,38 +97,59 @@ public class AccountSecurityActivity extends BaseActivity {
 			showPhotoDialog();
 			break;
 		case R.id.ll_my_item1:
-			//收获地址管理
-			CommonUtil.gotoActivity(AccountSecurityActivity.this, DeliveryAddressActivity.class, false);
+			// 收获地址管理
+			CommonUtil.gotoActivity(AccountSecurityActivity.this,
+					DeliveryAddressActivity.class, false);
 			break;
 		case R.id.ll_my_item2:
-			//修改登录密码
-			CommonUtil.gotoActivity(AccountSecurityActivity.this, ChangePasswordActivity.class, false);
+			// 修改登录密码
+			// CommonUtil.gotoActivity(AccountSecurityActivity.this,
+			// ChangePasswordActivity.class, false);
+			Bundle bundle1 = new Bundle();
+			bundle1.putInt(Constant.INT_SAFE_PAY_NEW,
+					SafetyVerificationActivity.USER_PASS_UP);
+			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this,
+					SafetyVerificationActivity.class, bundle1, false);
 			break;
 		case R.id.ll_my_item3:
-			//找回登录密码
-			CommonUtil.gotoActivity(AccountSecurityActivity.this, SafetyVerificationActivity.class, false);
+			// 找回登录密码
+			// CommonUtil.gotoActivity(AccountSecurityActivity.this,
+			// SafetyVerificationActivity.class, false);
+			Bundle bundle2 = new Bundle();
+			bundle2.putInt(Constant.INT_SAFE_PAY_NEW,
+					SafetyVerificationActivity.USER_PASS_NEW);
+			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this,
+					SafetyVerificationActivity.class, bundle2, false);
 			break;
 		case R.id.ll_my_item4:
-			//手机认证
-			CommonUtil.gotoActivity(AccountSecurityActivity.this, PhoneValidateActivity.class, false);
+			// 手机认证
+			CommonUtil.gotoActivity(AccountSecurityActivity.this,
+					PhoneValidateActivity.class, false);
 			break;
 		case R.id.ll_my_item5:
-			//修改支付密码
+			// 修改支付密码
 			if (isPayed(true)) {
-				Bundle bundle = new Bundle();
-				bundle.putBoolean("iszhifu", true);
-				CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, ChangePasswordActivity.class, bundle, false);
+				Bundle bundle3 = new Bundle();
+				bundle3.putInt(Constant.INT_SAFE_PAY_NEW,
+						SafetyVerificationActivity.PAY_PASS_UP);
+				CommonUtil.gotoActivityWithData(AccountSecurityActivity.this,
+						SafetyVerificationActivity.class, bundle3, false);
 			}
 			break;
 		case R.id.ll_my_item6:
-			//找回支付密码
-			Bundle bundle1 = new Bundle();
-			bundle1.putBoolean("iszhifu", true);
-			CommonUtil.gotoActivityWithData(AccountSecurityActivity.this, SafetyVerificationActivity.class, bundle1, false);
+			// 找回支付密码
+			if (isPayed(true)) {
+				Bundle bundle4 = new Bundle();
+				bundle4.putInt(Constant.INT_SAFE_PAY_NEW,
+						SafetyVerificationActivity.PAY_PASS_NEW);
+				CommonUtil.gotoActivityWithData(AccountSecurityActivity.this,
+						SafetyVerificationActivity.class, bundle4, false);
+			}
 			break;
 		case R.id.ll_my_item7:
-			//实名认证
-			CommonUtil.gotoActivity(AccountSecurityActivity.this, IDCationActivity.class, false);
+			// 实名认证
+			CommonUtil.gotoActivity(AccountSecurityActivity.this,
+					IDCationActivity.class, false);
 			break;
 
 		default:
@@ -168,7 +195,6 @@ public class AccountSecurityActivity extends BaseActivity {
 				intent.setDataAndType(
 						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 				startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
-
 				dlg.cancel();
 			}
 		});
@@ -181,7 +207,6 @@ public class AccountSecurityActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case PHOTO_REQUEST_TAKEPHOTO:
-
 				startPhotoZoom(
 						Uri.fromFile(new File(imagelocaldir, imageName)), 480);
 				break;
@@ -203,8 +228,9 @@ public class AccountSecurityActivity extends BaseActivity {
 				MyLogger.i(imagelocaldir);
 				Bitmap bitmap = BitmapFactory.decodeFile(imagelocaldir
 						+ imageName);
-				iv_photo.setImageBitmap(bitmap);
+				// iv_photo.setImageBitmap(bitmap);
 				updatePhotoInServer(imageName);
+
 				break;
 
 			}
@@ -236,8 +262,52 @@ public class AccountSecurityActivity extends BaseActivity {
 	}
 
 	private void updatePhotoInServer(final String image) {
-		LocalUserInfo.getInstance(this).setUserInfo(
-				LocalUserInfo.USERPHOTO_FILENAME, image);
+		// LocalUserInfo.getInstance(this).setUserInfo(
+		// LocalUserInfo.USERPHOTO_FILENAME, image);
+		new FileServer().toFile(new File(imagelocaldir + imageName),
+				new RequestCallBack<String>() {
+					@Override
+					public void onSuccess(ResponseInfo<String> info) {
+						String res = info.result;
+						MyLogger.i(res);
+						myToast("res==" + res);
+						if (!TextUtils.isEmpty(res)) {
+							try {
+								JSONObject json = new JSONObject(res);
+								int result_code = json.getInt("result_code");
+								Type type = new TypeToken<List<String>>() {
+								}.getType();
+								List<String> imgs = new Gson().fromJson(
+										json.getString("result"), type);
+								LocalUserInfo
+										.getInstance(
+												AccountSecurityActivity.this)
+										.setUserInfo(
+												LocalUserInfo.USERPHOTO_FILENAME,
+												imgs.get(1));
+								com.nostra13.universalimageloader.core.ImageLoader
+										.getInstance().displayImage(
+												Constant.BASEURL + imgs.get(1),
+												iv_photo,
+												Options.getListOptions());
+							} catch (Exception e) {
+								e.printStackTrace();
+								myToast("上传失败");
+							}
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						myToast("上传失败");
+					}
+
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+
+					}
+				});
 		// Map<String, String> map = new HashMap<String, String>();
 		// if ((new File("/sdcard/fanxin/" + image)).exists()) {
 		// map.put("file", "/sdcard/fanxin/" + image);

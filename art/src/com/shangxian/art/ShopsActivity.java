@@ -39,44 +39,48 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.FollowServer;
+import com.shangxian.art.net.FollowServer.OnFollowListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
  * 商家情况
+ * 
  * @author Administrator
  *
  */
-public class ShopsActivity extends BaseActivity implements OnClickListener{
-	ImageView img,shopsimg,collectionimg,img1,img2;
-	TextView shopsname,guanzu,all,up,youhui,summary1,price1,summary2,price2;
-	LinearLayout call,dingwei;
+public class ShopsActivity extends BaseActivity implements OnClickListener {
+	ImageView img, shopsimg, collectionimg, img1, img2;
+	TextView shopsname, guanzu, all, up, youhui, summary1, price1, summary2,
+			price2;
+	LinearLayout call, dingwei;
 
-	//判断是否收藏
+	// 判断是否收藏
 	boolean iscollection = false;
-	//联系电话
+	// 联系电话
 	String phonenum = null;
-	TextView phone,address;
-	//popupwindow
+	TextView phone, address;
+	// popupwindow
 	private PopupWindow popupWindow;
 	private View view;
-	private TextView fenlei,jianjie;
+	private TextView fenlei, jianjie;
 
 	private View headView = null;
 	ListView mGridView;
-	//	GridLinearLayout mGridView;
+	// GridLinearLayout mGridView;
 	ShopsModel model;
-	List<ProductDto>list;
+	List<ProductDto> list;
 	ShopsAdapter adapter;
 
-	//数据请求
+	// 数据请求
 	private AbHttpUtil httpUtil = null;
 	private String url = "";
 
-	//图片下载器
+	// 图片下载器
 	private AbImageLoader mAbImageLoader = null;
-	
+
 	private String shopid;
 
 	@Override
@@ -92,33 +96,31 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void initHeadView() {
-		headView = LayoutInflater.from(this).inflate(
-				R.layout.head_shops, null);
-
+		headView = LayoutInflater.from(this).inflate(R.layout.head_shops, null);
 
 		img = (ImageView) headView.findViewById(R.id.shops_img);
-		/*//获取屏幕宽、高 
-		Display mDisplay= getWindowManager().getDefaultDisplay(); 
-		int width= mDisplay.getWidth();  
-		int Height= mDisplay.getHeight();
-		img.setScaleType(ImageView.ScaleType.FIT_CENTER);  
-		img.setAdjustViewBounds(true);  
-		img.setMaxHeight(Height);//屏幕高度  
-		img.setMaxWidth(width);//屏幕宽度 */
-		//img.setScaleType(ImageView.ScaleType.FIT_XY); 
-		LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		layoutParams.width=CommonUtil.getScreenWidth(this);
-		layoutParams.height=layoutParams.width*2/3;
+		/*
+		 * //获取屏幕宽、高 Display mDisplay= getWindowManager().getDefaultDisplay();
+		 * int width= mDisplay.getWidth(); int Height= mDisplay.getHeight();
+		 * img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		 * img.setAdjustViewBounds(true); img.setMaxHeight(Height);//屏幕高度
+		 * img.setMaxWidth(width);//屏幕宽度
+		 */
+		// img.setScaleType(ImageView.ScaleType.FIT_XY);
+		LayoutParams layoutParams = new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		layoutParams.width = CommonUtil.getScreenWidth(this);
+		layoutParams.height = layoutParams.width * 2 / 3;
 		img.setLayoutParams(layoutParams);
 
-		
 		shopsimg = (ImageView) headView.findViewById(R.id.shops_shopsimg);
-		collectionimg = (ImageView) headView.findViewById(R.id.shops_collectionimg);
-		shopsname= (TextView) headView.findViewById(R.id.shops_shopsname);
-		guanzu= (TextView) headView.findViewById(R.id.shops_guanzu);
-		all= (TextView) headView.findViewById(R.id.shops_all);
-		up= (TextView) headView.findViewById(R.id.shops_up);
-		youhui= (TextView) headView.findViewById(R.id.shops_youhui);
+		collectionimg = (ImageView) headView
+				.findViewById(R.id.shops_collectionimg);
+		shopsname = (TextView) headView.findViewById(R.id.shops_shopsname);
+		guanzu = (TextView) headView.findViewById(R.id.shops_guanzu);
+		all = (TextView) headView.findViewById(R.id.shops_all);
+		up = (TextView) headView.findViewById(R.id.shops_up);
+		youhui = (TextView) headView.findViewById(R.id.shops_youhui);
 
 		call = (LinearLayout) headView.findViewById(R.id.shops_call);
 		dingwei = (LinearLayout) headView.findViewById(R.id.shops_dingwei);
@@ -129,23 +131,25 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	private void initView() {
 		// TODO Auto-generated method stub
-		topView=(TopView) findViewById(R.id.top_title);
+		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.setRightBtnDrawable(R.drawable.more1);
-		topView.getRightbtn().setPadding(CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20));
+		topView.getRightbtn().setPadding(CommonUtil.dip2px(this, 20),
+				CommonUtil.dip2px(this, 20), CommonUtil.dip2px(this, 20),
+				CommonUtil.dip2px(this, 20));
 		topView.showCenterSearch();
-		topView.setBack(R.drawable.back);//返回
+		topView.setBack(R.drawable.back);// 返回
 
 		mGridView = (ListView) this.findViewById(R.id.shops_mListView);
-		//		mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
-		//		mGridView.setColumns(2);
-		//		summary1= (TextView) findViewById(R.id.shops_summary1);
-		//		price1= (TextView) findViewById(R.id.shops_price1);
-		//		summary2= (TextView) findViewById(R.id.shops_summary2);
-		//		price2= (TextView) findViewById(R.id.shops_price2);
+		// mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);
+		// mGridView.setColumns(2);
+		// summary1= (TextView) findViewById(R.id.shops_summary1);
+		// price1= (TextView) findViewById(R.id.shops_price1);
+		// summary2= (TextView) findViewById(R.id.shops_summary2);
+		// price2= (TextView) findViewById(R.id.shops_price2);
 		initHeadView();
 		mGridView.addHeaderView(headView);
-		//图片下载器
+		// 图片下载器
 		mAbImageLoader = AbImageLoader.newInstance(mAc);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
@@ -156,14 +160,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		list = new ArrayList<ProductDto>();
 		model = new ShopsModel();
-		//请求解析数据
+		// 请求解析数据
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String id = getIntent().getStringExtra("id");
 		String geturl = getIntent().getStringExtra("url");
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+id;
+			url = Constant.BASEURL + Constant.CONTENT + "/shop/" + id;
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
@@ -197,39 +201,47 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 					JSONObject jsonObject;
 					try {
 						jsonObject = new JSONObject(arg1);
-						String result_code = jsonObject.getString("result_code");
+						String result_code = jsonObject
+								.getString("result_code");
 						String reason = jsonObject.getString("reason");
-						if (result_code.equals("200")&&reason.equals("success")) {
-							JSONObject resultObject = jsonObject.getJSONObject("result");
-							model=gson.fromJson(resultObject.toString(),ShopsModel.class);
+						if (result_code.equals("200")
+								&& reason.equals("success")) {
+							JSONObject resultObject = jsonObject
+									.getJSONObject("result");
+							model = gson.fromJson(resultObject.toString(),
+									ShopsModel.class);
 							if (model != null) {
 								shopid = model.getId() + "";
-								mAbImageLoader.display(img, Constant.BASEURL+ model.getLogo());//图片
-								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getIndexLogo());//商铺图标
-								shopsname.setText(""+model.getName());//商铺名
-								guanzu.setText(model.getNoticeCount()+"人关注");//关注
-								all.setText(""+model.getProductCount());//全部商品
-								up.setText(""+model.getNewCount());//上新
-								youhui.setText(""+model.getSpecialCount());//优惠
-								phone.setText(model.getShopPhoneNumber());//电话
-								address.setText(model.getShopAddress());//地址
-								list=model.getProductDtos();
+								mAbImageLoader.display(img, Constant.BASEURL
+										+ model.getLogo());// 图片
+								mAbImageLoader
+										.display(shopsimg, Constant.BASEURL
+												+ model.getIndexLogo());// 商铺图标
+								shopsname.setText("" + model.getName());// 商铺名
+								guanzu.setText(model.getNoticeCount() + "人关注");// 关注
+								all.setText("" + model.getProductCount());// 全部商品
+								up.setText("" + model.getNewCount());// 上新
+								youhui.setText("" + model.getSpecialCount());// 优惠
+								phone.setText(model.getShopPhoneNumber());// 电话
+								address.setText(model.getShopAddress());// 地址
+								list = model.getProductDtos();
 								collectionimg.setSelected(model.getAttened());
 
 								if (adapter == null) {
-									//								//给每项商品设置id
-									//								for (int i = 0; i < list.size(); i++) {
-									//									ProductDto p = new ProductDto();
-									//									p.setId(i);
-									//									list.add(p);
-									//								}
-									adapter = new ShopsAdapter(ShopsActivity.this);
-									//adapter = new ShopsAdapter(this);
+									// //给每项商品设置id
+									// for (int i = 0; i < list.size(); i++) {
+									// ProductDto p = new ProductDto();
+									// p.setId(i);
+									// list.add(p);
+									// }
+									adapter = new ShopsAdapter(
+											ShopsActivity.this);
+									// adapter = new ShopsAdapter(this);
 									adapter.updateData(list);
 									mGridView.setAdapter(adapter);
-									//								mGridView.bindLinearLayout();
-								}else {
-									//								adapter.upDateList(list);
+									// mGridView.bindLinearLayout();
+								} else {
+									// adapter.upDateList(list);
 									adapter.updateData(list);
 								}
 							}
@@ -266,22 +278,20 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 
 	private void initListener() {
 		// TODO Auto-generated method stub
-		/*mGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				System.out.println(">>>>>>>>>"+position);
-			}
-		});*/
-		/*mGridView.setOnCellClickListener(new OnCellClickListener() {
-
-			@Override
-			public void onCellClick(int index) {
-
-					System.out.println(">>>>>>>>>index"+index);
-			}
-		});*/
+		/*
+		 * mGridView.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> parent, View view,
+		 * int position, long id) { // TODO Auto-generated method stub
+		 * System.out.println(">>>>>>>>>"+position); } });
+		 */
+		/*
+		 * mGridView.setOnCellClickListener(new OnCellClickListener() {
+		 * 
+		 * @Override public void onCellClick(int index) {
+		 * 
+		 * System.out.println(">>>>>>>>>index"+index); } });
+		 */
 		topView.setRightBtnListener(new OnClickListener() {
 
 			@Override
@@ -290,38 +300,74 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 				popupWindow.showAsDropDown(topView.getRightbtn());
 			}
 		});
-		//收藏
+		// 收藏
 		collectionimg.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(isLoginAndToLogin()){
-//					if (!iscollection) {
-//						collectionimg.setImageResource(R.drawable.collection_on);
-//						myToast("已收藏");
-//					}else {
-//						collectionimg.setImageResource(R.drawable.collection_off);
-//						myToast("取消收藏");
-//					}
-//					iscollection = !iscollection;
+				if (isLoginAndToLogin()) {
+					// if (!iscollection) {
+					// collectionimg.setImageResource(R.drawable.collection_on);
+					// myToast("已收藏");
+					// }else {
+					// collectionimg.setImageResource(R.drawable.collection_off);
+					// myToast("取消收藏");
+					// }
+					// iscollection = !iscollection;
 					if (model == null) {
-						
+						collectionimg.setSelected(false);
+						myToast("关注失败！");
+					} else {
+						collectionimg.setSelected(!collectionimg.isSelected());
+						if (!collectionimg.isSelected()) {
+							new FollowServer().toDelFollowGoods(model.getId(),
+									true, new OnFollowListener() {
+										@Override
+										public void onFollow(boolean isFollow) {
+											if (!isFollow) {
+												myToast("取消关注失败");
+												collectionimg
+														.setSelected(!collectionimg
+																.isSelected());
+											} else {
+												myToast("取消关注成功");
+											}
+										}
+									});
+						} else {
+							new FollowServer().toFollowShop(model.getId(),
+									new OnFollowListener() {
+										@Override
+										public void onFollow(boolean isFollow) {
+											if (!isFollow) {
+												myToast("关注失败");
+												collectionimg
+														.setSelected(!collectionimg
+																.isSelected());
+											} else {
+												myToast("关注成功");
+											}
+										}
+									});
+						}
 					}
 				}
 			}
 		});
-		//打电话
+		// 打电话
+		
 		call.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				phonenum = phone.getText().toString().trim();
-				Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phonenum));
+				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+						+ phonenum));
 				startActivity(intent);
 			}
 		});
-		//定位
+		// 定位
 		dingwei.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -329,27 +375,30 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-				CommonUtil.gotoActivityWithData(ShopsActivity.this, LocationActivity.class, bundle, false);
+				CommonUtil.gotoActivityWithData(ShopsActivity.this,
+						LocationActivity.class, bundle, false);
 			}
 		});
 	}
+
 	private void initPopupWindow() {
 		// TODO Auto-generated method stub
 		LayoutInflater inflater = LayoutInflater.from(this);
-		//引入窗口配置文件
+		// 引入窗口配置文件
 		view = inflater.inflate(R.layout.shops_popupwindow, null);
-		//创建popupwindow对象
-		popupWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,false);
-		//		popupWindow.setBackgroundDrawable(R.drawable.background);
+		// 创建popupwindow对象
+		popupWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, false);
+		// popupWindow.setBackgroundDrawable(R.drawable.background);
 
-		//		popupWindow.setHeight(500);
-		//点击外边可消失
+		// popupWindow.setHeight(500);
+		// 点击外边可消失
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
-		//设置点击外边窗口消失
+		// 设置点击外边窗口消失
 		popupWindow.setOutsideTouchable(true);
-		//设置可获得焦点
+		// 设置可获得焦点
 		popupWindow.setFocusable(true);
-		//popupwindow是否消失监听
+		// popupwindow是否消失监听
 		popupWindow.setOnDismissListener(new OnDismissListener() {
 
 			@Override
@@ -357,8 +406,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 				// TODO Auto-generated method stub
 
 			}
-		});	
-		//得到popupwindow里面的控件
+		});
+		// 得到popupwindow里面的控件
 		fenlei = (TextView) view.findViewById(R.id.shops_popup_fenlei);
 		jianjie = (TextView) view.findViewById(R.id.shops_popup_jianjie);
 		fenlei.setOnClickListener(new OnClickListener() {
@@ -367,18 +416,21 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				//				CommonUtil.gotoActivity(ShopsActivity.this, ClassificationActivity.class, true);
+				// CommonUtil.gotoActivity(ShopsActivity.this,
+				// ClassificationActivity.class, true);
 			}
 		});
 		jianjie.setOnClickListener(new OnClickListener() {
-			//跳转到商铺简介
+			// 跳转到商铺简介
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				
-				ShopsSummaryActivity.startThisActivity(shopid, ShopsActivity.this);
-//				CommonUtil.gotoActivity(ShopsActivity.this, ShopsSummaryActivity.class, false);
+
+				ShopsSummaryActivity.startThisActivity(shopid,
+						ShopsActivity.this);
+				// CommonUtil.gotoActivity(ShopsActivity.this,
+				// ShopsSummaryActivity.class, false);
 			}
 		});
 
@@ -388,7 +440,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_share:
-			CommonUtil.showShare(this, "test", "http://www.peoit.com/", "http://www.peoit.com/");
+			CommonUtil.showShare(this, "test", "http://www.peoit.com/",
+					"http://www.peoit.com/");
 			break;
 
 		default:

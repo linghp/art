@@ -31,7 +31,7 @@ public class BaseActivity extends AbActivity {
 	protected BaseActivity mAc;
 	protected MyApplication app;
 	protected AbHttpUtil httpUtil;
-	protected UserInfo curUserInfo;
+	public static UserInfo curUserInfo;
 	protected LayoutInflater inflater;
 
 	@Override
@@ -114,7 +114,7 @@ public class BaseActivity extends AbActivity {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
 							Bundle bundle = new Bundle();
-							bundle.putInt(Constant.INT_SAFE_PAY_NEW, 1);
+							bundle.putInt(Constant.INT_SAFE_PAY_NEW, SafetyVerificationActivity.PAY_PASS_NEW);
 							CommonUtil.gotoActivityWithData(mAc, SafetyVerificationActivity.class, bundle, false);
 						}
 					})
