@@ -56,12 +56,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 	}
 	private void initData() {
-		
+
 	}
 	private void refreshTask(String url) {
 		HttpClients.getDo(url, new HttpCilentListener() {
 
-			
+
 			@Override
 			public void onResponse(String res) {
 				list.clear();
@@ -89,9 +89,9 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	protected void onResume() {
 		list = new ArrayList<DeliveryAddressModel>();
@@ -105,7 +105,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 		String url = "";
 		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
 		refreshTask(url);
-		
+
 		super.onResume();
 	}
 	private void initListener() {
@@ -123,7 +123,15 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//				CommonUtil.gotoActivity(DeliveryAddressActivity.this, .class, false);
+				
+//				AddDeliveryAddressActivity.startThisActivity(list.get(position).getId()+"", DeliveryAddressActivity.this);
+				
+				//修改地址 
+				Bundle bundle = new Bundle();
+//				bundle.putBoolean("isRevise", true);
+//				bundle.putInt("id", list.get(position).getId());
+				bundle.putSerializable("DeliveryAddressModel", list.get(position));
+				CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
 			}
 		});
 
