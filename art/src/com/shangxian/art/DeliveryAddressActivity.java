@@ -1,6 +1,5 @@
 package com.shangxian.art;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
@@ -59,21 +56,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 	}
 	private void initData() {
-		list = new ArrayList<DeliveryAddressModel>();
-		/*for (int i = 0; i < 5; i++) {
-			DeliveryAddressModel model = new DeliveryAddressModel();
-			model.setName("小明"+i);
-			model.setNum("1869663681"+i);
-			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
-			list.add(model);
-		}*/
-		String url = "";
-		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-		refreshTask(url);
+		
 	}
 	private void refreshTask(String url) {
 		HttpClients.getDo(url, new HttpCilentListener() {
 
+			
 			@Override
 			public void onResponse(String res) {
 				list.clear();
@@ -101,7 +89,24 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 			}
 		});
-
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		list = new ArrayList<DeliveryAddressModel>();
+		/*for (int i = 0; i < 5; i++) {
+			DeliveryAddressModel model = new DeliveryAddressModel();
+			model.setName("小明"+i);
+			model.setNum("1869663681"+i);
+			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
+			list.add(model);
+		}*/
+		String url = "";
+		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+		refreshTask(url);
+		
+		super.onResume();
 	}
 	private void initListener() {
 		topView.setRightBtnListener(new OnClickListener() {

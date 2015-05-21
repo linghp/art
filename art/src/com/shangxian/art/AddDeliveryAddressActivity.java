@@ -16,7 +16,6 @@ import com.shangxian.art.bean.AddDeliveryAddressModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
-import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 public class AddDeliveryAddressActivity extends BaseActivity{
@@ -112,15 +111,12 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 					if (result_code.equals("200")) {
 //						JSONArray str=jsonObject.getJSONArray("result");
 						myToast("添加地址成功");
-						CommonUtil.gotoActivity(AddDeliveryAddressActivity.this, DeliveryAddressActivity.class, true);
+						finish();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
-				
 			}
 		});
 	}
