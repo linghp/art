@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:padding="10dp"
-                android:src="@drawable/collection_off" />
+                android:src="@drawable/follow_bg_sel" />
 
             <ImageView
                 android:id="@+id/tv_share"

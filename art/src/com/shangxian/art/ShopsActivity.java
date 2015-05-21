@@ -214,6 +214,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 								phone.setText(model.getShopPhoneNumber());//电话
 								address.setText(model.getShopAddress());//地址
 								list=model.getProductDtos();
+								collectionimg.setSelected(model.getAttened());
 
 								if (adapter == null) {
 									//								//给每项商品设置id
@@ -295,14 +296,17 @@ public class ShopsActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				if(isLoginAndToLogin()){
-					if (!iscollection) {
-						collectionimg.setImageResource(R.drawable.collection_on);
-						myToast("已收藏");
-					}else {
-						collectionimg.setImageResource(R.drawable.collection_off);
-						myToast("取消收藏");
+//					if (!iscollection) {
+//						collectionimg.setImageResource(R.drawable.collection_on);
+//						myToast("已收藏");
+//					}else {
+//						collectionimg.setImageResource(R.drawable.collection_off);
+//						myToast("取消收藏");
+//					}
+//					iscollection = !iscollection;
+					if (model == null) {
+						
 					}
-					iscollection = !iscollection;
 				}
 			}
 		});

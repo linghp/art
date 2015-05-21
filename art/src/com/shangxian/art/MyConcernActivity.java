@@ -42,7 +42,6 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 	private FragmentViewPagerAdp adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myconcern);
 		initViews();
@@ -77,8 +76,8 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 	private void initViewPager() {
 		mViewPager = (ViewPager) findViewById(R.id.vp_content);
 		fragments = new ArrayList<Fragment>();
-		firstFragment = new MyConcern_Commodity_Fragment(model);
-		secondFragment = new MyConcern_Shops_Fragment(model_first);
+		firstFragment = new MyConcern_Commodity_Fragment();
+		secondFragment = new MyConcern_Shops_Fragment();
 
 		fragments.add(0, firstFragment);
 		fragments.add(1, secondFragment);
@@ -103,12 +102,12 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 		case 0:
 			img_first.setBackgroundResource(R.color.blue);
 			tv_first.setTextColor(getResources().getColor(R.color.blue));
-			((MyConcern_Commodity_Fragment)firstFragment).update();
+			//((MyConcern_Commodity_Fragment)firstFragment).update();
 			break;
 		case 1:
 			img_second.setBackgroundResource(R.color.blue);
 			tv_second.setTextColor(getResources().getColor(R.color.blue));
-			((MyConcern_Shops_Fragment)secondFragment).update();
+			//((MyConcern_Shops_Fragment)secondFragment).update();
 			break;
 		}
 	}
@@ -131,19 +130,16 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onPageSelected(int position) {
 		setBackground_slide(position);
-		
 	}
 }

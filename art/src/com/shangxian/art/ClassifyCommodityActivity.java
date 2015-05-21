@@ -22,6 +22,7 @@ import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbLogUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassityCommodiyAdp;
+import com.shangxian.art.adapter.ClassityCommodiyAdp1;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ClassityCommdityResultModel;
@@ -39,7 +40,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 	// 列表
 	private ListView list;
 	private List<ClassityCommdityModel> model;
-	private ClassityCommodiyAdp adapter;
+	private ClassityCommodiyAdp1 adapter;
 	private AbHttpUtil httpUtil = null;
 
 	// 底部选项
@@ -172,7 +173,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 							String str=jsonObject.getString("result");
 							ClassityCommdityResultModel classityCommdityResultModel=gson.fromJson(str, ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
-							adapter = new ClassityCommodiyAdp(ClassifyCommodityActivity.this,
+							adapter = new ClassityCommodiyAdp1(ClassifyCommodityActivity.this,
 									R.layout.item_classitycommodity, model);
 							list.setAdapter(adapter);
 							adapter.notifyDataSetChanged();

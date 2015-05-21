@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import com.shangxian.art.base.DataTools;
 import com.shangxian.art.bean.SearchProductInfo;
 
 /**
@@ -72,7 +73,23 @@ public class FollowServer extends BaseServer {
 		});
 	}
 	
-	public void toFollowGoodsList(Boolean isShop, final OnFollowInfoListener l){
+	public void toDelFollowGoods(int id, Boolean isShop, final OnFollowListener l){
+		toDel((isShop ? NET_FOLLOW_SHOP_DEL : NET_FOLLOW_PRODUCT_DEL) + id, new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				if (l != null) {
+					try {
+						l.onFollow(Boolean.valueOf(res));
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onFollow(false);
+					}
+				}
+			}
+		});
+	}
+	
+	public void toFollowList(Boolean isShop, final OnFollowInfoListener l){
 		toGet2(isShop ? NET_FOLLOW_SHOP_LIST : NET_FOLLOW_PRODUCT_LIST, null, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {

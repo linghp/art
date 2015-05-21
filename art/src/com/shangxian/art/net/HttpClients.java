@@ -12,6 +12,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
@@ -160,6 +161,83 @@ public class HttpClients {
 					MyLogger.i("respone:" + postMethod.toString());
 					// 执行POST方法
 					HttpResponse response = httpClient.execute(postMethod);
+					if (TextUtils.isEmpty(response.toString())
+							|| response.getStatusLine().getStatusCode() != 200) {
+						int s = response.getStatusLine().getStatusCode();
+						MyLogger.i("Code():"
+								+ response.getStatusLine().getStatusCode());
+						if (!TextUtils.isEmpty(response.toString())) {
+							MyLogger.i("respone:" + response.toString());
+						}
+						postHandler.sendEmptyMessage(FAIL);
+						return;
+					} else {
+						StringBuilder builder = new StringBuilder();
+						BufferedReader bufferedReader2 = new BufferedReader(
+								new InputStreamReader(response.getEntity()
+										.getContent()));
+						String str2 = "";
+						for (String s = bufferedReader2.readLine(); s != null; s = bufferedReader2
+								.readLine()) {
+							builder.append(s);
+						}
+						Message message = Message.obtain(postHandler, SUCCESS,
+								builder.toString());
+						postHandler.sendMessage(message);
+						MyLogger.d("response: =================="
+								+ builder.toString() + "==================");
+					}
+				} catch (UnsupportedEncodingException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				} catch (ClientProtocolException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	// get请求
+	public static void delDo(final String baseUrl, 
+			final HttpCilentListener l) {
+		final Handler postHandler = new Handler() {
+			public void handleMessage(android.os.Message msg) {
+				int what = msg.what;
+				switch (what) {
+				case FAIL:
+					l.onResponse(null);
+					break;
+				case SUCCESS:
+					String res = (String) msg.obj;
+					l.onResponse(res);
+					break;
+				}
+			};
+		};
+		// final String user_token = ParkApplication.getPrefer().getString(
+		// Constants.USER_TOKEN, null);
+		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
+				Constant.PRE_USER_ID, Integer.MIN_VALUE);
+		final HttpClient httpClient = getHttpClient();
+		executorService.submit(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					HttpDelete delete = new HttpDelete(baseUrl);
+					//HttpGet postMethod = new HttpGet(baseUrl);
+					delete.setHeader("Content-Type", "application/json;charset=UTF-8");
+					if (user_token != Integer.MIN_VALUE) {
+						delete.addHeader("User-Token", user_token + "");
+					}
+					// 将参数填入POST
+					// Entity中
+					MyLogger.i("respone:" + delete.toString());
+					// 执行POST方法
+					HttpResponse response = httpClient.execute(delete);
 					if (TextUtils.isEmpty(response.toString())
 							|| response.getStatusLine().getStatusCode() != 200) {
 						int s = response.getStatusLine().getStatusCode();

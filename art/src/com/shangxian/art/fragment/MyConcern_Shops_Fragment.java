@@ -12,9 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shangxian.art.R;
+import com.shangxian.art.adapter.FollowShopAdapter;
 import com.shangxian.art.adapter.ShopsListAdapter;
 import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.bean.ShopsListModel;
+import com.shangxian.art.net.FollowServer;
+import com.shangxian.art.net.FollowServer.OnFollowInfoListener;
 
 /**
  * 我的关注——商铺
@@ -25,16 +29,12 @@ public class MyConcern_Shops_Fragment extends Fragment{
 	private View view;
 	private TextView tv_empty;
 	private ListView listView;
-	private List<ShopsListModel> model = new ArrayList<ShopsListModel>();
-	private ShopsListAdapter adapter;
+	private FollowShopAdapter adapter;
+	protected SearchProductInfo info;
 	
-	public MyConcern_Shops_Fragment(List<ShopsListModel> model) {
-		super();
-		this.model = model;
-	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -42,7 +42,22 @@ public class MyConcern_Shops_Fragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		initMainView();
+		initData();
 		return view;
+	}
+	
+	private void initData() {
+		new FollowServer().toFollowList(true, new OnFollowInfoListener(){
+			@Override
+			public void onFollowInfo(SearchProductInfo info) {
+				if (info != null && !info.isNull()) {
+					MyConcern_Shops_Fragment.this.info = info;
+					if (adapter != null) {
+						adapter.upDateList(info.getData());
+					}
+				}
+			}
+		});
 	}
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
@@ -50,21 +65,7 @@ public class MyConcern_Shops_Fragment extends Fragment{
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
-		for (int i = 0; i < 20; i++) {
-			ShopsListModel m = new ShopsListModel();
-			m.setShopName("商铺"+i);
-			model.add(m);
-		}
-		adapter = new ShopsListAdapter(getActivity(), model, R.layout.item_list);
+		adapter = new FollowShopAdapter(getActivity(), R.layout.follow_shop_item, null);
 		listView.setAdapter(adapter);
-	}
-	
-	public void update() {
-		if(tv_empty!=null)
-		if (model.size() == 0 ) {
-			tv_empty.setVisibility(View.VISIBLE);
-		} else {
-			tv_empty.setVisibility(View.GONE);
-		}
 	}
 }

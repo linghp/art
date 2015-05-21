@@ -6,6 +6,10 @@ import java.util.List;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.ClassityCommodiyAdp;
 import com.shangxian.art.bean.ClassityCommdityModel;
+import com.shangxian.art.bean.ListCarGoodsBean;
+import com.shangxian.art.bean.SearchProductInfo;
+import com.shangxian.art.net.FollowServer;
+import com.shangxian.art.net.FollowServer.OnFollowInfoListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,16 +28,11 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 	private View view;
 	private TextView tv_empty;
 	private ListView listView;
-	private List<ClassityCommdityModel> model = new ArrayList<ClassityCommdityModel>();
 	private ClassityCommodiyAdp adapter;
+	private SearchProductInfo info;
 	
-	public MyConcern_Commodity_Fragment(List<ClassityCommdityModel> model) {
-		super();
-		this.model = model;
-	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -41,8 +40,23 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		initMainView();
+		initData();
 		return view;
 	}
+	private void initData() {
+		new FollowServer().toFollowList(false, new OnFollowInfoListener (){
+			@Override
+			public void onFollowInfo(SearchProductInfo info) {
+				if (info != null && !info.isNull()) {
+					MyConcern_Commodity_Fragment.this.info = info;
+					if (adapter != null) {
+						adapter.upDateList(info.getData());
+					}
+				}
+			}
+		});
+	}
+	
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
@@ -50,21 +64,8 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
 		
-		for (int i = 0; i < 20; i++) {
-			ClassityCommdityModel m = new ClassityCommdityModel();
-			m.setName("商品列表"+i);
-			model.add(m);
-		}
-		adapter = new ClassityCommodiyAdp(getActivity(), R.layout.item_classitycommodity, model);
+		adapter = new ClassityCommodiyAdp(getActivity(), R.layout.item_classitycommodity, null);
 		listView.setAdapter(adapter);
 	}
 	
-	public void update() {
-		if(tv_empty!=null)
-		if (model.size() == 0 ) {
-			tv_empty.setVisibility(View.VISIBLE);
-		} else {
-			tv_empty.setVisibility(View.GONE);
-		}
-	}
 }
