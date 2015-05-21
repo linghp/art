@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
@@ -100,6 +101,8 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 		((TextView)findViewById(R.id.tv_phone)).setText(receiverInfo.getReceiverTel());
 		
 		((TextView)findViewById(R.id.tv_tradetime)).setText(String.format(getString(R.string.text_tradetime), myOrderDetailBean.getOrderedDate()));
+		
+		//动态添加商品
 		((TextView)findViewById(R.id.car_storename)).setText(myOrderDetailBean.getSellerName());
 //        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 //				+ myOrderItem.getShopLogo());
@@ -122,6 +125,16 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 			mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 					+ OrderItem.getProductSacle());
 		}
+		
+		//根据状态显示按钮
+		String status=myOrderDetailBean.getStatus();
+		String[] orderState=MyOrderActivity.orderState;
+		if(status.equals(orderState[1])){
+			
+		}else if(status.equals(orderState[2])){
+			
+		}else if(status.equals(orderState[3])){
+			
+		}
 	}
-
 }
