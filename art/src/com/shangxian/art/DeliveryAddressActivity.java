@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,6 +36,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private ListView listview;
 	private List<DeliveryAddressModel>list;
 	private DeliveryAddressAdapter adapter;
+	
+	Boolean isfromConfirmOrder = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -56,7 +59,9 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 	}
 	private void initData() {
-
+		
+		Intent intent = new Intent();
+		intent.getBooleanExtra("isfromConfirmOrder", false);
 	}
 	private void refreshTask(String url) {
 		HttpClients.getDo(url, new HttpCilentListener() {
@@ -123,15 +128,17 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-//				AddDeliveryAddressActivity.startThisActivity(list.get(position).getId()+"", DeliveryAddressActivity.this);
-				
-				//修改地址 
-				Bundle bundle = new Bundle();
-//				bundle.putBoolean("isRevise", true);
-//				bundle.putInt("id", list.get(position).getId());
-				bundle.putSerializable("DeliveryAddressModel", list.get(position));
-				CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
+				if (isfromConfirmOrder != false) {
+					//确认订单
+					
+				}else {
+					//修改地址 
+					Bundle bundle = new Bundle();
+//					bundle.putBoolean("isRevise", true);
+//					bundle.putInt("id", list.get(position).getId());
+					bundle.putSerializable("DeliveryAddressModel", list.get(position));
+					CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
+				}
 			}
 		});
 
