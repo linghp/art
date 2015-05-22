@@ -71,7 +71,6 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
         	holder.item_classifiymain_spread.setVisibility(View.VISIBLE);
         	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview1);
         	layoutParams.height=layoutParams.width;
-        	//holder.img.setLayoutParams(layoutParams);
         }else{
         	convertView.setBackgroundResource(R.color.bg_gray);
         	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview2);
