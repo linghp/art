@@ -568,11 +568,15 @@ public class CommodityContentActivity extends BaseActivity implements
 				String result_code = jsonObject.getString("result_code");
 				if (result_code.equals("200")) {
 					myToast(jsonObject.getString("result"));
+				}else{
+					myToast("加入购物车失败");
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else{
+			myToast("加入购物车失败");
 		}
 
 	}
