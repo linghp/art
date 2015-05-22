@@ -131,6 +131,8 @@ public class SafetyVerificationActivity extends BaseActivity {
 	private String pass;
 	private String oldPass;
 	private LinearLayout ll_code;
+	private TextView tv_passTitle;
+	private TextView tv_enum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 修改密码
+	 * 
+	 * @param phone
+	 * @return
+	 */
 	private String getPhone(String phone) {
 		return phone.replace(phone.substring(3, 9), "***");
 	}
@@ -174,18 +182,16 @@ public class SafetyVerificationActivity extends BaseActivity {
 		tv_hint = (TextView) findViewById(R.id.saft_tv_hint);
 		tv_cancel = (TextView) findViewById(R.id.saft_tv_cancel);
 		tv_ok = (TextView) findViewById(R.id.saft_tv_ok);
+		tv_passTitle = (TextView) findViewById(R.id.tv_pass_title);
+		tv_enum = (TextView) findViewById(R.id.saft_tv_enum);
 
 		et_code = (EditText) findViewById(R.id.safe_et_code);
 		et_old = (EditText) findViewById(R.id.safe_et_old);
-		et_old.setHint(curToPass == PAY_PASS_UP ? "请输入当前支付密码" : "请输入当前登录密码");
 		et_new = (EditText) findViewById(R.id.safe_et_new);
-		et_new.setHint((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "请输入新的支付密码"
-				: "请输入新的登录密码");
 		et_reNew = (EditText) findViewById(R.id.safe_et_renew);
-		et_reNew.setHint((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "确认支付密码"
-				: "确认登录密码");
-		tv_hint.setText(Html.fromHtml(phone));
-		
+
+		upDataView();
+
 		ll_code = (LinearLayout) findViewById(R.id.safl_ll_code);
 		if (curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW) {
 			changeUi(UiModel.isNew);
@@ -194,11 +200,26 @@ public class SafetyVerificationActivity extends BaseActivity {
 		}
 	}
 
+	private void upDataView() {
+		et_old.setHint(curToPass == PAY_PASS_UP ? "请输入当前支付密码" : "请输入当前登录密码");
+		et_new.setHint((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "请输入新的支付密码"
+				: "请输入新的登录密码");
+		et_reNew.setHint((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "确认支付密码"
+				: "确认登录密码");
+		tv_hint.setText(Html.fromHtml(phone));
+		tv_passTitle.setText(curToPass == PAY_PASS_NEW ? "请输入您的支付密码"
+				: curToPass == PAY_PASS_UP ? "请输入支付密码"
+						: curToPass == USER_PASS_NEW ? "请输入新的登录密码" : "请输入登录密码");
+		tv_enum.setText((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "(注:支付密码为6位数字)"
+				: "(注:登录密码为6-18位数字、字母、部分特殊符号)");
+	}
+
 	public void doClick(View v) {
 		finish();
 	}
 
 	private void listener() {
+		
 		tv_code.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -286,19 +307,26 @@ public class SafetyVerificationActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * 验证输入有效性
+	 * 
+	 * @return
+	 */
 	protected boolean match() {
 		code = et_code.getText().toString();
 		pass = et_new.getText().toString();
 		rePass = et_reNew.getText().toString();
 		oldPass = et_old.getText().toString();
-		if ((curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW) && TextUtils.isEmpty(code)) {
+		if ((curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW)
+				&& TextUtils.isEmpty(code)) {
 			if (isCodeing)
 				myToast("请输入短信验证码");
 			else
 				myToast("请获取短信验证码");
 			return false;
 		}
-		if ((curToPass == PAY_PASS_UP || curToPass == USER_PASS_UP) && TextUtils.isEmpty(oldPass)) {
+		if ((curToPass == PAY_PASS_UP || curToPass == USER_PASS_UP)
+				&& TextUtils.isEmpty(oldPass)) {
 			myToast("请输入您当前的密码");
 			return false;
 		}

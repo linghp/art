@@ -351,7 +351,12 @@ public class HomeActivity extends BaseActivity implements
 		topView.setLeftBtnListener(activity);
 		topView.setRightBtnListener(activity);
 		topView.setRightBtnDrawable(R.drawable.map);
-		topView.setCenterListener(activity);
+		topView.setCenterListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
+			}
+		});
 	}
 
 	private void refreshTask() {

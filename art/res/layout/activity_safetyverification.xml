@@ -127,11 +127,20 @@
                 android:id="@+id/tv_pass_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="设置支付密码"
                 android:textColor="@color/txt_black"
                 android:textSize="@dimen/list_title_size" />
+
+            <!--
+                 <LinearLayout
+                android:id="@+id/safl_ll_old"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            -->
 
             <EditText
                 android:id="@+id/safe_et_old"
@@ -139,10 +148,23 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/regist_et_bg_sel"
                 android:hint="请输入当前支付密码"
-                android:padding="10dp"
                 android:inputType="textPassword"
+                android:padding="10dp"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
+
+            <!--
+            <TextView 
+                    android:id="@+id/saft_tv_mold"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/txt_white1"
+                    android:background="@drawable/searchs_scan_r_sel"
+                    android:text="0/6"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            -->
 
             <EditText
                 android:id="@+id/safe_et_new"
@@ -151,8 +173,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/regist_et_bg_sel"
                 android:hint="新的登录密码"
-                android:padding="10dp"
                 android:inputType="textPassword"
+                android:padding="10dp"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size"
                 android:visibility="visible" />
@@ -164,12 +186,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/regist_et_bg_sel"
                 android:hint="新的支付密码"
-                android:padding="10dp"
                 android:inputType="textPassword"
+                android:padding="10dp"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
 
             <TextView
+                android:id="@+id/saft_tv_enum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -182,9 +205,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/changepassword_linear1"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="48dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp" >
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/saft_tv_cancel"
@@ -193,11 +216,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/soge_not_bg_sel"
                 android:gravity="center_horizontal"
+                android:onClick="doClick"
                 android:padding="8dp"
                 android:text="取消"
                 android:textColor="@color/txt_whitetoback"
-                android:textSize="@dimen/button_txt_size"
-                android:onClick="doClick" />
+                android:textSize="@dimen/button_txt_size" />
 
             <TextView
                 android:id="@+id/saft_tv_ok"
@@ -213,4 +236,5 @@
                 android:textSize="@dimen/button_txt_size" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
