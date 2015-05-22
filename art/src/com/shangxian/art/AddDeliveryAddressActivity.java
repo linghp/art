@@ -160,10 +160,11 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 						myToast("添加地址成功");
 						finish();
 					}
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+						myToast("添加地址失败");
+				} 
 			}
 		});
 	}

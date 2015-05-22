@@ -194,12 +194,6 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-				//				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
-				//CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
-//				Intent intent=new Intent(ClassificationActivity.this, ClassifyCommodityActivity.class);
-//				intent.putExtra("id", model.get(position).getId()+"");
-//				startActivity(intent);
 				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
 			}
 		});
