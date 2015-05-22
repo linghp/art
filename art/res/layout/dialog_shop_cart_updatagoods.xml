@@ -107,44 +107,52 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/home_itemmargin"
+                android:layout_marginRight="@dimen/home_itemmargin"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/ll_options_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/home_itemmargin"
-                    android:layout_marginRight="@dimen/home_itemmargin"
-                    android:layout_marginTop="@dimen/home_itemmargin"
                     android:orientation="vertical" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="32dp"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
                     <Button
                         android:id="@+id/addbt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
                         android:text="-" >
                     </Button>
 
                     <EditText
                         android:id="@+id/edt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
                         android:inputType="number"
+                        android:maxEms="4"
+                        android:maxLength="4"
+                        android:singleLine="true"
                         android:text="1" >
                     </EditText>
 
                     <Button
                         android:id="@+id/subbt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
                         android:text="+" >
                     </Button>
                 </LinearLayout>
