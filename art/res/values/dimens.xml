@@ -25,5 +25,9 @@
     
     
     <dimen name="home_itemmargin">16dp</dimen><!-- 主界面每个单元的之间的margin -->
+    
+    
+    <dimen name="classification_imageview1">80dip</dimen><!-- 分类一级图片 -->
+    <dimen name="classification_imageview2">60dip</dimen><!-- 分类二级图片 -->
 
 </resources>

@@ -163,8 +163,13 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 							for (int i = 0; i < length; i++) {
 								JSONObject jo = resultObjectArray
 										.getJSONObject(i);
-								model.add(gson.fromJson(
-										jo.toString(), ClassificationModel.class));
+								ClassificationModel classificationModel=gson.fromJson(
+										jo.toString(), ClassificationModel.class);
+								List<ClassificationModel> classificationModels=classificationModel.getProductCategoryDtos();
+								for (ClassificationModel classificationModel2 : classificationModels) {//服务器返回level有误都为1，故在此修改为2
+									classificationModel2.setLevel(2);
+								}
+								model.add(classificationModel);
 							}
 							MyLogger.i(model.toString());
 							adapter.notifyDataSetChanged();

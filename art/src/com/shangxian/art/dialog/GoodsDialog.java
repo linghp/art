@@ -144,10 +144,10 @@ public class GoodsDialog extends Dialog implements
 		bt01.setTag("+");
 		bt02.setTag("-");
 
-		upDataView();
+		initViews2();
 	}
 
-	private void upDataView() {
+	private void initViews2() {
 		if (item != null) {
 			tv_price.setText("¥"
 					+ CommonUtil.priceConversion(item.listCarGoodsBean
@@ -157,17 +157,17 @@ public class GoodsDialog extends Dialog implements
 			String url = Constant.BASEURL + item.listCarGoodsBean.getPhoto();
 			mAbImageLoader.display(iv_icon, url);
 		} else if (commodityContentModel != null) {
-			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
-			specMap.putAll(commodityContentModel.getSpecs());
-			// Map<String, List<String>> specMap = commodityContentModel
-			// .getSpecs();
+			 Map<String, List<String>> specMap = commodityContentModel
+			 .getSpecs();
 
 			// 测试数据
-			List<String> listtest = new ArrayList<String>();
-			listtest.add("三菜一汤");
-			listtest.add("四菜一汤");
-			listtest.add("五菜一汤");
-			specMap.put("套餐2", listtest);
+//			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
+//			specMap.putAll(commodityContentModel.getSpecs());
+//			List<String> listtest = new ArrayList<String>();
+//			listtest.add("三菜一汤");
+//			listtest.add("四菜一汤");
+//			listtest.add("五菜一汤");
+//			specMap.put("套餐2", listtest);
 
 			tv_price.setText("¥  "
 					+ CommonUtil.priceConversion(commodityContentModel
@@ -177,10 +177,16 @@ public class GoodsDialog extends Dialog implements
 			String url = Constant.BASEURL
 					+ commodityContentModel.getPhotos().get(0);
 			mAbImageLoader.display(iv_icon, url);
-			List<String> specStrs = new ArrayList<String>();
+			List<String> specStrs = new ArrayList<String>();//属性的title集合
+			List<String> specSelectedStrs = new ArrayList<String>();//已选的属性
 			for (Entry<String, List<String>> listCarGoodsBean2 : specMap
 					.entrySet()) {
-				specStrs.add(listCarGoodsBean2.getKey());
+				List<String> specs=listCarGoodsBean2.getValue();
+				if(specs.size()==1){
+					specSelectedStrs.add(specs.get(0));
+				}else{
+					specStrs.add(listCarGoodsBean2.getKey());
+				}
 				// selectedSpec=listCarGoodsBean2.getValue();
 				View view = LayoutInflater.from(context).inflate(
 						R.layout.commoditycontent_sepcs_item, null);
@@ -209,11 +215,19 @@ public class GoodsDialog extends Dialog implements
 
 				ll_options_add.addView(view);
 			}
+			if(specStrs.size()>0){
+				String specStr = "";
+				for (String str : specStrs) {
+					specStr = specStr + str + "  ";
+				}
+				tv_option.setText("请选择  " + specStr);
+			}else{
 			String specStr = "";
-			for (String str : specStrs) {
+			for (String str : specSelectedStrs) {
 				specStr = specStr + str + "  ";
 			}
-			tv_option.setText("请选择  " + specStr);
+			tv_option.setText(specStr);
+			}
 		}
 	}
 

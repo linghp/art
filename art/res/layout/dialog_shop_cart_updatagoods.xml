@@ -88,8 +88,8 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:paddingBottom="4dp"
-                    android:text="红色、2.4"
-                    android:textColor="@color/grey500" />
+                    android:text=""
+                    android:textColor="@color/grey500"  />
             </LinearLayout>
         </LinearLayout>
 
