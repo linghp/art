@@ -154,6 +154,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 修改密码
+	 * 
+	 * @param phone
+	 * @return
+	 */
 	private String getPhone(String phone) {
 		return phone.replace(phone.substring(3, 9), "***");
 	}
@@ -285,7 +291,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 			}
 		});
 	}
-
+	
+	/**
+	 * 验证输入有效性
+	 * 
+	 * @return
+	 */
 	protected boolean match() {
 		code = et_code.getText().toString();
 		pass = et_new.getText().toString();

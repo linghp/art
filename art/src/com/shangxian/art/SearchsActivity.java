@@ -285,6 +285,7 @@ public class SearchsActivity extends BaseActivity {
 			ll_shop.setSelected(true);
 			ll_goods.setSelected(false);
 			curModel = SearchModel.shop;
+			if (searchsAdapter != null) searchsAdapter.setToSearch(true);
 			isChangModel = true;
 			break;
 		case goods:
@@ -292,6 +293,7 @@ public class SearchsActivity extends BaseActivity {
 			ll_goods.setSelected(true);
 			ll_shop.setSelected(false);
 			curModel = SearchModel.product;
+			if (searchsAdapter != null) searchsAdapter.setToSearch(false);
 			isChangModel = true;
 			break;
 		}
