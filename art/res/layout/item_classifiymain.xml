@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/txt_white"
+    android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <!--
          <com.shangxian.art.view.CircleImageView1
         android:id="@+id/item_classifiymain_img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/classification_imageview1"
+        android:layout_height="@dimen/classification_imageview1"
         android:layout_marginLeft="16dp"
         android:scaleType="fitXY"
         android:src="@drawable/image_loading" />
@@ -46,6 +46,7 @@
             android:text="特价美食,干果/仙贝"
             android:singleLine="true"
             android:layout_marginTop="4dp"
+            android:visibility="gone"
             android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_summary_size" />
     </LinearLayout>

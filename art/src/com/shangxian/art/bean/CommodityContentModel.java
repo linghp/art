@@ -2,6 +2,7 @@ package com.shangxian.art.bean;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private String categoryName;
 	@Expose
-	private Map<String, List<String>> specs;
+	private LinkedHashMap<String, List<String>> specs;
 	@Expose
 	private Integer sellerId;
 	@Expose
@@ -76,10 +77,12 @@ public class CommodityContentModel implements Serializable {
 		this.promotionPrice = promotionPrice;
 	}
 
-	public void setSpecs(Map<String, List<String>> specs) {
+	public void setSpecs(LinkedHashMap<String, List<String>> specs) {
 		this.specs = specs;
 	}
-
+	public LinkedHashMap<String, List<String>> getSpecs() {
+		return specs;
+	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -130,14 +133,6 @@ public class CommodityContentModel implements Serializable {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
-	}
-
-	public Map<String, List<String>> getSpecs() {
-		return specs;
-	}
-
-	public void setSpecs(HashMap<String, List<String>> specs) {
-		this.specs = specs;
 	}
 
 	public Integer getSellerId() {

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.CircleImageView1;
+import com.shangxian.art.utils.MyLogger;
 
 public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 	private AbImageLoader mAbImageLoader = null;
@@ -63,11 +65,18 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
         //图片的下载
         mAbImageLoader.display(holder.img,Constant.BASEURL
 				+ dates.get(position).getPhoto());
+        LayoutParams layoutParams=holder.img.getLayoutParams();
         if(classificationModel.getLevel()==1){
+        	convertView.setBackgroundResource(R.color.white);
         	holder.title.setVisibility(View.VISIBLE);
         	holder.item_classifiymain_spread.setVisibility(View.VISIBLE);
+        	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview1);
+        	layoutParams.height=layoutParams.width;
         }else{
-        	holder.title.setVisibility(View.GONE);
+        	convertView.setBackgroundResource(R.color.bg_gray);
+        	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview2);
+        	layoutParams.height=layoutParams.width;
+        	//holder.title.setVisibility(View.GONE);
         	holder.item_classifiymain_spread.setVisibility(View.GONE);
         	holder.summary.setText(dates.get(position).getName());
         }

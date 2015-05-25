@@ -1,6 +1,7 @@
 package com.shangxian.art.dialog;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,7 +48,7 @@ public class GoodsDialog extends Dialog implements
 
 	private Button bt01, bt02;
 	private EditText edt;
-	private int num = 0;// 数量
+	private int num = 1;// 数量
 
 	private Context context;
 
@@ -90,7 +91,7 @@ public class GoodsDialog extends Dialog implements
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog_shop_cart_updatagoods);
-		setCanceledOnTouchOutside(false);
+		setCanceledOnTouchOutside(true);
 		mAbImageLoader = AbImageLoader.newInstance(getContext());
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
@@ -143,10 +144,10 @@ public class GoodsDialog extends Dialog implements
 		bt01.setTag("+");
 		bt02.setTag("-");
 
-		upDataView();
+		initViews2();
 	}
 
-	private void upDataView() {
+	private void initViews2() {
 		if (item != null) {
 			tv_price.setText("¥"
 					+ CommonUtil.priceConversion(item.listCarGoodsBean
@@ -156,8 +157,17 @@ public class GoodsDialog extends Dialog implements
 			String url = Constant.BASEURL + item.listCarGoodsBean.getPhoto();
 			mAbImageLoader.display(iv_icon, url);
 		} else if (commodityContentModel != null) {
-			Map<String, List<String>> specMap = commodityContentModel
-					.getSpecs();
+			 Map<String, List<String>> specMap = commodityContentModel
+			 .getSpecs();
+
+			// 测试数据
+//			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
+//			specMap.putAll(commodityContentModel.getSpecs());
+//			List<String> listtest = new ArrayList<String>();
+//			listtest.add("三菜一汤");
+//			listtest.add("四菜一汤");
+//			listtest.add("五菜一汤");
+//			specMap.put("套餐2", listtest);
 
 			tv_price.setText("¥  "
 					+ CommonUtil.priceConversion(commodityContentModel
@@ -167,10 +177,16 @@ public class GoodsDialog extends Dialog implements
 			String url = Constant.BASEURL
 					+ commodityContentModel.getPhotos().get(0);
 			mAbImageLoader.display(iv_icon, url);
-			List<String> specStrs = new ArrayList<String>();
+			List<String> specStrs = new ArrayList<String>();//属性的title集合
+			List<String> specSelectedStrs = new ArrayList<String>();//已选的属性
 			for (Entry<String, List<String>> listCarGoodsBean2 : specMap
 					.entrySet()) {
-				specStrs.add(listCarGoodsBean2.getKey());
+				List<String> specs=listCarGoodsBean2.getValue();
+				if(specs.size()==1){
+					specSelectedStrs.add(specs.get(0));
+				}else{
+					specStrs.add(listCarGoodsBean2.getKey());
+				}
 				// selectedSpec=listCarGoodsBean2.getValue();
 				View view = LayoutInflater.from(context).inflate(
 						R.layout.commoditycontent_sepcs_item, null);
@@ -179,22 +195,39 @@ public class GoodsDialog extends Dialog implements
 				// 添加属性值
 				ViewGroup vg_ad = (ViewGroup) view.findViewById(R.id.vg_add);
 				List<String> listvalues = listCarGoodsBean2.getValue();
-				for (String str : listvalues) {
+				if (listvalues.size() == 1) {
 					TextView textView = new TextView(context);
-					textView.setText(str);
-					// textView.setBackgroundResource(R.drawable.reslib_item_bg);
-					// textView.setTag("");
+					textView.setText(listvalues.get(0));
+					textView.setBackgroundResource(R.drawable.addshopcartdialog_shape_selector);
+					textView.setSelected(true);
 					textView.setTextSize(14);
 					vg_ad.addView(textView);
+				} else {
+					for (String str : listvalues) {
+						TextView textView = new TextView(context);
+						textView.setText(str);
+						textView.setBackgroundResource(R.drawable.addshopcartdialog_shape_selector);
+						// textView.setTag("");
+						textView.setTextSize(14);
+						vg_ad.addView(textView);
+					}
 				}
 
 				ll_options_add.addView(view);
 			}
+			if(specStrs.size()>0){
+				String specStr = "";
+				for (String str : specStrs) {
+					specStr = specStr + str + "  ";
+				}
+				tv_option.setText("请选择  " + specStr);
+			}else{
 			String specStr = "";
-			for (String str : specStrs) {
+			for (String str : specSelectedStrs) {
 				specStr = specStr + str + "  ";
 			}
-			tv_option.setText("请选择  " + specStr);
+			tv_option.setText(specStr);
+			}
 		}
 	}
 
@@ -217,24 +250,24 @@ public class GoodsDialog extends Dialog implements
 		public void onClick(View v) {
 			String numString = edt.getText().toString();
 			if (numString == null || numString.equals("")) {
-				num = 0;
-				edt.setText("0");
+				num = 1;
+				edt.setText("1");
 			} else {
 				if (v.getTag().equals("-")) {
-					if (++num < 0) // 先加，再判断
+					if (++num < 1) // 先加，再判断
 					{
 						num--;
-						Toast.makeText(context, "请输入一个大于0的数字",
-								Toast.LENGTH_SHORT).show();
+//						Toast.makeText(context, "请输入一个大于0的数字",
+//								Toast.LENGTH_SHORT).show();
 					} else {
 						edt.setText(String.valueOf(num));
 					}
 				} else if (v.getTag().equals("+")) {
-					if (--num < 0) // 先减，再判断
+					if (--num < 1) // 先减，再判断
 					{
 						num++;
-						Toast.makeText(context, "请输入一个大于0的数字",
-								Toast.LENGTH_SHORT).show();
+//						Toast.makeText(context, "请输入一个大于0的数字",
+//								Toast.LENGTH_SHORT).show();
 					} else {
 						edt.setText(String.valueOf(num));
 					}
@@ -252,12 +285,13 @@ public class GoodsDialog extends Dialog implements
 		public void afterTextChanged(Editable s) {
 			String numString = s.toString();
 			if (numString == null || numString.equals("")) {
-				num = 0;
+				num = 1;
 			} else {
 				int numInt = Integer.parseInt(numString);
-				if (numInt < 0) {
-					Toast.makeText(context, "请输入一个大于0的数字", Toast.LENGTH_SHORT)
-							.show();
+				if (numInt < 1) {
+					 Toast.makeText(context, "请输入一个大于0的数字",
+					 Toast.LENGTH_SHORT)
+					 .show();
 				} else {
 					// 设置EditText光标位置 为文本末端
 					edt.setSelection(edt.getText().toString().length());
@@ -287,13 +321,14 @@ public class GoodsDialog extends Dialog implements
 		} else if (tv_sub == v) {
 			try {
 				Gson gson = new Gson();
+				// Map<String, String> spec=commodityContentModel.getSpecs().
 				String jsonsepcs = gson
 						.toJson(commodityContentModel.getSpecs());
 				// 服务器有问题 暂时改成这种格式
 				jsonsepcs = jsonsepcs.replace("[", "");
 				jsonsepcs = jsonsepcs.replace("]", "");
 				json = "{\"productId\":" + commodityContentModel.getId()
-						+ ",\"sepcs\":" + jsonsepcs + ",\"buyCount\":" + 1
+						+ ",\"sepcs\":" + jsonsepcs + ",\"buyCount\":" + num
 						+ "}";
 				MyLogger.i(json);
 				confirmListener.goodsDialogConfirm(json);

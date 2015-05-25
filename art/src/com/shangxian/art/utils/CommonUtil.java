@@ -240,6 +240,7 @@ public class CommonUtil {
 	 */
 	public static int dip2px(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
+		//MyLogger.i(scale+"");
 		return (int) (dpValue * scale + 0.5f);
 	}
 

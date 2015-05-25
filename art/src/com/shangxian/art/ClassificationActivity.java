@@ -164,8 +164,13 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 							for (int i = 0; i < length; i++) {
 								JSONObject jo = resultObjectArray
 										.getJSONObject(i);
-								model.add(gson.fromJson(
-										jo.toString(), ClassificationModel.class));
+								ClassificationModel classificationModel=gson.fromJson(
+										jo.toString(), ClassificationModel.class);
+								List<ClassificationModel> classificationModels=classificationModel.getProductCategoryDtos();
+								for (ClassificationModel classificationModel2 : classificationModels) {//服务器返回level有误都为1，故在此修改为2
+									classificationModel2.setLevel(2);
+								}
+								model.add(classificationModel);
 							}
 							MyLogger.i(model.toString());
 							adapter.notifyDataSetChanged();
@@ -195,12 +200,6 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-				//				System.out.println(">>>>>>>>分类：点击了" + model.get(position).getTitle());
-				//CommonUtil.gotoActivity(ClassificationActivity.this, ClassifyCommodityActivity.class, false);
-//				Intent intent=new Intent(ClassificationActivity.this, ClassifyCommodityActivity.class);
-//				intent.putExtra("id", model.get(position).getId()+"");
-//				startActivity(intent);
 				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
 			}
 		});
