@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
-        android:layout_marginTop="10dp"
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="vertical"

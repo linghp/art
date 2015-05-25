@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
-        android:id="@+id/commoditycontent_relative"
+        android:id="@+id/rl_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -55,7 +55,7 @@
     <com.shangxian.art.view.ScrollViewContainer
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/commoditycontent_relative"
+        android:layout_above="@id/rl_footer"
         android:layout_below="@id/top_title" >
 
         <ScrollView
