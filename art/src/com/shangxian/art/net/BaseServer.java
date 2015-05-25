@@ -20,6 +20,7 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
 import com.shangxian.art.base.DataTools;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.AccountSumInfo;
@@ -400,6 +401,22 @@ public class BaseServer {
 		});
 	}
 	
+	protected String getRes(String res) {
+		if (TextUtils.isEmpty(res)) throw new NullPointerException();
+		try {
+			JSONObject json = new JSONObject(res);
+			if (json.getInt("result_code") == 200) {
+				res = json.getString("result");
+			} 
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	protected HttpUtils getHttpUtils() {
+		return new HttpUtils();
+	}
 	
 	protected interface OnHttpListener {
 		void onHttp(String res);

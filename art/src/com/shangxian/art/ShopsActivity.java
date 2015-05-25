@@ -37,6 +37,7 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductDto;
+import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.FollowServer;
@@ -369,11 +370,16 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		});
 		// 定位
 		dingwei.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
+				ShopLocInfo info = new ShopLocInfo();
+				info.setId(model.getId());
+				info.setTitle(model.getName());
+				info.setPhoto(model.getLogo());
+				info.setLng(model.getLat());
+				info.setAddress(model.getShopAddress());
+				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
 				CommonUtil.gotoActivityWithData(ShopsActivity.this,
 						LocationActivity.class, bundle, false);

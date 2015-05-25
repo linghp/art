@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baidu.mapapi.model.LatLng;
 import com.google.gson.annotations.Expose;
 
 public class ShopsModel implements Serializable {
@@ -35,7 +36,12 @@ public class ShopsModel implements Serializable {
 	private List<ProductDto> productDtos = new ArrayList<ProductDto>();
 	@Expose
 	private Boolean attened;
-
+	
+	public MyLatLng getLat(){
+		MyLatLng lng = new MyLatLng(lag.get(1), lag.get(0));
+		return lng;
+	}
+ 
 	public Integer getId() {
 		return id;
 	}

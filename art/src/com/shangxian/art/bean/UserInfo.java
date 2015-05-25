@@ -102,8 +102,6 @@ public class UserInfo implements Serializable {
 		this.scalePhoto = scalePhoto;
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return "UserInfo [_id=" + _id + ", id=" + id + ", loginType="

@@ -27,25 +27,26 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.base.DataTools;
+import com.shangxian.art.bean.NearlyShopInfo;
+import com.shangxian.art.bean.NearlyShopStat;
+import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.utils.ImageUtil;
+import com.shangxian.art.net.HttpUtils;
+import com.shangxian.art.net.NearlyServer;
+import com.shangxian.art.net.NearlyServer.OnNearlyShopListener;
+import com.shangxian.art.utils.MyLogger;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ListActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class LocationActivity extends BaseActivity {
@@ -92,6 +93,7 @@ public class LocationActivity extends BaseActivity {
 
 	private final static int MAP_SHOPS = Constant.MAP_SHOPS_2_LOC;
 	private final static int MAP_NEARLY = Constant.MAP_NEARLY_LOC;
+	private final static int MAP_REGIST = Constant.MAP_REGIST_LOC;
 	private int curType;
 
 	// TODO:
@@ -99,20 +101,34 @@ public class LocationActivity extends BaseActivity {
 	private BDLocation mLoc;
 	private Random mRandom = new Random();
 	private LatLng mShopLatlng;
-	private List<LatLng> mNearlyLatlngs = new ArrayList<LatLng>();
+	// private List<LatLng> mNearlyLatlngs = new ArrayList<LatLng>();
+	private ShopsModel model;
+	private NearlyShopInfo shopInfo;
+	private ShopLocInfo locInfo;
+	protected List<NearlyShopInfo> nearlyShops = new ArrayList<NearlyShopInfo>();
 
 	private void initData() {
+		BDLocation bdl = app.getMLoc();
+		if (bdl != null) {
+			ll = new LatLng(bdl.getLatitude(), bdl.getLongitude());
+		} else {
+			myToast("请打开系统定位功能");
+			finish();
+		}
+
 		Intent intent = getIntent();
 		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
 				Integer.MIN_VALUE);
+		curType = type;
 		switch (type) {
 		case MAP_SHOPS:
-			curType = MAP_SHOPS;
 			shops();
 			break;
 		case MAP_NEARLY:
-			curType = MAP_NEARLY;
 			nearly();
+			break;
+		case MAP_REGIST:
+			regist();
 			break;
 		case Integer.MIN_VALUE:
 			myToast("请求错误");
@@ -121,6 +137,15 @@ public class LocationActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * 
+	 * 商铺入驻定位
+	 */
+	private void regist() {
+
+	}
+
+	@SuppressWarnings({ "unchecked", "unchecked" })
 	private void nearly() {
 		/*
 		 * mNearlyLatlngs.add(new LatLng(mLoc.getLatitude() +
@@ -155,32 +180,116 @@ public class LocationActivity extends BaseActivity {
 		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
 		 */
 
-		bits.add(bdnA);
-		bits.add(bdnB);
-		bits.add(bdnC);
-		bits.add(bdnD);
-		bits.add(bdnE);
-		bits.add(bdnF);
-		bits.add(bdnG);
-		bits.add(bdnH);
-		bits.add(bdnI);
-		bits.add(bdnJ);
-		int len = mRandom.nextInt(6) + 4;
-		for (int i = 0; i < len; i++) {
-			mNearlyLatlngs.add(new LatLng(mLoc.getLatitude()
-					+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
-					/ 1000000.0d, mLoc.getLongitude()
-					+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
-					/ 1000000.0d));
+		// bits.add(bdnA);
+		// bits.add(bdnB);
+		// bits.add(bdnC);
+		// bits.add(bdnD);
+		// bits.add(bdnE);
+		// bits.add(bdnF);
+		// bits.add(bdnG);
+		// bits.add(bdnH);
+		// bits.add(bdnI);
+		// bits.add(bdnJ);
+		// int len = mRandom.nextInt(6) + 4;
+		// for (int i = 0; i < len; i++) {
+		// mNearlyLatlngs.add(new LatLng(mLoc.getLatitude()
+		// + (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+		// / 1000000.0d, mLoc.getLongitude()
+		// + (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+		// / 1000000.0d));
+		// }
+
+		if (DataTools.newInstance().getDatas(mAc.getClass().getSimpleName()) != null) {
+			nearlyShops = (List<NearlyShopInfo>) DataTools.newInstance()
+					.getDatas(mAc.getClass().getSimpleName());
+		}
+
+		if (!HttpUtils.checkNetWork(mAc)) {
+			final AlertDialog dialog = new AlertDialog.Builder(this)
+					.setTitle("提示")
+					.setMessage("系统连接网络失败,请打开网络连接后重试")
+					.setNegativeButton("返回",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									finish();
+								}
+							})
+					.setNeutralButton("重试",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									if (dialog != null) {
+										dialog.dismiss();
+									}
+									nearly();
+								}
+							}).show();
+		} else {
+			new NearlyServer().toNearlyShop(
+					new LatLng(app.getMLoc().getLatitude(), app.getInstance()
+							.getMLoc().getLongitude()), 10000, 0,
+					new OnNearlyShopListener() {
+						@Override
+						public void onNearly(NearlyShopStat stat) {
+							MyLogger.i(stat != null ? stat.toString() : "null");
+							if (stat != null && !stat.isNull()) {
+								LocationActivity.this.nearlyShops = stat
+										.getContents();
+								DataTools.newInstance().put(
+										mAc.getClass().getSimpleName(),
+										LocationActivity.this.nearlyShops);
+								overNearly();
+							} else {
+								if (nearlyShops.size() == 0) {
+									final AlertDialog dialog = new AlertDialog.Builder(
+											mAc)
+											.setTitle("提示")
+											.setMessage("请求数据失败")
+											.setNegativeButton(
+													"返回",
+													new DialogInterface.OnClickListener() {
+														@Override
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															finish();
+														}
+													})
+											.setNeutralButton(
+													"重试",
+													new DialogInterface.OnClickListener() {
+														@Override
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															if (dialog != null) {
+																dialog.dismiss();
+															}
+															nearly();
+														}
+													}).show();
+								}
+							}
+						}
+					});
 		}
 	}
 
 	private void shops() {
-		mShopLatlng = new LatLng(mLoc.getLatitude()
-				+ (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d,
-				mLoc.getLongitude()
-						+ (mRandom.nextInt(1000) - mRandom.nextInt(2000))
-						/ 1000000.0d);
+		// mShopLatlng = new LatLng(mLoc.getLatitude()
+		// + (mRandom.nextInt(1000) - mRandom.nextInt(2000)) / 1000000.0d,
+		// mLoc.getLongitude()
+		// + (mRandom.nextInt(1000) - mRandom.nextInt(2000))
+		// / 1000000.0d);
+		locInfo = (ShopLocInfo) getIntent().getSerializableExtra(
+				Constant.INT_LOC_NEARLY_SHOPINFO);
+		if (locInfo == null) {
+			throw new NullPointerException("ShopLocInfo is null");
+		}
+		mShopLatlng = locInfo.getLatLng();
 	}
 
 	private void initView() {
@@ -188,20 +297,18 @@ public class LocationActivity extends BaseActivity {
 		mp_loc.showZoomControls(false);
 		mp_loc.showScaleControl(false);
 		mMap = mp_loc.getMap();
-		upDataMap();
-	}
-
-	private void upDataMap() {
-		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())
-				.target(getLat()).zoom(16f).build();
-		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
-		mMap.setMapStatus(msu);
 		// 开启定位图层
 		if (curType == MAP_SHOPS) {
 			mMap.setMyLocationEnabled(false);
 		} else if (curType == MAP_NEARLY) {
-			mMap.setMyLocationEnabled(false);
+			mMap.setMyLocationEnabled(true);
+		} else if (curType == MAP_REGIST) {
+			mMap.setMyLocationEnabled(true);
 		}
+		upDataMap();
+	}
+
+	private void upDataMap() {
 		// mMap.set
 		// 定位初始化
 		mLocClient = new LocationClient(this);
@@ -213,6 +320,13 @@ public class LocationActivity extends BaseActivity {
 		option.setScanSpan(2000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
+
+		LatLng lng = getLat();
+		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())
+				.target(lng == null ? ll : lng).zoom(16f).build();
+		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
+		mMap.setMapStatus(msu);
+
 		initOverlay();
 	}
 
@@ -221,27 +335,28 @@ public class LocationActivity extends BaseActivity {
 	 */
 	public MyLocationListenner myListener = new MyLocationListenner();
 	private Marker mMarkerShop;
+	public LatLng ll;
 
 	public class MyLocationListenner implements BDLocationListener {
 		@Override
 		public void onReceiveLocation(BDLocation location) {
 			// map view 销毁后不在处理新接收的位置
-			if (location == null || mp_loc == null)
-				return;
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					// 此处设置开发者获取到的方向信息，顺时针0-360
-					.direction(100).latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			mMap.setMyLocationData(locData);
-			if (isFirstLoc) {
-				isFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				/*
-				 * MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				 * mMap.animateMapStatus(u);
-				 */
+			if (location != null && mp_loc != null) {
+				MyLocationData locData = new MyLocationData.Builder()
+						.accuracy(location.getRadius())
+						// 此处设置开发者获取到的方向信息，顺时针0-360
+						.direction(100).latitude(location.getLatitude())
+						.longitude(location.getLongitude()).build();
+				mMap.setMyLocationData(locData);
+				if (isFirstLoc) {
+					isFirstLoc = false;
+					ll = new LatLng(location.getLatitude(),
+							location.getLongitude());
+					/*
+					 * MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+					 * mMap.animateMapStatus(u);
+					 */
+				}
 			}
 		}
 
@@ -257,18 +372,65 @@ public class LocationActivity extends BaseActivity {
 		case MAP_NEARLY:
 			overNearly();
 			break;
+		case MAP_REGIST:
+			overRegist();
+			break;
 		}
+	}
+
+	private void overRegist() {
+
 	}
 
 	List<Marker> markers;
 
 	private void overNearly() {
-		if (mNearlyLatlngs.size() > 0) {
+		// if (mNearlyLatlngs.size() > 0) {
+		// markers = new ArrayList<Marker>();
+		// for (int i = 0; i < mNearlyLatlngs.size(); i++) {
+		// OverlayOptions ooA = new MarkerOptions()
+		// .position(mNearlyLatlngs.get(i)).icon(bits.get(i))
+		// .zIndex(mNearlyLatlngs.size() - i);
+		// markers.add((Marker) (mMap.addOverlay(ooA)));
+		// }
+		// mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+		// @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+		// @Override
+		// public boolean onMarkerClick(Marker marker) {
+		// mMap.hideInfoWindow();
+		// final int mark = markers.indexOf(marker);
+		// View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg,
+		// null);
+		// TextView title = (TextView) view.findViewById(R.id.loct_tv_title);
+		// title.setText("测试商铺" + mark);
+		// mInfoWindow = new InfoWindow(BitmapDescriptorFactory
+		// .fromView(view), marker.getPosition(), -47,
+		// new OnInfoWindowClickListener() {
+		// @Override
+		// public void onInfoWindowClick() {
+		// myToast("点击测试商铺" + mark);
+		// mMap.hideInfoWindow();
+		// }
+		// });
+		// mMap.showInfoWindow(mInfoWindow);
+		// isShowWindowing = true;
+		// toHideWindow(marker);
+		// return true;
+		// }
+		// });
+		// }
+		if (nearlyShops.size() > 0) {
+			MapStatus u = new MapStatus.Builder(mMap.getMapStatus())
+					.target(getLat()).zoom(16f).build();
+			MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
+			mMap.setMapStatus(msu);
 			markers = new ArrayList<Marker>();
-			for (int i = 0; i < mNearlyLatlngs.size(); i++) {
+			for (int i = 0; i < nearlyShops.size(); i++) {
 				OverlayOptions ooA = new MarkerOptions()
-						.position(mNearlyLatlngs.get(i)).icon(bits.get(i))
-						.zIndex(mNearlyLatlngs.size() - i);
+						.position(
+								new LatLng(nearlyShops.get(i).getLat(),
+										nearlyShops.get(i).getLng()))
+						.icon(bits.get(i)).zIndex(nearlyShops.size() - i);
 				markers.add((Marker) (mMap.addOverlay(ooA)));
 			}
 			mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
@@ -277,9 +439,11 @@ public class LocationActivity extends BaseActivity {
 				public boolean onMarkerClick(Marker marker) {
 					mMap.hideInfoWindow();
 					final int mark = markers.indexOf(marker);
-					View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg, null);
-					TextView title = (TextView) view.findViewById(R.id.loct_tv_title);
-					title.setText("测试商铺"  + mark);
+					View view = getLayoutInflater().inflate(
+							R.layout.act_loc_pupo_bg, null);
+					TextView title = (TextView) view
+							.findViewById(R.id.loct_tv_title);
+					title.setText("测试商铺" + mark);
 					mInfoWindow = new InfoWindow(BitmapDescriptorFactory
 							.fromView(view), marker.getPosition(), -47,
 							new OnInfoWindowClickListener() {
@@ -310,10 +474,13 @@ public class LocationActivity extends BaseActivity {
 			@SuppressLint("NewApi")
 			@Override
 			public boolean onMarkerClick(Marker mark) {
-				/*Button button = new Button(getApplicationContext());
-				button.setText("测试商铺>");
-				button.setBackgroundResource(R.drawable.yinying);*/
-				View view = getLayoutInflater().inflate(R.layout.act_loc_pupo_bg, null);
+				/*
+				 * Button button = new Button(getApplicationContext());
+				 * button.setText("测试商铺>");
+				 * button.setBackgroundResource(R.drawable.yinying);
+				 */
+				View view = getLayoutInflater().inflate(
+						R.layout.act_loc_pupo_bg, null);
 				LatLng ll = mark.getPosition();
 				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
 						.fromView(view), ll, -47,
@@ -365,12 +532,25 @@ public class LocationActivity extends BaseActivity {
 		} else if (curType == MAP_NEARLY) {
 			double lat = 0;
 			double lon = 0;
-			for (int i = 0; i < mNearlyLatlngs.size(); i++) {
-				lat += mNearlyLatlngs.get(i).latitude;
-				lon += mNearlyLatlngs.get(i).longitude;
+			// for (int i = 0; i < mNearlyLatlngs.size(); i++) {
+			// lat += mNearlyLatlngs.get(i).latitude;
+			// lon += mNearlyLatlngs.get(i).longitude;
+			// }
+			// return new LatLng(lat / mNearlyLatlngs.size(), lon
+			// / mNearlyLatlngs.size());
+			if (nearlyShops.size() == 0) {
+				return null;
+			} else {
+				for (int i = 0; i < nearlyShops.size(); i++) {
+					lat += nearlyShops.get(i).getLat();
+					lon += nearlyShops.get(i).getLng();
+				}
+				lat += ll.latitude;
+				lon += ll.longitude;
+				lat = lat / (nearlyShops.size() + 1.0);
+				lon = lon / (nearlyShops.size() + 1.0);
+				return new LatLng(lat, lon);
 			}
-			return new LatLng(lat / mNearlyLatlngs.size(), lon
-					/ mNearlyLatlngs.size());
 		}
 		return null;
 	}
@@ -381,7 +561,7 @@ public class LocationActivity extends BaseActivity {
 			public boolean onMapPoiClick(MapPoi arg0) {
 				return false;
 			}
-			
+
 			@Override
 			public void onMapClick(LatLng arg0) {
 				mMap.hideInfoWindow();

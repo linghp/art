@@ -69,6 +69,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
 	}
+	
 	//添加数据
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);

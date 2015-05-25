@@ -15,8 +15,6 @@ public class FileServer extends BaseServer {
 		params.addBodyParameter("photo", file);
 		params.addHeader("User-Token", curUser.getId() + "");
 		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST, NET_UPLOAD_IMG, params,callBack);
-	}
-	
-	
+		http.send(HttpRequest.HttpMethod.POST, NET_UPLOAD_IMG, params, callBack);
+	}	
 }

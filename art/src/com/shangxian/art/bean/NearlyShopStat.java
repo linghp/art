@@ -8,6 +8,7 @@ import com.google.gson.annotations.Expose;
 
 /**
  * 附近商铺数据统计
+ * 
  * @author Administrator
  *
  */
@@ -16,16 +17,16 @@ public class NearlyShopStat implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7248541170087340925L;
-	
+
 	@Expose
-	private Integer status;
-	
+	private Integer status = Integer.MIN_VALUE;
+
 	@Expose
-	private Integer total; // 总条数
-	
+	private Integer total = Integer.MIN_VALUE; // 总条数
+
 	@Expose
-	private Integer size; 
-	
+	private Integer size = Integer.MIN_VALUE;
+
 	@Expose
 	private List<NearlyShopInfo> contents = new ArrayList<NearlyShopInfo>();
 
@@ -59,6 +60,12 @@ public class NearlyShopStat implements Serializable {
 
 	public void setContents(List<NearlyShopInfo> contents) {
 		this.contents = contents;
+	}
+
+	public boolean isNull() {
+		return status == Integer.MIN_VALUE && total == Integer.MIN_VALUE
+				&& size == Integer.MIN_VALUE && contents != null
+				&& contents.size() == 0;
 	}
 
 	@Override

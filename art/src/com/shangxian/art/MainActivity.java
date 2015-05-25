@@ -189,10 +189,14 @@ public class MainActivity extends TabActivity implements OnClickListener{
 			CommonUtil.gotoActivity(this, CaptureActivity.class, false);
 			break;
 		case R.id.btn_right:
-			myToast("定位");
+			//myToast("定位");
+			Bundle bundle = new Bundle();
+			bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_NEARLY_LOC);
+			CommonUtil.gotoActivityWithData(this, LocationActivity.class, bundle, false);
 			break;
 		case R.id.ll_center:
-			myToast("搜索");
+			//myToast("搜索");
+			CommonUtil.gotoActivity(this, SearchsActivity.class, false);
 			break;
 		default:
 			break;

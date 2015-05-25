@@ -21,6 +21,7 @@ import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.view.CircleImageView1;
 
 public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 	private AbImageLoader mAbImageLoader = null;
@@ -46,7 +47,7 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 					R.layout.item_classifiymain, null);
 			holder.title = (TextView) convertView.findViewById(R.id.item_classifiymain_title);
 			holder.summary = (TextView) convertView.findViewById(R.id.item_classifiymain_summary);
-			holder.img = (ImageView) convertView.findViewById(R.id.item_classifiymain_img);
+			holder.img = (CircleImageView1) convertView.findViewById(R.id.item_classifiymain_img);
 			holder.item_classifiymain_spread = (ImageView) convertView.findViewById(R.id.item_classifiymain_spread);
 			
 			convertView.setTag(holder);
@@ -99,6 +100,7 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 
 	public static class ViewHolder {
 		TextView title, summary;
-		ImageView img, item_classifiymain_spread;
+		ImageView item_classifiymain_spread;
+		CircleImageView1 img;
 	}
 }

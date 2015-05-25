@@ -61,7 +61,7 @@ public class NearlyShopInfo implements Serializable {
 	private Integer uid;
 	
 	@Expose
-	private Integer id;
+	private Integer id = Integer.MIN_VALUE;
 	
 	@SerializedName("coord_type")
 	@Expose
@@ -81,6 +81,10 @@ public class NearlyShopInfo implements Serializable {
 	
 	@Expose
 	private String indexLogo;
+	
+	public boolean isNull(){
+		return id == Integer.MIN_VALUE;
+	}
 
 	public String getTitle() {
 		return title;
@@ -118,8 +122,8 @@ public class NearlyShopInfo implements Serializable {
 	 * 获取经纬度
 	 * @return
 	 */
-	public LatLng getLatLng(){
-		LatLng lat = new LatLng(Double.valueOf(location.get(1)), Double.valueOf(location.get(1)));
+	public MyLatLng getLatLng(){
+		MyLatLng lat = new MyLatLng(Double.valueOf(location.get(1)), Double.valueOf(location.get(0)));
 		return lat;
 	}
 
@@ -282,7 +286,5 @@ public class NearlyShopInfo implements Serializable {
 				+ uid + ", id=" + id + ", coordType=" + coordType + ", type="
 				+ type + ", distance=" + distance + ", weight=" + weight
 				+ ", shopId=" + shopId + ", indexLogo=" + indexLogo + "]";
-	}
-	
-	
+	}	
 }

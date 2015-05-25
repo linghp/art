@@ -93,7 +93,7 @@ public class AccountSecurityActivity extends BaseActivity {
 			finish();
 			break;
 		case R.id.rl_photo:
-			myToast("头像");
+			//myToast("头像");
 			showPhotoDialog();
 			break;
 		case R.id.ll_my_item1:
@@ -270,7 +270,7 @@ public class AccountSecurityActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> info) {
 						String res = info.result;
 						MyLogger.i(res);
-						myToast("res==" + res);
+						//myToast("res==" + res);
 						if (!TextUtils.isEmpty(res)) {
 							try {
 								JSONObject json = new JSONObject(res);
