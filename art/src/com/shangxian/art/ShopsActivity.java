@@ -227,23 +227,26 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								list = model.getProductDtos();
 								collectionimg.setSelected(model.getAttened());
 
-								if (adapter == null) {
-									// //给每项商品设置id
-									// for (int i = 0; i < list.size(); i++) {
-									// ProductDto p = new ProductDto();
-									// p.setId(i);
-									// list.add(p);
-									// }
-									adapter = new ShopsAdapter(
-											ShopsActivity.this);
-									// adapter = new ShopsAdapter(this);
-									adapter.updateData(list);
-									mGridView.setAdapter(adapter);
-									// mGridView.bindLinearLayout();
-								} else {
-									// adapter.upDateList(list);
-									adapter.updateData(list);
+								if (list != null) {
+									if (adapter == null) {
+										// //给每项商品设置id
+										// for (int i = 0; i < list.size(); i++) {
+										// ProductDto p = new ProductDto();
+										// p.setId(i);
+										// list.add(p);
+										// }
+										adapter = new ShopsAdapter(
+												ShopsActivity.this);
+										// adapter = new ShopsAdapter(this);
+										adapter.updateData(list);
+										mGridView.setAdapter(adapter);
+										// mGridView.bindLinearLayout();
+									} else {
+										// adapter.upDateList(list);
+										adapter.updateData(list);
+									}
 								}
+								
 							}
 
 						}

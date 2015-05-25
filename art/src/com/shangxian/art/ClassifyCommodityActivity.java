@@ -213,6 +213,12 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>筛选");
+				shaixuan.setSelected(!shaixuan.isSelected());
+				if (shaixuan.isSelected()) {
+					//弹出
+					
+				}
+//				shaixuan.setTextColor(R.color.col_b1toma500);
 				// popupWindow.showAtLocation(v, MODE_APPEND, 0, 0);
 				// dialog.show();
 			}
@@ -223,6 +229,10 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>销量");
+				xiaoliang.setSelected(!xiaoliang.isSelected());
+				if (xiaoliang.isSelected()) {
+					//弹出
+				}
 			}
 		});
 		jiage.setOnClickListener(new OnClickListener() {
@@ -231,6 +241,11 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>价格");
+				jiage.setSelected(!jiage.isSelected());
+				if (jiage.isSelected()) {
+					//弹出
+					
+				}
 			}
 		});
 		xinpin.setOnClickListener(new OnClickListener() {
@@ -239,6 +254,11 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println(">>>>>>>新品");
+				xinpin.setSelected(!xinpin.isSelected());
+				if (xinpin.isSelected()) {
+					//弹出
+					
+				}
 			}
 		});
 
