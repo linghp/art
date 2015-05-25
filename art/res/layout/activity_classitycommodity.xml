@@ -22,35 +22,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/screening"
+            android:drawableTop="@drawable/shaixuan_green"
             android:text="筛选"
             android:textSize="@dimen/list_min_size"
+            android:textColor="@color/col_b1toma500"
             android:gravity="center"/>
+        <View 
+            android:layout_width="0.5dp"
+            android:layout_height="30dp"
+            android:background="@color/txt_black3"/>
         <TextView
             android:id="@+id/classitycommodity_xiaoliang" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/salesvolume"
+            android:drawableTop="@drawable/xiaoliang_green"
             android:text="销量"
+            android:textColor="@color/col_b1toma500"
             android:textSize="@dimen/list_min_size"
             android:gravity="center"/>
+        <View 
+            android:layout_width="0.5dp"
+            android:layout_height="30dp"
+            android:background="@color/txt_black3"/>
         <TextView
             android:id="@+id/classitycommodity_jiage" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/price"
+            android:drawableTop="@drawable/jiage_green"
             android:text="价格"
+            android:textColor="@color/col_b1toma500"
             android:textSize="@dimen/list_min_size"
             android:gravity="center"/>
+        <View 
+            android:layout_width="0.5dp"
+            android:layout_height="30dp"
+            android:background="@color/txt_black3"/>
         <TextView
             android:id="@+id/classitycommodity_xinpin" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/newproduct"
+            android:drawableTop="@drawable/xinpin_green"
             android:text="新品"
+            android:textColor="@color/col_b1toma500"
             android:textSize="@dimen/list_min_size"
             android:gravity="center"/>
         
