@@ -179,6 +179,11 @@ public class LocalUserInfo {
 		put(Constant.PRE_USER_NICKNAME, user.getNickName());
 		put(Constant.PRE_USER_PHONENUMBER, user.getPhoneNumber());
 		put(USERPHOTO_FILENAME, user.getScalePhoto());
+		put(Constant.PRE_LOGIN_USERNAME,
+				user.getPhoneNumber());
+		put(Constant.PRE_LOGIN_LASTTIME,
+				System.currentTimeMillis());
+		put(Constant.PRE_LOGIN_STATE, true);
 		put("payed", user.isPayed());
 	}
 	

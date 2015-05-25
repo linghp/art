@@ -44,9 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:imeOptions="actionNext"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:hint="请输入收货人姓名"
-                android:lines="1"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -85,10 +87,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:ems="11"
                 android:hint="请输入手机号码"
                 android:imeOptions="actionNext"
                 android:numeric="integer"
-                android:ems="11"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -127,15 +129,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:ems="6"
                 android:hint="请输入邮政编码"
                 android:imeOptions="actionNext"
-                android:ems="6"
                 android:numeric="integer"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
 
-<!--         <View
+        <!--
+             <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
@@ -179,8 +182,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:src="@drawable/next_level" />
-        </LinearLayout>
- -->
+        </LinearLayout>
+        -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -215,7 +219,6 @@
                 android:background="@null"
                 android:gravity="top"
                 android:hint="请输入详细地址"
-                android:imeOptions="actionNext"
                 android:lines="2"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />

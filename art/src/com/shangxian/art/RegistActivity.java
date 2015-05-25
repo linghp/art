@@ -263,11 +263,6 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 						if (userInfo != null) {
 							myToast("注册成功");
 							share.putUser(userInfo);
-							share.put(Constant.PRE_LOGIN_USERNAME,
-									userInfo.getPhoneNumber());
-							share.put(Constant.PRE_LOGIN_LASTTIME,
-									System.currentTimeMillis());
-							share.put(Constant.PRE_LOGIN_STATE, true);
 						}
 					}
 					finish();

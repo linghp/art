@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.shangxian.art.R;
+import com.shangxian.art.R.string;
 import com.shangxian.art.ShoppingcartActivity;
 import com.shangxian.art.bean.CarItem;
 import com.shangxian.art.bean.ListCarGoodsBean;
@@ -177,7 +179,12 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 //			imageLoader.displayImage(path, holder.goodsImg, options, null);
 
 			holder.goodsName.setText(item.listCarGoodsBean.getName());
-			//holder.goodsAttr.setText(item.listCarGoodsBean.goodsAttr);
+			Map<String, String> selectedspec=item.listCarGoodsBean.getSelectedSpec();
+			String specs="";
+			for (Entry<String, String> entry : selectedspec.entrySet()) {
+				specs=specs+entry.getValue()+"  ";
+			}
+			holder.goodsAttr.setText(specs);
 			holder.goodsNum.setText("x"+item.listCarGoodsBean.getQuantity());
 //			if(!StringUtils.isEmpty(item.listCarGoodsBean.goodsOldPrice)){
 //				holder.goodsOldPrice.setText(item.goods.goodsOldPrice);
@@ -210,8 +217,7 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 			holder.updata.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity,ListCarAdapter.this);
-					dialog.setCarGoodsItem(item);
+					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity,ListCarAdapter.this,item.listCarGoodsBean);
 					dialog.show();
 				}
 			});
@@ -464,7 +470,7 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 
 	@Override
 	public void goodsDialogConfirm(String str) {
-		// TODO Auto-generated method stub
-		
+		this.notifyDataSetChanged();
 	}
+
 }

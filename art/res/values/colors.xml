@@ -47,6 +47,7 @@
     <color name="teal2">#8a009688</color>
     <color name="teal3">#42009688</color>
     <!-- green 绿色 -->
+    <color name="green_listitem">#EBFAF0</color>
     <color name="green300">#42bd41</color>
     <color name="green500">#259b24</color>
     <color name="green1">#de259b24</color>

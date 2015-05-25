@@ -201,11 +201,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						System.out.println("登录========================="
 								+ info.toString());
 						share.putUser(info);
-						share.put(Constant.PRE_LOGIN_USERNAME, user);
-						//share.put(Constant.PRE_LOGIN_PASSWORD, pass);
-						share.put(Constant.PRE_LOGIN_LASTTIME,
-								System.currentTimeMillis());
-						share.put(Constant.PRE_LOGIN_STATE, true);
 						showView(LOGIN_SUCCESS);
 					} else {
 						//myToast("登录失败");

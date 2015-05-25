@@ -47,7 +47,12 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 		initView();
 		initData();
 		initListener();
-
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		name.requestFocus();
 	}
 	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);

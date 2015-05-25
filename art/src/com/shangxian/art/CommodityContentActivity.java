@@ -65,6 +65,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	private ImageView commoditycontent_shoucang;
 	private TextView commoditycontent_jieshao, commoditycontent_jiage,
 			commoditycontent_jiarugouwuche, address, guige, dianpu;
+	private View rl_footer;
 //	private TextView tv_first, tv_second;
 //	private ImageView img_first, img_second;
 	private LinearLayout dingwei, shangpu;
@@ -303,6 +304,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
+				myToast("加载失败，请重试");
 				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
 				// imgList.clear();
 				// ArrayList<String> imgs = new ArrayList<String>();
@@ -406,6 +408,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// Imageloader_homePager.displayImage(Constant.BASEURL
 		// + model.getPhotos().get(0), commoditycontent_img,
 		// new Handler(), null);// TODO Auto-generated method stub
+		rl_footer.setVisibility(View.VISIBLE);
 		commoditycontent_jieshao.setText(model.getName().toString().trim());
 		commoditycontent_jiage.setText("￥"
 				+ CommonUtil.priceConversion(model.getPromotionPrice()));
@@ -434,6 +437,8 @@ public class CommodityContentActivity extends BaseActivity implements
 		viewPager = (TagViewPager) findViewById(R.id.commoditycontent_mTagViewPager);
 		initTagViewPager();// 初始化轮播VIEW
 
+		rl_footer=findViewById(R.id.rl_footer);
+		rl_footer.setVisibility(View.GONE);
 		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);

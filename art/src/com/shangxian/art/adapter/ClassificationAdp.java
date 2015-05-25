@@ -66,13 +66,13 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 				+ dates.get(position).getPhoto());
         LayoutParams layoutParams=holder.img.getLayoutParams();
         if(classificationModel.getLevel()==1){
-        	convertView.setBackgroundResource(R.color.white);
+        	convertView.setBackgroundResource(R.drawable.listitem_background);
         	holder.title.setVisibility(View.VISIBLE);
         	holder.item_classifiymain_spread.setVisibility(View.VISIBLE);
         	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview1);
         	layoutParams.height=layoutParams.width;
         }else{
-        	convertView.setBackgroundResource(R.color.bg_gray);
+        	convertView.setBackgroundResource(R.drawable.listitemsub_background);
         	layoutParams.width=(int)mAc.getResources().getDimension(R.dimen.classification_imageview2);
         	layoutParams.height=layoutParams.width;
         	//holder.title.setVisibility(View.GONE);

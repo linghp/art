@@ -62,12 +62,18 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void changeview() {
-		if (isLogin()) {
+		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==1) {//买家
+			ll_loginbefore.setVisibility(View.GONE);
+			ll_loginafter.setVisibility(View.VISIBLE);
+			findViewById(R.id.ll_seller).setVisibility(View.GONE);
+			tv_username = (TextView) findViewById(R.id.tv_username);
+			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
+		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==2){//卖家
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
 			tv_username = (TextView) findViewById(R.id.tv_username);
 			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
-		} else {
+		}else {//未登录
 			ll_loginbefore.setVisibility(View.VISIBLE);
 			ll_loginafter.setVisibility(View.GONE);
 		}

@@ -221,11 +221,13 @@ public class TagViewPager extends RelativeLayout implements
 	@Override
 	public void run() {
 		int count = viewPager.getCurrentItem();
+		if(imageList.size()>0){
 		imageList.get(currentItem).setImageResource(tagImageId_nomorl);
 		viewPager.setCurrentItem(++count);
 		currentItem = viewPager.getCurrentItem() % this.count;
 		imageList.get(currentItem).setImageResource(tagImageId_seleced);
 		hd.postDelayed(this, autoNextTime);
+		}
 	}
 
 	OnGetView onGetView;

@@ -38,7 +38,7 @@ import com.shangxian.art.utils.MyLogger;
  *
  */
 public class ClassificationActivity extends BaseActivity implements OnClickListener{
-	private ListView list;
+	private ListView listView;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
 	private View ll_nonetwork,loading_big;
@@ -83,14 +83,14 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 //		}
 		
 		adapter = new ClassificationAdp(this, R.layout.item_classifiymain, model);
-		list.setAdapter(adapter);
+		listView.setAdapter(adapter);
 
 	}
 	
 	private void requestTask() {
 //		AbDialogUtil.showLoadDialog(this,
 //				R.drawable.progress_circular, "数据加载中...");
-		list.setVisibility(View.GONE);
+		listView.setVisibility(View.GONE);
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
 		AbRequestParams params = new AbRequestParams();
 		params.put("level", "all");
@@ -113,7 +113,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
 				loading_big.setVisibility(View.GONE);
-				list.setVisibility(View.GONE);
+				listView.setVisibility(View.GONE);
 				 AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
 //				imgList.clear();
 //				ArrayList<String> imgs = new ArrayList<String>();
@@ -156,7 +156,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
-							list.setVisibility(View.VISIBLE);
+							listView.setVisibility(View.VISIBLE);
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
 							int length = resultObjectArray.length();
@@ -187,14 +187,14 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	//初始化控件
 	private void initView() {
 		// TODO Auto-generated method stub
-		list = (ListView) findViewById(R.id.classify);
+		listView = (ListView) findViewById(R.id.classify);
 		ll_nonetwork=findViewById(R.id.ll_nonetwork);
 		loading_big=findViewById(R.id.loading_big);
 	}
 
 	//事件监听
 	private void listener(){
-		list.setOnItemClickListener(new OnItemClickListener() {
+		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
