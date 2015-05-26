@@ -22,7 +22,7 @@ public class NearlyServer extends BaseServer {
 		if (!curUser.isNull())
 			params.addHeader("User-Token", curUser.getId() + "");
 		getHttpUtils().send(HttpMethod.POST,
-				"http://192.168.0.106:8888/art/api/nearbyGeosearch", params,
+				"http://192.168.0.159:8888/art/api/nearbyGeosearch", params,
 				new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
@@ -31,6 +31,7 @@ public class NearlyServer extends BaseServer {
 					
 					@Override
 					public void onSuccess(ResponseInfo<String> result) {
+						//MyLogger.d();
 						try {
 							String res = getRes(result.result);
 							MyLogger.i(res);

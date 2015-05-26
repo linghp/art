@@ -2,35 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-    
-	<LinearLayout 
-	    android:id="@+id/title"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:gravity="center_vertical"
-	    android:layout_centerHorizontal="true"
-	    android:background="@drawable/infowind"
-	    android:paddingLeft="12dp"
-	    android:paddingRight="12dp"
-	    android:paddingBottom="20dp">
-	    
-	    <ImageView 
-	        android:layout_width="30dp"
-	        android:layout_height="30dp"
-	        android:src="@drawable/icon_home_check"
-	        android:layout_marginRight="8dp"/>
-	    
-	    <TextView 
-	        android:id="@+id/loct_tv_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="测试商铺1"
-	        android:maxWidth="200dp"
-	        android:minLines="1"
-	        android:gravity="center_vertical"
-	        android:layout_marginTop="8dp"
-	        android:layout_marginBottom="8dp"
-	        />
-	</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/abc_popup_background_mtrl_mult"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp" >
+
+        <com.shangxian.art.view.CircleImageView1
+            android:id="@+id/item_classifiymain_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/image_loading" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="8dp" >
+
+            <TextView
+                android:id="@+id/loct_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:gravity="center_vertical"
+                android:maxWidth="150dp"
+                android:minLines="1"
+                android:singleLine="true"
+                android:text="测试商铺111111111111111111111111111111111111111111111111111111111111111111111"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
