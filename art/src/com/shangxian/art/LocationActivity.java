@@ -180,16 +180,16 @@ public class LocationActivity extends BaseActivity {
 		 * mLoc.getLongitude() + mRandom.nextInt(20) / 1000000.0d));
 		 */
 
-		// bits.add(bdnA);
-		// bits.add(bdnB);
-		// bits.add(bdnC);
-		// bits.add(bdnD);
-		// bits.add(bdnE);
-		// bits.add(bdnF);
-		// bits.add(bdnG);
-		// bits.add(bdnH);
-		// bits.add(bdnI);
-		// bits.add(bdnJ);
+		 bits.add(bdnA);
+		 bits.add(bdnB);
+		 bits.add(bdnC);
+		 bits.add(bdnD);
+		 bits.add(bdnE);
+		 bits.add(bdnF);
+		 bits.add(bdnG);
+		 bits.add(bdnH);
+		 bits.add(bdnI);
+		 bits.add(bdnJ);
 		// int len = mRandom.nextInt(6) + 4;
 		// for (int i = 0; i < len; i++) {
 		// mNearlyLatlngs.add(new LatLng(mLoc.getLatitude()
@@ -321,9 +321,9 @@ public class LocationActivity extends BaseActivity {
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 
-		LatLng lng = getLat();
+		//MyLogger.e("lat=========" + lng.toString());
 		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())
-				.target(lng == null ? ll : lng).zoom(16f).build();
+				.target(getLat()).zoom(16f).build();
 		MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
 		mMap.setMapStatus(msu);
 
@@ -348,15 +348,15 @@ public class LocationActivity extends BaseActivity {
 						.direction(100).latitude(location.getLatitude())
 						.longitude(location.getLongitude()).build();
 				mMap.setMyLocationData(locData);
-				if (isFirstLoc) {
-					isFirstLoc = false;
-					ll = new LatLng(location.getLatitude(),
-							location.getLongitude());
-					/*
-					 * MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-					 * mMap.animateMapStatus(u);
-					 */
-				}
+//				if (isFirstLoc) {
+//					isFirstLoc = false;
+//					ll = new LatLng(location.getLatitude(),
+//							location.getLongitude());
+//					/*
+//					 * MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+//					 * mMap.animateMapStatus(u);
+//					 */
+//				}
 			}
 		}
 
@@ -424,13 +424,14 @@ public class LocationActivity extends BaseActivity {
 					.target(getLat()).zoom(16f).build();
 			MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(u);
 			mMap.setMapStatus(msu);
+			
 			markers = new ArrayList<Marker>();
-			for (int i = 0; i < nearlyShops.size(); i++) {
+			for (int i = 0; i < nearlyShops.size() && bits.size() > 0; i++) {
 				OverlayOptions ooA = new MarkerOptions()
 						.position(
 								new LatLng(nearlyShops.get(i).getLat(),
 										nearlyShops.get(i).getLng()))
-						.icon(bits.get(i)).zIndex(nearlyShops.size() - i);
+						.icon(bits.get(i > bits.size()-1 ? bits.size() -1 : i)).zIndex(16);
 				markers.add((Marker) (mMap.addOverlay(ooA)));
 			}
 			mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
@@ -539,7 +540,7 @@ public class LocationActivity extends BaseActivity {
 			// return new LatLng(lat / mNearlyLatlngs.size(), lon
 			// / mNearlyLatlngs.size());
 			if (nearlyShops.size() == 0) {
-				return null;
+				return ll;
 			} else {
 				for (int i = 0; i < nearlyShops.size(); i++) {
 					lat += nearlyShops.get(i).getLat();
@@ -568,6 +569,7 @@ public class LocationActivity extends BaseActivity {
 			}
 		});
 	}
+	
 
 	@Override
 	protected void onPause() {

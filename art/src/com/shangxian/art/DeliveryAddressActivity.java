@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -62,6 +63,17 @@ public class DeliveryAddressActivity extends BaseActivity{
 		
 		Intent intent = new Intent();
 		intent.getBooleanExtra("isfromConfirmOrder", false);
+	}
+	public static void startThisActivity(Boolean isfromConfirmOrder, Context context) {
+		Intent intent = new Intent(context, AddDeliveryAddressActivity.class);
+		intent.putExtra("isfromConfirmOrder", false);
+		context.startActivity(intent);
+	}
+
+	public static void startThisActivity_url(String url, Context context) {
+		Intent intent = new Intent(context, AddDeliveryAddressActivity.class);
+		intent.putExtra("url", url);
+		context.startActivity(intent);
 	}
 	private void refreshTask(String url) {
 		HttpClients.getDo(url, new HttpCilentListener() {
@@ -130,7 +142,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 					int position, long id) {
 				if (isfromConfirmOrder != false) {
 					//确认订单
-					
+					Intent intent = new Intent();
+					Bundle bundle = new Bundle();
+				    bundle.putSerializable("DeliveryAddressModel", list.get(position));
+				    DeliveryAddressActivity.this.setResult(RESULT_OK, intent);
+				    DeliveryAddressActivity.this.finish();
+				    
 				}else {
 					//修改地址 
 					Bundle bundle = new Bundle();

@@ -112,7 +112,7 @@ public class NearlyShopInfo implements Serializable {
 	 */
 	public double getLng(){
 		try {
-			return Double.valueOf(location.get(1));
+			return Double.valueOf(location.get(0));
 		} catch (Exception e) {
 			return 0;
 		}
