@@ -138,55 +138,39 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 					+ listCarStoreBean.getLogo());
 			holder.et_message.setText(listCarStoreBean.getRecommand());
 
-			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {
-	            public void onFocusChange(View view, boolean hasFocus) {
-	                if (!hasFocus){
-	                    //final int position = view.getId();
-	                   final EditText editText = (EditText) view;
-	                   // myItems.set(position, editText.getText().toString());
-						listCarStoreBean.setRecommand(editText.getText().toString());
-						MyLogger.i(editText.getText().toString());
-	                }
-	            }
-	        });
-			
-//			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {		
-//				  @Override
-//				  public void onFocusChange(View view, boolean arg1) {
-//				  
-//				    if(arg1==false){
-//				      selectIndex = position;
-//				      currentSelection = ((EditText)view).getSelectionStart();
-//				      MyLogger.i("Item位置："+position +", 焦点位置："+currentSelection);
-//				    }
-//				  }
-//				});
-//			if(position == selectIndex){
-//				holder.et_message.requestFocus();        
-//				holder.et_message.setSelection(currentSelection);
-//			}
-			// 给控件赋值
-//			DisplayImageOptions options;
-//			options = new DisplayImageOptions.Builder().cacheInMemory(true)// 是否緩存都內存中
-//					.cacheOnDisc(true)// 是否緩存到sd卡上
-//					.build();
-//			ImageLoader imageLoader = ImageLoader.getInstance();
-//			String path = (RequestServer.FILE_REQUEST + item.goods.goodsImg).replaceAll("\\\\", "/");
-//			imageLoader.displayImage(path, holder.goodsImg, options, null);
-//			if(item.getType()==CarItem.ITEM){
-//			holder.goodsName.setText(item.listCarGoodsBean.goodsName);
-//			
-//			//holder.goodsAttr.setText(item.listCarGoodsBean.goodsAttr);
-//			holder.goodsNum.setText("x"+item.listCarGoodsBean.goodsNum);
-//			if(!StringUtils.isEmpty(item.listCarGoodsBean.goodsOldPrice)){
-//				holder.goodsOldPrice.setText(item.goods.goodsOldPrice);
-//			}else{
-//				holder.goodsOldPrice.setVisibility(View.GONE);
-//			}
-			//holder.goodsOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-//			holder.goodsPrice.setText("￥"+item.listCarGoodsBean.price);
-//			holder.goodsid = item.listCarGoodsBean.goodsId;
-			//}
+//			holder.et_message.setOnFocusChangeListener(new OnFocusChangeListener() {
+//	            public void onFocusChange(View view, boolean hasFocus) {
+//	                if (!hasFocus){
+//	                    //final int position = view.getId();
+//	                   final EditText editText = (EditText) view;
+//	                   // myItems.set(position, editText.getText().toString());
+//						listCarStoreBean.setRecommand(editText.getText().toString());
+//						MyLogger.i(editText.getText().toString());
+//	                }
+//	            }
+//	        });
+			holder.et_message.addTextChangedListener(new TextWatcher() {
+				
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) {
+						listCarStoreBean.setRecommand(s.toString());
+						MyLogger.i(s.toString());
+				}
+			});
+
 		return convertView;
 	}
 

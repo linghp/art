@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,13 @@ import com.ab.util.AbSharedUtil;
 import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
+import com.shangxian.art.bean.ListCarGoodsBean;
+import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
+import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmNowBuyListener;
 import com.shangxian.art.net.FollowServer;
 import com.shangxian.art.net.FollowServer.OnFollowListener;
 import com.shangxian.art.net.HttpClients;
@@ -56,15 +60,14 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener {
+		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConfirmNowBuyListener{
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
 
 	private ImageView call, next, shopsimg;
 	private ImageView commoditycontent_shoucang;
-	private TextView commoditycontent_jieshao, commoditycontent_jiage,
-			commoditycontent_jiarugouwuche, address, guige, dianpu;
+	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu;
 	private View rl_footer;
 //	private TextView tv_first, tv_second;
 //	private ImageView img_first, img_second;
@@ -107,7 +110,6 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void listener() {
-		commoditycontent_jiarugouwuche.setOnClickListener(this);
 //		tv_first.setOnClickListener(this);
 //		tv_second.setOnClickListener(this);
 		next.setOnClickListener(new OnClickListener() {
@@ -442,7 +444,6 @@ public class CommodityContentActivity extends BaseActivity implements
 		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
-		commoditycontent_jiarugouwuche = (TextView) findViewById(R.id.commoditycontent_jiarugouwuche);
 
 		ratingbar = (RatingBar) findViewById(R.id.commoditycontent_starRating);
 
@@ -501,6 +502,11 @@ public class CommodityContentActivity extends BaseActivity implements
 		case R.id.commoditycontent_jiarugouwuche://加入购物车
 			if (isLoginAndToLogin()) {
 				dotask_addcart();
+			}
+			break;
+		case R.id.tv_nowbuy://加入购物车
+			if (isLoginAndToLogin()) {
+				doNowBuy();
 			}
 			break;
 		case R.id.tv_share:
@@ -563,6 +569,11 @@ public class CommodityContentActivity extends BaseActivity implements
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}
+	private void doNowBuy() {
+		GoodsDialog dialog = new GoodsDialog(this, this,true);
+		dialog.setCommodityContent(model);
+		dialog.show();
+	}
 
 	@Override
 	public void onResponse(String content) {
@@ -590,5 +601,23 @@ public class CommodityContentActivity extends BaseActivity implements
 	public void goodsDialogConfirm(String json) {
 		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT + Constant.CART,
 				json, this);
+	}
+
+	@Override
+	public void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean) {
+		List<ListCarStoreBean> listCarGoodsBeans = new ArrayList<ListCarStoreBean>();
+		ListCarStoreBean listCarStoreBean=new ListCarStoreBean();
+		listCarStoreBean.setLogo(model.getShopLogo());
+		listCarStoreBean.setShopId(model.getShopId());
+		listCarStoreBean.setShopName(model.getShopName());
+		//listCarStoreBean.setItemDtos(listCarGoodsBeans);
+		listCarGoodsBeans.add(listCarStoreBean);
+		Intent intent = new Intent(this, ConfirmOrderActivity.class);
+//		intent.putExtra("totalprice", CommonUtil.priceConversion(price));
+//		intent.putExtra("mapCarItem_goods",
+//				(Serializable) hashmapGoodsBeans);
+//		intent.putExtra("listCarItem_stores",
+//				(Serializable) listStoreBean);
+		startActivityForResult(intent, 1);
 	}
 }
