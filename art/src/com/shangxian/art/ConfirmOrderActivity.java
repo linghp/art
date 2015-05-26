@@ -128,7 +128,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			//myToast("去结算");
 			break;
 		case R.id.rl_address:
-			myToast("待完善中...");
+			//myToast("待完善中...");
+			//DeliveryAddressActivity
 			break;
 
 		default:
@@ -189,12 +190,15 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					//myToast(jsonObject.getString("result"));
 					setResult(RESULT_OK);
 					finish();
+				}else{
+					myToast("结算失败");
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}catch (Exception e) {
 				e.printStackTrace();
+				myToast("结算失败");
 		}finally{
 			AbDialogUtil.removeDialog(ConfirmOrderActivity.this);
 		}

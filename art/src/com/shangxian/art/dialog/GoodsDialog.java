@@ -158,8 +158,8 @@ public class GoodsDialog extends Dialog implements
 		bt01 = (Button) findViewById(R.id.addbt);
 		bt02 = (Button) findViewById(R.id.subbt);
 		edt = (EditText) findViewById(R.id.edt);
-		bt01.setTag("+");
-		bt02.setTag("-");
+		bt01.setTag("-");
+		bt02.setTag("+");
 
 		initViews2();
 	}
@@ -176,16 +176,16 @@ public class GoodsDialog extends Dialog implements
 			String url = Constant.BASEURL + listCarGoodsBean.getPhoto();
 			mAbImageLoader.display(iv_icon, url);
 			}
-			edt.setText(listCarGoodsBean.getQuantity()+"");;
-			// Map<String, List<String>> specMap = listCarGoodsBean .getSpecs();
+			edt.setText((num=listCarGoodsBean.getQuantity())+"");;
+			 Map<String, List<String>> specMap = listCarGoodsBean .getSpecs();
 			// 测试数据
-			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
-			specMap.putAll(listCarGoodsBean.getSpecs());
-			List<String> listtest = new ArrayList<String>();
-			listtest.add("三菜一汤");
-			listtest.add("四菜一汤");
-			listtest.add("五菜一汤");
-			specMap.put("套餐2", listtest);
+//			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
+//			specMap.putAll(listCarGoodsBean.getSpecs());
+//			List<String> listtest = new ArrayList<String>();
+//			listtest.add("三菜一汤");
+//			listtest.add("四菜一汤");
+//			listtest.add("五菜一汤");
+//			specMap.put("套餐2", listtest);
 
 			specSelectedStrs = new LinkedHashMap<String, String>();// 已选的属性
 			if (listCarGoodsBean.getSelectedSpec() != null) {
@@ -228,19 +228,19 @@ public class GoodsDialog extends Dialog implements
 
 			tips();
 		} else if (commodityContentModel != null) {// 商品详情
-			// Map<String, List<String>> specMap = commodityContentModel
-			// .getSpecs();
+			 Map<String, List<String>> specMap = commodityContentModel
+			 .getSpecs();
 
 			// 测试数据
-			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
-			if(commodityContentModel.getSpecs()!=null){
-			specMap.putAll(commodityContentModel.getSpecs());
-			}
-			List<String> listtest = new ArrayList<String>();
-			listtest.add("三菜一汤");
-			listtest.add("四菜一汤");
-			listtest.add("五菜一汤");
-			specMap.put("套餐2", listtest);
+//			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
+//			if(commodityContentModel.getSpecs()!=null){
+//			specMap.putAll(commodityContentModel.getSpecs());
+//			}
+//			List<String> listtest = new ArrayList<String>();
+//			listtest.add("三菜一汤");
+//			listtest.add("四菜一汤");
+//			listtest.add("五菜一汤");
+//			specMap.put("套餐2", listtest);
 
 			tv_price.setText("¥  "
 					+ CommonUtil.priceConversion(commodityContentModel
@@ -352,23 +352,16 @@ public class GoodsDialog extends Dialog implements
 				edt.setText("1");
 			} else {
 				if (v.getTag().equals("-")) {
-					if (++num < 1) // 先加，再判断
+					if ((num+1) >2) // 先加，再判断
 					{
 						num--;
 						// Toast.makeText(context, "请输入一个大于0的数字",
 						// Toast.LENGTH_SHORT).show();
-					} else {
 						edt.setText(String.valueOf(num));
-					}
+					} 
 				} else if (v.getTag().equals("+")) {
-					if (--num < 1) // 先减，再判断
-					{
 						num++;
-						// Toast.makeText(context, "请输入一个大于0的数字",
-						// Toast.LENGTH_SHORT).show();
-					} else {
 						edt.setText(String.valueOf(num));
-					}
 				}
 			}
 		}
@@ -383,7 +376,7 @@ public class GoodsDialog extends Dialog implements
 		public void afterTextChanged(Editable s) {
 			String numString = s.toString();
 			if (numString == null || numString.equals("")) {
-				num = 1;
+				num = 0;
 			} else {
 				int numInt = Integer.parseInt(numString);
 				if (numInt < 1) {
@@ -416,6 +409,7 @@ public class GoodsDialog extends Dialog implements
 		if (v == iv_cha) {
 			dismiss();
 		} else if (tv_sub == v) {
+			if(num>0){
 			// 购物车
 			if (listCarGoodsBean != null) {
 				listCarGoodsBean.setSelectedSpec(specSelectedStrs);
@@ -443,6 +437,9 @@ public class GoodsDialog extends Dialog implements
 					CommonUtil.toast("请选择产品属性", context);
 				}
 			}
+		}else{
+			CommonUtil.toast("请输入产品数量", context);
+		}
 		}
 	}
 
