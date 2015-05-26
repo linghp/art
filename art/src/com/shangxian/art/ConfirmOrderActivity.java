@@ -3,7 +3,6 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONException;
@@ -24,6 +23,7 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ListConfirmOrderAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommitOrder;
+import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.bean.Mapbean;
@@ -129,7 +129,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.rl_address:
 			//myToast("待完善中...");
-			//DeliveryAddressActivity
+			DeliveryAddressActivity.startThisActivity(this);
 			break;
 
 		default:
@@ -212,6 +212,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				boolean isPay = data.getBooleanExtra("pay_order_res", false);
 				if (isPay) {
 					finish();
+				}
+			}else if(arg0 == 1001){
+				DeliveryAddressModel deliveryAddressModel=(DeliveryAddressModel) data.getSerializableExtra("DeliveryAddressModel");
+				if(deliveryAddressModel!=null){
+					MyLogger.i(deliveryAddressModel.toString());;
 				}
 			}
 		}

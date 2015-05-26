@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,14 +61,13 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 	}
 	private void initData() {
-		
-		Intent intent = new Intent();
-		intent.getBooleanExtra("isfromConfirmOrder", false);
+		Intent intent = getIntent();
+		isfromConfirmOrder=intent.getBooleanExtra("isfromConfirmOrder", false);
 	}
-	public static void startThisActivity(Boolean isfromConfirmOrder, Context context) {
-		Intent intent = new Intent(context, AddDeliveryAddressActivity.class);
-		intent.putExtra("isfromConfirmOrder", false);
-		context.startActivity(intent);
+	public static void startThisActivity(Context context) {
+		Intent intent = new Intent(context, DeliveryAddressActivity.class);
+		intent.putExtra("isfromConfirmOrder", true);
+		((Activity)context).startActivityForResult(intent, 1001);;
 	}
 
 	public static void startThisActivity_url(String url, Context context) {
@@ -140,14 +140,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (isfromConfirmOrder != false) {
+				if (isfromConfirmOrder) {
 					//确认订单
 					Intent intent = new Intent();
-					Bundle bundle = new Bundle();
-				    bundle.putSerializable("DeliveryAddressModel", list.get(position));
+					intent.putExtra("DeliveryAddressModel", list.get(position));
 				    DeliveryAddressActivity.this.setResult(RESULT_OK, intent);
 				    DeliveryAddressActivity.this.finish();
-				    
 				}else {
 					//修改地址 
 					Bundle bundle = new Bundle();

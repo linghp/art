@@ -21,7 +21,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private float promotionPrice;
 	@Expose
-	private Integer categoryId;
+	private String categoryId;
 	@Expose
 	private String categoryName;
 	@Expose
@@ -119,11 +119,11 @@ public class CommodityContentModel implements Serializable {
 		this.promotionPrice = promotionPrice;
 	}
 
-	public Integer getCategoryId() {
+	public String getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
 

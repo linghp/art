@@ -1,5 +1,7 @@
 package com.shangxian.art.view;
 
+import com.shangxian.art.utils.MyLogger;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,9 +25,9 @@ public class MyRelativeLayout extends RelativeLayout {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
 		return true;
 	}
+	
 	
 
 	private void init(AttributeSet attrs, int defStyle) {

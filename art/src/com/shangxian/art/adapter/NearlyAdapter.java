@@ -81,7 +81,7 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 				Bundle bundle = new Bundle();
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
 				ShopLocInfo info1 = new ShopLocInfo();
-				info1.setId(info.getId() == null ? Integer.MIN_VALUE : info.getId());
+				info1.setId(info.getId());
 				info1.setTitle(info.getTitle());
 				info1.setPhoto(info.getShopName());
 				info1.setAddress(info.getAddress());

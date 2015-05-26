@@ -16,7 +16,7 @@ public class ShopLocInfo implements Serializable {
 	 */
 	private static final long serialVersionUID = -7187545990729805839L;
 
-	private int id = Integer.MIN_VALUE;
+	private String id;
 
 	private String title;
 
@@ -26,15 +26,11 @@ public class ShopLocInfo implements Serializable {
 
 	private MyLatLng lng;
 
-	public boolean isNull() {
-		return id == Integer.MIN_VALUE;
-	}
-
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

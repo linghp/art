@@ -9,7 +9,7 @@ import com.google.gson.annotations.Expose;
 
 public class ShopsModel implements Serializable {
 	@Expose
-	private Integer id;
+	private String id;
 	@Expose
 	private String owner;// 所有人（物主）
 	@Expose
@@ -42,11 +42,11 @@ public class ShopsModel implements Serializable {
 		return lng;
 	}
  
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
