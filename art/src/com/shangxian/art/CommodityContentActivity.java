@@ -353,7 +353,7 @@ public class CommodityContentActivity extends BaseActivity implements
 									CommodityContentModel.class);
 							// MyLogger.i(model.toString());
 							if (model != null) {
-								shopid = model.getShopId() + ""; 
+								shopid = model.getShopId() + "";
 								updateView();
 							}
 
