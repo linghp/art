@@ -32,6 +32,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
     final static String INTENTDATAKEY="ordernumber";
     private MyOrderDetailBean myOrderDetailBean;
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
