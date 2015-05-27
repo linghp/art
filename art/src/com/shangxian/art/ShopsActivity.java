@@ -40,6 +40,7 @@ import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.FollowServer;
 import com.shangxian.art.net.FollowServer.OnFollowListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -231,7 +232,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								if (list != null) {
 									if (adapter == null) {
 										// //给每项商品设置id
-										// for (int i = 0; i < list.size(); i++) {
+										// for (int i = 0; i < list.size(); i++)
+										// {
 										// ProductDto p = new ProductDto();
 										// p.setId(i);
 										// list.add(p);
@@ -247,7 +249,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 										adapter.updateData(list);
 									}
 								}
-								
+
 							}
 
 						}
@@ -325,17 +327,18 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 						collectionimg.setSelected(!collectionimg.isSelected());
 						if (!collectionimg.isSelected()) {
 							new FollowServer().toDelFollowGoods(model.getId(),
-									true, new OnFollowListener() {
+									true, new CallBack() {
 										@Override
-										public void onFollow(boolean isFollow) {
-											if (!isFollow) {
-												myToast("取消关注失败");
-												collectionimg
-														.setSelected(!collectionimg
-																.isSelected());
-											} else {
-												myToast("取消关注成功");
-											}
+										public void onSimpleSuccess(Object res) {
+											myToast("取消关注成功");
+										}
+
+										@Override
+										public void onSimpleFailure(int code) {
+											myToast("取消关注失败");
+											collectionimg
+													.setSelected(!collectionimg
+															.isSelected());
 										}
 									});
 						} else {
@@ -359,7 +362,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 		// 打电话
-		
+
 		call.setOnClickListener(new OnClickListener() {
 
 			@Override

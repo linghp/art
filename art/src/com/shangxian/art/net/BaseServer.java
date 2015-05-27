@@ -404,17 +404,6 @@ public class BaseServer {
 			}
 		});
 	}
-
-	protected void toDel(String url, final OnHttpListener l) {
-		HttpClients.toDel(url, new HttpCilentListener() {
-			@Override
-			public void onResponse(String res) {
-				if (l != null) {
-					l.onHttp(res);
-				}
-			}
-		});
-	}
 	
 	public static final int ERROR_JSON_EX = 0x00001011;
 	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
