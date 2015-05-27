@@ -1,5 +1,7 @@
 package com.shangxian.art;
 
+import java.lang.reflect.Type;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -18,7 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.net.CallBack;
+import com.shangxian.art.net.UserServer;
 import com.shangxian.art.utils.SelectImgUtil;
 import com.shangxian.art.view.TopView;
 
@@ -430,7 +436,21 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 
 	private void next1() {
 		if (match1()) {
-			showView(UI_LI2);
+			//showView(UI_LI2);
+			Type type = new TypeToken<UserInfo>(){}.getType();
+			new UserServer().toSogoRegist(phone, yan, pass, repass, type, new CallBack() {		
+				@Override
+				public void onSimpleSuccess(Object res) {
+					UserInfo info = (UserInfo) res;
+					myToast("注册成功");
+					finish();
+				}
+				
+				@Override
+				public void onSimpleFailure(int code) {
+					myToast("注册失败，请重试");
+				}
+			});
 		}
 	}
 	/**
@@ -512,14 +532,22 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 获取验证码
 	 */
-	private void getYan() {
+	private void getYan() {	
 		showView(LOADING);
-		new Handler().postDelayed(new Runnable() {
+		new UserServer().toSogoRegistCode(phone, new CallBack() {
+			
 			@Override
-			public void run() {
+			public void onSimpleSuccess(Object res) {
+				//showView(LOADING);
 				showView(TOYAN);
 			}
-		}, 2000);
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				myToast("获取验证码失败");
+				showView(NORMAL);
+			}
+		});
 	}
 
 	

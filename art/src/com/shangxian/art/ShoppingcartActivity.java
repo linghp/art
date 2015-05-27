@@ -174,11 +174,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 			topView = (TopView) findViewById(R.id.top_title);
 			topView.setActivity(this);
 			topView.setVisibility(View.VISIBLE);
-			topView.hideRightBtn();
 			topView.hideCenterSearch();
 			topView.setTitle("购物车");
 			topView.showTitle();
 			topView.setBack(R.drawable.back);// 返回
+			topView.showRightBtn();
+			topView.setRightBtnDrawable(R.drawable.delete);
+			topView.setRightBtnListener(this);
 		}
 
 		mAbPullToRefreshView = (AbPullToRefreshView) findViewById(R.id.mPullRefreshView);
