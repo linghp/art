@@ -58,8 +58,10 @@ public class GoodsDialog extends Dialog implements
 	// 商品详情模块
 	private CommodityContentModel commodityContentModel;
 	private GoodsDialogConfirmListener confirmListener;
+	private GoodsDialogConfirmNowBuyListener confirmNowBuyListener;
 	private String json;
 	private boolean isallselected;// 商品详情时用于判断是否还有没有选择的规格属性
+	private boolean isNowBuy;
 	// 购物车模块
 	private ListCarGoodsBean listCarGoodsBean;
 
@@ -72,7 +74,11 @@ public class GoodsDialog extends Dialog implements
 		void goodsDialogConfirm(String str);
 	}
 
-	// 商品详情模块
+	public interface GoodsDialogConfirmNowBuyListener {
+		void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean);
+	}
+
+	// 商品详情加入购物车模块
 	public GoodsDialog(Context context,
 			GoodsDialogConfirmListener confirmListener) {
 		super(context, android.R.style.Theme_Translucent);
@@ -81,8 +87,20 @@ public class GoodsDialog extends Dialog implements
 		init();
 	}
 
+	// 商品详情立即购买模块
+	public GoodsDialog(Context context,
+			GoodsDialogConfirmNowBuyListener confirmListener, boolean isNowBuy) {
+		super(context, android.R.style.Theme_Translucent);
+		this.context = context;
+		this.isNowBuy = isNowBuy;
+		this.confirmNowBuyListener = confirmListener;
+		init();
+	}
+
 	// 购物车模块
-	public GoodsDialog(Context context, GoodsDialogConfirmListener confirmListener,ListCarGoodsBean listCarGoodsBean) {
+	public GoodsDialog(Context context,
+			GoodsDialogConfirmListener confirmListener,
+			ListCarGoodsBean listCarGoodsBean) {
 		super(context, android.R.style.Theme_Translucent);
 		this.context = context;
 		this.listCarGoodsBean = listCarGoodsBean;
@@ -158,8 +176,8 @@ public class GoodsDialog extends Dialog implements
 		bt01 = (Button) findViewById(R.id.addbt);
 		bt02 = (Button) findViewById(R.id.subbt);
 		edt = (EditText) findViewById(R.id.edt);
-		bt01.setTag("+");
-		bt02.setTag("-");
+		bt01.setTag("-");
+		bt02.setTag("+");
 
 		initViews2();
 	}
@@ -172,20 +190,22 @@ public class GoodsDialog extends Dialog implements
 							.getPromotionPrice()));
 			// tv_option.setText(item.listCarGoodsBean.getSpecs());
 			tv_title.setText(listCarGoodsBean.getName());
-			if(!TextUtils.isEmpty(listCarGoodsBean.getPhoto())){
-			String url = Constant.BASEURL + listCarGoodsBean.getPhoto();
-			mAbImageLoader.display(iv_icon, url);
+			if (!TextUtils.isEmpty(listCarGoodsBean.getPhoto())) {
+				String url = Constant.BASEURL + listCarGoodsBean.getPhoto();
+				mAbImageLoader.display(iv_icon, url);
 			}
-			edt.setText(listCarGoodsBean.getQuantity()+"");;
-			// Map<String, List<String>> specMap = listCarGoodsBean .getSpecs();
+			edt.setText((num = listCarGoodsBean.getQuantity()) + "");
+			;
+			Map<String, List<String>> specMap = listCarGoodsBean.getSpecs();
 			// 测试数据
-			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
-			specMap.putAll(listCarGoodsBean.getSpecs());
-			List<String> listtest = new ArrayList<String>();
-			listtest.add("三菜一汤");
-			listtest.add("四菜一汤");
-			listtest.add("五菜一汤");
-			specMap.put("套餐2", listtest);
+			// Map<String, List<String>> specMap = new LinkedHashMap<String,
+			// List<String>>();
+			// specMap.putAll(listCarGoodsBean.getSpecs());
+			// List<String> listtest = new ArrayList<String>();
+			// listtest.add("三菜一汤");
+			// listtest.add("四菜一汤");
+			// listtest.add("五菜一汤");
+			// specMap.put("套餐2", listtest);
 
 			specSelectedStrs = new LinkedHashMap<String, String>();// 已选的属性
 			if (listCarGoodsBean.getSelectedSpec() != null) {
@@ -228,29 +248,31 @@ public class GoodsDialog extends Dialog implements
 
 			tips();
 		} else if (commodityContentModel != null) {// 商品详情
-			// Map<String, List<String>> specMap = commodityContentModel
-			// .getSpecs();
+			Map<String, List<String>> specMap = commodityContentModel
+					.getSpecs();
 
 			// 测试数据
-			Map<String, List<String>> specMap = new LinkedHashMap<String, List<String>>();
-			if(commodityContentModel.getSpecs()!=null){
-			specMap.putAll(commodityContentModel.getSpecs());
-			}
-			List<String> listtest = new ArrayList<String>();
-			listtest.add("三菜一汤");
-			listtest.add("四菜一汤");
-			listtest.add("五菜一汤");
-			specMap.put("套餐2", listtest);
+			// Map<String, List<String>> specMap = new LinkedHashMap<String,
+			// List<String>>();
+			// if(commodityContentModel.getSpecs()!=null){
+			// specMap.putAll(commodityContentModel.getSpecs());
+			// }
+			// List<String> listtest = new ArrayList<String>();
+			// listtest.add("三菜一汤");
+			// listtest.add("四菜一汤");
+			// listtest.add("五菜一汤");
+			// specMap.put("套餐2", listtest);
 
 			tv_price.setText("¥  "
 					+ CommonUtil.priceConversion(commodityContentModel
 							.getPromotionPrice()));
 			// tv_option.setText(item.listCarGoodsBean.getSpecs());
 			tv_title.setText(commodityContentModel.getName());
-			if(commodityContentModel.getPhotos()!=null&&commodityContentModel.getPhotos().size()>0){
-			String url = Constant.BASEURL
-					+ commodityContentModel.getPhotos().get(0);
-			mAbImageLoader.display(iv_icon, url);
+			if (commodityContentModel.getPhotos() != null
+					&& commodityContentModel.getPhotos().size() > 0) {
+				String url = Constant.BASEURL
+						+ commodityContentModel.getPhotos().get(0);
+				mAbImageLoader.display(iv_icon, url);
 			}
 			List<String> specStrs = new ArrayList<String>();// 属性的title集合
 			specSelectedStrs = new LinkedHashMap<String, String>();// 已选的属性
@@ -352,23 +374,16 @@ public class GoodsDialog extends Dialog implements
 				edt.setText("1");
 			} else {
 				if (v.getTag().equals("-")) {
-					if (++num < 1) // 先加，再判断
+					if ((num + 1) > 2) // 先加，再判断
 					{
 						num--;
 						// Toast.makeText(context, "请输入一个大于0的数字",
 						// Toast.LENGTH_SHORT).show();
-					} else {
 						edt.setText(String.valueOf(num));
 					}
 				} else if (v.getTag().equals("+")) {
-					if (--num < 1) // 先减，再判断
-					{
-						num++;
-						// Toast.makeText(context, "请输入一个大于0的数字",
-						// Toast.LENGTH_SHORT).show();
-					} else {
-						edt.setText(String.valueOf(num));
-					}
+					num++;
+					edt.setText(String.valueOf(num));
 				}
 			}
 		}
@@ -383,7 +398,7 @@ public class GoodsDialog extends Dialog implements
 		public void afterTextChanged(Editable s) {
 			String numString = s.toString();
 			if (numString == null || numString.equals("")) {
-				num = 1;
+				num = 0;
 			} else {
 				int numInt = Integer.parseInt(numString);
 				if (numInt < 1) {
@@ -416,32 +431,46 @@ public class GoodsDialog extends Dialog implements
 		if (v == iv_cha) {
 			dismiss();
 		} else if (tv_sub == v) {
-			// 购物车
-			if (listCarGoodsBean != null) {
-				listCarGoodsBean.setSelectedSpec(specSelectedStrs);
-				listCarGoodsBean.setQuantity(num);
-				confirmListener.goodsDialogConfirm("");
-				dismiss();
-			} else {//商品详情
-				if (isallselected) {
-					try {
-						Gson gson = new Gson();
-						// Map<String, String>
-						// spec=commodityContentModel.getSpecs().
-						String jsonsepcs = gson.toJson(specSelectedStrs);
-						json = "{\"productId\":"
-								+ commodityContentModel.getId() + ",\"specs\":"
-								+ jsonsepcs + ",\"buyCount\":" + num + "}";
-						MyLogger.i(json);
-						confirmListener.goodsDialogConfirm(json);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			if (num > 0) {
+				// 购物车
+				if (listCarGoodsBean != null) {
+					listCarGoodsBean.setSelectedSpec(specSelectedStrs);
+					listCarGoodsBean.setQuantity(num);
+					confirmListener.goodsDialogConfirm("");
 					dismiss();
-				} else {
-					CommonUtil.toast("请选择产品属性", context);
+				} else if(commodityContentModel!=null){// 商品详情
+					if (isallselected) {
+						if (isNowBuy) {//立即购买
+							ListCarGoodsBean listCarGoodsBean=new ListCarGoodsBean();
+							listCarGoodsBean.setQuantity(num);
+							listCarGoodsBean.setSelectedSpec(specSelectedStrs);
+							listCarGoodsBean.setProductId(commodityContentModel.getId());
+							confirmNowBuyListener.goodsDialogConfirmNowBuy(listCarGoodsBean);
+						} else {
+							try {
+								Gson gson = new Gson();
+								// Map<String, String>
+								// spec=commodityContentModel.getSpecs().
+								String jsonsepcs = gson
+										.toJson(specSelectedStrs);
+								json = "{\"productId\":"
+										+ commodityContentModel.getId()
+										+ ",\"specs\":" + jsonsepcs
+										+ ",\"buyCount\":" + num + "}";
+								MyLogger.i(json);
+								confirmListener.goodsDialogConfirm(json);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						dismiss();
+					} else {
+						CommonUtil.toast("请选择产品属性", context);
+					}
 				}
+			} else {
+				CommonUtil.toast("请输入产品数量", context);
 			}
 		}
 	}

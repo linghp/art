@@ -20,7 +20,7 @@ public class UserInfo implements Serializable {
 	private String nickName;
 	private String phoneNumber;
 	private String scalePhoto;// 头像路径
-    private boolean payed;
+    private boolean payed = false;
 	public boolean isPayed() {
 		return payed;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.base.DataTools;
 import com.shangxian.art.bean.SearchProductInfo;
 
@@ -31,7 +32,7 @@ public class FollowServer extends BaseServer {
 	 * @param productId 商品id
 	 * @param l
 	 */
-	public void toFollowGoods(int productId, final OnFollowListener l) {
+	public void toFollowGoods(String productId, final OnFollowListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("productId", productId + ""));
 		toPostWithToken(NET_FOLLOW_PRODUCT, pairs, new OnHttpListener() {
@@ -55,7 +56,7 @@ public class FollowServer extends BaseServer {
 	 * @param shopId 商铺id
 	 * @param l
 	 */
-	public void toFollowShop(int shopId, final OnFollowListener l) {
+	public void toFollowShop(String shopId, final OnFollowListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("shopId", shopId + ""));
 		toPostWithToken(NET_FOLLOW_SHOP, pairs, new OnHttpListener() {
@@ -73,20 +74,8 @@ public class FollowServer extends BaseServer {
 		});
 	}
 	
-	public void toDelFollowGoods(int id, Boolean isShop, final OnFollowListener l){
-		toDel((isShop ? NET_FOLLOW_SHOP_DEL : NET_FOLLOW_PRODUCT_DEL) + id, new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				if (l != null) {
-					try {
-						l.onFollow(Boolean.valueOf(res));
-					} catch (Exception e) {
-						e.printStackTrace();
-						l.onFollow(false);
-					}
-				}
-			}
-		});
+	public void toDelFollowGoods(String id, Boolean isShop, final CallBack call){
+		toXUtils(HttpMethod.DELETE, (isShop ? NET_FOLLOW_SHOP_DEL : NET_FOLLOW_PRODUCT_DEL) + id, null, null, call);
 	}
 	
 	public void toFollowList(Boolean isShop, final OnFollowInfoListener l){

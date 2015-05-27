@@ -61,7 +61,7 @@ public class NearlyShopInfo implements Serializable {
 	private Integer uid;
 	
 	@Expose
-	private Integer id = Integer.MIN_VALUE;
+	private String id;
 	
 	@SerializedName("coord_type")
 	@Expose
@@ -82,10 +82,6 @@ public class NearlyShopInfo implements Serializable {
 	@Expose
 	private String indexLogo;
 	
-	public boolean isNull(){
-		return id == Integer.MIN_VALUE;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -112,7 +108,7 @@ public class NearlyShopInfo implements Serializable {
 	 */
 	public double getLng(){
 		try {
-			return Double.valueOf(location.get(1));
+			return Double.valueOf(location.get(0));
 		} catch (Exception e) {
 			return 0;
 		}
@@ -219,11 +215,11 @@ public class NearlyShopInfo implements Serializable {
 		this.uid = uid;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

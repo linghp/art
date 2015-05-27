@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class CommodityContentModel implements Serializable {
 	@Expose
-	private Integer id;
+	private String id;
 	@Expose
 	private String productNumber;
 	@Expose
@@ -21,7 +21,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private float promotionPrice;
 	@Expose
-	private Integer categoryId;
+	private String categoryId;
 	@Expose
 	private String categoryName;
 	@Expose
@@ -31,7 +31,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private String sellerName;
 	@Expose
-	private Integer shopId;
+	private String shopId;
 	@Expose
 	private String shopName;
 	@Expose
@@ -57,7 +57,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private Boolean attened;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -83,7 +83,7 @@ public class CommodityContentModel implements Serializable {
 	public LinkedHashMap<String, List<String>> getSpecs() {
 		return specs;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -119,11 +119,11 @@ public class CommodityContentModel implements Serializable {
 		this.promotionPrice = promotionPrice;
 	}
 
-	public Integer getCategoryId() {
+	public String getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -151,11 +151,11 @@ public class CommodityContentModel implements Serializable {
 		this.sellerName = sellerName;
 	}
 
-	public Integer getShopId() {
+	public String getShopId() {
 		return shopId;
 	}
 
-	public void setShopId(Integer shopId) {
+	public void setShopId(String shopId) {
 		this.shopId = shopId;
 	}
 

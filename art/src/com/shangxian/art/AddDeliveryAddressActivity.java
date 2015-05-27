@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.AddDeliveryAddressModel;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients;
@@ -33,11 +32,11 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 	private ImageView diqu_img;
 
 	private String receiverName,receiverTel,deliveryAddress;//收货人、联系方式、详细地址
-	private AddDeliveryAddressModel model;
+	private DeliveryAddressModel model;
 
 
 	Boolean isRevise = false;//是否为修改地址
-	int id = -1;
+	String id ;
 	DeliveryAddressModel deliveryAddressModel;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 		quxiao = (TextView) findViewById(R.id.adddeliveryaddress_quxiao);//取消
 		baocun = (TextView) findViewById(R.id.adddeliveryaddress_baocun);//保存
 
-		model = new AddDeliveryAddressModel();
+		model = new DeliveryAddressModel();
 	}
 	public static void startThisActivity(String id, Context context) {
 		Intent intent = new Intent(context, AddDeliveryAddressActivity.class);

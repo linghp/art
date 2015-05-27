@@ -39,6 +39,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.Options;
+import com.shangxian.art.view.CircleImageView1;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -48,7 +49,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class AccountSecurityActivity extends BaseActivity {
-	private ImageView iv_photo;
+	private CircleImageView1 iv_photo;
 
 	private String imagelocaldir;// 图片存储根路径
 	private String imageName;// 头像存储文件名
@@ -74,7 +75,7 @@ public class AccountSecurityActivity extends BaseActivity {
 	}
 
 	private void initviews() {
-		iv_photo = (ImageView) findViewById(R.id.iv_photo);
+		iv_photo = (CircleImageView1) findViewById(R.id.iv_photo);
 		// 改变topbar
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
