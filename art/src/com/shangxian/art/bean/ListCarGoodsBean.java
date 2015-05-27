@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import android.R.integer;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,15 +16,6 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class ListCarGoodsBean implements Serializable {
-
-	public String getShopLogo() {
-		return shopLogo;
-	}
-
-	public void setShopLogo(String shopLogo) {
-		this.shopLogo = shopLogo;
-	}
-
 	/**
 	 * 
 	 */
@@ -38,14 +31,6 @@ public class ListCarGoodsBean implements Serializable {
 
 	@Expose
 	private String shopId; // 商铺id
-
-	public String getCartItemId() {
-		return cartItemId;
-	}
-
-	public void setCartItemId(String cartItemId) {
-		this.cartItemId = cartItemId;
-	}
 
 	@Expose
 	private Map<String, List<String>> specs;
@@ -100,6 +85,22 @@ public class ListCarGoodsBean implements Serializable {
 	 */
 	@Expose
 	private String shopLogo; // 商铺关注图片
+	
+	public String getShopLogo() {
+		return shopLogo;
+	}
+
+	public void setShopLogo(String shopLogo) {
+		this.shopLogo = shopLogo;
+	}
+
+	public String getCartItemId() {
+		return cartItemId;
+	}
+
+	public void setCartItemId(String cartItemId) {
+		this.cartItemId = cartItemId;
+	}
 
 	public String getProductId() {
 		return productId;

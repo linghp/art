@@ -398,7 +398,8 @@ public class PayActivity extends BaseActivity {
 			myToast("请选择支付方式(注:在线支付暂只支持支付宝)");
 			return false;
 		}
-		return true;
+		return isPayed(true);
+		//return true;
 	}
 	
 	/**

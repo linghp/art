@@ -78,6 +78,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 		iv_logo = (ImageView) findViewById(R.id.iv_logo);
 		tv_storeName = (TextView) findViewById(R.id.car_storename);
 		ll_goodsitem_add = (LinearLayout) findViewById(R.id.ll_goodsitem_add);
+		findViewById(R.id.tv_noaddress).setVisibility(View.GONE);
 	}
 
 	@Override

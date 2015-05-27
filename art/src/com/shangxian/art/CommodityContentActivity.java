@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
@@ -605,19 +606,16 @@ public class CommodityContentActivity extends BaseActivity implements
 
 	@Override
 	public void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean) {
-		List<ListCarStoreBean> listCarGoodsBeans = new ArrayList<ListCarStoreBean>();
+		List<ListCarStoreBean> listCarStoreBeans = new ArrayList<ListCarStoreBean>();
 		ListCarStoreBean listCarStoreBean=new ListCarStoreBean();
 		listCarStoreBean.setLogo(model.getShopLogo());
 		listCarStoreBean.setShopId(model.getShopId());
 		listCarStoreBean.setShopName(model.getShopName());
-		//listCarStoreBean.setItemDtos(listCarGoodsBeans);
-		listCarGoodsBeans.add(listCarStoreBean);
-		Intent intent = new Intent(this, ConfirmOrderActivity.class);
-//		intent.putExtra("totalprice", CommonUtil.priceConversion(price));
-//		intent.putExtra("mapCarItem_goods",
-//				(Serializable) hashmapGoodsBeans);
-//		intent.putExtra("listCarItem_stores",
-//				(Serializable) listStoreBean);
-		startActivityForResult(intent, 1);
+		List<ListCarGoodsBean> listCarGoodsBeans=new ArrayList<ListCarGoodsBean>();
+		listCarGoodsBeans.add(listCarGoodsBean);
+		listCarStoreBean.setItemDtos(listCarGoodsBeans);
+		listCarStoreBeans.add(listCarStoreBean);
+		
+		ConfirmOrderActivity.startThisActivity(this, listCarStoreBeans, listCarGoodsBean.getPromotionPrice(), true);
 	}
 }

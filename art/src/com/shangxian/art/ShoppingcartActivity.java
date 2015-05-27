@@ -63,6 +63,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 	private AbHttpUtil httpUtil;
 	private List<CarItem> listCarItem = new ArrayList<CarItem>();
 	private List<ListCarStoreBean> listStore = new ArrayList<ListCarStoreBean>();
+	private List<ListCarStoreBean> listStoreSelected = new ArrayList<ListCarStoreBean>();
 	private ListCarAdapter adapter;
 	private boolean isFromConfirmOrderAct;
 
@@ -79,7 +80,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 		if (isLogin()) {
 			loading_big.setVisibility(View.VISIBLE);
 			requestTask();
-		}else{
+		} else {
 			loading_big.setVisibility(View.GONE);
 		}
 		adapter = new ListCarAdapter(ShoppingcartActivity.this, listCarItem);
@@ -227,7 +228,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 				}
 			}
 		}
-		allprice.setText("￥ " +CommonUtil.priceConversion(price));
+		allprice.setText("￥ " + CommonUtil.priceConversion(price));
 	}
 
 	// 设置全选是否选中
@@ -370,25 +371,27 @@ public class ShoppingcartActivity extends BaseActivity implements
 		Map<String, Boolean> goodsCheced = adapter.getGoodsCheced();
 		Map<String, Boolean> storeCheced = adapter.getStoreCheced();
 		final List<CarItem> listCarItemDelete = new ArrayList<CarItem>();
-		List<String> cartItemIds=new ArrayList<String>();
+		List<String> cartItemIds = new ArrayList<String>();
 		for (CarItem carItem : listCarItem) {
 			if (carItem.getType() == CarItem.SECTION) {
 				if (storeCheced.get(carItem.getListCarStoreBean().getShopId())) {
 					listCarItemDelete.add(carItem);
 				}
 			} else {
-				ListCarGoodsBean listCarGoodsBean=carItem.getListCarGoodsBean();
+				ListCarGoodsBean listCarGoodsBean = carItem
+						.getListCarGoodsBean();
 				if (goodsCheced.get(listCarGoodsBean.getCartItemId())) {
 					listCarItemDelete.add(carItem);
 					cartItemIds.add(listCarGoodsBean.getCartItemId());
 				}
 			}
 		}
-		Gson gson=new Gson();
-		String json=gson.toJson(cartItemIds);
+		Gson gson = new Gson();
+		String json = gson.toJson(cartItemIds);
 		MyLogger.i(json);
-		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.DELCART, json, new HttpCilentListener() {
-			
+		HttpClients.postDo(Constant.BASEURL + Constant.CONTENT
+				+ Constant.DELCART, json, new HttpCilentListener() {
+
 			@Override
 			public void onResponse(String res) {
 				MyLogger.i(res);
@@ -401,11 +404,11 @@ public class ShoppingcartActivity extends BaseActivity implements
 				} catch (Exception e) {
 					e.printStackTrace();
 					myToast("删除失败");
-				} 
+				}
 			}
 		});
 	}
-	
+
 	private void doDeleteNext(List<CarItem> listCarItemDelete) {
 		listCarItem.removeAll(listCarItemDelete);
 		adapter.initState();
@@ -468,7 +471,25 @@ public class ShoppingcartActivity extends BaseActivity implements
 				}
 
 				// 存放每个店铺下的订单
-				HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans = new HashMap<String, List<ListCarGoodsBean>>();
+				// HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans =
+				// new HashMap<String, List<ListCarGoodsBean>>();
+				// for (ListCarStoreBean listCarStoreBean2 : linkedHashMap
+				// .values()) {
+				// List<ListCarGoodsBean> listGoodsBeans = new
+				// ArrayList<ListCarGoodsBean>();
+				// String storeid = listCarStoreBean2.getShopId();
+				// for (CarItem carItem : listCarItem_select) {
+				// if (carItem.getType() == CarItem.ITEM) {
+				// if (carItem.getListCarGoodsBean().getShopId()
+				// .equals(storeid)) {
+				// listGoodsBeans.add(carItem
+				// .getListCarGoodsBean());
+				// }
+				// }
+				// }
+				// hashmapGoodsBeans.put(storeid, listGoodsBeans);
+				// }
+				listStoreSelected.clear();
 				for (ListCarStoreBean listCarStoreBean2 : linkedHashMap
 						.values()) {
 					List<ListCarGoodsBean> listGoodsBeans = new ArrayList<ListCarGoodsBean>();
@@ -482,9 +503,9 @@ public class ShoppingcartActivity extends BaseActivity implements
 							}
 						}
 					}
-					hashmapGoodsBeans.put(storeid, listGoodsBeans);
+					listCarStoreBean2.setItemDtos(listGoodsBeans);;
+					listStoreSelected.add(listCarStoreBean2);
 				}
-
 				// for (String storeid : hashmapGoodsBeans.keySet()) {
 				// for (CarItem carItem : listCarItem) {
 				// if(carItem.getType()==CarItem.ITEM){
@@ -494,19 +515,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 				// }
 				// }
 
-				Intent intent = new Intent(this, ConfirmOrderActivity.class);
-				intent.putExtra("totalprice", CommonUtil.priceConversion(price));
-				intent.putExtra("mapCarItem_goods",
-						(Serializable) hashmapGoodsBeans);
-				intent.putExtra("listCarItem_stores",
-						(Serializable) listStoreBean);
-				// Bundle bundle = new Bundle();
-				// bundle.putSerializable("car", car);
-				// intent.putExtras(bundle);
-				// intent.putExtra("from", GoodsOrder.FROMCAR);
-				startActivityForResult(intent, 1);
-				// }
-
+				ConfirmOrderActivity.startThisActivity(this, listStoreSelected,
+						price, false);
 			} else {
 				myToast("请选择要结算的商品");
 			}
