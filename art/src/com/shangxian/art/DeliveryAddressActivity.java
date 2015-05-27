@@ -63,6 +63,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private void initData() {
 		Intent intent = getIntent();
 		isfromConfirmOrder=intent.getBooleanExtra("isfromConfirmOrder", false);
+		
 	}
 	public static void startThisActivity(Context context) {
 		Intent intent = new Intent(context, DeliveryAddressActivity.class);

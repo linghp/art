@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/iandedetailscontent_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/agricultural_bao" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="农合宝-成功转账"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/iandedetailscontent_view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear1"
+        android:background="@color/txt_black3" />
+
+    <RelativeLayout
+        android:id="@+id/iandedetailscontent_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view1"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            android:text="交易金额"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_price"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="right"
+            android:padding="10dp"
+            android:text="-500"
+            android:textColor="@color/txt_black"
+            android:textSize="40sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/iandedetailscontent_view2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear2"
+        android:background="@color/txt_black3" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:text="流  水  号"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_liushuihao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="2015052775168"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+    <View
+        android:id="@+id/iandedetailscontent_view3"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear3"
+        android:background="@color/txt_black3" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view3"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:text="收支方向"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_fangxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="支出"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+<View
+        android:id="@+id/iandedetailscontent_view4"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear4"
+        android:background="@color/txt_black3" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view4"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:text="支付方式"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_fangshi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="中国工商银行"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+    <View
+        android:id="@+id/iandedetailscontent_view5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear5"
+        android:background="@color/txt_black3" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:text="交易时间"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="2015-5-27 13:00"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+    <View
+        android:id="@+id/iandedetailscontent_view6"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iandedetailscontent_linear6"
+        android:background="@color/txt_black3" />
+
+    <LinearLayout
+        android:id="@+id/iandedetailscontent_linear7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iandedetailscontent_view6"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:text="备        注"
+            android:textColor="@color/txt_black3"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/iandedetailscontent_beizhu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="无"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+</RelativeLayout>

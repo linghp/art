@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_iandedetails_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/txt_black3"
+        android:paddingLeft="15dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="1月"
+        android:textColor="@color/txt_black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@color/txt_white" >
+        <ImageView 
+            android:id="@+id/item_iandedetails_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/agricultural_bao"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            />
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
+            <TextView 
+                android:id="@+id/item_iandedetails_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="农合宝-成功转账"
+                android:textSize="@dimen/list_title_size"
+                android:textColor="@color/txt_black2"/>
+            <TextView 
+                android:id="@+id/item_iandedetails_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015-5-26 11:45"
+                android:textSize="12sp"
+                android:textColor="@color/txt_black2"/>
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:layout_marginRight="5dp">
+            <TextView 
+                android:id="@+id/item_iandedetails_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-¥5000"
+                android:textSize="@dimen/list_title_size"
+                android:textColor="@color/txt_black1"/>
+            <TextView 
+                android:id="@+id/item_iandedetails_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出"
+                android:textSize="11sp"
+                android:textColor="@color/txt_red"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
