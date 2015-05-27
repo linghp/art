@@ -301,7 +301,8 @@ public class NearlyActivity extends BaseActivity implements
 								mAbPullToRefreshView.onHeaderRefreshFinish();
 							}
 						} else {
-
+							mListView.setVisibility(View.GONE);
+							ll_nonetwork.setVisibility(View.VISIBLE);
 						}
 					}
 				});

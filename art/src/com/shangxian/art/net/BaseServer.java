@@ -1,6 +1,7 @@
 package com.shangxian.art.net;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,11 @@ import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.base.DataTools;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.AccountSumInfo;
@@ -52,28 +58,38 @@ public class BaseServer {
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
-	protected static final String NET_ORDERS =HOST + "orders/";//我的订单
-	protected static final String NET_CANCELORDER =HOST +  "order/cancel/";//取消订单
-	protected static final String NET_DELORDER = HOST + "order/del/";//删除订单
-	protected static final String NET_ORDERDETAILS = HOST + "order/details?orderNumber=";//订单详情
-	
+	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
+	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
+	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
+	protected static final String NET_ORDERDETAILS = HOST
+			+ "order/details?orderNumber=";// 订单详情
+
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
-	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST + "user/password/captcha"; // 发送验证码
-	protected static final String NET_LOGIN_PASSWORD_SENDCODE = HOST + "send"; //发送支付密码验证码
-	protected static final String NET_NEW_PAYPASSWORD = HOST + "user/payPassword?action=new"; //设置支付密码
-	protected static final String NET_NEW_LOGIN_PASSWORD = HOST + "user/password"; //设置新的登录密码
-	protected static final String NET_UPDATA_LOGIN_PASSWORD = HOST + "user/password"; //修改新的登录密码
-	protected static final String NET_UPDATA_PAYPASSWORD = HOST + "user/password"; //修改新的登录密码
-	
-	protected static final String NET_FOLLOW_PRODUCT = HOST + "aat/product";  //添加商品关注
-	protected static final String NET_FOLLOW_SHOP = HOST + "aat/shop";  //添加商铺关注
-	protected static final String NET_FOLLOW_PRODUCT_DEL = HOST + "aat/product/";  //删除商品关注
-	protected static final String NET_FOLLOW_SHOP_DEL = HOST + "aat/shop/";  //删除商铺关注
-	public static final String NET_FOLLOW_PRODUCT_LIST = HOST + "aats?type=product"; //获取产品关注列表 
-	public static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; //获取商铺关注列表
-	
-	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto";
+	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST
+			+ "user/password/captcha"; // 发送验证码
+	protected static final String NET_LOGIN_PASSWORD_SENDCODE = HOST + "send"; // 发送支付密码验证码
+	protected static final String NET_NEW_PAYPASSWORD = HOST
+			+ "user/payPassword?action=new"; // 设置支付密码
+	protected static final String NET_NEW_LOGIN_PASSWORD = HOST
+			+ "user/password"; // 设置新的登录密码
+	protected static final String NET_UPDATA_LOGIN_PASSWORD = HOST
+			+ "user/password"; // 修改新的登录密码
+	protected static final String NET_UPDATA_PAYPASSWORD = HOST
+			+ "user/password"; // 修改新的登录密码
+
+	protected static final String NET_FOLLOW_PRODUCT = HOST + "aat/product"; // 添加商品关注
+	protected static final String NET_FOLLOW_SHOP = HOST + "aat/shop"; // 添加商铺关注
+	protected static final String NET_FOLLOW_PRODUCT_DEL = HOST
+			+ "aat/product/"; // 删除商品关注
+	protected static final String NET_FOLLOW_SHOP_DEL = HOST + "aat/shop/"; // 删除商铺关注
+	public static final String NET_FOLLOW_PRODUCT_LIST = HOST
+			+ "aats?type=product"; // 获取产品关注列表
+	public static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; // 获取商铺关注列表
+
+	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto"; // 上传图片
+	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
+	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
 
 	/**
 	 * 
@@ -304,10 +320,9 @@ public class BaseServer {
 			}
 		});
 	}
-	
-	protected static void toGet(String url,
-			final OnHttpListener l) {
-		HttpClients.getDo(url,  new HttpCilentListener() {
+
+	protected static void toGet(String url, final OnHttpListener l) {
+		HttpClients.getDo(url, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
 				if (l != null) {
@@ -330,7 +345,7 @@ public class BaseServer {
 			}
 		});
 	}
-	
+
 	protected static void toPostWithToken2(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {
@@ -358,8 +373,8 @@ public class BaseServer {
 					try {
 						sb.append(entry.getKey())
 								.append('=')
-								.append(URLEncoder.encode(entry.getValue(), "UTF-8"))
-								.append('&');
+								.append(URLEncoder.encode(entry.getValue(),
+										"UTF-8")).append('&');
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 					}
@@ -386,39 +401,103 @@ public class BaseServer {
 						e.printStackTrace();
 						l.onHttp(null);
 					}
-				}	
-			}
-		});
-	}
-
-	protected void toDel(String url, final OnHttpListener l){
-		HttpClients.toDel(url, new HttpCilentListener() {
-			@Override
-			public void onResponse(String res) {
-				if (l != null) {
-					l.onHttp(res);
 				}
 			}
 		});
 	}
 	
+	public static final int ERROR_JSON_EX = 0x00001011;
+	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
+	public static final int ERROR_CONN_EX = 0x00001013;
+	
+	protected void toXUtils(HttpMethod method, String url,
+			RequestParams params, final Type type, final CallBack call) {
+		if (call == null)
+			return;
+		new HttpUtils().send(method, url, params,
+				new RequestCallBack<String>() {
+
+					@Override
+					public void onFailure(HttpException e, String msg) {
+						call.onSimpleFailure(ERROR_CONN_EX);
+					}
+
+					@Override
+					public void onStart() {
+						super.onStart();
+						call.onStart();
+					}
+					
+					@Override
+					public void onCancelled() {
+						super.onCancelled();
+						call.onCancelled();
+					}
+					
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						super.onLoading(total, current, isUploading);
+						call.onLoading(total, current, isUploading);
+					}
+					
+					@Override
+					public void onSuccess(ResponseInfo res) {
+						String result = String.valueOf(res.result);
+						JSONObject json;
+						int result_code = Integer.MIN_VALUE;
+						try {
+							json = new JSONObject(result);
+							result_code = json.getInt("result_code");
+							if (result_code == 200) {
+								String re = json.getString("result");
+								System.out.println("xUtils -------> code == "
+										+ result_code + " , result == "
+										+ result);
+								if (type != null && !TextUtils.isEmpty(re)) {
+									Object o = gson.fromJson(re, type);
+									if (o == null) {
+										call.onSimpleFailure(ERROR_GSON2ENTITY_EX);
+									} else {
+										call.onSimpleSuccess(o);
+									}
+								} else {
+									call.onSimpleSuccess(null);
+								}
+							} else {
+								call.onSimpleFailure(result_code);
+							}
+						} catch (JSONException e) {
+							call.onSimpleFailure(ERROR_JSON_EX);
+							e.printStackTrace();
+						}
+					}
+				});
+	}
+
 	protected String getRes(String res) {
-		if (TextUtils.isEmpty(res)) throw new NullPointerException();
+		if (TextUtils.isEmpty(res))
+			throw new NullPointerException();
 		try {
 			JSONObject json = new JSONObject(res);
 			if (json.getInt("result_code") == 200) {
 				res = json.getString("result");
-			} 
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
-	
+
+	// protected void toXUtils(HttpMethod method, String url, RequestParams
+	// params, final XUtilsCallback<String> call){
+	// new HttpUtils().send(method, url, params, call);
+	// }
+
 	protected HttpUtils getHttpUtils() {
 		return new HttpUtils();
 	}
-	
+
 	protected interface OnHttpListener {
 		void onHttp(String res);
 	}

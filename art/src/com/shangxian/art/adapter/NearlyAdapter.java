@@ -35,7 +35,8 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 				// // 设置图片Uri为空或是错误的时候显示的图片
 				.showImageForEmptyUri(R.drawable.image_empty)
 				// // 设置图片加载/解码过程中错误时候显示的图片
-				.showImageOnFail(R.drawable.image_loading).cacheInMemory(true)
+				.showImageOnFail(R.drawable.image_loading).
+				cacheInMemory(true)
 				// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc(true)
 				// 设置下载的图片是否缓存在SD卡中
@@ -83,7 +84,7 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 				ShopLocInfo info1 = new ShopLocInfo();
 				info1.setId(info.getId());
 				info1.setTitle(info.getTitle());
-				info1.setPhoto(info.getShopName());
+				info1.setPhoto(info.getIndexLogo());
 				info1.setAddress(info.getAddress());
 				info1.setLng(info.getLatLng());
 				bundle.putSerializable(Constant.INT_LOC_NEARLY_SHOPINFO, info1);

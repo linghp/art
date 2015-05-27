@@ -308,7 +308,9 @@ public class PayActivity extends BaseActivity {
 			break;
 		case R.id.payt_tv_ok:
 			// myToast("确定");
-			okToPay();
+			if (isPayed(true)) {
+				okToPay();
+			}
 			break;
 		case R.id.payl_ll_zhi:
 			// myToast("支付宝功能暂未开通");

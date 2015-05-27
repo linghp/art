@@ -11,15 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/rl_photo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/white"
-        android:clickable="true"
-        android:onClick="doClick" >
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
 
-        <ImageView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/rl_photo"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:onClick="doClick" >
+
+                <!--
+             <ImageView
             android:id="@+id/iv_photo"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -27,272 +38,284 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
             android:src="@drawable/defaultloginheader" />
+                -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="头像"
-            android:textSize="@dimen/list_title_size" />
+                <com.shangxian.art.view.CircleImageView1
+                    android:id="@+id/iv_photo"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/defaultloginheader" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="头像"
+                    android:textSize="@dimen/list_title_size" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:layout_marginTop="@dimen/home_itemmargin"
-        android:background="@color/white"
-        android:orientation="vertical" >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray" />
+            </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:layout_marginTop="@dimen/home_itemmargin"
+                android:background="@color/white"
+                android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/ll_my_item1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="收货地址管理"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="修改登录密码"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="找回登陆密码"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="手机认证"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:layout_marginTop="@dimen/home_itemmargin"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="修改支付密码"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item6"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="找回支付密码"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_my_item7"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="doClick"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="实名认证"
+                        android:textSize="@dimen/list_title_size" />
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="17dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/next_level" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_logout"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="收货地址管理"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/blue"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="doClick"
+                android:padding="10dp"
+                android:text="注销"
+                android:textColor="@color/white"
                 android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="修改登录密码"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="找回登陆密码"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item4"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="手机认证"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:layout_marginTop="@dimen/home_itemmargin"
-        android:background="@color/white"
-        android:orientation="vertical" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item5"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="修改支付密码"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item6"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="找回支付密码"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_my_item7"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="doClick"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="实名认证"
-                android:textSize="@dimen/list_title_size" />
-
-            <View
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/next_level" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_logout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/blue"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="doClick"
-        android:padding="10dp"
-        android:text="注销"
-        android:textColor="@color/white"
-        android:textSize="@dimen/list_title_size" />
+    </ScrollView>
 
 </LinearLayout>

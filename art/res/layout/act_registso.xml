@@ -262,7 +262,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/soge_next_bg_sel"
                     android:gravity="center"
-                    android:text="下一步"
+                    android:text="注册"
                     android:textColor="@color/col_w1tow2"
                     android:textSize="18sp" />
             </LinearLayout>

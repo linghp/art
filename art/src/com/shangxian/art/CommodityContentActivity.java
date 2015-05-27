@@ -44,6 +44,7 @@ import com.shangxian.art.constant.Global;
 import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmNowBuyListener;
+import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.FollowServer;
 import com.shangxian.art.net.FollowServer.OnFollowListener;
 import com.shangxian.art.net.HttpClients;
@@ -74,7 +75,6 @@ public class CommodityContentActivity extends BaseActivity implements
 //	private ImageView img_first, img_second;
 	private LinearLayout dingwei, shangpu;
 	private WebView webView;
-
 	// 判断是否收藏
 	//boolean iscollection = false;
 
@@ -159,45 +159,46 @@ public class CommodityContentActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
-					// if (!iscollection) {
-					// commoditycontent_shoucang
-					// .setImageResource(R.drawable.collection_on);
-					// myToast("已收藏");
-					// } else {
-					// commoditycontent_shoucang
-					// .setImageResource(R.drawable.collection_off);
-					// myToast("取消收藏");
-					// }
-					// iscollection = !iscollection;
 					if (model == null) {
 						commoditycontent_shoucang.setSelected(false);
 						myToast("关注失败！");
 					} else {
-						commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
+						commoditycontent_shoucang
+								.setSelected(!commoditycontent_shoucang
+										.isSelected());
 						if (!commoditycontent_shoucang.isSelected()) {
-							new FollowServer().toDelFollowGoods(model.getCategoryId(), false, new OnFollowListener(){
-								@Override
-								public void onFollow(boolean isFollow) {
-									if (!isFollow) {
-										myToast("取消关注失败");
-										commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
-									} else {
-										myToast("关注成功");
-									}
-								}
-							});
+							new FollowServer().toDelFollowGoods(
+									model.getCategoryId(), false,
+									new CallBack() {
+										@Override
+										public void onSimpleSuccess(Object res) {
+											myToast("取消关注成功");
+										}
+
+										@Override
+										public void onSimpleFailure(int code) {
+											myToast("取消关注失败");
+											commoditycontent_shoucang
+													.setSelected(!commoditycontent_shoucang
+															.isSelected());
+										}
+									});
 						} else {
-							new FollowServer().toFollowGoods(model.getCategoryId(), new OnFollowListener() {
-								@Override
-								public void onFollow(boolean isFollow) {
-									if (!isFollow) {
-										myToast("关注失败");
-										commoditycontent_shoucang.setSelected(!commoditycontent_shoucang.isSelected());
-									} else {
-										myToast("关注成功");
-									}
-								}
-							});
+							new FollowServer().toFollowGoods(
+									model.getCategoryId(),
+									new OnFollowListener() {
+										@Override
+										public void onFollow(boolean isFollow) {
+											if (!isFollow) {
+												myToast("关注失败");
+												commoditycontent_shoucang
+														.setSelected(!commoditycontent_shoucang
+																.isSelected());
+											} else {
+												myToast("关注成功");
+											}
+										}
+									});
 						}
 					}
 				}
@@ -388,10 +389,13 @@ public class CommodityContentActivity extends BaseActivity implements
 								}
 							});
 							viewPager.setAdapter(imgList.size());
-             //商品详情
-							String url_detail = Constant.BASEURL + Constant.CONTENT + String.format(Constant.GOODSDETAIL, model.getId());
+							// 商品详情
+							String url_detail = Constant.BASEURL
+									+ Constant.CONTENT
+									+ String.format(Constant.GOODSDETAIL,
+											model.getId());
 							MyLogger.i(url_detail);
-							//refreshTask_detail(url_detail);
+							// refreshTask_detail(url_detail);
 							webView.loadUrl(url_detail);
 						}
 						// else {
@@ -440,7 +444,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		viewPager = (TagViewPager) findViewById(R.id.commoditycontent_mTagViewPager);
 		initTagViewPager();// 初始化轮播VIEW
 
-		rl_footer=findViewById(R.id.rl_footer);
+		rl_footer = findViewById(R.id.rl_footer);
 		rl_footer.setVisibility(View.GONE);
 		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
@@ -473,8 +477,9 @@ public class CommodityContentActivity extends BaseActivity implements
 		topView.showTitle();
 		topView.setBack(R.drawable.back);// 返回
 		topView.setTitle("商品详情");// title文字
-		
-		if (!isLogin()) commoditycontent_shoucang.setSelected(false);
+
+		if (!isLogin())
+			commoditycontent_shoucang.setSelected(false);
 
 	}
 
@@ -570,6 +575,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}
+
 	private void doNowBuy() {
 		GoodsDialog dialog = new GoodsDialog(this, this,true);
 		dialog.setCommodityContent(model);
