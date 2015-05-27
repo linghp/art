@@ -104,7 +104,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 		}
 		model = new ArrayList<ClassityCommdityModel>();
 		refreshTask(url);
-		
+
 	}
 
 	private void refreshTask(String url) {
@@ -173,10 +173,13 @@ public class ClassifyCommodityActivity extends BaseActivity {
 							String str=jsonObject.getString("result");
 							ClassityCommdityResultModel classityCommdityResultModel=gson.fromJson(str, ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
-							adapter = new ClassityCommodiyAdp1(ClassifyCommodityActivity.this,
-									R.layout.item_classitycommodity, model);
-							list.setAdapter(adapter);
-							adapter.notifyDataSetChanged();
+							if (model != null) {
+								adapter = new ClassityCommodiyAdp1(ClassifyCommodityActivity.this,
+										R.layout.item_classitycommodity, model);
+								list.setAdapter(adapter);
+								adapter.notifyDataSetChanged();
+							}
+
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -216,9 +219,9 @@ public class ClassifyCommodityActivity extends BaseActivity {
 				shaixuan.setSelected(!shaixuan.isSelected());
 				if (shaixuan.isSelected()) {
 					//弹出
-					
+
 				}
-//				shaixuan.setTextColor(R.color.col_b1toma500);
+				//				shaixuan.setTextColor(R.color.col_b1toma500);
 				// popupWindow.showAtLocation(v, MODE_APPEND, 0, 0);
 				// dialog.show();
 			}
@@ -244,7 +247,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 				jiage.setSelected(!jiage.isSelected());
 				if (jiage.isSelected()) {
 					//弹出
-					
+
 				}
 			}
 		});
@@ -257,14 +260,14 @@ public class ClassifyCommodityActivity extends BaseActivity {
 				xinpin.setSelected(!xinpin.isSelected());
 				if (xinpin.isSelected()) {
 					//弹出
-					
+
 				}
 			}
 		});
 
 		// title购物车跳转
 		topView.setRightBtnListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub

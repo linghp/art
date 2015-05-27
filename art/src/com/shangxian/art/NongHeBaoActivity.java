@@ -9,6 +9,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 爱农卡
+ * @author zyz
+ *
+ */
 public class NongHeBaoActivity extends BaseActivity{
 	LinearLayout balance,recharge,cash,profit,bankcard,expenses;
 	@Override
@@ -74,8 +79,24 @@ public class NongHeBaoActivity extends BaseActivity{
 			//农合宝
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				CommonUtil.gotoActivity(NongHeBaoActivity.this, ProfitActivity.class, false);
+			}
+		});
+		bankcard.setOnClickListener(new OnClickListener() {
+			//银行卡
+			@Override
+			public void onClick(View v) {
+				
+				
+			}
+		});
+		expenses.setOnClickListener(new OnClickListener() {
+			//收支明细
+			@Override
+			public void onClick(View v) {
+				
+				CommonUtil.gotoActivity(NongHeBaoActivity.this, IandEDetailsActivity.class, false);
 			}
 		});
 	}
