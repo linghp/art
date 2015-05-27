@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,7 +44,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private ListView listview;
 	private TextView tv_car_allprice_value;
 	private View headView;
+	private View tv_noaddress;
 	private View rl_address ;
+	
+	private String deliveryAddressId;
 	
 	private ListConfirmOrderAdapter listadapter;
 	private List<ListCarStoreBean> listStoreBean;
@@ -111,6 +115,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		
 		initHeadView();
 		listview.addHeaderView(headView);
+		tv_noaddress=findViewById(R.id.tv_noaddress);
 		rl_address=findViewById(R.id.rl_address);
 		rl_address.setOnClickListener(this);
 	}
@@ -138,10 +143,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void dosettlement() {
+		if(!TextUtils.isEmpty(deliveryAddressId)){
 		AbDialogUtil.showLoadDialog(this, R.drawable.progress_circular,
 				"请稍等...");
 		CommitOrder commitOrder=new CommitOrder();
-		commitOrder.setAddressId("1");
+		commitOrder.setAddressId(deliveryAddressId);
 		List<OrderItem> orderItems=new ArrayList<OrderItem>();
 //		for (List<ListCarGoodsBean> listCarGoodsBeans : hashmapGoodsBeans.values()) {
 //			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
@@ -154,14 +160,23 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 //				orderItems.add(orderItem);
 //			}
 //		}
-		for (Entry<String, List<ListCarGoodsBean>> entry : hashmapGoodsBeans.entrySet()) {
-			String shopid=entry.getKey();
-			 List<ListCarGoodsBean> listCarGoodsBeans=entry.getValue();
+//		for (Entry<String, List<ListCarGoodsBean>> entry : hashmapGoodsBeans.entrySet()) {
+//			String shopid=entry.getKey();
+//			 List<ListCarGoodsBean> listCarGoodsBeans=entry.getValue();
+//			 List<String> cartOrderItemId=new ArrayList<String>();
+//			 for (ListCarGoodsBean listCarGoodsBean2 : listCarGoodsBeans) {
+//				 cartOrderItemId.add(listCarGoodsBean2.getCartItemId());
+//			}
+//			 OrderItem orderItem=new OrderItem(shopid,cartOrderItemId, "");
+//			 orderItems.add(orderItem);
+//		}
+		for (ListCarStoreBean listCarStoreBean : listStoreBean) {
 			 List<String> cartOrderItemId=new ArrayList<String>();
-			 for (ListCarGoodsBean listCarGoodsBean2 : listCarGoodsBeans) {
+			 for (ListCarGoodsBean listCarGoodsBean2 : listCarStoreBean.getItemDtos()) {
 				 cartOrderItemId.add(listCarGoodsBean2.getCartItemId());
 			}
-			 OrderItem orderItem=new OrderItem(shopid,cartOrderItemId, "");
+			 OrderItem orderItem=new OrderItem(listCarStoreBean.getShopId(),cartOrderItemId, listCarStoreBean.getRecommand());
+			 MyLogger.i(orderItem.toString());
 			 orderItems.add(orderItem);
 		}
 		commitOrder.setOrderItems(orderItems);
@@ -169,6 +184,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		String json=gson.toJson(commitOrder);
 		MyLogger.i(json);
 		HttpClients.postDo(Constant.BASEURL+Constant.CONTENT+Constant.ORDER, json, this);
+		}else{
+			myToast("请添加收货地址");
+		}
 	}
 	
 	@Override
@@ -216,7 +234,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			}else if(arg0 == 1001){
 				DeliveryAddressModel deliveryAddressModel=(DeliveryAddressModel) data.getSerializableExtra("DeliveryAddressModel");
 				if(deliveryAddressModel!=null){
-					MyLogger.i(deliveryAddressModel.toString());;
+					MyLogger.i(deliveryAddressModel.toString());
+					tv_noaddress.setVisibility(View.GONE);
+					deliveryAddressId=deliveryAddressModel.getId();
+					((TextView)findViewById(R.id.tv_receiver)).setText(String.format(getString(R.string.text_receiver), deliveryAddressModel.getReceiverName()));
+					((TextView)findViewById(R.id.tv_address)).setText(String.format(getString(R.string.text_receiver_address), deliveryAddressModel.getDeliveryAddress()));
+					((TextView)findViewById(R.id.tv_phone)).setText(deliveryAddressModel.getReceiverTel());
 				}
 			}
 		}

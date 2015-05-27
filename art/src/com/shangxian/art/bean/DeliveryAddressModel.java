@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class DeliveryAddressModel implements Serializable{
 	@Expose
-	private Integer id;
+	private String id;
 	@Expose
 	private String deliveryAddress;
 	@Expose
@@ -17,10 +17,10 @@ public class DeliveryAddressModel implements Serializable{
 	@SerializedName("default")
 	@Expose
 	private Boolean _default;
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getDeliveryAddress() {

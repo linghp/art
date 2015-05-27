@@ -13,7 +13,7 @@ public class ListCarStoreBean implements Serializable{
 	private String shopId;
 	private String shopName;
 	private String logo;
-	private String recommand;
+	private String recommand="";
 	private List<ListCarGoodsBean> itemDtos;
 	
 	@Override

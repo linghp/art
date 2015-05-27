@@ -13,7 +13,7 @@ import java.util.List;
 public class OrderItem implements Serializable{
 	private String shopId;
 	private List<String> cartOrderItemId;
-	private String guestMessage;
+	private String guestMessage="";
 	
 	public OrderItem(String shopId, List<String> cartOrderItemId,
 			String guestMessage) {

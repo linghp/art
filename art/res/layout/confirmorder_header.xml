@@ -18,21 +18,22 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="51dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_toRightOf="@id/iv_locationicon" >
 
         <RelativeLayout android:id="@+id/rl_address2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="fill_parent" >
 
             <TextView
                 android:id="@+id/tv_receiver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="收货人：xxx"
+                android:text="收货人："
                 android:textSize="@dimen/list_summary_size" />
 
             <TextView
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="13812345678"
+                android:text=""
                 android:textSize="@dimen/list_summary_size" />
 
             <TextView
@@ -50,17 +51,19 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/tv_receiver"
                 android:layout_marginTop="5dp"
-                android:text="收货地址:重庆市南岸区上海城xxx"
+                android:text="收货地址:"
                 android:textSize="@dimen/list_summary_size" />
         </RelativeLayout>
+
                     <TextView
-                android:id="@+id/tv_noaddress"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@color/bg_gray"
-                android:gravity="center"
-                android:text="点击添加收货地址"
-                android:textSize="@dimen/list_summary_size" />
+                        android:id="@+id/tv_noaddress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/bg_gray"
+                        android:gravity="center"
+                        android:text="点击添加收货地址"
+                        android:textSize="@dimen/list_summary_size" />
+
     </RelativeLayout>
 
     <ImageView
