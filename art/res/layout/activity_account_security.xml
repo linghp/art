@@ -29,25 +29,30 @@
                 android:clickable="true"
                 android:onClick="doClick" >
 
-                <!--
-             <ImageView
-            android:id="@+id/iv_photo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/defaultloginheader" />
-                -->
-
-                <com.shangxian.art.view.CircleImageView1
-                    android:id="@+id/iv_photo"
+                <FrameLayout
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/defaultloginheader" />
+                    android:layout_marginRight="12dp" >
+
+                    <com.shangxian.art.view.CircleImageView1
+                        android:id="@+id/iv_photo"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/defaultloginheader" />
+                    
+                    <ImageView 
+                        android:id="@+id/iv_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/avater_upload_bg"
+                        android:layout_gravity="center"
+                        android:src="@drawable/refreshing"
+                        android:scaleType="centerInside"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -304,6 +309,7 @@
                 android:id="@+id/tv_logout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="16dp"
@@ -314,8 +320,7 @@
                 android:padding="10dp"
                 android:text="注销"
                 android:textColor="@color/white"
-                android:textSize="@dimen/list_title_size"
-                android:layout_marginBottom="8dp" />
+                android:textSize="@dimen/list_title_size" />
         </LinearLayout>
     </ScrollView>
 

@@ -211,8 +211,10 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item7:
 			// 账户与安全
-			startActivityForResult((new Intent(this,
-					AccountSecurityActivity.class)), 2);
+			if (isLoginAndToLogin()) {
+				startActivityForResult((new Intent(this,
+						AccountSecurityActivity.class)), 2);
+			}
 			break;
 		case R.id.ll_my_item8:
 			// 退货/售后
