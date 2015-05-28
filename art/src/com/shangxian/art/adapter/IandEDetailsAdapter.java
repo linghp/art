@@ -39,7 +39,7 @@ public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 		}
 		holder.title.setText(dates.get(position).getTradeTitle());
 		holder.time.setText(dates.get(position).getTransDate());
-		holder.parice.setText(dates.get(position).getTotalPrice());
+		holder.parice.setText(dates.get(position).getTotalPrice()+"");
 		holder.type.setText(dates.get(position).getPayType());
 		return convertView;
 	}

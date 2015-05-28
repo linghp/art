@@ -175,23 +175,23 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 
 		switch (position) {
 		case 0:
-			img_first.setBackgroundResource(R.color.blue);
-			tv_first.setTextColor(getResources().getColor(R.color.blue));
+			img_first.setBackgroundResource(R.color.green);
+			tv_first.setTextColor(getResources().getColor(R.color.green));
 			//((MyOrder_All_Fragment)firstFragment).update();
 			break;
 		case 1:
-			img_second.setBackgroundResource(R.color.blue);
-			tv_second.setTextColor(getResources().getColor(R.color.blue));
+			img_second.setBackgroundResource(R.color.green);
+			tv_second.setTextColor(getResources().getColor(R.color.green));
 			//((MyOrder_dfk_Fragment)secondFragment).update();
 			break;
 		case 2:
-			img_three.setBackgroundResource(R.color.blue);
-			tv_three.setTextColor(getResources().getColor(R.color.blue));
+			img_three.setBackgroundResource(R.color.green);
+			tv_three.setTextColor(getResources().getColor(R.color.green));
 			//((MyOrder_dfh_Fragment)thirdFragment).update();
 			break;
 		case 3:
-			img_four.setBackgroundResource(R.color.blue);
-			tv_four.setTextColor(getResources().getColor(R.color.blue));
+			img_four.setBackgroundResource(R.color.green);
+			tv_four.setTextColor(getResources().getColor(R.color.green));
 			//((MyOrder_dsh_Fragment)fourthFragment).update();
 			break;
 		}

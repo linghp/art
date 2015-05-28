@@ -232,7 +232,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// }
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/product" + "/" + id;
+			url = Constant.BASEURL + Constant.CONTENT + Constant.PRODUCT + "/" + id;
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}

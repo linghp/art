@@ -100,13 +100,13 @@ public class MyConcernActivity extends BaseActivity implements OnClickListener,O
 
 		switch (position) {
 		case 0:
-			img_first.setBackgroundResource(R.color.blue);
-			tv_first.setTextColor(getResources().getColor(R.color.blue));
+			img_first.setBackgroundResource(R.color.green);
+			tv_first.setTextColor(getResources().getColor(R.color.green));
 			//((MyConcern_Commodity_Fragment)firstFragment).update();
 			break;
 		case 1:
-			img_second.setBackgroundResource(R.color.blue);
-			tv_second.setTextColor(getResources().getColor(R.color.blue));
+			img_second.setBackgroundResource(R.color.green);
+			tv_second.setTextColor(getResources().getColor(R.color.green));
 			//((MyConcern_Shops_Fragment)secondFragment).update();
 			break;
 		}

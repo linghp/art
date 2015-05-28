@@ -7,16 +7,16 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 
 /**
- * 提交订单
+ * 我的订单
  * 
- * @author Administrator
+ * @author ling
  *
  */
 public class ProductItemDto implements Serializable{
 	@Expose
 	private String id;
 	@Expose
-	private HashMap<String, List<String>> specs;
+	private HashMap<String, String> specs;
 	@Expose
 	private Integer quantity;
 	@Expose
@@ -31,10 +31,10 @@ public class ProductItemDto implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public HashMap<String, List<String>> getSpecs() {
+	public HashMap<String, String> getSpecs() {
 		return specs;
 	}
-	public void setSpecs(HashMap<String, List<String>> specs) {
+	public void setSpecs(HashMap<String, String> specs) {
 		this.specs = specs;
 	}
 	public Integer getQuantity() {
