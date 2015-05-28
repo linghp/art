@@ -225,4 +225,10 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		MyLogger.i("onItemClick");
 		MyOrderDetailsActivity.startThisActivity(mOrderItems.get(position).getOrderNumber(), getActivity());
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }
