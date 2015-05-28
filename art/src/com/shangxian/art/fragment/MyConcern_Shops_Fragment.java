@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ab.view.pullview.AbPullToRefreshView;
+import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
+import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.FollowShopAdapter;
 import com.shangxian.art.adapter.ShopsListAdapter;
@@ -31,6 +34,7 @@ public class MyConcern_Shops_Fragment extends Fragment{
 	private ListView listView;
 	private FollowShopAdapter adapter;
 	protected SearchProductInfo info;
+	private AbPullToRefreshView mListRefreshView;
 	
 	
 	@Override
@@ -50,6 +54,8 @@ public class MyConcern_Shops_Fragment extends Fragment{
 		new FollowServer().toFollowList(true, new OnFollowInfoListener(){
 			@Override
 			public void onFollowInfo(SearchProductInfo info) {
+				mListRefreshView.onHeaderRefreshFinish();
+				mListRefreshView.onFooterLoadFinish();
 				if (info != null && !info.isNull()) {
 					MyConcern_Shops_Fragment.this.info = info;
 					if (adapter != null) {
@@ -59,13 +65,29 @@ public class MyConcern_Shops_Fragment extends Fragment{
 			}
 		});
 	}
+	
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
+		mListRefreshView = (AbPullToRefreshView) view.findViewById(R.id.mPullRefreshView);
 		adapter = new FollowShopAdapter(getActivity(), R.layout.follow_shop_item, null);
 		listView.setAdapter(adapter);
+		
+		mListRefreshView.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
+			@Override
+			public void onHeaderRefresh(AbPullToRefreshView v) {
+				initData();
+			}
+		});
+		mListRefreshView.setOnFooterLoadListener(new OnFooterLoadListener() {	
+			@Override
+			public void onFooterLoad(AbPullToRefreshView v) {
+				//loadMore();
+				initData();
+			}
+		});
 	}
 }

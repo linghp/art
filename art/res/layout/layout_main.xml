@@ -24,17 +24,19 @@
         </FrameLayout>
 
         <!-- 选项卡 -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_weight="0"
-            android:divider="@null"
-            android:background="@color/white" >
+            android:background="@color/white"
+            android:divider="@null" >
         </TabWidget>
     </LinearLayout>
 

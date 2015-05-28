@@ -3,6 +3,9 @@ package com.shangxian.art.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ab.view.pullview.AbPullToRefreshView;
+import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
+import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.ClassityCommodiyAdp;
 import com.shangxian.art.bean.ClassityCommdityModel;
@@ -30,6 +33,7 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 	private ListView listView;
 	private ClassityCommodiyAdp adapter;
 	private SearchProductInfo info;
+	private AbPullToRefreshView mListRefreshView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,22 +43,8 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		initMainView();
-		initData();
+		initMainView();	
 		return view;
-	}
-	private void initData() {
-		new FollowServer().toFollowList(false, new OnFollowInfoListener (){
-			@Override
-			public void onFollowInfo(SearchProductInfo info) {
-				if (info != null && !info.isNull()) {
-					MyConcern_Commodity_Fragment.this.info = info;
-					if (adapter != null) {
-						adapter.upDateList(info.getData());
-					}
-				}
-			}
-		});
 	}
 	
 	private void initMainView() {
@@ -63,9 +53,46 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
+		mListRefreshView = (AbPullToRefreshView) view.findViewById(R.id.mPullRefreshView);
 		
 		adapter = new ClassityCommodiyAdp(getActivity(), R.layout.item_classitycommodity, null);
 		listView.setAdapter(adapter);
+		toLoad();
+		
+		mListRefreshView.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
+			@Override
+			public void onHeaderRefresh(AbPullToRefreshView v) {
+				toLoad();
+			}
+		});
+		mListRefreshView.setOnFooterLoadListener(new OnFooterLoadListener() {	
+			@Override
+			public void onFooterLoad(AbPullToRefreshView v) {
+				//loadMore();
+				toLoad();
+			}
+		});
 	}
 	
+	private void toLoad(){
+		new FollowServer().toFollowList(false, new OnFollowInfoListener (){
+			@Override
+			public void onFollowInfo(SearchProductInfo info) {
+				mListRefreshView.onHeaderRefreshFinish();
+				mListRefreshView.onFooterLoadFinish();
+				if (info != null && !info.isNull()) {
+					MyConcern_Commodity_Fragment.this.info = info;
+					if (adapter != null) {
+						adapter.upDateList(info.getData());
+					}
+				} else {
+					
+				}
+			}
+		});
+	}
+	
+	private void loadMore(){
+		
+	}
 }
