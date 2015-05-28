@@ -137,6 +137,7 @@ public class LocationActivity extends BaseActivity implements
 	private TextView tv_info;
 	private TextView tv_ok;
 	private String lng;
+	private MyLocationData locData;
 
 	private void initData() {
 		BDLocation bdl = app.getMLoc();
@@ -148,6 +149,10 @@ public class LocationActivity extends BaseActivity implements
 		}
 		
 		try {
+			locData = new MyLocationData.Builder().accuracy(100f)
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(ll.latitude).longitude(ll.longitude)
+					.build();
 			lng = ll.longitude + "," + ll.latitude;
 		} catch (Exception e) {
 			myToast("获取位置失败");
@@ -314,10 +319,6 @@ public class LocationActivity extends BaseActivity implements
 			mMap.setMyLocationEnabled(true);
 		}
 
-		MyLocationData locData = new MyLocationData.Builder().accuracy(100f)
-				// 此处设置开发者获取到的方向信息，顺时针0-360
-				.direction(100).latitude(ll.latitude).longitude(ll.longitude)
-				.build();
 		mMap.setMyLocationData(locData);
 
 		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())

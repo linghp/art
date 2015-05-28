@@ -128,7 +128,6 @@ public class NearlyActivity extends BaseActivity implements
 			ll = new LatLng(bdl.getLatitude(), bdl.getLongitude());
 		} else {
 			myToast("获取位置失败");
-			finish();
 		}
 		
 		try {

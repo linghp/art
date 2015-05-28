@@ -81,7 +81,7 @@ public class MyApplication extends Application {
 		option.setScanSpan(10000);
 
 		mLocationClient.setLocOption(option);
-		//mLocationClient.start();
+		mLocationClient.start();
 	}
 
 	/**
