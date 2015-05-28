@@ -20,6 +20,7 @@ import com.shangxian.art.R;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.utils.MyLogger;
 
 public class MyApplication extends Application {
 
@@ -39,6 +40,7 @@ public class MyApplication extends Application {
 		Global.mContext = this;
 		DataTools.newInstance().initApplication(mInstance);
 
+		MyLogger.i("densityDpi", this.getResources().getDisplayMetrics().densityDpi+"");
 		// ImageLoaderConfiguration config = new
 		// ImageLoaderConfiguration.Builder(
 		// getApplicationContext())

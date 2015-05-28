@@ -42,6 +42,9 @@
     <string name="title_activity_phonevalidate">设置新手机</string>
     <string name="title_activity_idcation">实名认证</string>
 
+    <!-- 爱农谷 -->
+    <string name="title_activity_iandedetails">收支明细</string>
+    <string name="title_activity_iandedetailscontent">详情</string>
     <!-- 评论 -->
     <string name="text_all_comment">全部(%d)</string>
     <string name="text_bad_comment">差评(%d)</string>

@@ -99,9 +99,9 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder = new ViewHolder();
-		MyLogger.i(position+"");
+		//MyLogger.i(position+"");
 		final CarItem item = (CarItem) getItem(position);
-		MyLogger.i(item+"");
+		//MyLogger.i(item+"");
 		if (item.type == CarItem.SECTION) {
 			convertView = inflater.inflate(R.layout.list_car_store_item, null);
 			LinearLayout ll_item= (LinearLayout) convertView.findViewById(R.id.ll_item);
@@ -201,7 +201,7 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 
 			holder.check_goods.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-					MyLogger.i("check_goods");
+					MyLogger.i(position+"");
 					if (checked) {
 						goodsCheced.put(item.listCarGoodsBean.getCartItemId(), true);
 					} else {

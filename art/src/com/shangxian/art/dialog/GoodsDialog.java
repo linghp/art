@@ -445,6 +445,13 @@ public class GoodsDialog extends Dialog implements
 							listCarGoodsBean.setQuantity(num);
 							listCarGoodsBean.setSelectedSpec(specSelectedStrs);
 							listCarGoodsBean.setProductId(commodityContentModel.getId());
+							listCarGoodsBean.setPromotionPrice(commodityContentModel.getPromotionPrice());
+							listCarGoodsBean.setOriginalPrice(commodityContentModel.getOriginalPrice());
+							listCarGoodsBean.setName(commodityContentModel.getName());
+							List<String> photos=commodityContentModel.getPhotos();
+							if(photos!=null&&photos.size()>0){
+							listCarGoodsBean.setPhoto(photos.get(0));
+							}
 							confirmNowBuyListener.goodsDialogConfirmNowBuy(listCarGoodsBean);
 						} else {
 							try {
