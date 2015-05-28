@@ -229,11 +229,9 @@ public class AccountSecurityActivity extends BaseActivity {
 				MyLogger.i(imagelocaldir);
 				Bitmap bitmap = BitmapFactory.decodeFile(imagelocaldir
 						+ imageName);
-				// iv_photo.setImageBitmap(bitmap);
+				iv_photo.setImageBitmap(bitmap);
 				updatePhotoInServer(imageName);
-
 				break;
-
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 
@@ -263,8 +261,6 @@ public class AccountSecurityActivity extends BaseActivity {
 	}
 
 	private void updatePhotoInServer(final String image) {
-		// LocalUserInfo.getInstance(this).setUserInfo(
-		// LocalUserInfo.USERPHOTO_FILENAME, image);
 		new FileServer().toFile(new File(imagelocaldir + imageName),
 				new RequestCallBack<String>() {
 					@Override

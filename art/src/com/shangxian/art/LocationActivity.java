@@ -136,6 +136,7 @@ public class LocationActivity extends BaseActivity implements
 	private LinearLayout ll_info;
 	private TextView tv_info;
 	private TextView tv_ok;
+	private String lng;
 
 	private void initData() {
 		BDLocation bdl = app.getMLoc();
@@ -145,6 +146,15 @@ public class LocationActivity extends BaseActivity implements
 			myToast("获取位置失败");
 			finish();
 		}
+		
+		try {
+			lng = ll.longitude + "," + ll.latitude;
+		} catch (Exception e) {
+			myToast("获取位置失败");
+			finish();
+			return;
+		}
+		
 		Intent intent = getIntent();
 		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
 				Integer.MIN_VALUE);
@@ -212,8 +222,7 @@ public class LocationActivity extends BaseActivity implements
 								}
 							}).show();
 		} else {
-			new NearlyServer().toNearlyShop(new LatLng(ll.latitude,
-					ll.longitude), 10000, 0, new OnNearlyShopListener() {
+			new NearlyServer().toNearlyShop(lng, 10000, 0, new OnNearlyShopListener() {
 				@Override
 				public void onNearly(NearlyShopStat stat) {
 					MyLogger.i(stat != null ? stat.toString() : "null");

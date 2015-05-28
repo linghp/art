@@ -13,10 +13,10 @@ import com.shangxian.art.bean.NearlyShopStat;
 import com.shangxian.art.utils.MyLogger;
 
 public class NearlyServer extends BaseServer {
-	public void toNearlyShop(LatLng lng, int r, int index, final OnNearlyShopListener l) {
+	public void toNearlyShop(String lng, int r, int index, final OnNearlyShopListener l) {
 		if (l == null) return; 
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("location", lng.longitude + "," + lng.latitude);
+		params.addBodyParameter("location", lng);
 		params.addBodyParameter("radius", r + "");
 		params.addBodyParameter("page_index", index + "");
 		if (!curUser.isNull())
