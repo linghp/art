@@ -150,7 +150,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 				}else {
 					//修改地址 
 					Bundle bundle = new Bundle();
-//					bundle.putBoolean("isRevise", true);
+					bundle.putBoolean("isRevise", true);
 //					bundle.putInt("id", list.get(position).getId());
 					bundle.putSerializable("DeliveryAddressModel", list.get(position));
 					CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
