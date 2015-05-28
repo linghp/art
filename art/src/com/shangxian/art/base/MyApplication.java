@@ -117,7 +117,7 @@ public class MyApplication extends Application {
 				sb.append("\noperationers : ");
 				sb.append(location.getOperators());
 			}
-			Log.i("BaiduLocationApiDem", sb.toString());
+			Log.v("BaiduLocationApiDem", sb.toString());
 		}
 
 	}

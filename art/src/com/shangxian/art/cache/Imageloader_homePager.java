@@ -53,8 +53,8 @@ public class Imageloader_homePager {
 				try {
 					HttpURLConnection connection = (HttpURLConnection) new URL(
 							url).openConnection();
-					connection.setConnectTimeout(10000);
-					connection.setReadTimeout(10000);
+					connection.setConnectTimeout(20000);
+					connection.setReadTimeout(20000);
 					InputStream is = connection.getInputStream();
 					// 获取创建Bitmap的选项对象
 					Options options = new Options();

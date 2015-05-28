@@ -206,7 +206,7 @@ public class ScrollViewContainer extends RelativeLayout {
 					else
 						state = AUTO_DOWN;
 				}
-				mTimer.schedule(2);
+				mTimer.schedule(1);
 				//vt.recycle();//java.lang.IllegalStateException: Already in the pool!
 				break;
 
