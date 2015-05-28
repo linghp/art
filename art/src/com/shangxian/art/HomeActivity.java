@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -204,6 +205,14 @@ public class HomeActivity extends BaseActivity implements
 										if (j == 0) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_01);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 41 / 100;
+											layoutParams.height = layoutParams.width*34/25;
+											iv.setLayoutParams(layoutParams);
+											
 											Imageloader_homePager
 													.displayImage(
 															Constant.BASEURL
@@ -217,6 +226,13 @@ public class HomeActivity extends BaseActivity implements
 										} else if (j == 1) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_02);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
+											layoutParams.height = layoutParams.width*38/80;
+											iv.setLayoutParams(layoutParams);
 											Imageloader_homePager
 													.displayImage(
 															Constant.BASEURL
@@ -230,6 +246,13 @@ public class HomeActivity extends BaseActivity implements
 										} else if (j == 2) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_03);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
+											layoutParams.height = layoutParams.width*9/20;
+											iv.setLayoutParams(layoutParams);
 											Imageloader_homePager
 													.displayImage(
 															Constant.BASEURL
@@ -397,6 +420,14 @@ public class HomeActivity extends BaseActivity implements
 							public View getView(ViewGroup container,
 									int position) {
 								ImageView iv = new ImageView(HomeActivity.this);
+								//设置图片的比例大小
+								iv.setScaleType(ImageView.ScaleType.FIT_XY);
+								LayoutParams layoutParams = iv.getLayoutParams();
+								layoutParams.width = CommonUtil
+										.getScreenWidth(HomeActivity.this);
+								layoutParams.height = layoutParams.width * 5 / 13;
+								iv.setLayoutParams(layoutParams);
+								
 								Imageloader_homePager.displayImage(
 										imgList.get(position), iv,
 										new Handler(), null);
@@ -452,6 +483,14 @@ public class HomeActivity extends BaseActivity implements
 							public View getView(ViewGroup container,
 									int position) {
 								ImageView iv = new ImageView(HomeActivity.this);
+								//设置轮播图片的比例大小1:3
+								iv.setScaleType(ImageView.ScaleType.FIT_XY);
+								LayoutParams layoutParams = viewPager
+										.getLayoutParams();
+								layoutParams.width = CommonUtil
+										.getScreenWidth(HomeActivity.this);
+								layoutParams.height = layoutParams.width * 1 / 3;
+								iv.setLayoutParams(layoutParams);
 								Imageloader_homePager.displayImage(
 										imgList.get(position), iv,
 										new Handler(), null);
@@ -523,7 +562,7 @@ public class HomeActivity extends BaseActivity implements
 				.getLayoutParams();
 		params.width = AbSharedUtil.getInt(HomeActivity.this,
 				Global.KEY_SCREEN_WIDTH);
-		params.height = (int) (params.width / 2.65);
+		params.height = (int) (params.width / 3);
 		viewPager.setLayoutParams(params);
 	}
 

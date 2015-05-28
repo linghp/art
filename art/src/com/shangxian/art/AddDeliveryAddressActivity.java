@@ -91,6 +91,7 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 		deliveryAddressModel = (DeliveryAddressModel) intent.getSerializableExtra("DeliveryAddressModel");
 		System.out.println(">>>>>>>>>>>deliveryAddressModel"+deliveryAddressModel);
 		if (deliveryAddressModel != null) {
+			topView.setTitle(getString(R.string.title_activity_changedeliveryaddress));
 			//修改地址
 			name.setText(deliveryAddressModel.getReceiverName()+"");
 			num.setText(deliveryAddressModel.getReceiverTel()+"");
@@ -146,7 +147,6 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 	}
 	//添加地址
 	private void refreshTask(String url) {
-		System.out.println(">>>>>>>>>>>>>添加地址");
 		Gson gson = new Gson();
 		String json = gson.toJson(model);
 		System.out.println("<<<<<<<<<<<<<<json"+json);
@@ -161,13 +161,13 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 					String result_code = jsonObject.getString("result_code");
 					if (result_code.equals("200")) {
 						//						JSONArray str=jsonObject.getJSONArray("result");
-						myToast("添加地址成功");
+						myToast("保存地址成功");
 						finish();
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-						myToast("添加地址失败");
+						myToast("保存地址失败");
 				} 
 			}
 		});
