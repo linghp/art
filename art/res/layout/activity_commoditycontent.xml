@@ -322,7 +322,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="图文详情"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/green"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -330,7 +330,7 @@
                     android:layout_height="20dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/blue"
+                    android:background="@color/green"
                     android:gravity="center" />
 
                 <TextView
@@ -357,7 +357,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
                     android:layout_weight="1"
-                    android:background="@color/blue"
+                    android:background="@color/green"
                     android:gravity="center_horizontal" />
 
                 <ImageView

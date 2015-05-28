@@ -43,7 +43,7 @@
                     android:layout_height="20dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/blue"
+                    android:background="@color/green"
                     android:gravity="center" />
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:layout_height="20dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/blue"
+                    android:background="@color/green"
                     android:gravity="center" />
 
                 <TextView
@@ -81,7 +81,7 @@
                     android:layout_height="20dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/blue"
+                    android:background="@color/green"
                     android:gravity="center" />
 
                 <TextView

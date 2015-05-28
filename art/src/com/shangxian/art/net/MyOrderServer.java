@@ -46,7 +46,7 @@ public class MyOrderServer extends BaseServer {
 		toPostJson(NET_ORDERS + status, "{}", new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				MyLogger.i(res);
+				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResult(null);
@@ -70,7 +70,7 @@ public class MyOrderServer extends BaseServer {
 		toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				MyLogger.i(res);
+				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultMore(null);
@@ -106,7 +106,7 @@ public class MyOrderServer extends BaseServer {
 		toGet(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				MyLogger.i(res);
+				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultOrderDetails(null);
@@ -141,7 +141,7 @@ public class MyOrderServer extends BaseServer {
 		toGet(NET_CANCELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				MyLogger.i(res);
+				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultCancelOrder(null);
@@ -164,7 +164,7 @@ public class MyOrderServer extends BaseServer {
 		toGet(NET_DELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				MyLogger.i(res);
+				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultDelOrder(null);

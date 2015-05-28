@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="登陆/注册"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/green"
                     android:textSize="@dimen/list_title_size" />
             </LinearLayout>
 

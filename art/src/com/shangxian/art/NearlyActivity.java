@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import cn.jpush.android.data.s;
 
 import com.ab.fragment.AbDialogFragment.AbDialogOnLoadListener;
@@ -31,6 +32,7 @@ import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.ab.view.titlebar.AbTitleBar;
+import com.baidu.location.BDLocation;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ImageListAdapter;
@@ -64,6 +66,12 @@ public class NearlyActivity extends BaseActivity implements
 
 	protected NearlyShopStat stat;
 
+	private String lng;
+
+	private LatLng ll;
+
+	private TextView tv_reload;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,7 +84,8 @@ public class NearlyActivity extends BaseActivity implements
 		// mAbTitleBar.setTitleBarBackground(R.drawable.top_bg);
 		// mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		// mAbTitleBar.setLogoLine(R.drawable.line);
-
+		initLoc();
+		
 		for (int i = 0; i < 23; i++) {
 			mPhotoList.add(Constant.BASEURL1
 					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
@@ -111,6 +120,22 @@ public class NearlyActivity extends BaseActivity implements
 		});
 
 		refreshTask();
+	}
+
+	private void initLoc() {
+		BDLocation bdl = app.getMLoc();
+		if (bdl != null) {
+			ll = new LatLng(bdl.getLatitude(), bdl.getLongitude());
+		} else {
+			myToast("获取位置失败");
+		}
+		
+		try {
+			lng = ll.longitude + "," + ll.latitude;
+		} catch (Exception e) {
+			lng = null;
+			myToast("获取位置失败");
+		}
 	}
 
 	private void initviews() {
@@ -279,13 +304,12 @@ public class NearlyActivity extends BaseActivity implements
 		// }
 		//
 		// });
-		if (!HttpUtils.checkNetWork(mAc)) {
+		if (!HttpUtils.checkNetWork(mAc) || TextUtils.isEmpty(lng)) {
 			mListView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
-		new NearlyServer().toNearlyShop(new LatLng(app.getMLoc().getLatitude(),
-				app.getInstance().getMLoc().getLongitude()), 10000, 0,
+		new NearlyServer().toNearlyShop(lng, 10000, 0,
 				new OnNearlyShopListener() {
 					@Override
 					public void onNearly(NearlyShopStat stat) {
@@ -358,13 +382,12 @@ public class NearlyActivity extends BaseActivity implements
 		// });
 		//
 		// mAbTask.execute(item);
-		if (!HttpUtils.checkNetWork(mAc)) {
+		if (!HttpUtils.checkNetWork(mAc) || TextUtils.isEmpty(lng)) {
 			mListView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
-		new NearlyServer().toNearlyShop(new LatLng(app.getMLoc().getLatitude(),
-				app.getInstance().getMLoc().getLongitude()), 10000, ++ curPage,
+		new NearlyServer().toNearlyShop(lng, 10000, ++ curPage,
 				new OnNearlyShopListener() {
 					@Override
 					public void onNearly(NearlyShopStat stat) {
@@ -388,11 +411,13 @@ public class NearlyActivity extends BaseActivity implements
 		topView = MainActivity.getTopView();
 		topView.setActivity(this);
 		topView.hideLeftBtn();
-		topView.hideRightBtn();
+		topView.showRightBtn();
 		topView.hideCenterSearch();
 		topView.setCenterListener(null);
 		topView.setTitle("附近");
 		topView.showTitle();
+		topView.setRightBtnDrawable(R.drawable.map);
+		topView.setCenterListener((MainActivity)getParent());
 	}
 
 	public void onPause() {
@@ -406,7 +431,7 @@ public class NearlyActivity extends BaseActivity implements
 			mListView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.GONE);
 			loading_big.setVisibility(View.VISIBLE);
-			refreshTask();
+			refreshTask(); 
 			break;
 		default:
 			break;

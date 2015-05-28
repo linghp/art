@@ -7,18 +7,18 @@
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:background="@color/grey200"
+        android:background="@color/main_col500"
         android:layout_height="48dp" >
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/search_bg_sel"
             android:paddingRight="4dp"
             android:scaleType="centerInside"
-            android:src="@drawable/back1" />
+            android:src="@drawable/back" />
 
         <LinearLayout
             android:id="@+id/ll_scan"
@@ -74,18 +74,18 @@
                 android:paddingRight="8dp"
                 android:singleLine="true"
                 android:textCursorDrawable="@drawable/cursor_bg1"
-                android:textColorHint="@color/red300" >
+                android:textColorHint="@color/main_col500_2" >
             </EditText>
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/search_bg_sel"
             android:scaleType="centerInside"
-            android:src="@drawable/search_button1" />
+            android:src="@drawable/search_button" />
     </RelativeLayout>
 
     <ListView

@@ -81,6 +81,12 @@ public class ClassifyCommodityActivity extends BaseActivity {
 		topView.setActivity(this);
 		topView.setRightBtnDrawable(R.drawable.shopcart);// 右侧按钮（购物车 白色）
 		topView.setBack(R.drawable.back);// 返回
+		topView.setCenterListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
+			}
+		});
 
 		list = (ListView) findViewById(R.id.classitycommodity);
 		// 底部选项

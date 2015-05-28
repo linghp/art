@@ -20,6 +20,7 @@ import com.shangxian.art.R;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.utils.MyLogger;
 
 public class MyApplication extends Application {
 
@@ -39,6 +40,7 @@ public class MyApplication extends Application {
 		Global.mContext = this;
 		DataTools.newInstance().initApplication(mInstance);
 
+		MyLogger.i("densityDpi", this.getResources().getDisplayMetrics().densityDpi+"");
 		// ImageLoaderConfiguration config = new
 		// ImageLoaderConfiguration.Builder(
 		// getApplicationContext())
@@ -53,7 +55,7 @@ public class MyApplication extends Application {
 		BaseServer.toRegistContext(mInstance);
 		AliPayBase.initContext(mInstance);
 		SDKInitializer.initialize(getApplicationContext());
-		
+
 		initBdLoc();
 		initImageLoader();
 
@@ -69,19 +71,19 @@ public class MyApplication extends Application {
 	private void initBdLoc() {
 		mLocationClient = new LocationClient(this.getApplicationContext());
 		mGeofenceClient = new GeofenceClient(getApplicationContext());
-		
+
 		mMyLocationListener = new MyLocationListener();
 		mLocationClient.registerLocationListener(mMyLocationListener);
-		
+
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(2000);
-		
+		option.setScanSpan(10000);
+
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
 	}
-	
+
 	/**
 	 * 实时监听
 	 */
@@ -115,7 +117,7 @@ public class MyApplication extends Application {
 				sb.append("\noperationers : ");
 				sb.append(location.getOperators());
 			}
-			Log.i("BaiduLocationApiDem", sb.toString());
+			Log.v("BaiduLocationApiDem", sb.toString());
 		}
 
 	}
@@ -156,8 +158,6 @@ public class MyApplication extends Application {
 	public BDLocation getMLoc() {
 		return mloc;
 	}
-
-	
 
 	public static MyApplication getInstance() {
 		return mInstance;

@@ -50,7 +50,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 
 	private boolean isScrollListViewFresh;//旋转进度条显示与否
 	private int skip = 0; //从第skip+1条开始查询
-	private int pageSize = 10;
+	private final int pageSize = 10;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -169,12 +169,12 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		progressBar.setVisibility(View.GONE);
 		mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (myOrderItemAll != null) {
-			MyLogger.i(myOrderItemAll.toString());
+			//MyLogger.i(myOrderItemAll.toString());
 			skip = 0;
 			mOrderItems.clear();
 			if (myOrderItemAll.getData() != null) {
 			mOrderItems.addAll(myOrderItemAll.getData());
-			MyLogger.i(myOrderItemAll.getData().toString());
+			//MyLogger.i(myOrderItemAll.getData().toString());
 			myOrderListAdapter.notifyDataSetChanged();
 			}else{
 				
@@ -213,7 +213,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	}
 
 	private void loadMore() {
-		skip=+pageSize;
+		skip+=pageSize;
 		String json = "{\"skip\":" + skip + ",\"pageSize\":" + pageSize
 				+ "}";
 		MyOrderServer.toGetOrderMore(status, json, this);

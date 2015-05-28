@@ -10,8 +10,10 @@ public class Constant {
 	public static final String CATEGORYS = "/categorys";//分类
 	public static final String CART = "/cart";//购物车
 	public static final String ORDER = "/order/from/cart";//下订单
+	public static final String NOWBUYORDER = "/order";//立即购买下订单
 	public static final String ORDERS = "/orders";//我的订单
 	public static final String DELCART = "/del/cart";//删除购物车
+	public static final String PRODUCT = "/product";//商品信息
 	public static String GOODSDETAIL = "/product/%s/details";//商品详情
 //	public static final String SHOPSLIST = "/1/shops";
 	

@@ -20,7 +20,11 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +57,10 @@ public class AccountSecurityActivity extends BaseActivity {
 
 	private String imagelocaldir;// 图片存储根路径
 	private String imageName;// 头像存储文件名
+
+	private ImageView iv_loading;
+
+	private Animation anim_;
 	private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
 	private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
 	private static final int PHOTO_REQUEST_CUT = 3;// 结果
@@ -76,6 +84,17 @@ public class AccountSecurityActivity extends BaseActivity {
 
 	private void initviews() {
 		iv_photo = (CircleImageView1) findViewById(R.id.iv_photo);
+		iv_loading = (ImageView) findViewById(R.id.iv_loading);
+		anim_ = AnimationUtils.loadAnimation(this, R.anim.rotate);
+		anim_.setInterpolator(new LinearInterpolator());
+		iv_loading.startAnimation(anim_);
+		iv_loading.setVisibility(View.GONE);
+		iv_loading.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				myToast("正在上传图片...");
+			}
+		});
 		// 改变topbar
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
@@ -229,11 +248,9 @@ public class AccountSecurityActivity extends BaseActivity {
 				MyLogger.i(imagelocaldir);
 				Bitmap bitmap = BitmapFactory.decodeFile(imagelocaldir
 						+ imageName);
-				// iv_photo.setImageBitmap(bitmap);
+				iv_photo.setImageBitmap(bitmap);
 				updatePhotoInServer(imageName);
-
 				break;
-
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 
@@ -263,12 +280,12 @@ public class AccountSecurityActivity extends BaseActivity {
 	}
 
 	private void updatePhotoInServer(final String image) {
-		// LocalUserInfo.getInstance(this).setUserInfo(
-		// LocalUserInfo.USERPHOTO_FILENAME, image);
+		// iv_loading.setVisibility(View.VISIBLE);
 		new FileServer().toFile(new File(imagelocaldir + imageName),
 				new RequestCallBack<String>() {
 					@Override
 					public void onSuccess(ResponseInfo<String> info) {
+						iv_loading.setVisibility(View.GONE);
 						String res = info.result;
 						MyLogger.i(res);
 						//myToast("res==" + res);
@@ -301,12 +318,12 @@ public class AccountSecurityActivity extends BaseActivity {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
 						myToast("上传失败");
+						iv_loading.setVisibility(View.GONE);
 					}
 
 					@Override
 					public void onLoading(long total, long current,
 							boolean isUploading) {
-
 					}
 				});
 		// Map<String, String> map = new HashMap<String, String>();

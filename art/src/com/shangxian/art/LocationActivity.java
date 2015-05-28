@@ -136,6 +136,8 @@ public class LocationActivity extends BaseActivity implements
 	private LinearLayout ll_info;
 	private TextView tv_info;
 	private TextView tv_ok;
+	private String lng;
+	private MyLocationData locData;
 
 	private void initData() {
 		BDLocation bdl = app.getMLoc();
@@ -145,6 +147,19 @@ public class LocationActivity extends BaseActivity implements
 			myToast("获取位置失败");
 			finish();
 		}
+		
+		try {
+			locData = new MyLocationData.Builder().accuracy(100f)
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(ll.latitude).longitude(ll.longitude)
+					.build();
+			lng = ll.longitude + "," + ll.latitude;
+		} catch (Exception e) {
+			myToast("获取位置失败");
+			finish();
+			return;
+		}
+		
 		Intent intent = getIntent();
 		int type = intent.getIntExtra(Constant.INT_LOC_TOTYPE,
 				Integer.MIN_VALUE);
@@ -212,8 +227,7 @@ public class LocationActivity extends BaseActivity implements
 								}
 							}).show();
 		} else {
-			new NearlyServer().toNearlyShop(new LatLng(ll.latitude,
-					ll.longitude), 10000, 0, new OnNearlyShopListener() {
+			new NearlyServer().toNearlyShop(lng, 10000, 0, new OnNearlyShopListener() {
 				@Override
 				public void onNearly(NearlyShopStat stat) {
 					MyLogger.i(stat != null ? stat.toString() : "null");
@@ -305,10 +319,6 @@ public class LocationActivity extends BaseActivity implements
 			mMap.setMyLocationEnabled(true);
 		}
 
-		MyLocationData locData = new MyLocationData.Builder().accuracy(100f)
-				// 此处设置开发者获取到的方向信息，顺时针0-360
-				.direction(100).latitude(ll.latitude).longitude(ll.longitude)
-				.build();
 		mMap.setMyLocationData(locData);
 
 		MapStatus u = new MapStatus.Builder(mMap.getMapStatus())

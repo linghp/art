@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -152,7 +153,6 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		MyLogger.i("onStop");
 	}
@@ -211,8 +211,10 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item7:
 			// 账户与安全
-			startActivityForResult((new Intent(this,
-					AccountSecurityActivity.class)), 2);
+			if (isLoginAndToLogin()) {
+				startActivityForResult((new Intent(this,
+						AccountSecurityActivity.class)), 2);
+			}
 			break;
 		case R.id.ll_my_item8:
 			// 退货/售后

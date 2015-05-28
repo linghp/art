@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
@@ -38,6 +39,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.dialog.GoodsDialog;
@@ -61,24 +63,21 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener,
-		GoodsDialogConfirmNowBuyListener {
+		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConfirmNowBuyListener{
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
 
 	private ImageView call, next, shopsimg;
 	private ImageView commoditycontent_shoucang;
-	private TextView commoditycontent_jieshao, commoditycontent_jiage, address,
-			guige, dianpu;
+	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu;
 	private View rl_footer;
-	// private TextView tv_first, tv_second;
-	// private ImageView img_first, img_second;
+//	private TextView tv_first, tv_second;
+//	private ImageView img_first, img_second;
 	private LinearLayout dingwei, shangpu;
 	private WebView webView;
-
 	// 判断是否收藏
-	// boolean iscollection = false;
+	//boolean iscollection = false;
 
 	private AbHttpUtil httpUtil = null;
 	private CommodityContentModel model;
@@ -113,8 +112,8 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void listener() {
-		// tv_first.setOnClickListener(this);
-		// tv_second.setOnClickListener(this);
+//		tv_first.setOnClickListener(this);
+//		tv_second.setOnClickListener(this);
 		next.setOnClickListener(new OnClickListener() {
 			// 跳转到商铺
 			@Override
@@ -139,9 +138,19 @@ public class CommodityContentActivity extends BaseActivity implements
 			// 跳转到定位
 			@Override
 			public void onClick(View v) {
+				if (/*model == null*/true) {
+					return;
+				}
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+				ShopLocInfo info = new ShopLocInfo();
+				info.setId(model.getShopId());
+				info.setTitle(model.getShopName());
+				info.setPhoto(model.getShopLogo());
+				info.setAddress(model.getShopAddress());
+				//info.setLng(model.get);
+				bundle.putSerializable(Constant.INT_LOC_NEARLY_SHOPINFO, info);
 				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
 						LocationActivity.class, bundle, false);
 
@@ -234,7 +243,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		// }
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/product" + "/" + id;
+			url = Constant.BASEURL + Constant.CONTENT + Constant.PRODUCT + "/" + id;
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
@@ -251,44 +260,45 @@ public class CommodityContentActivity extends BaseActivity implements
 		});
 	}
 
-	// private void refreshTask_detail(String url) {
-	// // AbRequestParams params = new AbRequestParams();
-	// // params.put("shopid", "1019");
-	// // params.put("code", "88881110344801123456");
-	// // params.put("phone", "15889936624");
-	// httpUtil.get(url, new AbStringHttpResponseListener() {
-	//
-	// @Override
-	// public void onStart() {
-	// MyLogger.i("");
-	// }
-	//
-	// @Override
-	// public void onFinish() {
-	// MyLogger.i("");
-	// // AbDialogUtil.removeDialog(HomeActivity.this);
-	// // mAbPullToRefreshView.onHeaderRefreshFinish();
-	// }
-	//
-	// @Override
-	// public void onFailure(int statusCode, String content,
-	// Throwable error) {
-	// MyLogger.i(content);
-	// }
-	//
-	// @Override
-	// public void onSuccess(int statusCode, String content) {
-	// // AbToastUtil.showToast(HomeActivity.this, content);
-	// // imgList.clear();
-	// MyLogger.i(content);
-	// if (!TextUtils.isEmpty(content)) {
-	// webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
-	// }
-	//
-	// }
-	// });
-	// }
-
+//	private void refreshTask_detail(String url) {
+//		// AbRequestParams params = new AbRequestParams();
+//		// params.put("shopid", "1019");
+//		// params.put("code", "88881110344801123456");
+//		// params.put("phone", "15889936624");
+//		httpUtil.get(url, new AbStringHttpResponseListener() {
+//
+//			@Override
+//			public void onStart() {
+//				MyLogger.i("");
+//			}
+//
+//			@Override
+//			public void onFinish() {
+//				MyLogger.i("");
+//				// AbDialogUtil.removeDialog(HomeActivity.this);
+//				// mAbPullToRefreshView.onHeaderRefreshFinish();
+//			}
+//
+//			@Override
+//			public void onFailure(int statusCode, String content,
+//					Throwable error) {
+//				MyLogger.i(content);
+//			}
+//
+//			@Override
+//			public void onSuccess(int statusCode, String content) {
+//				// AbToastUtil.showToast(HomeActivity.this, content);
+//				// imgList.clear();
+//				MyLogger.i(content);
+//				if (!TextUtils.isEmpty(content)) {
+//					webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
+//				}
+//
+//			}
+//		});
+//	}
+	
+	
 	private void refreshTask(String url) {
 		// AbRequestParams params = new AbRequestParams();
 		// params.put("shopid", "1019");
@@ -462,10 +472,10 @@ public class CommodityContentActivity extends BaseActivity implements
 		address = (TextView) findViewById(R.id.commoditycontent_address);
 		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
 		webView = (WebView) findViewById(R.id.webView);
-		// tv_first = (TextView) findViewById(R.id.text_one);
-		// tv_second = (TextView) findViewById(R.id.text_two);
-		// img_first = (ImageView) findViewById(R.id.image_one);
-		// img_second = (ImageView) findViewById(R.id.image_two);
+//		tv_first = (TextView) findViewById(R.id.text_one);
+//		tv_second = (TextView) findViewById(R.id.text_two);
+//		img_first = (ImageView) findViewById(R.id.image_one);
+//		img_second = (ImageView) findViewById(R.id.image_two);
 
 		webView.getSettings().setJavaScriptEnabled(true);
 
@@ -506,12 +516,12 @@ public class CommodityContentActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.commoditycontent_jiarugouwuche:// 加入购物车
+		case R.id.commoditycontent_jiarugouwuche://加入购物车
 			if (isLoginAndToLogin()) {
 				dotask_addcart();
 			}
 			break;
-		case R.id.tv_nowbuy:// 加入购物车
+		case R.id.tv_nowbuy://加入购物车
 			if (isLoginAndToLogin()) {
 				doNowBuy();
 			}
@@ -523,37 +533,37 @@ public class CommodityContentActivity extends BaseActivity implements
 		case R.id.ll_comment:
 			CommentActivity.startThisActivity("", this);
 			break;
-		// case R.id.text_one:
-		// setBackground_slide(0);
-		// break;
-		// case R.id.text_two:
-		// setBackground_slide(1);
-		// break;
+//		case R.id.text_one:
+//			setBackground_slide(0);
+//			break;
+//		case R.id.text_two:
+//			setBackground_slide(1);
+//			break;
 		default:
 			break;
 		}
 	}
 
-	// private void setBackground_slide(int position) {
-	// img_first.setBackgroundResource(R.color.transparent);
-	// img_second.setBackgroundResource(R.color.transparent);
-	//
-	// tv_first.setTextColor(Color.parseColor("#333333"));
-	// tv_second.setTextColor(Color.parseColor("#333333"));
-	//
-	// switch (position) {
-	// case 0:
-	// img_first.setBackgroundResource(R.color.blue);
-	// tv_first.setTextColor(getResources().getColor(R.color.blue));
-	// webView.loadUrl("http://baidu.com");
-	// break;
-	// case 1:
-	// img_second.setBackgroundResource(R.color.blue);
-	// tv_second.setTextColor(getResources().getColor(R.color.blue));
-	// webView.loadUrl("http://www.taobao.com/");
-	// break;
-	// }
-	// }
+//	private void setBackground_slide(int position) {
+//		img_first.setBackgroundResource(R.color.transparent);
+//		img_second.setBackgroundResource(R.color.transparent);
+//
+//		tv_first.setTextColor(Color.parseColor("#333333"));
+//		tv_second.setTextColor(Color.parseColor("#333333"));
+//
+//		switch (position) {
+//		case 0:
+//			img_first.setBackgroundResource(R.color.blue);
+//			tv_first.setTextColor(getResources().getColor(R.color.blue));
+//			webView.loadUrl("http://baidu.com");
+//			break;
+//		case 1:
+//			img_second.setBackgroundResource(R.color.blue);
+//			tv_second.setTextColor(getResources().getColor(R.color.blue));
+//			webView.loadUrl("http://www.taobao.com/");
+//			break;
+//		}
+//	}
 
 	/**
 	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。 本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
@@ -578,7 +588,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void doNowBuy() {
-		GoodsDialog dialog = new GoodsDialog(this, this, true);
+		GoodsDialog dialog = new GoodsDialog(this, this,true);
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}
@@ -592,14 +602,14 @@ public class CommodityContentActivity extends BaseActivity implements
 				String result_code = jsonObject.getString("result_code");
 				if (result_code.equals("200")) {
 					myToast(jsonObject.getString("result"));
-				} else {
+				}else{
 					myToast("加入购物车失败");
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
+		}else{
 			myToast("加入购物车失败");
 		}
 
@@ -613,19 +623,16 @@ public class CommodityContentActivity extends BaseActivity implements
 
 	@Override
 	public void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean) {
-		List<ListCarStoreBean> listCarGoodsBeans = new ArrayList<ListCarStoreBean>();
-		ListCarStoreBean listCarStoreBean = new ListCarStoreBean();
+		List<ListCarStoreBean> listCarStoreBeans = new ArrayList<ListCarStoreBean>();
+		ListCarStoreBean listCarStoreBean=new ListCarStoreBean();
 		listCarStoreBean.setLogo(model.getShopLogo());
 		listCarStoreBean.setShopId(model.getShopId());
 		listCarStoreBean.setShopName(model.getShopName());
-		// listCarStoreBean.setItemDtos(listCarGoodsBeans);
-		listCarGoodsBeans.add(listCarStoreBean);
-		Intent intent = new Intent(this, ConfirmOrderActivity.class);
-		// intent.putExtra("totalprice", CommonUtil.priceConversion(price));
-		// intent.putExtra("mapCarItem_goods",
-		// (Serializable) hashmapGoodsBeans);
-		// intent.putExtra("listCarItem_stores",
-		// (Serializable) listStoreBean);
-		startActivityForResult(intent, 1);
+		List<ListCarGoodsBean> listCarGoodsBeans=new ArrayList<ListCarGoodsBean>();
+		listCarGoodsBeans.add(listCarGoodsBean);
+		listCarStoreBean.setItemDtos(listCarGoodsBeans);
+		listCarStoreBeans.add(listCarStoreBean);
+		
+		ConfirmOrderActivity.startThisActivity(this, listCarStoreBeans, listCarGoodsBean.getPromotionPrice(), true);
 	}
 }
