@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
+        android:weightSum="2"
         android:orientation="horizontal"
         android:padding="10dp" >
 
