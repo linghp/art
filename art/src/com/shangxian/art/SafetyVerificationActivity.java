@@ -2,6 +2,7 @@ package com.shangxian.art;
 
 import java.util.Currency;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +16,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.BaseBean;
+import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.PasswordServer;
 import com.shangxian.art.net.PasswordServer.OnNewSafeCodeListener;
 import com.shangxian.art.net.PasswordServer.OnSendCodeListener;
+import com.shangxian.art.net.call.BaseCallBack;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
@@ -52,6 +59,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 	public static final int PAY_PASS_UP = 0x00001012;
 	public static final int USER_PASS_NEW = 0x00001013;
 	public static final int USER_PASS_UP = 0x00001014;
+	public static final int USER_PASS_FINDWORD = 0x00001015;
 
 	private boolean isCodeing = false;
 	private int codeMin = 120;
@@ -69,8 +77,15 @@ public class SafetyVerificationActivity extends BaseActivity {
 		};
 	};
 
+	public static void toThis(int type, Activity mac) {
+		Bundle bundle = new Bundle();
+		bundle.putInt(Constant.INT_SAFE_PAY_NEW, type);
+		CommonUtil.gotoActivityWithData(mac, SafetyVerificationActivity.class,
+				bundle, false);
+	}
+
 	private enum UiModel {
-		codeing, toCode, isNew, isUp
+		codeing, toCode, isNew, isUp, findPassword
 	}
 
 	private void changeUi(UiModel m) {
@@ -97,6 +112,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 			ll_code.setVisibility(View.GONE);
 			tv_hint.setVisibility(View.GONE);
 			et_old.setVisibility(View.VISIBLE);
+			break;
+		case findPassword:
+			tv_hint.setVisibility(View.GONE);
+			et_phone.setVisibility(View.VISIBLE);
+			et_old.setVisibility(View.GONE);
+			ll_code.setVisibility(View.VISIBLE);
 			break;
 		}
 	}
@@ -133,6 +154,8 @@ public class SafetyVerificationActivity extends BaseActivity {
 	private LinearLayout ll_code;
 	private TextView tv_passTitle;
 	private TextView tv_enum;
+	private EditText et_phone;
+	private String phonehtml;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,14 +168,16 @@ public class SafetyVerificationActivity extends BaseActivity {
 	}
 
 	private void initData() {
-		phone = curUserInfo.getPhoneNumber();
-		phone = "<font color='#212121'>点击获取短信验证码，验证码将发送到手机号为</font>"
-				+ "<font color='#259b24'>" + getPhone(phone) + "</font>"
-				+ "<font color='#212121'>的手机上</font>";
 		curToPass = getIntent().getIntExtra(Constant.INT_SAFE_PAY_NEW,
 				Integer.MIN_VALUE);
 		if (curToPass == Integer.MIN_VALUE) {
 			throw new NullPointerException("请传入标示码！用于密码类型...");
+		}
+		if (!matchCurrent(USER_PASS_FINDWORD)) {
+			phone = curUserInfo.getPhoneNumber();
+			phonehtml = "<font color='#212121'>点击获取短信验证码，验证码将发送到手机号为</font>"
+					+ "<font color='#259b24'>" + getPhone(phone) + "</font>"
+					+ "<font color='#212121'>的手机上</font>";
 		}
 	}
 
@@ -176,7 +201,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 		topView.setTitle(curToPass == PAY_PASS_NEW ? "设置支付密码"
 				: curToPass == PAY_PASS_UP ? "修改支付密码"
 						: curToPass == USER_PASS_NEW ? "找回登录密码"
-								: curToPass == USER_PASS_UP ? "修改登录密码" : "");
+								: curToPass == USER_PASS_UP ? "修改登录密码" : "找回密码");
 
 		tv_code = (TextView) findViewById(R.id.saft_tv_code);
 		tv_hint = (TextView) findViewById(R.id.saft_tv_hint);
@@ -189,12 +214,15 @@ public class SafetyVerificationActivity extends BaseActivity {
 		et_old = (EditText) findViewById(R.id.safe_et_old);
 		et_new = (EditText) findViewById(R.id.safe_et_new);
 		et_reNew = (EditText) findViewById(R.id.safe_et_renew);
+		et_phone = (EditText) findViewById(R.id.safe_et_phone);
 
 		upDataView();
 
 		ll_code = (LinearLayout) findViewById(R.id.safl_ll_code);
 		if (curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW) {
 			changeUi(UiModel.isNew);
+		} else if (matchCurrent(USER_PASS_FINDWORD)) {
+			changeUi(UiModel.findPassword);
 		} else {
 			changeUi(UiModel.isUp);
 		}
@@ -206,7 +234,8 @@ public class SafetyVerificationActivity extends BaseActivity {
 				: "请输入新的登录密码");
 		et_reNew.setHint((curToPass == PAY_PASS_NEW || curToPass == PAY_PASS_UP) ? "确认支付密码"
 				: "确认登录密码");
-		tv_hint.setText(Html.fromHtml(phone));
+		if (!matchCurrent(USER_PASS_FINDWORD))
+			tv_hint.setText(Html.fromHtml(phonehtml));
 		tv_passTitle.setText(curToPass == PAY_PASS_NEW ? "请输入您的支付密码"
 				: curToPass == PAY_PASS_UP ? "请输入支付密码"
 						: curToPass == USER_PASS_NEW ? "请输入新的登录密码" : "请输入登录密码");
@@ -219,21 +248,51 @@ public class SafetyVerificationActivity extends BaseActivity {
 	}
 
 	private void listener() {
-		
 		tv_code.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handler.sendEmptyMessage(codeing);
-				PasswordServer.toSendCode(curToPass == USER_PASS_NEW,
-						new OnSendCodeListener() {
-							@Override
-							public void onSendCode(boolean isSend) {
-								if (!isSend) {
-									myToast("验证码获取失败");
+				if (matchCurrent(USER_PASS_FINDWORD)) {
+					phone = et_phone.getText().toString();
+					if (TextUtils.isEmpty(phone)) {
+						myToast("请输入手机号");
+						return;
+					}
+					handler.sendEmptyMessage(codeing);
+					RequestParams params = new RequestParams();
+					params.addBodyParameter("phoneNumber", phone);
+					new HttpUtils().send(HttpMethod.GET,
+							Constant.NET_FINDWORD_CODE + phone, null,
+							new BaseCallBack<String>() {
+
+								@Override
+								public void onSimpleSuccess(
+										BaseBean<String> bean) {
+									if (bean != null && bean.isSuccess()) {
+										myToast("发送成功");
+									} else {
+										myToast("发送失败");
+										handler.sendEmptyMessage(tocode);
+									}
+								}
+
+								@Override
+								public void onSimpleFailure(int code, String res) {
+									myToast("发送失败");
 									handler.sendEmptyMessage(tocode);
 								}
-							}
-						});
+							});
+				} else {
+					handler.sendEmptyMessage(codeing);
+					PasswordServer.toSendCode(curToPass == USER_PASS_NEW,
+							new OnSendCodeListener() {
+								@Override
+								public void onSendCode(boolean isSend) {
+									if (!isSend) {
+										myToast("验证码获取失败");
+									}
+								}
+							});
+				}
 			}
 		});
 
@@ -243,11 +302,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 				if (match()) {
 					final ProgressDialog dialog = new ProgressDialog(mAc);
 					dialog.setCanceledOnTouchOutside(false);
-					if (curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW) {
+					if (matchCurrent(PAY_PASS_NEW)
+							|| matchCurrent(USER_PASS_NEW)) {
 						dialog.setMessage("正在保存密码...");
 						dialog.show();
 						PasswordServer.toNewPassword(code, pass, rePass,
-								curToPass == USER_PASS_NEW,
+								matchCurrent(USER_PASS_NEW),
 								new OnNewSafeCodeListener() {
 									@Override
 									public void onNewSafeCode(boolean isNew) {
@@ -273,11 +333,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 										}
 									}
 								});
-					} else {
+					} else if (matchCurrent(USER_PASS_UP)
+							|| matchCurrent(PAY_PASS_UP)) {
 						dialog.setMessage("正在修改密码...");
 						dialog.show();
 						PasswordServer.toUpPassword(oldPass, pass, rePass,
-								curToPass == USER_PASS_UP,
+								matchCurrent(USER_PASS_UP),
 								new OnNewSafeCodeListener() {
 									@Override
 									public void onNewSafeCode(boolean isNew) {
@@ -301,6 +362,31 @@ public class SafetyVerificationActivity extends BaseActivity {
 										}
 									}
 								});
+					} else {
+						dialog.setMessage("正在修改...");
+						dialog.show();
+						RequestParams params = new RequestParams();
+						params.addBodyParameter("phoneNumber", phone);
+						params.addBodyParameter("captcha", code);
+						params.addBodyParameter("newPassword", pass);
+						params.addBodyParameter("reNewPassword", rePass);
+						new HttpUtils().send(HttpMethod.POST,
+								Constant.NET_FINDWORD, params,
+								new BaseCallBack<UserInfo>() {
+									@Override
+									public void onSimpleSuccess(
+											BaseBean<UserInfo> bean) {
+										dialog.dismiss();
+										myToast("修改成功");
+									}
+
+									@Override
+									public void onSimpleFailure(int code,
+											String res) {
+										myToast("修改失败");
+										dialog.dismiss();
+									}
+								});
 					}
 				}
 			}
@@ -317,7 +403,12 @@ public class SafetyVerificationActivity extends BaseActivity {
 		pass = et_new.getText().toString();
 		rePass = et_reNew.getText().toString();
 		oldPass = et_old.getText().toString();
-		if ((curToPass == PAY_PASS_NEW || curToPass == USER_PASS_NEW)
+		phone = et_phone.getText().toString();
+		if (matchCurrent(USER_PASS_FINDWORD) && TextUtils.isEmpty(phone)) {
+			myToast("请输入账号绑定的手机号");
+			return false;
+		}
+		if ((matchCurrent(PAY_PASS_NEW) || matchCurrent(USER_PASS_NEW))
 				&& TextUtils.isEmpty(code)) {
 			if (isCodeing)
 				myToast("请输入短信验证码");
@@ -343,5 +434,9 @@ public class SafetyVerificationActivity extends BaseActivity {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean matchCurrent(int type) {
+		return curToPass == type;
 	}
 }

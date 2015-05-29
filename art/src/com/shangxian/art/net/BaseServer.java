@@ -489,11 +489,6 @@ public class BaseServer {
 		return res;
 	}
 
-	// protected void toXUtils(HttpMethod method, String url, RequestParams
-	// params, final XUtilsCallback<String> call){
-	// new HttpUtils().send(method, url, params, call);
-	// }
-
 	protected HttpUtils getHttpUtils() {
 		return new HttpUtils();
 	}

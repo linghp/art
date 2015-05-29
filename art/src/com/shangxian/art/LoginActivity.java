@@ -226,7 +226,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			});
 		} else if (v == tv_find) {
 			//Toast.makeText(this, "忘记密码", Toast.LENGTH_SHORT).show();
-			LocationActivity.startTihsActivity(Constant.MAP_REGIST_LOC, mAc);
+			SafetyVerificationActivity.toThis(SafetyVerificationActivity.USER_PASS_FINDWORD, mAc);
 		} else if (v == tv_regist) {
 			Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
 			startActivity(intent);
