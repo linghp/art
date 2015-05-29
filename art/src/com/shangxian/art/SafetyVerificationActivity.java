@@ -378,6 +378,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 											BaseBean<UserInfo> bean) {
 										dialog.dismiss();
 										myToast("修改成功");
+										finish();
 									}
 
 									@Override
