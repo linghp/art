@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="3dp" android:visibility="gone">
+        android:padding="3dp"
+        android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -103,7 +104,8 @@
         android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="3dp" android:visibility="gone">
+        android:padding="3dp"
+        android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -190,8 +192,8 @@
         android:id="@+id/ll_mainhomehead_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/home_itemmargin"
-        android:layout_marginRight="@dimen/home_itemmargin"
+        android:layout_marginLeft="@dimen/home_itemmargin1"
+        android:layout_marginRight="@dimen/home_itemmargin1"
         android:layout_marginTop="@dimen/home_itemmargin"
         android:orientation="vertical" >
     </LinearLayout>
@@ -200,7 +202,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" android:visibility="gone">
+        android:layout_marginRight="8dp"
+        android:visibility="gone" >
 
         <View
             android:layout_width="fill_parent"

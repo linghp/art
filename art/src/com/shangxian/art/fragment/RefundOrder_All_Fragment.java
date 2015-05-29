@@ -17,9 +17,9 @@ import android.widget.TextView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
-import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.RefundOrderActivity;
 import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
@@ -35,7 +35,7 @@ import com.shangxian.art.utils.MyLogger;
  * @author ling
  *
  */
-public class MyOrder_All_Fragment extends BaseFragment implements
+public class RefundOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
 		OnHeaderRefreshListener, OnFooterLoadListener, OnItemClickListener {
 	private View view;
@@ -59,7 +59,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		super.onCreate(savedInstanceState);
 	}
 
-	public MyOrder_All_Fragment(String status) {
+	public RefundOrder_All_Fragment(String status) {
 		super();
 		this.status = status;
 	}
@@ -99,7 +99,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		if (status.equals("")) {
-			((MyOrderActivity) getActivity()).initDateFirstFragment();
+			((RefundOrderActivity) getActivity()).initDateFirstFragment();
 
 		}
 	}

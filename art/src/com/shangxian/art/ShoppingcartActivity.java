@@ -1,8 +1,6 @@
 package com.shangxian.art;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -539,7 +537,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
+		MyLogger.i("onActivityResult---resultCode:"+resultCode);
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
 			if (resultCode != RESULT_OK) {

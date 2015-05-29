@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.shangxian.art.alipays.AliPayServer;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.dialog.PayPasswordDialog;
 import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
@@ -299,6 +301,13 @@ public class PayActivity extends BaseActivity {
 		intent.putExtra("totalprice", totalprice);
 		mAc.startActivityForResult(intent, 1000);
 	}
+	public static void startThisActivity_Fragment(List<String> orderids,
+			float totalprice, Activity mAc,Fragment fragment) {
+		Intent intent = new Intent(mAc, PayActivity.class);
+		intent.putExtra("orderids", (Serializable) orderids);
+		intent.putExtra("totalprice", totalprice);
+		fragment.startActivityForResult(intent, 111);
+	}
 
 	public void doClick(View view) {
 		switch (view.getId()) {
@@ -356,12 +365,16 @@ public class PayActivity extends BaseActivity {
 								if (res) {
 									myToast("支付成功");
 									Intent data = new Intent();
+									MyOrderItem myOrderItem=new MyOrderItem();
+									myOrderItem.setStatus(MyOrderActivity.orderState[2]);
+									MyLogger.i(myOrderItem.toString());
 									data.putExtra("pay_order_res", true);
-									setResult(RESULT_OK, data);
-									finish();
+									data.putExtra("MyOrderItem", myOrderItem);
 									if(orderids.size()==1){
 									MyOrderDetailsActivity.startThisActivity(orderids.get(0), PayActivity.this);
 									}
+									setResult(RESULT_OK, data);
+									finish();
 								} else {
 									myToast("支付失败");
 								}

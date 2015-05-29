@@ -218,6 +218,9 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item8:
 			// 退货/售后
+			if (HttpUtils.checkNetWork(this) && isLoginAndToLogin()) {
+				startActivity(new Intent(this, RefundOrderActivity.class));
+			}
 			break;
 		case R.id.ll_my_item9:
 			// 意见反馈

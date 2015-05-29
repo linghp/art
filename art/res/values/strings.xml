@@ -37,6 +37,7 @@
     <!-- 账户与安全      设置 -->
     <string name="title_activity_deliveryaddress">收货地址管理</string>
     <string name="title_activity_adddeliveryaddress">添加收货地址</string>
+    <string name="title_activity_changedeliveryaddress">修改收货地址</string>
     <string name="title_activity_changepassword">修改登录密码</string>
     <string name="title_activity_safetyverification">安全验证</string>
     <string name="title_activity_phonevalidate">设置新手机</string>
@@ -62,4 +63,9 @@
       <!-- 收货信息 -->
     <string name="text_receiver">收货人：%s</string>
     <string name="text_receiver_address">收货地址：%s</string>
+      <!-- 退款订单 -->
+    <string name="title_activity_refundorder">退款订单</string>
+    
+    <!-- 退款订单 -->
+    <string name="text_main_reimburse">退货申请</string>
 </resources>

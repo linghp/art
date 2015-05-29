@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- 背景白  左边圆角 -->
-    <solid android:color="@color/txt_white" />
+    <!-- 背景绿  左边圆角 -->
+    <solid android:color="@color/txt_green" />
     <!-- 填充 -->
     <stroke
         android:width="0.5dp"
-        android:color="@color/txt_black3" />
+        android:color="@color/txt_white" />
 
     <corners
         android:bottomLeftRadius="10dp"
