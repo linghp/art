@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 	private LinearLayout ll_goodsitem_add;
 	private ImageView iv_logo;
 	private TextView tv_storeName,tv_01,tv_02;
-    final static String INTENTDATAKEY="ordernumber";
+    private final static String INTENTDATAKEY="ordernumber";
     private MyOrderDetailBean myOrderDetailBean;
     private MyOrderItem myOrderItem;
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
@@ -51,7 +52,12 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 	public static void startThisActivity(String ordernumber, Context context) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
-		context.startActivity(intent);
+		((Activity)context).startActivityForResult(intent, 1);
+	}
+	public static void startThisActivity_MyOrder(String ordernumber, Context context,Fragment fragment) {
+		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
+		intent.putExtra(INTENTDATAKEY, ordernumber);
+		fragment.startActivityForResult(intent, 1);
 	}
 
 	private void initData() {
@@ -99,6 +105,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 			this.myOrderDetailBean=myOrderDetailBean;
 			myOrderItem.setOrderNumber(myOrderDetailBean.getOrderNumber());
 			myOrderItem.setTotalPrice(myOrderDetailBean.getTotalPrice());
+			myOrderItem.setStatus(myOrderDetailBean.getStatus());
 			updateViews();
 		}else{
 			
@@ -163,10 +170,27 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(status.equals(orderState[2])){
-			
-		}else if(status.equals(orderState[3])){
-			
+		}else if(myOrderItem.getStatus().equals(orderState[7])){//已取消交易
+			tv_01.setText("删除订单");
+			tv_02.setVisibility(View.GONE);
+			tv_01.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//CommonUtil.toast("click", context);
+					MyOrderServer.toDelOrder(myOrderItem, MyOrderDetailsActivity.this);
+				}
+			});
+		}else if(myOrderItem.getStatus().equals(orderState[2])){//待发货
+			tv_02.setText("退款");
+			tv_01.setVisibility(View.GONE);
+			tv_02.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					CommonUtil.toast("click", MyOrderDetailsActivity.this);
+				}
+			});
 		}
 	}
 	
@@ -175,6 +199,8 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 		if(myOrderItem!=null){
 		//	this.notifyDataSetChanged();
 			CommonUtil.toast("取消成功", this);
+			setResult(RESULT_OK, new Intent().putExtra("MyOrderItem", myOrderItem));
+			finish();
 		}else{
 			CommonUtil.toast("取消失败", this);
 		}
@@ -186,6 +212,8 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 //			myOrderItems.remove(myOrderItem);
 //			this.notifyDataSetChanged();
 			CommonUtil.toast("删除成功", this);
+			setResult(RESULT_OK, new Intent().putExtra("MyOrderItem", myOrderItem));
+			finish();
 		}else{
 			CommonUtil.toast("删除失败", this);
 		}

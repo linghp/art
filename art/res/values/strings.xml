@@ -63,4 +63,6 @@
       <!-- 收货信息 -->
     <string name="text_receiver">收货人：%s</string>
     <string name="text_receiver_address">收货地址：%s</string>
+      <!-- 退款订单 -->
+    <string name="title_activity_refundorder">退款订单</string>
 </resources>
