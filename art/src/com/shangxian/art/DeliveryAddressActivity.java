@@ -40,6 +40,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private DeliveryAddressAdapter adapter;
 	
 	Boolean isfromConfirmOrder = false;
+	
+	private View loading_big,ll_refresh_empty;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -59,8 +61,11 @@ public class DeliveryAddressActivity extends BaseActivity{
 		topView.setTitle(getString(R.string.title_activity_deliveryaddress));
 		listview = (ListView) findViewById(R.id.search_list);
 
+		loading_big = findViewById(R.id.loading_big);//加载
+		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);//无数据
 	}
 	private void initData() {
+		
 		Intent intent = getIntent();
 		isfromConfirmOrder=intent.getBooleanExtra("isfromConfirmOrder", false);
 		
@@ -90,6 +95,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
+
 							JSONArray str=jsonObject.getJSONArray("result");
 							for (int i = 0; i < str.length(); i++) {
 								list.add(gson.fromJson(str.getString(i), DeliveryAddressModel.class));		
@@ -97,7 +103,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 							adapter = new DeliveryAddressAdapter(DeliveryAddressActivity.this, R.layout.item_deliveryaddress, list);
 							listview.setAdapter(adapter);
 							adapter.notifyDataSetChanged();
-
+							loading_big.setVisibility(View.GONE);
+						}
+						else {
+							loading_big.setVisibility(View.GONE);
+							ll_refresh_empty.setVisibility(View.GONE);
+							
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -120,6 +131,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
 			list.add(model);
 		}*/
+		
 		String url = "";
 		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
 		refreshTask(url);

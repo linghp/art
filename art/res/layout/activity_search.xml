@@ -9,11 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ListView
-        android:id="@+id/search_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top_title"
-        android:scrollbars="none" >
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_title" >
+
+        <ListView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+        </ListView>
+        <include
+            layout="@layout/refresh_empty"
+            android:visibility="gone" />
+        <include layout="@layout/loadind_big" />
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -2,14 +2,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- 背景白  右边圆角 -->
-    <solid android:color="@color/txt_white" />
+    <solid android:color="@color/txt_green" />
     <!-- 填充 -->
 	
 
     <!-- 边框 -->
     <stroke
         android:width="0.5dp"
-        android:color="@color/txt_black3" />
+        android:color="@color/txt_white" />
 
     <corners
         android:bottomLeftRadius="0dp"

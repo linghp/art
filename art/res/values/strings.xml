@@ -65,4 +65,7 @@
     <string name="text_receiver_address">收货地址：%s</string>
       <!-- 退款订单 -->
     <string name="title_activity_refundorder">退款订单</string>
+    
+    <!-- 退款订单 -->
+    <string name="text_main_reimburse">退货申请</string>
 </resources>
