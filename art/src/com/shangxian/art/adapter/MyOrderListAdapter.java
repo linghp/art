@@ -165,7 +165,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					@Override
 					public void onClick(View v) {
 						//CommonUtil.toast("click", context);
-						ReimburseActivity.startThisActivity_Fragment("", 0f, context, fragment);
+						ReimburseActivity.startThisActivity_Fragment(myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, context, fragment);
 					}
 				});
 			}
