@@ -60,7 +60,7 @@ public class UserServer extends BaseServer {
 	public void toSogoRegistCode(String phone, final CallBack call) {
 		if (call == null)
 			return;
-		toXUtils(HttpMethod.GET, NET_SOGO_REGIST_CODE, null, null, call);
+		toXUtils(HttpMethod.GET, NET_SOGO_REGIST_CODE + phone, null, null, call);
 //		new HttpUtils().send(HttpMethod.GET, NET_SOGO_REGIST_CODE + phone,
 //				new RequestCallBack<String>() {
 //
