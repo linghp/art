@@ -18,16 +18,19 @@ import com.shangxian.art.view.TopView;
 
 /**
  * 退款申请
+ * 
  * @author zyz
  *
  */
-public class ReimburseActivity extends BaseActivity implements OnHttpResultRefundListener{
+public class ReimburseActivity extends BaseActivity implements
+		OnHttpResultRefundListener {
 
-	private TextView tv_need,tv_notneed,tv_quxiao,tv_tijiao;//需要、不需要
-	private EditText et_cause,et_money,et_explain;//原因、金额、说明
-	private String cause,money,explain;
-	private String orderid,productid,totalprice;
+	private TextView tv_need, tv_notneed, tv_quxiao, tv_tijiao;// 需要、不需要
+	private EditText et_cause, et_money, et_explain;// 原因、金额、说明
+	private String cause, money, explain;
+	private String orderid, productid, totalprice;
 	private boolean isGoods;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,8 +41,9 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 		initListener();
 	}
 
-	public static void startThisActivity_Fragment(boolean isGoods,String orderid,
-			String productid,float totalprice, Context mAc,Fragment fragment) {
+	public static void startThisActivity_Fragment(boolean isGoods,
+			String orderid, String productid, float totalprice, Context mAc,
+			Fragment fragment) {
 		Intent intent = new Intent(mAc, ReimburseActivity.class);
 		intent.putExtra("isGoods", isGoods);
 		intent.putExtra("orderid", orderid);
@@ -47,7 +51,7 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 		intent.putExtra("totalprice", totalprice);
 		fragment.startActivityForResult(intent, 111);
 	}
-	
+
 	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
@@ -55,68 +59,80 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_refund));
-		
+		if (isGoods) {
+			topView.setTitle(getString(R.string.text_main_reimburse));
+		} else {
+			topView.setTitle(getString(R.string.title_activity_refund));
+		}
 		tv_need = (TextView) findViewById(R.id.reimburse_tv1);
 		tv_notneed = (TextView) findViewById(R.id.reimburse_tv2);
 		tv_quxiao = (TextView) findViewById(R.id.reimburse_quxiao);
 		tv_tijiao = (TextView) findViewById(R.id.reimburse_baocun);
-		
+
 		et_cause = (EditText) findViewById(R.id.reimburse_edit1);
 		et_money = (EditText) findViewById(R.id.reimburse_edit2);
 		et_explain = (EditText) findViewById(R.id.reimburse_edit3);
 
 	}
 
-	private void initData() {	
-		orderid=getIntent().getStringExtra("orderid");
-		productid=getIntent().getStringExtra("productid");
-		isGoods=getIntent().getBooleanExtra("isGoods",false);
+	private void initData() {
+		orderid = getIntent().getStringExtra("orderid");
+		productid = getIntent().getStringExtra("productid");
+		isGoods = getIntent().getBooleanExtra("isGoods", false);
 	}
 
 	private void initListener() {
 		tv_quxiao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				//取消
+				// 取消
 				finish();
 			}
 		});
 		tv_tijiao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if(match()){
-				MyOrderServer.toRequestRefund("false",productid, orderid, money, cause, explain, ReimburseActivity.this);
+				if (match()) {
+					if (isGoods) {
+						MyOrderServer.toRequestRefund("true", productid,
+								orderid, money, cause, explain,
+								ReimburseActivity.this);
+					} else {
+						MyOrderServer.toRequestRefund("false", productid,
+								orderid, money, cause, explain,
+								ReimburseActivity.this);
+					}
 				}
 			}
 		});
 	}
 
 	private boolean match() {
-		cause=et_cause.getText().toString().trim();
-		money=et_money.getText().toString().trim();
-		explain=et_explain.getText().toString().trim();
-		if(TextUtils.isEmpty(cause)){
+		cause = et_cause.getText().toString().trim();
+		money = et_money.getText().toString().trim();
+		explain = et_explain.getText().toString().trim();
+		if (TextUtils.isEmpty(cause)) {
 			myToast("退款原因不能为空");
 			return false;
-		}else if(TextUtils.isEmpty(money)){
+		} else if (TextUtils.isEmpty(money)) {
 			myToast("退款金额不能为空");
 			return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onHttpResultRefund(CommonBean<Object> commonBean) {
-		if(commonBean!=null){
-			if(commonBean.getResult_code().equals("200")){
+		if (commonBean != null) {
+			if (commonBean.getResult_code().equals("200")) {
 				myToast("等待卖家审核");
-				MyOrderActivity.currentFragment.setNeedFresh_Refund(MyOrderActivity.orderReturnStatus[2]);
+				MyOrderActivity.currentFragment
+						.setNeedFresh_Refund(MyOrderActivity.orderReturnStatus[2]);
 				finish();
 			}
-		}else{
+		} else {
 			myToast("退款失败");
 		}
 	}

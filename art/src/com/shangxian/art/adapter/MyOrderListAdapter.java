@@ -93,6 +93,9 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 		}else{
 			holder=(ViewHolder) convertView.getTag();
 		}
+		//恢复状态
+		holder.tv_02.setEnabled(true);
+		
 			holder.ll_goodsitem_add.removeAllViews();
 			List<ProductItemDto> listCarGoodsBeans=myOrderItem.getProductItemDtos();
 			boolean isRefundStatus=false;
@@ -200,13 +203,20 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					}
 				});
 			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[4])){//已完成交易
+				if(isRefundStatus){
+					holder.tv_02.setText("退货中");
+					holder.tv_02.setEnabled(false);
+				}else{
 				holder.tv_02.setText("退货");
+				holder.tv_02.setEnabled(true);
+				}
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
+						((MyOrder_All_Fragment)fragment).setMyOrderItem(myOrderItem);
 						ReimburseActivity.startThisActivity_Fragment(true,myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, context, fragment);
 					}
 				});
