@@ -22,7 +22,7 @@ public class NearlyServer extends BaseServer {
 		if (!curUser.isNull())
 			params.addHeader("User-Token", curUser.getId() + "");
 		getHttpUtils().send(HttpMethod.POST,
-				"http://192.168.0.159:8888/art/api/nearbyGeosearch", params,
+				NET_NEARLY, params,
 				new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {

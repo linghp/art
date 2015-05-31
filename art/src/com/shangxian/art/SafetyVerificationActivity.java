@@ -147,6 +147,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 		};
 	};
 
+	
 	private String code;
 	private String rePass;
 	private String pass;
