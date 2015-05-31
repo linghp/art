@@ -94,6 +94,8 @@ public class BaseServer {
 	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
 	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
 	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
+	
+	public static final String NET_MYORDER_BACK_LIST = HOST + "orderReturnList/";//通过状态获取退货订单
 
 	/**
 	 * 
@@ -410,18 +412,17 @@ public class BaseServer {
 			}
 		});
 	}
-	
+
 	public static final int ERROR_JSON_EX = 0x00001011;
 	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
 	public static final int ERROR_CONN_EX = 0x00001013;
-	
+
 	protected void toXUtils(HttpMethod method, String url,
 			RequestParams params, final Type type, final CallBack call) {
 		if (call == null)
 			return;
 		new HttpUtils().send(method, url, params,
 				new RequestCallBack<String>() {
-
 					@Override
 					public void onFailure(HttpException e, String msg) {
 						call.onSimpleFailure(ERROR_CONN_EX);
@@ -432,7 +433,7 @@ public class BaseServer {
 						super.onStart();
 						call.onStart();
 					}
-					
+
 					@Override
 					public void onCancelled() {
 						super.onCancelled();
@@ -445,7 +446,7 @@ public class BaseServer {
 						super.onLoading(total, current, isUploading);
 						call.onLoading(total, current, isUploading);
 					}
-					
+
 					@Override
 					public void onSuccess(ResponseInfo res) {
 						String result = String.valueOf(res.result);
