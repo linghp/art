@@ -20,7 +20,8 @@ public abstract class BaseCallBack<S> extends RequestCallBack<String> {
 		String json = result.result;
 		try {
 			Type type = new TypeToken<BaseBean<S>>(){}.getType();	
-			BaseBean<S> bean = new Gson().fromJson(json, type);
+			BaseBean<S> bean = new BaseBean<S>();
+			bean = new Gson().fromJson(json, type);
 			onSimpleSuccess(bean);
 		} catch (Exception e) {
 			e.printStackTrace();
