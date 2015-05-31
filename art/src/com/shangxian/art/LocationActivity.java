@@ -417,8 +417,9 @@ public class LocationActivity extends BaseActivity implements
 								@Override
 								public void onInfoWindowClick() {
 									// myToast("点击测试商铺" + mark);
+									NearlyShopInfo info1 = info;
 									ShopsActivity.startThisActivity(
-											info.getId(), mAc);
+											info.getShopId(), mAc);
 									mMap.hideInfoWindow();
 								}
 							});

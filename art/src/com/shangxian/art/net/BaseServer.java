@@ -50,6 +50,8 @@ public class BaseServer {
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
 //	public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
 //	public static final String HOST = "http://192.168.0.197:8888/art/api/";
+	//public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
+	//public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
@@ -62,8 +64,10 @@ public class BaseServer {
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
+	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
 	protected static final String NET_ORDERDETAILS = HOST
 			+ "order/details?orderNumber=";// 订单详情
+	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款申请
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -91,6 +95,9 @@ public class BaseServer {
 	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto"; // 上传图片
 	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
 	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
+	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
+	
+	public static final String NET_MYORDER_BACK_LIST = HOST + "orderReturnList/";//通过状态获取退货订单
 
 	/**
 	 * 
@@ -357,6 +364,7 @@ public class BaseServer {
 			public void onResponse(String res) {
 				if (l != null) {
 					// l.onHttp(res);
+					MyLogger.i(res);
 					l.onHttp(res);
 				}
 			}
@@ -406,18 +414,17 @@ public class BaseServer {
 			}
 		});
 	}
-	
+
 	public static final int ERROR_JSON_EX = 0x00001011;
 	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
 	public static final int ERROR_CONN_EX = 0x00001013;
-	
+
 	protected void toXUtils(HttpMethod method, String url,
 			RequestParams params, final Type type, final CallBack call) {
 		if (call == null)
 			return;
 		new HttpUtils().send(method, url, params,
 				new RequestCallBack<String>() {
-
 					@Override
 					public void onFailure(HttpException e, String msg) {
 						call.onSimpleFailure(ERROR_CONN_EX);
@@ -428,7 +435,7 @@ public class BaseServer {
 						super.onStart();
 						call.onStart();
 					}
-					
+
 					@Override
 					public void onCancelled() {
 						super.onCancelled();
@@ -441,7 +448,7 @@ public class BaseServer {
 						super.onLoading(total, current, isUploading);
 						call.onLoading(total, current, isUploading);
 					}
-					
+
 					@Override
 					public void onSuccess(ResponseInfo res) {
 						String result = String.valueOf(res.result);

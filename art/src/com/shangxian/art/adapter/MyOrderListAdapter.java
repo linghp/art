@@ -21,16 +21,18 @@ import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.ReimburseActivity;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
+import com.shangxian.art.net.MyOrderServer.OnHttpResultConfirmGoodsListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.utils.CommonUtil;
 
-public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener{
+public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
 	private Fragment fragment;
@@ -93,6 +95,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 		}
 			holder.ll_goodsitem_add.removeAllViews();
 			List<ProductItemDto> listCarGoodsBeans=myOrderItem.getProductItemDtos();
+			boolean isRefundStatus=false;
 			for (ProductItemDto productItemDto : listCarGoodsBeans) {
 				View child = inflater.inflate(
 						R.layout.list_car_goods_item, null);
@@ -102,10 +105,20 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 				//holder.goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
 				TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 				TextView goodsPrice = (TextView) child.findViewById(R.id.car_goods_price);
+				TextView car_goodsstatus = (TextView) child.findViewById(R.id.car_goodsstatus);
 				//final ViewHolder holder1 = new ViewHolder();
 				ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 				goodsNum.setText("x"+productItemDto.getQuantity());
 				goodsPrice.setText("￥"+CommonUtil.priceConversion(productItemDto.getPrice()));
+				String status=productItemDto.getOrderItemStatus();
+				if(!status.equals(MyOrderActivity.orderReturnStatus[0])){
+					isRefundStatus=true;
+					car_goodsstatus.setVisibility(View.VISIBLE);
+					car_goodsstatus.setText(String.format(context.getResources().getString(R.string.text_refundstatus), MyOrderActivity.map_orderReturnStatusValue.get(status)));
+				}else{
+					isRefundStatus=false;
+					car_goodsstatus.setVisibility(View.GONE);
+				}
 			    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 				mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 						+ productItemDto.getProductSacle());
@@ -157,7 +170,13 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					}
 				});
 			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])){//待发货
+				if(isRefundStatus){
+					holder.tv_02.setText("退款中");
+					holder.tv_02.setEnabled(false);
+				}else{
 				holder.tv_02.setText("退款");
+				holder.tv_02.setEnabled(true);
+				}
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +184,30 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					@Override
 					public void onClick(View v) {
 						//CommonUtil.toast("click", context);
-						ReimburseActivity.startThisActivity_Fragment("", 0f, context, fragment);
+						((MyOrder_All_Fragment)fragment).setMyOrderItem(myOrderItem);
+						ReimburseActivity.startThisActivity_Fragment(false,myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, context, fragment);
+					}
+				});
+			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[3])){//待收货
+				holder.tv_02.setText("确认收货");
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.VISIBLE);
+				holder.tv_02.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						MyOrderServer.toConfirmGoods(myOrderItem, MyOrderListAdapter.this);
+					}
+				});
+			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[4])){//已完成交易
+				holder.tv_02.setText("退货");
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.VISIBLE);
+				holder.tv_02.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						ReimburseActivity.startThisActivity_Fragment(true,myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, context, fragment);
 					}
 				});
 			}
@@ -211,6 +253,16 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 			CommonUtil.toast("删除成功", context);
 		}else{
 			CommonUtil.toast("删除失败", context);
+		}
+	}
+
+	@Override
+	public void onHttpResultConfirmGoods(MyOrderItem myOrderItem) {
+		if(myOrderItem!=null){
+				CommonUtil.toast("确认收货完成", context);
+				this.notifyDataSetChanged();
+		}else{
+			CommonUtil.toast("确认收货完成失败", context);
 		}
 	}
 }

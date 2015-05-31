@@ -1,19 +1,19 @@
 package com.shangxian.art;
 
-import java.io.Serializable;
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.net.MyOrderServer;
+import com.shangxian.art.net.MyOrderServer.OnHttpResultRefundListener;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -21,10 +21,13 @@ import com.shangxian.art.view.TopView;
  * @author zyz
  *
  */
-public class ReimburseActivity extends BaseActivity{
+public class ReimburseActivity extends BaseActivity implements OnHttpResultRefundListener{
 
 	private TextView tv_need,tv_notneed,tv_quxiao,tv_tijiao;//需要、不需要
 	private EditText et_cause,et_money,et_explain;//原因、金额、说明
+	private String cause,money,explain;
+	private String orderid,productid,totalprice;
+	private boolean isGoods;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -35,10 +38,12 @@ public class ReimburseActivity extends BaseActivity{
 		initListener();
 	}
 
-	public static void startThisActivity_Fragment(String orderids,
-			float totalprice, Context mAc,Fragment fragment) {
+	public static void startThisActivity_Fragment(boolean isGoods,String orderid,
+			String productid,float totalprice, Context mAc,Fragment fragment) {
 		Intent intent = new Intent(mAc, ReimburseActivity.class);
-		intent.putExtra("orderids", (Serializable) orderids);
+		intent.putExtra("isGoods", isGoods);
+		intent.putExtra("orderid", orderid);
+		intent.putExtra("productid", productid);
 		intent.putExtra("totalprice", totalprice);
 		fragment.startActivityForResult(intent, 111);
 	}
@@ -64,6 +69,9 @@ public class ReimburseActivity extends BaseActivity{
 	}
 
 	private void initData() {	
+		orderid=getIntent().getStringExtra("orderid");
+		productid=getIntent().getStringExtra("productid");
+		isGoods=getIntent().getBooleanExtra("isGoods",false);
 	}
 
 	private void initListener() {
@@ -79,9 +87,37 @@ public class ReimburseActivity extends BaseActivity{
 			
 			@Override
 			public void onClick(View v) {
-				//提交
-				
+				if(match()){
+				MyOrderServer.toRequestRefund("false",productid, orderid, money, cause, explain, ReimburseActivity.this);
+				}
 			}
 		});
+	}
+
+	private boolean match() {
+		cause=et_cause.getText().toString().trim();
+		money=et_money.getText().toString().trim();
+		explain=et_explain.getText().toString().trim();
+		if(TextUtils.isEmpty(cause)){
+			myToast("退款原因不能为空");
+			return false;
+		}else if(TextUtils.isEmpty(money)){
+			myToast("退款金额不能为空");
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public void onHttpResultRefund(CommonBean<Object> commonBean) {
+		if(commonBean!=null){
+			if(commonBean.getResult_code().equals("200")){
+				myToast("等待卖家审核");
+				MyOrderActivity.currentFragment.setNeedFresh_Refund(MyOrderActivity.orderReturnStatus[2]);
+				finish();
+			}
+		}else{
+			myToast("退款失败");
+		}
 	}
 }

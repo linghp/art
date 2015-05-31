@@ -217,7 +217,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/txt_white"
                 android:focusable="true"
-                android:visibility="gone"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:padding="10dp" >

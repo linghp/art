@@ -1,8 +1,15 @@
 package com.shangxian.art.net;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
+
 import android.text.TextUtils;
 
+import com.ab.http.AbRequestParams;
 import com.google.gson.Gson;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
@@ -40,6 +47,18 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public interface OnHttpResultDelOrderListener {
 		void onHttpResultDelOrder(MyOrderItem myOrderItem);
+	}
+	/*
+	 * 返回退款申请监听
+	 */
+	public interface OnHttpResultRefundListener {
+		void onHttpResultRefund(CommonBean<Object> commonBean);
+	}
+	/*
+	 * 返回确认收货监听
+	 */
+	public interface OnHttpResultConfirmGoodsListener {
+		void onHttpResultConfirmGoods(MyOrderItem myOrderItem);
 	}
 
 	public static void toGetOrder(String status, final OnHttpResultListener l) {
@@ -187,5 +206,71 @@ public class MyOrderServer extends BaseServer {
 			e.printStackTrace();
 		}
 		return myOrderItem2;
+	}
+	
+	/**
+	 *退款/退货申请
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toRequestRefund(String isGoods,String productid,String orderNumber,String totalPrice,String returnReason,String buyerMessege,
+			final OnHttpResultRefundListener l) {
+		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		pairs.add(new BasicNameValuePair("isGoods", isGoods));
+		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
+		pairs.add(new BasicNameValuePair("returnReason", returnReason));
+		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
+		toPostWithToken2(NET_REFUND+productid+"/"+ orderNumber, pairs,new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultRefund(null);
+					} else {
+						l.onHttpResultRefund(getCommonBean(res));
+					}
+				}
+			}
+		});
+	}
+	/**
+	 *确认收货
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toConfirmGoods(final MyOrderItem myOrderItem,
+			final OnHttpResultConfirmGoodsListener l) {
+		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem.getOrderNumber()));
+		toPostWithToken(NET_CONFIRMGOODS, pairs,new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultConfirmGoods(null);
+					} else {
+						l.onHttpResultConfirmGoods(getMyOrderItem(myOrderItem,res));
+					}
+				}
+			}
+		});
+	}
+
+	protected static CommonBean<Object> getCommonBean(String res) {
+		CommonBean<Object> commonBean = null;
+		try {
+			Gson gson = new Gson();
+			commonBean = gson.fromJson(res, CommonBean.class);
+			MyLogger.i(commonBean.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return commonBean;
 	}
 }

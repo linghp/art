@@ -21,7 +21,7 @@ import com.shangxian.art.fragment.RefundOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
 /**
- * 我的订单
+ * 退款、订单
  * @author Administrator
  *
  */
@@ -210,7 +210,6 @@ public class RefundOrderActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onPageScrolled(int position, float positionOffset,
 			int positionOffsetPixels) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -223,7 +222,6 @@ public class RefundOrderActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onPageScrollStateChanged(int state) {
-		// TODO Auto-generated method stub
 		
 	}
 }

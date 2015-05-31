@@ -67,11 +67,23 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 //                                                       0                     1                     2            3                      4                        5                               6                  7
 	public static String[] orderState={"PENDING","SUBMITTED","PAID","SHIPPING","COMPLETED","ORDER_RETURNING","EVALUATE","CANCELLED"};
 	public static String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
+	
+	//退货状态 NORMAL,//正常，不退货 SUCCESS,//退款成功 WAIT_SELLER_APPROVAL , //等待卖家审核b WAIT_BUYER_DELIVERY,
+	//等待买家退货b WAIT_COMPLETED,//买家已发货,等待卖家签收b COMPLETED_REFUSE, //卖家拒绝签收s ORDER_RETURNING, 
+	//已签收，退款成功 CANCELLED, //取消 FAILURE, //退货失败
+	//                                                                0                        1                               2                                      3                                           4                                    5                                       6                        7                 8             
+	public static String[] orderReturnStatus={"NORMAL","SUCCESS","WAIT_SELLER_APPROVAL","WAIT_BUYER_DELIVERY","WAIT_COMPLETED","COMPLETED_REFUSE","ORDER_RETURNING","CANCELLED","FAILURE"};
+	public static String[] orderReturnStatusValue={"正常，不退货","退款成功","等待卖家审核","等待买家退货","买家已发货,等待卖家签收","卖家拒绝签收","已签收，退款成功","取消","退货失败"};
+
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
+	public static Map<String, String> map_orderReturnStatusValue=new HashMap<String, String>();
 	public static MyOrder_All_Fragment currentFragment;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
 	static{
 		for (int i = 0; i < orderState.length; i++) {
 			map_orderStateValue.put(orderState[i], orderStateValue[i]);
+		}
+		for (int i = 0; i < orderReturnStatus.length; i++) {
+			map_orderReturnStatusValue.put(orderReturnStatus[i], orderReturnStatusValue[i]);
 		}
 	}
 	@Override
