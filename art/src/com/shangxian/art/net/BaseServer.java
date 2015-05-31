@@ -90,6 +90,7 @@ public class BaseServer {
 	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto"; // 上传图片
 	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
 	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
+	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
 
 	/**
 	 * 

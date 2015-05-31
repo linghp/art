@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/txt_white"
+        android:minHeight="80dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="筛选"
+            android:textColor="@color/txt_black1"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/line_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格区间"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/transparentblack3" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/fite_et_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="最低"
+                    android:padding="8dp"
+                    android:textColor="@color/txt_black1"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    android:layout_toLeftOf="@+id/view"
+                    android:layout_alignParentLeft="true"
+                 	android:textSize="@dimen/list_title_size" />
+                
+                <View 
+                    android:id="@+id/view"
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:background="@color/main_col300"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_centerInParent="true"/>
+
+                <EditText
+                    android:id="@+id/fite_et_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="最高"
+                    android:padding="8dp"
+                    android:textColor="@color/txt_black1"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    android:layout_toRightOf="@+id/view"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/list_title_size" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/filter_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="确定"
+            android:textColor="@color/col_w1tow2"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</LinearLayout>
