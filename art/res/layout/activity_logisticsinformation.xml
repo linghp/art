@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white3" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/logisticsinfomation_tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
+        android:padding="10dp"
+        android:text="是否需要退还货物"
+        android:textColor="@color/txt_black2"
+        android:textSize="@dimen/list_summary_size" />
+
+    <LinearLayout
+        android:id="@+id/logisticsinfomation_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logisticsinfomation_tv1"
+        android:background="@color/txt_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/logisticsinfomation_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快递公司"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+
+        <EditText
+            android:id="@+id/logisticsinfomation_et1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="请输入快递公司"
+            android:padding="5dp"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size"
+            android:visibility="visible" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/logisticsinfomation_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logisticsinfomation_linear1"
+        android:background="@color/txt_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp" >
+
+        <TextView
+            android:id="@+id/logisticsinfomation_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="运单编号"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size" />
+
+        <EditText
+            android:id="@+id/logisticsinfomation_et2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/regist_et_bg_sel"
+            android:hint="请输入运单编号"
+            android:padding="5dp"
+            android:textColor="@color/txt_black1"
+            android:textSize="@dimen/list_summary_size"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>

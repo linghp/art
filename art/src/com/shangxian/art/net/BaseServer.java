@@ -48,6 +48,8 @@ public class BaseServer {
 	 * 
 	 */
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
+//	public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
+//	public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	//public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
 	//public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";

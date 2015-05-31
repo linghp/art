@@ -10,6 +10,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/returnorderdetails_linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
@@ -44,16 +45,18 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,16 +80,18 @@
                 android:textColor="@color/txt_red"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,16 +115,18 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,16 +150,18 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,16 +185,18 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -209,16 +220,18 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/txt_black3"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp" >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -242,6 +255,56 @@
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:layout_below="@id/returnorderdetails_linear1"
+        android:weightSum="3"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/returnorderdetails_tv8"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/soge_not_bg_sel"
+            android:gravity="center_horizontal"
+            android:onClick="doClick"
+            android:padding="8dp"
+            android:text="审核不通过"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/returnorderdetails_tv9"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/soge_next_bg_sel"
+            android:gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="审核通过"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:id="@+id/returnorderdetails_tv10"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/soge_next_bg_sel"
+            android:gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="退款"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
     </LinearLayout>
 
 </RelativeLayout>
