@@ -473,6 +473,10 @@
             android:name=".RefundOrderActivity"
             android:label="@string/title_activity_refundorder" >
         </activity>
+        <activity
+            android:name=".ReimburseActivity"
+            android:label="@string/title_activity_refund" >
+        </activity>
     </application>
 
 </manifest>

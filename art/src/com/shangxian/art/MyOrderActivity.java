@@ -68,7 +68,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	public static String[] orderState={"PENDING","SUBMITTED","PAID","SHIPPING","COMPLETED","ORDER_RETURNING","EVALUATE","CANCELLED"};
 	public static String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
-	public static boolean isNeedRefresh;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+	public static MyOrder_All_Fragment currentFragment;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
 	static{
 		for (int i = 0; i < orderState.length; i++) {
 			map_orderStateValue.put(orderState[i], orderStateValue[i]);
@@ -145,6 +145,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 
 		fragments = new ArrayList<Fragment>();
 		firstFragment = new MyOrder_All_Fragment("");
+		currentFragment=(MyOrder_All_Fragment) firstFragment;
 		secondFragment = new MyOrder_All_Fragment(orderState[1]);
 		thirdFragment = new MyOrder_All_Fragment(orderState[2]);
 		fourthFragment = new MyOrder_All_Fragment(orderState[3]);
@@ -202,10 +203,10 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 
 	@Override
 	protected void onResume() {
-		if(isNeedRefresh){
-		((MyOrder_All_Fragment)fragments.get(currentPosion)).getData();
-		isNeedRefresh=false;
-		}
+//		if(isNeedRefresh){
+//		((MyOrder_All_Fragment)fragments.get(currentPosion)).getData();
+//		isNeedRefresh=false;
+//		}
 		super.onResume();
 	}
 
@@ -238,7 +239,8 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	@Override
 	public void onPageSelected(int position) {
 		currentPosion=position;
-		((MyOrder_All_Fragment)fragments.get(position)).getData();
+		currentFragment=(MyOrder_All_Fragment)fragments.get(position);
+		currentFragment.getData();
 		setBackground_slide(position);
 	}
 

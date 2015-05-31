@@ -94,7 +94,10 @@ public class RefundOrderActivity extends BaseActivity implements OnClickListener
 		tv_second = (TextView) findViewById(R.id.text_two);
 		tv_three = (TextView) findViewById(R.id.text_three);
 		tv_four = (TextView) findViewById(R.id.text_four);
-
+		tv_second.setText(orderStateValue[0]);
+		tv_three.setText(orderStateValue[1]);
+		tv_four.setText(orderStateValue[2]);
+		
 		img_first = (ImageView) findViewById(R.id.image_one);
 		img_second = (ImageView) findViewById(R.id.image_two);
 		img_three = (ImageView) findViewById(R.id.image_three);

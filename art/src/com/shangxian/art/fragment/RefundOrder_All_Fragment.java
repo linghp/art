@@ -53,6 +53,12 @@ public class RefundOrder_All_Fragment extends BaseFragment implements
 	private int skip = 0; // 从第skip+1条开始查询
 	private final int pageSize = 10;
 
+	private boolean isNeedFresh;
+	
+	public void setNeedFresh(boolean isNeedFresh) {
+		this.isNeedFresh = isNeedFresh;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		MyLogger.i("");

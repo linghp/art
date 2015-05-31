@@ -4,6 +4,7 @@ package com.shangxian.art.constant;
 
 public class Constant {
 	//public static final String BASEURL = "http://192.168.1.125:8888/art/";
+	//public static final String BASEURL = "http://192.168.0.179:8888/art";
 	public static final String BASEURL = "http://www.ainonggu666.com";
 	public static final String CONTENT = "/api";
 	public static final String HOME = "/ads";//动态布局的数据
@@ -18,8 +19,6 @@ public class Constant {
 //	public static final String SHOPSLIST = "/1/shops";
 	
 	
-	
-    
     // 连接超时
  	public static final int timeOut = 10000;
  	// 建立连接
