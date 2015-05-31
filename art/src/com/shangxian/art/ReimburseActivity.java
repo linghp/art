@@ -1,7 +1,5 @@
 package com.shangxian.art;
 
-import java.io.Serializable;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +27,7 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 	private EditText et_cause,et_money,et_explain;//原因、金额、说明
 	private String cause,money,explain;
 	private String orderid,productid,totalprice;
+	private boolean isGoods;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,9 +38,10 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 		initListener();
 	}
 
-	public static void startThisActivity_Fragment(String orderid,
+	public static void startThisActivity_Fragment(boolean isGoods,String orderid,
 			String productid,float totalprice, Context mAc,Fragment fragment) {
 		Intent intent = new Intent(mAc, ReimburseActivity.class);
+		intent.putExtra("isGoods", isGoods);
 		intent.putExtra("orderid", orderid);
 		intent.putExtra("productid", productid);
 		intent.putExtra("totalprice", totalprice);
@@ -71,6 +71,7 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 	private void initData() {	
 		orderid=getIntent().getStringExtra("orderid");
 		productid=getIntent().getStringExtra("productid");
+		isGoods=getIntent().getBooleanExtra("isGoods",false);
 	}
 
 	private void initListener() {
@@ -87,7 +88,7 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 			@Override
 			public void onClick(View v) {
 				if(match()){
-				MyOrderServer.toRequestRefund(productid, orderid, money, cause, explain, ReimburseActivity.this);
+				MyOrderServer.toRequestRefund("false",productid, orderid, money, cause, explain, ReimburseActivity.this);
 				}
 			}
 		});
@@ -112,8 +113,11 @@ public class ReimburseActivity extends BaseActivity implements OnHttpResultRefun
 		if(commonBean!=null){
 			if(commonBean.getResult_code().equals("200")){
 				myToast("等待卖家审核");
+				MyOrderActivity.currentFragment.setNeedFresh_Refund(MyOrderActivity.orderReturnStatus[2]);
 				finish();
 			}
+		}else{
+			myToast("退款失败");
 		}
 	}
 }

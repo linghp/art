@@ -96,6 +96,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/regist_et_bg_sel"
             android:hint="请输入退款原因"
+            android:imeOptions="actionNext"
             android:padding="5dp"
             android:textColor="@color/txt_black1"
             android:textSize="@dimen/list_title_size" />
@@ -143,6 +144,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/regist_et_bg_sel"
             android:hint="请输入退款金额"
+            android:imeOptions="actionNext"
+            android:inputType="number"
             android:padding="5dp"
             android:textColor="@color/txt_black1"
             android:textSize="@dimen/list_title_size" />
