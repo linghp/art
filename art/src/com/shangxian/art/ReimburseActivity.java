@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
@@ -25,11 +27,15 @@ import com.shangxian.art.view.TopView;
 public class ReimburseActivity extends BaseActivity implements
 		OnHttpResultRefundListener {
 
-	private TextView tv_need, tv_notneed, tv_quxiao, tv_tijiao;// 需要、不需要
+	private TextView tv_need, tv_notneed, tv_quxiao, tv_tijiao,tv_txt1;// 需要、不需要、取消、提交
+	private ImageView img1,img2,img3;
 	private EditText et_cause, et_money, et_explain;// 原因、金额、说明
 	private String cause, money, explain;
 	private String orderid, productid, totalprice;
-	private boolean isGoods;
+	private LinearLayout ll_linear1,ll_linear8,ll_linear9;
+	
+	private boolean isGoods;//是否为退货申请   退款/退货  false/true
+	private boolean isNeed = true;//是否需要退还货物   需要/不需要  true/false
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +65,7 @@ public class ReimburseActivity extends BaseActivity implements
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		if (isGoods) {
-			topView.setTitle(getString(R.string.text_main_reimburse));
-		} else {
-			topView.setTitle(getString(R.string.title_activity_refund));
-		}
+		
 		tv_need = (TextView) findViewById(R.id.reimburse_tv1);
 		tv_notneed = (TextView) findViewById(R.id.reimburse_tv2);
 		tv_quxiao = (TextView) findViewById(R.id.reimburse_quxiao);
@@ -72,6 +74,14 @@ public class ReimburseActivity extends BaseActivity implements
 		et_cause = (EditText) findViewById(R.id.reimburse_edit1);
 		et_money = (EditText) findViewById(R.id.reimburse_edit2);
 		et_explain = (EditText) findViewById(R.id.reimburse_edit3);
+		
+		img1 = (ImageView) findViewById(R.id.reimburse_img1);
+		img2 = (ImageView) findViewById(R.id.reimburse_img2);
+		img3 = (ImageView) findViewById(R.id.reimburse_img3);
+		tv_txt1 = (TextView) findViewById(R.id.reimburse_txt1);
+		ll_linear1 = (LinearLayout) findViewById(R.id.reimburse_linear1);
+		ll_linear8 = (LinearLayout) findViewById(R.id.reimburse_linear8);
+		ll_linear9 = (LinearLayout) findViewById(R.id.reimburse_linear9);
 
 	}
 
@@ -79,9 +89,43 @@ public class ReimburseActivity extends BaseActivity implements
 		orderid = getIntent().getStringExtra("orderid");
 		productid = getIntent().getStringExtra("productid");
 		isGoods = getIntent().getBooleanExtra("isGoods", false);
+		if (isGoods) {
+			topView.setTitle(getString(R.string.text_main_reimburse));//退货申请
+			
+		} else {
+			topView.setTitle(getString(R.string.title_activity_refund));//退款申请
+			tv_txt1.setVisibility(View.GONE);
+			ll_linear1.setVisibility(View.GONE);
+			ll_linear8.setVisibility(View.GONE);
+			ll_linear9.setVisibility(View.GONE);
+		}
 	}
 
 	private void initListener() {
+		tv_need.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//需要退货
+				isNeed = true;
+				tv_need.setBackgroundResource(R.drawable.leftcorner_green);
+				tv_notneed.setBackgroundResource(R.drawable.rightcorner);
+				tv_need.setTextColor(getResources().getColor(R.color.txt_white));
+				tv_notneed.setTextColor(getResources().getColor(R.color.txt_black1));
+			}
+		});
+		tv_notneed.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// 不需要退货
+				isNeed = false;
+				tv_need.setBackgroundResource(R.drawable.leftcorner);
+				tv_notneed.setBackgroundResource(R.drawable.rightcorner_green);
+				tv_need.setTextColor(getResources().getColor(R.color.txt_black1));
+				tv_notneed.setTextColor(getResources().getColor(R.color.txt_white));
+			}
+		});
 		tv_quxiao.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -96,10 +140,13 @@ public class ReimburseActivity extends BaseActivity implements
 			public void onClick(View v) {
 				if (match()) {
 					if (isGoods) {
+						//退货
 						MyOrderServer.toRequestRefund("true", productid,
 								orderid, money, cause, explain,
 								ReimburseActivity.this);
+						
 					} else {
+						//退款
 						MyOrderServer.toRequestRefund("false", productid,
 								orderid, money, cause, explain,
 								ReimburseActivity.this);

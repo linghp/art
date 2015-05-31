@@ -28,8 +28,7 @@
                 android:padding="10dp"
                 android:text="是否需要退还货物"
                 android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size"
-                android:visibility="gone" />
+                android:textSize="@dimen/list_summary_size" />
 
             <LinearLayout
                 android:id="@+id/reimburse_linear1"
@@ -37,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp"
-                android:visibility="gone"
                 android:weightSum="2" >
 
                 <TextView
@@ -203,13 +201,13 @@
                 android:background="@color/txt_white2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                android:visibility="gone" >
+                android:padding="10dp" >
 
                 <TextView
+                    android:id="@+id/reimburse_txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="添加退款凭证"
+                    android:text="添加退货凭证"
                     android:textColor="@color/txt_black2"
                     android:textSize="@dimen/list_title_size" />
             </LinearLayout>
@@ -225,18 +223,21 @@
                 android:padding="10dp" >
 
                 <ImageView
+                    android:id="@+id/reimburse_img1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/addimage" />
 
                 <ImageView
+                    android:id="@+id/reimburse_img2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/addimage" />
 
                 <ImageView
+                    android:id="@+id/reimburse_img3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -257,7 +258,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_btn"
+            android:background="@drawable/soge_not_bg_sel"
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="取消"
@@ -270,7 +271,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_btn"
+            android:background="@drawable/soge_next_bg_sel"
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="提交"
