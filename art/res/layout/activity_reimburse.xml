@@ -150,6 +150,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="请输入退款金额"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
                     android:padding="5dp"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_title_size" />
@@ -200,8 +202,8 @@
                 android:background="@color/txt_white2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                android:padding="10dp" >
+                android:padding="10dp"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -219,7 +221,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:padding="10dp"
+                android:visibility="gone" >
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -238,41 +241,42 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/addimage" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/reimburse_quxiao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_btn"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    android:text="取消"
-                    android:textColor="@color/txt_whitetoback"
-                    android:textSize="@dimen/button_txt_size" />
-
-                <TextView
-                    android:id="@+id/reimburse_baocun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_btn"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    android:text="提交"
-                    android:textColor="@color/txt_whitetoback"
-                    android:textSize="@dimen/button_txt_size" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/reimburse_quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="取消"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
+
+        <TextView
+            android:id="@+id/reimburse_baocun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_btn"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="提交"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/button_txt_size" />
+    </LinearLayout>
 
 </RelativeLayout>
