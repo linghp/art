@@ -20,6 +20,7 @@ import com.ab.image.AbImageLoader;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.ReimburseActivity;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
@@ -163,7 +164,8 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					
 					@Override
 					public void onClick(View v) {
-						CommonUtil.toast("click", context);
+						//CommonUtil.toast("click", context);
+						ReimburseActivity.startThisActivity_Fragment("", 0f, context, fragment);
 					}
 				});
 			}

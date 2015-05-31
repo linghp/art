@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,13 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	private int skip = 0; // 从第skip+1条开始查询
 	private final int pageSize = 10;
 
+	private String returnStatus;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+	public static final String DELETE="delete";
+	
+	public void setNeedFresh(String returnStatus) {
+		this.returnStatus = returnStatus;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		MyLogger.i("");
@@ -122,6 +130,15 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	@Override
 	public void onStart() {
 		MyLogger.i("");
+		if(!TextUtils.isEmpty(returnStatus)){//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+			if(returnStatus.equals(DELETE)){
+				mOrderItems.remove(myOrderItem);
+			}else{
+				myOrderItem.setStatus(returnStatus);
+			}
+			myOrderListAdapter.notifyDataSetChanged();
+			returnStatus=null;
+		}
 		super.onStart();
 	}
 

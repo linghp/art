@@ -1,6 +1,13 @@
 package com.shangxian.art;
 
+import java.io.Serializable;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -10,7 +17,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.view.TopView;
 
 /**
- * 退货申请
+ * 退款申请
  * @author zyz
  *
  */
@@ -28,14 +35,22 @@ public class ReimburseActivity extends BaseActivity{
 		initListener();
 	}
 
+	public static void startThisActivity_Fragment(String orderids,
+			float totalprice, Context mAc,Fragment fragment) {
+		Intent intent = new Intent(mAc, ReimburseActivity.class);
+		intent.putExtra("orderids", (Serializable) orderids);
+		intent.putExtra("totalprice", totalprice);
+		fragment.startActivityForResult(intent, 111);
+	}
+	
 	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
-		topView.setRightBtnDrawable(R.drawable.addto);
+		topView.hideRightBtn_invisible();
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_iandedetailscontent));
+		topView.setTitle(getString(R.string.title_activity_refund));
 		
 		tv_need = (TextView) findViewById(R.id.reimburse_tv1);
 		tv_notneed = (TextView) findViewById(R.id.reimburse_tv2);
