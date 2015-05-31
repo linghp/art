@@ -24,11 +24,13 @@ import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultOrderDetailsListener;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResultOrderDetailsListener,OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener{
@@ -151,6 +153,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 		//根据状态显示按钮
 		String status=myOrderDetailBean.getStatus();
 		String[] orderState=MyOrderActivity.orderState;
+		String[] orderReturnStatus=MyOrderActivity.orderReturnStatus;
 		if(status.equals(orderState[1])){
 			tv_01.setOnClickListener(new View.OnClickListener() {
 				
@@ -181,14 +184,27 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 					MyOrderServer.toDelOrder(myOrderItem, MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(myOrderItem.getStatus().equals(orderState[2])){//待发货
+		}else if(status.equals(orderState[2])){//待发货
+			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
+			MyLogger.i(status_temp);
+			if(TextUtils.isEmpty(status_temp)){
+				status_temp=orderReturnStatus[0];
+			}
+			if(status_temp.equals(orderReturnStatus[0])){
 			tv_02.setText("退款");
+			}else{
+			tv_02.setText("退款中");
+			tv_02.setEnabled(false);
+			}
 			tv_01.setVisibility(View.GONE);
 			tv_02.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					CommonUtil.toast("click", MyOrderDetailsActivity.this);
+					if(MyOrderActivity.currentFragment!=null){
+					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
+					ReimburseActivity.startThisActivity_Fragment(false,myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+					}
 				}
 			});
 		}

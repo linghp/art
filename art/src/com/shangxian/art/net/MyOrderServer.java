@@ -9,6 +9,8 @@ import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
 import com.google.gson.Gson;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
@@ -262,6 +264,11 @@ public class MyOrderServer extends BaseServer {
 		});
 	}
 
+	public static void toCancelRefund(String id, final CallBack back){
+		RequestParams params = getParams();
+		toXUtils(HttpMethod.POST, NET_CANCEL_REFUND, params, null, back);
+	}
+	
 	protected static CommonBean<Object> getCommonBean(String res) {
 		CommonBean<Object> commonBean = null;
 		try {

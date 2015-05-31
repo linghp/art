@@ -34,6 +34,7 @@ public class MyOrderItem implements Serializable {
 	private Integer totalQuantity;
 	@Expose
 	private String createDate;
+	
 	public String getAddressId() {
 		return addressId;
 	}

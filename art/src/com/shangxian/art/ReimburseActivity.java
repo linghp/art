@@ -16,6 +16,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultRefundListener;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**

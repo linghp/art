@@ -41,7 +41,7 @@ public class RefundOrderActivity extends BaseActivity implements OnClickListener
 //	@"未提交",@"PENDING",@"待付款",@"SUBMITTED",@"待发货",@"PAID",@"待收货",@"SHIPPING",@"已完成交易"
 //	,@"COMPLETED",@"退款中",@"ORDER_RETURNING",@"待评价",@"EVALUATE",@"已取消交易",@"CANCELLED"
 //                                                       0                     1                     2            3                      4                        5                               6                  7
-	public static String[] orderState={"PENDING","SUBMITTED","PAID"};
+	public static String[] orderState={"WAIT_SELLER_APPROVAL","WAIT_BUYER_DELIVERY","WAIT_COMPLETED"};
 	public static String[] orderStateValue={"待审核","待退货","待退款"};
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
 	public static boolean isNeedRefresh;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
