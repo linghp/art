@@ -12,11 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.ab.http.AbBinaryHttpResponseListener;
-import com.ab.http.AbFileHttpResponseListener;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -28,7 +25,6 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.base.DataTools;
-import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
@@ -96,6 +92,7 @@ public class BaseServer {
 	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
 	
 	public static final String NET_MYORDER_BACK_LIST = HOST + "orderReturnList/";//通过状态获取退货订单
+	protected static final String NET_CANCEL_REFUND = HOST + "orderCancelReturnList/"; //取消退货订单
 
 	/**
 	 * 
@@ -113,6 +110,16 @@ public class BaseServer {
 		BaseServer.mContext = mContext;
 		mAbHttpUtil = AbHttpUtil.getInstance(mContext);
 		curUser = LocalUserInfo.getInstance(mContext).getUser();
+	}
+	
+	protected static RequestParams getParams() {
+		if (curUser != null && !curUser.isNull()) {
+			RequestParams params = new RequestParams();
+			params.addHeader("User-Token", curUser.getId() + "");
+			return params;
+		} else {
+			return new RequestParams();
+		}
 	}
 
 	protected static void toGet(String url, AbRequestParams params,
@@ -416,7 +423,7 @@ public class BaseServer {
 	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
 	public static final int ERROR_CONN_EX = 0x00001013;
 
-	protected void toXUtils(HttpMethod method, String url,
+	public static void toXUtils(HttpMethod method, String url,
 			RequestParams params, final Type type, final CallBack call) {
 		if (call == null)
 			return;
@@ -467,7 +474,7 @@ public class BaseServer {
 										call.onSimpleSuccess(o);
 									}
 								} else {
-									call.onSimpleSuccess(null);
+									call.onSimpleSuccess(re);
 								}
 							} else {
 								call.onSimpleFailure(result_code);
