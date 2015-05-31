@@ -47,7 +47,7 @@ public class MyOrder_dfk_Fragment extends Fragment {
 
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
-		myOrderListAdapter = new MyOrderListAdapter(getActivity(), mOrderItems);
+		//myOrderListAdapter = new MyOrderListAdapter(getActivity(), mOrderItems);
 		listView.setAdapter(myOrderListAdapter);
 		MyLogger.i(mOrderItems.size() + "");
 	}

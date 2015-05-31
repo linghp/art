@@ -52,7 +52,7 @@ public class MyOrder_dfh_Fragment extends Fragment {
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
-		myOrderListAdapter = new MyOrderListAdapter(getActivity(), mOrderItems);
+		//myOrderListAdapter = new MyOrderListAdapter(getActivity(), mOrderItems);
 		listView.setAdapter(myOrderListAdapter);
 
 	}

@@ -2,40 +2,22 @@ package com.shangxian.art;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.MyOrderItem_all;
-import com.shangxian.art.constant.Constant;
 import com.shangxian.art.fragment.MyOrder_All_Fragment;
-import com.shangxian.art.fragment.MyOrder_dfh_Fragment;
-import com.shangxian.art.fragment.MyOrder_dfk_Fragment;
-import com.shangxian.art.fragment.MyOrder_dsh_Fragment;
-import com.shangxian.art.net.HttpClients;
-import com.shangxian.art.net.HttpClients.HttpCilentListener;
-import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.fragment.RefundOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -43,7 +25,7 @@ import com.shangxian.art.view.TopView;
  * @author Administrator
  *
  */
-public class MyOrderActivity extends BaseActivity implements OnClickListener,OnPageChangeListener{
+public class RefundOrderActivity extends BaseActivity implements OnClickListener,OnPageChangeListener{
 	private TopView topView;
     private ViewPager  mViewPager;
 
@@ -54,21 +36,15 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	private Fragment firstFragment, secondFragment, thirdFragment, fourthFragment;
 	private int currentPosion=0;
 
-	//以下注释的以前版本 暂时不删
-//	private List<MyOrderItem> mOrderItems = new ArrayList<MyOrderItem>();
-//	private List<MyOrderItem> mOrderItems_dfk = new ArrayList<MyOrderItem>();
-//	private List<MyOrderItem> mOrderItems_dfh = new ArrayList<MyOrderItem>();
-//	private List<MyOrderItem> mOrderItems_dsh = new ArrayList<MyOrderItem>();
-	
 	private FragmentViewPagerAdp adapter;
 	
 //	@"未提交",@"PENDING",@"待付款",@"SUBMITTED",@"待发货",@"PAID",@"待收货",@"SHIPPING",@"已完成交易"
 //	,@"COMPLETED",@"退款中",@"ORDER_RETURNING",@"待评价",@"EVALUATE",@"已取消交易",@"CANCELLED"
 //                                                       0                     1                     2            3                      4                        5                               6                  7
-	public static String[] orderState={"PENDING","SUBMITTED","PAID","SHIPPING","COMPLETED","ORDER_RETURNING","EVALUATE","CANCELLED"};
-	public static String[] orderStateValue={"未提交","待付款","待发货","待收货","已完成交易","退款中","待评价","已取消交易"};
+	public static String[] orderState={"PENDING","SUBMITTED","PAID"};
+	public static String[] orderStateValue={"待审核","待退货","待退款"};
 	public static Map<String, String> map_orderStateValue=new HashMap<String, String>();
-	public static MyOrder_All_Fragment currentFragment;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+	public static boolean isNeedRefresh;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
 	static{
 		for (int i = 0; i < orderState.length; i++) {
 			map_orderStateValue.put(orderState[i], orderStateValue[i]);
@@ -100,7 +76,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	}
 
 	public void initDateFirstFragment(){
-		((MyOrder_All_Fragment)firstFragment).getData();
+		((RefundOrder_All_Fragment)firstFragment).getData();
 	}
 	
 //	public void updateData(){
@@ -118,7 +94,10 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		tv_second = (TextView) findViewById(R.id.text_two);
 		tv_three = (TextView) findViewById(R.id.text_three);
 		tv_four = (TextView) findViewById(R.id.text_four);
-
+		tv_second.setText(orderStateValue[0]);
+		tv_three.setText(orderStateValue[1]);
+		tv_four.setText(orderStateValue[2]);
+		
 		img_first = (ImageView) findViewById(R.id.image_one);
 		img_second = (ImageView) findViewById(R.id.image_two);
 		img_three = (ImageView) findViewById(R.id.image_three);
@@ -130,7 +109,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_my_order));
+		topView.setTitle(getString(R.string.title_activity_refundorder));
 	}
 	
     @Override
@@ -144,11 +123,10 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 		mViewPager = (ViewPager) findViewById(R.id.vp_content);
 
 		fragments = new ArrayList<Fragment>();
-		firstFragment = new MyOrder_All_Fragment("");
-		currentFragment=(MyOrder_All_Fragment) firstFragment;
-		secondFragment = new MyOrder_All_Fragment(orderState[1]);
-		thirdFragment = new MyOrder_All_Fragment(orderState[2]);
-		fourthFragment = new MyOrder_All_Fragment(orderState[3]);
+		firstFragment = new RefundOrder_All_Fragment("");
+		secondFragment = new RefundOrder_All_Fragment(orderState[0]);
+		thirdFragment = new RefundOrder_All_Fragment(orderState[1]);
+		fourthFragment = new RefundOrder_All_Fragment(orderState[2]);
 //		thirdFragment = new MyOrder_dfh_Fragment();
 //		fourthFragment = new MyOrder_dsh_Fragment();
 
@@ -203,10 +181,10 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 
 	@Override
 	protected void onResume() {
-//		if(isNeedRefresh){
-//		((MyOrder_All_Fragment)fragments.get(currentPosion)).getData();
-//		isNeedRefresh=false;
-//		}
+		if(isNeedRefresh){
+		((RefundOrder_All_Fragment)fragments.get(currentPosion)).getData();
+		isNeedRefresh=false;
+		}
 		super.onResume();
 	}
 
@@ -239,8 +217,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,OnP
 	@Override
 	public void onPageSelected(int position) {
 		currentPosion=position;
-		currentFragment=(MyOrder_All_Fragment)fragments.get(position);
-		currentFragment.getData();
+		((RefundOrder_All_Fragment)fragments.get(position)).getData();
 		setBackground_slide(position);
 	}
 

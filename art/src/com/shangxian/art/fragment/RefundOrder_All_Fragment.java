@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,9 @@ import android.widget.TextView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
-import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.RefundOrderActivity;
 import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
@@ -36,7 +35,7 @@ import com.shangxian.art.utils.MyLogger;
  * @author ling
  *
  */
-public class MyOrder_All_Fragment extends BaseFragment implements
+public class RefundOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
 		OnHeaderRefreshListener, OnFooterLoadListener, OnItemClickListener {
 	private View view;
@@ -54,20 +53,19 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	private int skip = 0; // 从第skip+1条开始查询
 	private final int pageSize = 10;
 
-	private String returnStatus;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
-	public static final String DELETE="delete";
+	private boolean isNeedFresh;
 	
-	public void setNeedFresh(String returnStatus) {
-		this.returnStatus = returnStatus;
+	public void setNeedFresh(boolean isNeedFresh) {
+		this.isNeedFresh = isNeedFresh;
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		MyLogger.i("");
 		super.onCreate(savedInstanceState);
 	}
 
-	public MyOrder_All_Fragment(String status) {
+	public RefundOrder_All_Fragment(String status) {
 		super();
 		this.status = status;
 	}
@@ -107,7 +105,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		if (status.equals("")) {
-			((MyOrderActivity) getActivity()).initDateFirstFragment();
+			((RefundOrderActivity) getActivity()).initDateFirstFragment();
 
 		}
 	}
@@ -130,15 +128,6 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	@Override
 	public void onStart() {
 		MyLogger.i("");
-		if(!TextUtils.isEmpty(returnStatus)){//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
-			if(returnStatus.equals(DELETE)){
-				mOrderItems.remove(myOrderItem);
-			}else{
-				myOrderItem.setStatus(returnStatus);
-			}
-			myOrderListAdapter.notifyDataSetChanged();
-			returnStatus=null;
-		}
 		super.onStart();
 	}
 

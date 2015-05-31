@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,11 @@ import com.ab.image.AbImageLoader;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.ReimburseActivity;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
@@ -30,11 +33,13 @@ import com.shangxian.art.utils.CommonUtil;
 public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private Context context;
+	private Fragment fragment;
 	private LayoutInflater inflater;
 	private List<MyOrderItem> myOrderItems=new ArrayList<MyOrderItem>();
 
-	public MyOrderListAdapter(Context contex, List<MyOrderItem> myOrderItems) {
+	public MyOrderListAdapter(Context contex, Fragment fragment, List<MyOrderItem> myOrderItems) {
 		this.context = contex;
+		this.fragment = fragment;
 		this.myOrderItems = myOrderItems;
 		inflater = LayoutInflater.from(contex);
 		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
@@ -135,7 +140,8 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 						//CommonUtil.toast("click", context);
 						List<String> ordernumber=new ArrayList<String>();
 						ordernumber.add(myOrderItem.getOrderNumber());
-						PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), (Activity)context);
+						((MyOrder_All_Fragment)fragment).setMyOrderItem(myOrderItem);
+						PayActivity.startThisActivity_Fragment(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), (Activity)context,fragment);
 					}
 				});
 			}else if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[7])){//已取消交易
@@ -158,7 +164,8 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 					
 					@Override
 					public void onClick(View v) {
-						CommonUtil.toast("click", context);
+						//CommonUtil.toast("click", context);
+						ReimburseActivity.startThisActivity_Fragment("", 0f, context, fragment);
 					}
 				});
 			}

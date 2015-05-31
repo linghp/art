@@ -466,7 +466,16 @@
         </activity>
         <activity
             android:name=".MyOrderDetailsActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_my_order_details" >
+        </activity>
+        <activity
+            android:name=".RefundOrderActivity"
+            android:label="@string/title_activity_refundorder" >
+        </activity>
+        <activity
+            android:name=".ReimburseActivity"
+            android:label="@string/title_activity_refund" >
         </activity>
     </application>
 
