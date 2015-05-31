@@ -16,6 +16,11 @@ public class Constant {
 	public static final String DELCART = "/del/cart";//删除购物车
 	public static final String PRODUCT = "/product";//商品信息
 	public static String GOODSDETAIL = "/product/%s/details";//商品详情
+	
+	public static final String HOST = "http://192.168.0.133:8888/art/";
+	public static final String NET_FINDWORD = HOST + "user/findpassword";
+	//user/findpassword?newPassword=612714&captcha=903527&reNewPassword=612714&phoneNumber=15025496981
+	public static final String NET_FINDWORD_CODE = "http://192.168.0.133:8888/art/user/findpasswodCaptcha?phoneNumber=";
 //	public static final String SHOPSLIST = "/1/shops";
 	
 	
