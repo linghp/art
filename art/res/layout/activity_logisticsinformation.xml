@@ -50,6 +50,7 @@
             android:textSize="@dimen/list_summary_size"
             android:visibility="visible" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/logisticsinfomation_linear2"
         android:layout_width="match_parent"
@@ -59,9 +60,9 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp" >
+        android:paddingRight="10dp" >
 
         <TextView
             android:id="@+id/logisticsinfomation_tv3"
@@ -83,5 +84,41 @@
             android:textSize="@dimen/list_summary_size"
             android:visibility="visible" />
     </LinearLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom="50dp"
+       android:gravity="bottom"
+       android:orientation="horizontal"
+       android:padding="15dp" >
+
+       <TextView
+           android:id="@+id/logisticsinfomation_tv4"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="@drawable/soge_not_bg_sel"
+           android:gravity="center_horizontal"
+           android:onClick="doClick"
+           android:padding="8dp"
+           android:text="取消"
+           android:textColor="@color/txt_whitetoback"
+           android:textSize="@dimen/list_title_size" />
+
+       <TextView
+           android:id="@+id/logisticsinfomation_tv5"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="10dp"
+           android:layout_weight="1"
+           android:background="@drawable/soge_next_bg_sel"
+           android:gravity="center_horizontal"
+           android:padding="8dp"
+           android:text="提交"
+           android:textColor="@color/txt_whitetoback"
+           android:textSize="@dimen/list_title_size" />
+   </LinearLayout>
 
 </RelativeLayout>

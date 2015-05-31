@@ -151,6 +151,7 @@
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="请输入退款金额"
                     android:padding="5dp"
+                    android:numeric="decimal"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_title_size" />
             </LinearLayout>
@@ -252,7 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_btn"
+                    android:background="@drawable/soge_not_bg_sel"
                     android:gravity="center_horizontal"
                     android:padding="5dp"
                     android:text="取消"
@@ -265,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_btn"
+                    android:background="@drawable/soge_next_bg_sel"
                     android:gravity="center_horizontal"
                     android:padding="5dp"
                     android:text="提交"
