@@ -98,7 +98,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 		
 			holder.ll_goodsitem_add.removeAllViews();
 			List<ProductItemDto> listCarGoodsBeans=myOrderItem.getProductItemDtos();
-			boolean isRefundStatus=false;
+			boolean isRefundStatus=false;//是否是normal
 			for (ProductItemDto productItemDto : listCarGoodsBeans) {
 				View child = inflater.inflate(
 						R.layout.list_car_goods_item, null);
