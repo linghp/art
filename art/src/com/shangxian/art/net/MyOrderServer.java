@@ -2,7 +2,9 @@ package com.shangxian.art.net;
 
 import android.text.TextUtils;
 
+import com.ab.http.AbRequestParams;
 import com.google.gson.Gson;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
@@ -40,6 +42,12 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public interface OnHttpResultDelOrderListener {
 		void onHttpResultDelOrder(MyOrderItem myOrderItem);
+	}
+	/*
+	 * 返回退款申请监听
+	 */
+	public interface OnHttpResultRefundListener {
+		void onHttpResultRefund(CommonBean<Object> commonBean);
 	}
 
 	public static void toGetOrder(String status, final OnHttpResultListener l) {
@@ -187,5 +195,46 @@ public class MyOrderServer extends BaseServer {
 			e.printStackTrace();
 		}
 		return myOrderItem2;
+	}
+	
+	/**
+	 *退款申请
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toRequestRefund(String productid,String orderNumber,String totalPrice,String returnReason,String buyerMessege,
+			final OnHttpResultRefundListener l) {
+		AbRequestParams params = new AbRequestParams();
+		params.put("isGoods", "false");
+		params.put("totalPrice", totalPrice);
+		params.put("returnReason", returnReason);
+		params.put("buyerMessege", buyerMessege);
+		toPost2(NET_REFUND+productid+"/"+ orderNumber, params,new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultRefund(null);
+					} else {
+						l.onHttpResultRefund(getCommonBean(res));
+					}
+				}
+			}
+		});
+	}
+
+	protected static CommonBean<Object> getCommonBean(String res) {
+		CommonBean<Object> commonBean = null;
+		try {
+			Gson gson = new Gson();
+			commonBean = gson.fromJson(res, CommonBean.class);
+			MyLogger.i(commonBean.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return commonBean;
 	}
 }
