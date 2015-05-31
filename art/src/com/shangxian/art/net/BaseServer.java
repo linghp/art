@@ -65,7 +65,7 @@ public class BaseServer {
 	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
 	protected static final String NET_ORDERDETAILS = HOST
 			+ "order/details?orderNumber=";// 订单详情
-	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款申请
+	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款/退货申请
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
