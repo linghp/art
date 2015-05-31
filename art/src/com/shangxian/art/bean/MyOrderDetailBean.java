@@ -282,6 +282,34 @@ public Integer getOrderId() {
 		private Integer price;
 		@Expose
 		private String productSacle;
+		private Integer productSourcePrice;
+		private Integer unitPrice;
+		private Integer discount;
+		private String orderItemStatus;
+		public Integer getProductSourcePrice() {
+			return productSourcePrice;
+		}
+		public void setProductSourcePrice(Integer productSourcePrice) {
+			this.productSourcePrice = productSourcePrice;
+		}
+		public Integer getUnitPrice() {
+			return unitPrice;
+		}
+		public void setUnitPrice(Integer unitPrice) {
+			this.unitPrice = unitPrice;
+		}
+		public Integer getDiscount() {
+			return discount;
+		}
+		public void setDiscount(Integer discount) {
+			this.discount = discount;
+		}
+		public String getOrderItemStatus() {
+			return orderItemStatus;
+		}
+		public void setOrderItemStatus(String orderItemStatus) {
+			this.orderItemStatus = orderItemStatus;
+		}
 		public Integer getId() {
 			return id;
 		}
@@ -322,7 +350,10 @@ public Integer getOrderId() {
 		public String toString() {
 			return "OrderItem [id=" + id + ", specs=" + specs + ", quantity="
 					+ quantity + ", name=" + name + ", price=" + price
-					+ ", productSacle=" + productSacle + "]";
+					+ ", productSacle=" + productSacle
+					+ ", productSourcePrice=" + productSourcePrice
+					+ ", unitPrice=" + unitPrice + ", discount=" + discount
+					+ ", orderItemStatus=" + orderItemStatus + "]";
 		}
 		
 		}
