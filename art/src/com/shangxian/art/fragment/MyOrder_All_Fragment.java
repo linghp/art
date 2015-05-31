@@ -54,13 +54,18 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	private int skip = 0; // 从第skip+1条开始查询
 	private final int pageSize = 10;
 
-	private String returnStatus;//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
-	public static final String DELETE="delete";
-	
+	private String returnStatus;// 当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+	private String returnRefundStatus;// 退款状态
+	public static final String DELETE = "delete";
+
 	public void setNeedFresh(String returnStatus) {
 		this.returnStatus = returnStatus;
 	}
-	
+
+	public void setNeedFresh_Refund(String returnRefundStatus) {
+		this.returnRefundStatus = returnRefundStatus;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		MyLogger.i("");
@@ -130,14 +135,20 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	@Override
 	public void onStart() {
 		MyLogger.i("");
-		if(!TextUtils.isEmpty(returnStatus)){//当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
-			if(returnStatus.equals(DELETE)){
-				mOrderItems.remove(myOrderItem);
-			}else{
-				myOrderItem.setStatus(returnStatus);
+		if (myOrderItem != null) {
+			if (!TextUtils.isEmpty(returnStatus)) {// 当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
+				if (returnStatus.equals(DELETE)) {
+					mOrderItems.remove(myOrderItem);
+				} else {
+					myOrderItem.setStatus(returnStatus);
+				}
+				myOrderListAdapter.notifyDataSetChanged();
+				returnStatus = null;
+			} else if (!TextUtils.isEmpty(returnRefundStatus)) {
+				myOrderItem.getProductItemDtos().get(0)
+						.setOrderItemStatus(returnRefundStatus);
+				myOrderListAdapter.notifyDataSetChanged();
 			}
-			myOrderListAdapter.notifyDataSetChanged();
-			returnStatus=null;
 		}
 		super.onStart();
 	}

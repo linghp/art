@@ -12,13 +12,13 @@ import com.google.gson.annotations.Expose;
  */
 public class CommonBean<T> implements Serializable {
 	@Expose
-	private String result_code;
+	private String result_code="";
 
 	@Expose
-	private String reason;
+	private String reason="";
 
 	@Expose
-	private String result;
+	private String result="";
 
 	@Expose
 	private T object;

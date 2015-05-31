@@ -7,15 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +23,6 @@ import android.widget.ListView;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
-import com.ab.util.AbDialogUtil;
 import com.ab.util.AbLogUtil;
 import com.ab.util.AbSharedUtil;
 import com.ab.util.AbToastUtil;
@@ -33,7 +31,6 @@ import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.HomeGridAdp;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.GoodBean;
 import com.shangxian.art.bean.HomeData;
 import com.shangxian.art.bean.HomeadsBean;
 import com.shangxian.art.cache.Imageloader_homePager;
@@ -382,7 +379,6 @@ public class HomeActivity extends BaseActivity implements
 //			}
 //		});
 	}
-
 	private void refreshTask() {
 		String url = "http://59.36.101.88:8013/app/shop/warehouse/custuihuosaomiao.asp?";
 		AbRequestParams params = new AbRequestParams();
@@ -416,6 +412,7 @@ public class HomeActivity extends BaseActivity implements
 						// viewPager.setVisibility(View.VISIBLE);
 						viewPager.setOnGetView(new OnGetView() {
 
+							
 							@Override
 							public View getView(ViewGroup container,
 									int position) {
@@ -481,7 +478,7 @@ public class HomeActivity extends BaseActivity implements
 
 							@Override
 							public View getView(ViewGroup container,
-									int position) {
+									final int position) {
 								ImageView iv = new ImageView(HomeActivity.this);
 								//设置轮播图片的比例大小1:3
 								iv.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -495,6 +492,24 @@ public class HomeActivity extends BaseActivity implements
 										imgList.get(position), iv,
 										new Handler(), null);
 								container.addView(iv);
+								iv.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View v) {
+										
+										if (position == 0) {
+											System.out.println(">>>>>>>>>>>>>>跳转到商品列表");
+										}else if (position == 1) {
+											System.out.println(">>>>>>>>>>>>>>跳转到商铺列表");
+										}else if (position == 2) {
+											System.out.println(">>>>>>>>>>>>>>跳转到商家情况");
+										}else if (position == 3) {
+											System.out.println(">>>>>>>>>>>>>>跳转到商品详情");
+										}else {
+											System.out.println(">>>>>>>>>>>>>>点击"+position);
+										}
+									}
+								});
 								return iv;
 							}
 						});
@@ -502,7 +517,7 @@ public class HomeActivity extends BaseActivity implements
 					} else {
 						// viewPager.setVisibility(View.GONE);
 					}
-
+					
 					// if (mDatas.getTipsList() != null
 					// && mDatas.getTipsList().size() > 0) {
 					// tipsList.addAll(mDatas.getTipsList());
@@ -531,6 +546,8 @@ public class HomeActivity extends BaseActivity implements
 		viewPager = (TagViewPager) headView.findViewById(R.id.mTagViewPager);
 		ll_mainhomehead_add = (LinearLayout) headView
 				.findViewById(R.id.ll_mainhomehead_add);
+		
+		
 		initTagViewPager();
 		// tv_tips = (MarqueeText) headView.findViewById(R.id.tv_tips);
 		// tv_more = (TextView) headView.findViewById(R.id.tv_more);
@@ -564,6 +581,7 @@ public class HomeActivity extends BaseActivity implements
 				Global.KEY_SCREEN_WIDTH);
 		params.height = (int) (params.width / 3);
 		viewPager.setLayoutParams(params);
+		
 	}
 
 	@Override

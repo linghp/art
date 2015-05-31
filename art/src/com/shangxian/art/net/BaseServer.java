@@ -44,9 +44,10 @@ public class BaseServer {
 	 * 
 	 */
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
-	// public static final String HOSTtest=
-	// "http://192.168.0.116:8888/art/api/";
-	// public static final String HOST = "http://192.168.0.179:8888/art/api/";
+//	public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
+//	public static final String HOST = "http://192.168.0.197:8888/art/api/";
+	//public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
+	//public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
@@ -59,9 +60,10 @@ public class BaseServer {
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
+	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
 	protected static final String NET_ORDERDETAILS = HOST
 			+ "order/details?orderNumber=";// 订单详情
-	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款申请
+	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款/退货申请
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -369,6 +371,7 @@ public class BaseServer {
 			public void onResponse(String res) {
 				if (l != null) {
 					// l.onHttp(res);
+					MyLogger.i(res);
 					l.onHttp(res);
 				}
 			}
@@ -445,7 +448,7 @@ public class BaseServer {
 						super.onCancelled();
 						call.onCancelled();
 					}
-
+					
 					@Override
 					public void onLoading(long total, long current,
 							boolean isUploading) {

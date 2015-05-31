@@ -57,7 +57,7 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/cursor_bg"
                     android:text=""
-                    android:digits="0123456789@.qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+                    android:digits="0123456789@._-qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                     android:textColor="@color/txt_black1"
                     android:textColorHint="@color/txt_black2"
                     android:textSize="18sp" />
@@ -88,7 +88,6 @@
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="请输入密码"
-                    android:digits="0123456789@.qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:text=""
