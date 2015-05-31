@@ -6,6 +6,11 @@ import android.widget.TextView;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 退货订单详情
+ * @author zyz
+ *
+ */
 public class ReturnOrderDetailsActivity extends BaseActivity{
 	private TextView tv_time,tv_return,tv_goods,tv_istrue,tv_money,tv_reason,tv_explain;
 	@Override

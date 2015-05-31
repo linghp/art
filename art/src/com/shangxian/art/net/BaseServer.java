@@ -48,8 +48,8 @@ public class BaseServer {
 	 * 
 	 */
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
-	//public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
-	//public static final String HOST = "http://192.168.0.179:8888/art/api/";
+//	public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
+//	public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
