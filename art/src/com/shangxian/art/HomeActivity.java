@@ -57,7 +57,8 @@ public class HomeActivity extends BaseActivity implements
 	private HomeGridAdp adp = null;
 
 	/** 首页轮播图地址 */
-	private List<String> imgList = new ArrayList<String>();
+	private ArrayList<String> imgList = new ArrayList<String>();
+	List<HomeadsBean> listHomeadsBean_ads = new ArrayList<HomeadsBean>();
 	/** 首页广告数据 */
 	// private List<String> tipsList = new ArrayList<String>();
 	/** 首页热门礼品 */
@@ -100,7 +101,8 @@ public class HomeActivity extends BaseActivity implements
 		mGridView.setAdapter(adp);
 
 		// 请求轮滑图片
-		refreshTask();
+		requestTask_ads();
+		// refreshTask();
 		// 请求动态布局的数据
 		requestTask();
 	}
@@ -112,6 +114,151 @@ public class HomeActivity extends BaseActivity implements
 		mGridView = (ListView) this.findViewById(R.id.mListView);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
+	}
+
+	private void requestTask_ads() {
+		if (HttpUtils.checkNetWork(this)) {
+			AbRequestParams params = new AbRequestParams();
+			// params.put("shopid", "1019");
+			// params.put("code", "88881110344801123456");
+			// params.put("phone", "15889936624");
+			String url = Constant.BASEURL+Constant.CONTENT+Constant.HOMEAD;
+					//"http://192.168.0.197:8888/art/api/ad/indexBanner";
+			httpUtil.post(url, params, new AbStringHttpResponseListener() {
+				@Override
+				public void onStart() {
+				}
+
+				@Override
+				public void onFinish() {
+					MyLogger.i("onFinish");
+					// loading_big.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onFailure(int statusCode, String content,
+						Throwable error) {
+					MyLogger.i("onFailure");
+					//AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				}
+
+				@Override
+				public void onSuccess(int statusCode, String content) {
+					// AbToastUtil.showToast(HomeActivity.this, content);
+					AbLogUtil.i(HomeActivity.this, content);
+					if (!TextUtils.isEmpty(content)) {
+						Gson gson = new Gson();
+						try {
+							JSONObject jsonObject = new JSONObject(content);
+							String result_code = jsonObject
+									.getString("result_code");
+							if (result_code.equals("200")) {
+								// mGridView.setVisibility(View.VISIBLE);
+								listHomeadsBean_ads.clear();
+								imgList.clear();
+								JSONArray resultObjectArray = jsonObject
+										.getJSONArray("result");
+								int length = resultObjectArray.length();
+								for (int i = 0; i < length; i++) {
+									JSONObject jo = resultObjectArray
+											.getJSONObject(i);
+									HomeadsBean homeadsBean = gson.fromJson(
+											jo.toString(), HomeadsBean.class);
+									imgList.add(Constant.BASEURL
+											+ homeadsBean.getImageUrl());
+									listHomeadsBean_ads.add(homeadsBean);
+								}
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+						}
+					}
+					mDatas.setImgList(imgList);
+					// mDatas.setTipsList(tips);
+					// mDatas.setGoods(goodlist);
+
+					if (mDatas != null) {
+						if (mDatas.getImgList() != null
+								&& mDatas.getImgList().size() > 0) {
+							//imgList.addAll(mDatas.getImgList());
+							// viewPager.setVisibility(View.VISIBLE);
+							viewPager.setOnGetView(new OnGetView() {
+
+								@Override
+								public View getView(ViewGroup container,
+										final int position) {
+									ImageView iv = new ImageView(
+											HomeActivity.this);
+									// 设置轮播图片的比例大小1:3
+									iv.setScaleType(ImageView.ScaleType.FIT_XY);
+									LayoutParams layoutParams = viewPager
+											.getLayoutParams();
+									layoutParams.width = CommonUtil
+											.getScreenWidth(HomeActivity.this);
+									layoutParams.height = layoutParams.width * 1 / 3;
+									iv.setLayoutParams(layoutParams);
+									Imageloader_homePager.displayImage(
+											imgList.get(position), iv,
+											new Handler(), null);
+									container.addView(iv);
+									iv.setTag(listHomeadsBean_ads
+											.get(position)
+											.getAdAction());
+									iv.setTag(
+											R.id.homeDataUrl,
+											listHomeadsBean_ads.get(
+													position)
+													.getDataUrl());
+									iv.setOnClickListener(HomeActivity.this);
+//									iv.setOnClickListener(new OnClickListener() {
+//
+//										@Override
+//										public void onClick(View view) {
+//											myToast("click");
+//											view.setTag(listHomeadsBean_ads
+//													.get(position)
+//													.getAdAction());
+//											view.setTag(
+//													R.id.homeDataUrl,
+//													listHomeadsBean_ads.get(
+//															position)
+//															.getDataUrl());
+//											view.setOnClickListener(HomeActivity.this);
+//										}
+//									});
+									return iv;
+								}
+							});
+							viewPager.setAdapter(imgList.size());
+						} else {
+							// viewPager.setVisibility(View.GONE);
+						}
+
+						// if (mDatas.getTipsList() != null
+						// && mDatas.getTipsList().size() > 0) {
+						// tipsList.addAll(mDatas.getTipsList());
+						// tv_tips.setVisibility(View.VISIBLE);
+						// tv_tips.setText(tipsList.get(0));
+						// } else {
+						// tv_tips.setVisibility(View.GONE);
+						// }
+
+						// if (mDatas.getGoods() != null
+						// && mDatas.getGoods().size() > 0) {
+						// goods.addAll(mDatas.getGoods());
+						// adp.updateData(goods);
+						// }
+					}
+				}
+
+			});
+		} else if (listHomeadsBean_ads.size() == 0) {// 如果没有网且没有缓存数据
+		} else {// 如果没有网且有缓存数据
+		}
 	}
 
 	private void requestTask() {
@@ -129,7 +276,7 @@ public class HomeActivity extends BaseActivity implements
 				@Override
 				public void onFinish() {
 					MyLogger.i("onFinish");
-					//loading_big.setVisibility(View.GONE);
+					// loading_big.setVisibility(View.GONE);
 					mAbPullToRefreshView.onHeaderRefreshFinish();
 				}
 
@@ -152,7 +299,7 @@ public class HomeActivity extends BaseActivity implements
 							String result_code = jsonObject
 									.getString("result_code");
 							if (result_code.equals("200")) {
-								//mGridView.setVisibility(View.VISIBLE);
+								// mGridView.setVisibility(View.VISIBLE);
 								listHomeadsBean.clear();
 								JSONArray resultObjectArray = jsonObject
 										.getJSONArray("result");
@@ -167,9 +314,9 @@ public class HomeActivity extends BaseActivity implements
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}catch (Exception e) {
+						} catch (Exception e) {
 							e.printStackTrace();
-						}finally{
+						} finally {
 							mGridView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -202,14 +349,17 @@ public class HomeActivity extends BaseActivity implements
 										if (j == 0) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_01);
-											//设置图片的比例大小
+											// 设置图片的比例大小
 											iv.setScaleType(ImageView.ScaleType.FIT_XY);
-											LayoutParams layoutParams = iv.getLayoutParams();
+											LayoutParams layoutParams = iv
+													.getLayoutParams();
 											layoutParams.width = (CommonUtil
-													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 41 / 100;
-											layoutParams.height = layoutParams.width*34/25;
+													.getScreenWidth(HomeActivity.this) - CommonUtil
+													.dip2px(HomeActivity.this,
+															10)) * 41 / 100;
+											layoutParams.height = layoutParams.width * 34 / 25;
 											iv.setLayoutParams(layoutParams);
-											
+
 											Imageloader_homePager
 													.displayImage(
 															Constant.BASEURL
@@ -223,12 +373,15 @@ public class HomeActivity extends BaseActivity implements
 										} else if (j == 1) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_02);
-											//设置图片的比例大小
+											// 设置图片的比例大小
 											iv.setScaleType(ImageView.ScaleType.FIT_XY);
-											LayoutParams layoutParams = iv.getLayoutParams();
+											LayoutParams layoutParams = iv
+													.getLayoutParams();
 											layoutParams.width = (CommonUtil
-													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
-											layoutParams.height = layoutParams.width*38/80;
+													.getScreenWidth(HomeActivity.this) - CommonUtil
+													.dip2px(HomeActivity.this,
+															10)) * 3 / 5;
+											layoutParams.height = layoutParams.width * 38 / 80;
 											iv.setLayoutParams(layoutParams);
 											Imageloader_homePager
 													.displayImage(
@@ -243,12 +396,15 @@ public class HomeActivity extends BaseActivity implements
 										} else if (j == 2) {
 											ImageView iv = (ImageView) view2
 													.findViewById(R.id.iv_03);
-											//设置图片的比例大小
+											// 设置图片的比例大小
 											iv.setScaleType(ImageView.ScaleType.FIT_XY);
-											LayoutParams layoutParams = iv.getLayoutParams();
+											LayoutParams layoutParams = iv
+													.getLayoutParams();
 											layoutParams.width = (CommonUtil
-													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
-											layoutParams.height = layoutParams.width*9/20;
+													.getScreenWidth(HomeActivity.this) - CommonUtil
+													.dip2px(HomeActivity.this,
+															10)) * 3 / 5;
+											layoutParams.height = layoutParams.width * 9 / 20;
 											iv.setLayoutParams(layoutParams);
 											Imageloader_homePager
 													.displayImage(
@@ -372,13 +528,14 @@ public class HomeActivity extends BaseActivity implements
 		topView.setRightBtnListener(activity);
 		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
-//		topView.setCenterListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
-//			}
-//		});
+		// topView.setCenterListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
+		// }
+		// });
 	}
+
 	private void refreshTask() {
 		String url = "http://59.36.101.88:8013/app/shop/warehouse/custuihuosaomiao.asp?";
 		AbRequestParams params = new AbRequestParams();
@@ -412,19 +569,19 @@ public class HomeActivity extends BaseActivity implements
 						// viewPager.setVisibility(View.VISIBLE);
 						viewPager.setOnGetView(new OnGetView() {
 
-							
 							@Override
 							public View getView(ViewGroup container,
 									int position) {
 								ImageView iv = new ImageView(HomeActivity.this);
-								//设置图片的比例大小
+								// 设置图片的比例大小
 								iv.setScaleType(ImageView.ScaleType.FIT_XY);
-								LayoutParams layoutParams = iv.getLayoutParams();
+								LayoutParams layoutParams = iv
+										.getLayoutParams();
 								layoutParams.width = CommonUtil
 										.getScreenWidth(HomeActivity.this);
 								layoutParams.height = layoutParams.width * 5 / 13;
 								iv.setLayoutParams(layoutParams);
-								
+
 								Imageloader_homePager.displayImage(
 										imgList.get(position), iv,
 										new Handler(), null);
@@ -480,7 +637,7 @@ public class HomeActivity extends BaseActivity implements
 							public View getView(ViewGroup container,
 									final int position) {
 								ImageView iv = new ImageView(HomeActivity.this);
-								//设置轮播图片的比例大小1:3
+								// 设置轮播图片的比例大小1:3
 								iv.setScaleType(ImageView.ScaleType.FIT_XY);
 								LayoutParams layoutParams = viewPager
 										.getLayoutParams();
@@ -493,20 +650,26 @@ public class HomeActivity extends BaseActivity implements
 										new Handler(), null);
 								container.addView(iv);
 								iv.setOnClickListener(new OnClickListener() {
-									
+
 									@Override
 									public void onClick(View v) {
-										
+
 										if (position == 0) {
-											System.out.println(">>>>>>>>>>>>>>跳转到商品列表");
-										}else if (position == 1) {
-											System.out.println(">>>>>>>>>>>>>>跳转到商铺列表");
-										}else if (position == 2) {
-											System.out.println(">>>>>>>>>>>>>>跳转到商家情况");
-										}else if (position == 3) {
-											System.out.println(">>>>>>>>>>>>>>跳转到商品详情");
-										}else {
-											System.out.println(">>>>>>>>>>>>>>点击"+position);
+											System.out
+													.println(">>>>>>>>>>>>>>跳转到商品列表");
+										} else if (position == 1) {
+											System.out
+													.println(">>>>>>>>>>>>>>跳转到商铺列表");
+										} else if (position == 2) {
+											System.out
+													.println(">>>>>>>>>>>>>>跳转到商家情况");
+										} else if (position == 3) {
+											System.out
+													.println(">>>>>>>>>>>>>>跳转到商品详情");
+										} else {
+											System.out
+													.println(">>>>>>>>>>>>>>点击"
+															+ position);
 										}
 									}
 								});
@@ -517,7 +680,7 @@ public class HomeActivity extends BaseActivity implements
 					} else {
 						// viewPager.setVisibility(View.GONE);
 					}
-					
+
 					// if (mDatas.getTipsList() != null
 					// && mDatas.getTipsList().size() > 0) {
 					// tipsList.addAll(mDatas.getTipsList());
@@ -546,8 +709,7 @@ public class HomeActivity extends BaseActivity implements
 		viewPager = (TagViewPager) headView.findViewById(R.id.mTagViewPager);
 		ll_mainhomehead_add = (LinearLayout) headView
 				.findViewById(R.id.ll_mainhomehead_add);
-		
-		
+
 		initTagViewPager();
 		// tv_tips = (MarqueeText) headView.findViewById(R.id.tv_tips);
 		// tv_more = (TextView) headView.findViewById(R.id.tv_more);
@@ -581,12 +743,12 @@ public class HomeActivity extends BaseActivity implements
 				Global.KEY_SCREEN_WIDTH);
 		params.height = (int) (params.width / 3);
 		viewPager.setLayoutParams(params);
-		
+
 	}
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView arg0) {
-		// refreshTask();
+		requestTask_ads();
 		requestTask();
 	}
 

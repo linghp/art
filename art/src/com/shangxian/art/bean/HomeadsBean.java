@@ -21,6 +21,15 @@ public class HomeadsBean {
 	private Integer itemOrder;
 	@Expose
 	private Boolean single;
+	private String banner;
+
+	public String getBanner() {
+		return banner;
+	}
+
+	public void setBanner(String banner) {
+		this.banner = banner;
+	}
 
 	/**
 	 * 
@@ -122,6 +131,14 @@ public class HomeadsBean {
 	 */
 	public void setSingle(Boolean single) {
 		this.single = single;
+	}
+
+	@Override
+	public String toString() {
+		return "HomeadsBean [itemId=" + itemId + ", imageUrl=" + imageUrl
+				+ ", adAction=" + adAction + ", dataUrl=" + dataUrl
+				+ ", itemOrder=" + itemOrder + ", single=" + single
+				+ ", banner=" + banner + "]";
 	}
 
 }

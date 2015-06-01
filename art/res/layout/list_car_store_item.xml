@@ -12,7 +12,8 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        style="@style/item_shop_parent"
+        >
 
         <CheckBox
             android:id="@+id/check_store"
@@ -24,8 +25,7 @@
         <ImageView
             android:layout_marginLeft="5dp"
             android:id="@+id/iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/item_shop_shoplogo"/>
 
         <TextView
             android:id="@+id/car_storename"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="测试店铺1"
-            android:textSize="@dimen/list_summary_size" />
+            />
     </LinearLayout>
 
 </LinearLayout>

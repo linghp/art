@@ -200,8 +200,8 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item4:
 			// 我的消息
-			if (isLoginAndToLogin())
-				startActivity(new Intent(this, MyMessageActivity.class));
+//			if (isLoginAndToLogin())
+//				startActivity(new Intent(this, MyMessageActivity.class));
 			break;
 		case R.id.ll_my_item5:
 			// 我的预付

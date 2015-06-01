@@ -142,6 +142,7 @@ public class HttpClients {
 					break;
 				case SUCCESS:
 					String res = (String) msg.obj;
+					MyLogger.i(res);
 					l.onResponse(res);
 					break;
 				}
