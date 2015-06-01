@@ -23,7 +23,6 @@ public class HomeadsBean {
 	private Boolean single;
 	@Expose
 	private Boolean banner;
-
 	public Boolean getBanner() {
 		return banner;
 	}
