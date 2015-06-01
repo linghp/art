@@ -138,7 +138,7 @@ public class RefundOrder_All_Fragment extends BaseFragment implements
 		MyLogger.i("status: " + status);
 		//MyOrderServer.toGetOrder(status, this);
 		RequestParams params = new RequestParams();
-		params.addHeader("User-Token", /*LocalUserInfo.getInstance(getActivity()).getUser().getId() + ""*/"17");
+		params.addHeader("User-Token", LocalUserInfo.getInstance(getActivity()).getUser().getId() + "");
 //		new HttpUtils().send(HttpMethod.POST, BaseServer.NET_MYORDER_BACK_LIST + status, params, new BaseCallBack<MyOrderItem_all>() {
 //			
 //			@Override

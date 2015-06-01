@@ -57,6 +57,7 @@ public class HomeActivity extends BaseActivity implements
 	private HomeGridAdp adp = null;
 
 	/** 首页轮播图地址 */
+	//private List<String> imgList = new ArrayList<String>();
 	private List<String> imgList = new ArrayList<String>();
 	/** 首页广告数据 */
 	// private List<String> tipsList = new ArrayList<String>();
@@ -114,6 +115,245 @@ public class HomeActivity extends BaseActivity implements
 		loading_big = findViewById(R.id.loading_big);
 	}
 
+	private void requestTask_ads() {
+		if (HttpUtils.checkNetWork(this)) {
+			AbRequestParams params = new AbRequestParams();
+			// params.put("shopid", "1019");
+			// params.put("code", "88881110344801123456");
+			// params.put("phone", "15889936624");
+			String url = "http://192.168.0.197:8888/art/api/ad/indexBanner";
+			httpUtil.get(url, params, new AbStringHttpResponseListener() {
+				@Override
+				public void onStart() {
+				}
+
+				@Override
+				public void onFinish() {
+					MyLogger.i("onFinish");
+				}
+
+				@Override
+				public void onFailure(int statusCode, String content,
+						Throwable error) {
+					AbToastUtil.showToast(HomeActivity.this, error.getMessage());
+				}
+
+				@Override
+				public void onSuccess(int statusCode, String content) {
+					// AbToastUtil.showToast(HomeActivity.this, content);
+					AbLogUtil.i(HomeActivity.this, content);
+					if (!TextUtils.isEmpty(content)) {
+						Gson gson = new Gson();
+						try {
+							JSONObject jsonObject = new JSONObject(content);
+							String result_code = jsonObject
+									.getString("result_code");
+							if (result_code.equals("200")) {
+								//mGridView.setVisibility(View.VISIBLE);
+								listHomeadsBean.clear();
+								JSONArray resultObjectArray = jsonObject
+										.getJSONArray("result");
+								int length = resultObjectArray.length();
+								for (int i = 0; i < length; i++) {
+									JSONObject jo = resultObjectArray
+											.getJSONObject(i);
+									listHomeadsBean.add(gson.fromJson(
+											jo.toString(), HomeadsBean.class));
+								}
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}catch (Exception e) {
+							e.printStackTrace();
+						}finally{
+							mGridView.setVisibility(View.VISIBLE);
+						}
+					}
+
+					ll_mainhomehead_add.removeAllViews();
+					if (listHomeadsBean.size() > 0) {
+						int i = 0;
+						List<HomeadsBean> listHomeadsBean_three = new ArrayList<HomeadsBean>();
+						for (HomeadsBean homeadsBean : listHomeadsBean) {
+							if (homeadsBean.getSingle()) {
+								View view = mInflater.inflate(
+										R.layout.layout_main_home_item1, null);
+								Imageloader_homePager.displayImage(
+										Constant.BASEURL
+												+ homeadsBean.getImageUrl(),
+										(ImageView) view
+												.findViewById(R.id.iv_01),
+										new Handler(), null);
+								ll_mainhomehead_add.addView(view);
+								extracted(homeadsBean, view);
+							} else {
+								i++;
+								listHomeadsBean_three.add(homeadsBean);
+								if (i % 3 == 0) {
+									View view2 = mInflater.inflate(
+											R.layout.layout_main_home_item2,
+											null);
+									for (int j = 0; j < listHomeadsBean_three
+											.size(); j++) {
+										if (j == 0) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_01);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 41 / 100;
+											layoutParams.height = layoutParams.width*34/25;
+											iv.setLayoutParams(layoutParams);
+											
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(0)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										} else if (j == 1) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_02);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
+											layoutParams.height = layoutParams.width*38/80;
+											iv.setLayoutParams(layoutParams);
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(1)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										} else if (j == 2) {
+											ImageView iv = (ImageView) view2
+													.findViewById(R.id.iv_03);
+											//设置图片的比例大小
+											iv.setScaleType(ImageView.ScaleType.FIT_XY);
+											LayoutParams layoutParams = iv.getLayoutParams();
+											layoutParams.width = (CommonUtil
+													.getScreenWidth(HomeActivity.this)-CommonUtil.dip2px(HomeActivity.this, 10)) * 3 / 5;
+											layoutParams.height = layoutParams.width*9/20;
+											iv.setLayoutParams(layoutParams);
+											Imageloader_homePager
+													.displayImage(
+															Constant.BASEURL
+																	+ listHomeadsBean_three
+																			.get(2)
+																			.getImageUrl(),
+															iv, new Handler(),
+															null);
+											extracted(listHomeadsBean_three
+													.get(j), iv);
+										}
+									}
+									ll_mainhomehead_add.addView(view2);
+									listHomeadsBean_three.clear();
+								}
+							}
+						}
+					}
+				}
+
+				// TestBean bean = (TestBean) AbJsonUtil.fromJson(content,
+				// TestBean.class);
+				// tv_tips.setText(bean.getPname());
+
+				// imgList.clear();
+				// // tipsList.clear();
+				// // goods.clear();
+				//
+				// ArrayList<String> imgs = new ArrayList<String>();
+				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				// imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
+				// imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
+				// imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
+				// // ArrayList<String> tips = new ArrayList<String>();
+				// //
+				// tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
+				// // ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
+				// // for (int i = 0; i < 3; i++) {
+				// // GoodBean good = new GoodBean();
+				// // //good.setContent("中国测试产品:" + i);
+				// // //good.setPrice(1000 + i + "");
+				// //
+				// good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
+				// // goodlist.add(good);
+				// // }
+				//
+				// mDatas.setImgList(imgs);
+				// // mDatas.setTipsList(tips);
+				// // mDatas.setGoods(goodlist);
+				//
+				// if (mDatas != null) {
+				// if (mDatas.getImgList() != null
+				// && mDatas.getImgList().size() > 0) {
+				// imgList.addAll(mDatas.getImgList());
+				// // viewPager.setVisibility(View.VISIBLE);
+				// viewPager.setOnGetView(new OnGetView() {
+				//
+				// @Override
+				// public View getView(ViewGroup container,
+				// int position) {
+				// ImageView iv = new ImageView(HomeActivity.this);
+				// Imageloader_homePager.displayImage(
+				// imgList.get(position), iv,
+				// new Handler(), null);
+				// container.addView(iv);
+				// return iv;
+				// }
+				// });
+				// viewPager.setAdapter(imgList.size());
+				// } else {
+				// // viewPager.setVisibility(View.GONE);
+				// }
+				//
+				// // if (mDatas.getTipsList() != null
+				// // && mDatas.getTipsList().size() > 0) {
+				// // tipsList.addAll(mDatas.getTipsList());
+				// // tv_tips.setVisibility(View.VISIBLE);
+				// // tv_tips.setText(tipsList.get(0));
+				// // } else {
+				// // tv_tips.setVisibility(View.GONE);
+				// // }
+				//
+				// // if (mDatas.getGoods() != null
+				// // && mDatas.getGoods().size() > 0) {
+				// // goods.addAll(mDatas.getGoods());
+				// // adp.updateData(goods);
+				// // }
+				// }
+				//
+				// addlayout();
+
+				private void extracted(HomeadsBean homeadsBean, View view) {
+					view.setTag(homeadsBean.getAdAction());
+					view.setTag(R.id.homeDataUrl, homeadsBean.getDataUrl());
+					view.setOnClickListener(HomeActivity.this);
+				}
+			});
+		} else if (listHomeadsBean.size() == 0) {// 如果没有网且没有缓存数据
+			mGridView.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.VISIBLE);
+			mAbPullToRefreshView.onHeaderRefreshFinish();
+		} else {// 如果没有网且有缓存数据
+			mGridView.setVisibility(View.VISIBLE);
+			mAbPullToRefreshView.onHeaderRefreshFinish();
+		}
+	}
+	
 	private void requestTask() {
 		if (HttpUtils.checkNetWork(this)) {
 			AbRequestParams params = new AbRequestParams();

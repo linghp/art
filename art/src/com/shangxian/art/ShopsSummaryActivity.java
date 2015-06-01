@@ -62,6 +62,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 		topView.setRightBtnDrawable(R.drawable.collection);
 		topView.setTitle("商铺简介");
 		topView.setBack(R.drawable.back);//返回
+		topView.hideCenterSearch();
 
 		shopsimg = (ImageView) findViewById(R.id.shopssummary_shopsimg);
 		phoneimg = (ImageView) findViewById(R.id.shopssummary_phoneimg);

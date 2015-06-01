@@ -7,7 +7,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.text.TextUtils;
 
-import com.ab.http.AbRequestParams;
 import com.google.gson.Gson;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;

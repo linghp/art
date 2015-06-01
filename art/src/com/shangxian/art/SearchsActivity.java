@@ -13,6 +13,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.SearchServer;
 import com.shangxian.art.net.SearchServer.OnSearchProductListener;
+import com.shangxian.art.view.CircleImageView1;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -52,11 +53,10 @@ public class SearchsActivity extends BaseActivity {
 	private PopupWindow popu;
 	private TextView tv_sea;
 	private boolean isChangModel;
+	private CircleImageView1 iv_noData;
 
 	public enum SearchModel {
-		product, 
-		shop, 
-		all, 
+		product, shop, all,
 	}
 
 	@Override
@@ -65,14 +65,15 @@ public class SearchsActivity extends BaseActivity {
 		setContentView(R.layout.act_searchs);
 		initData();
 		initView();
-		
+
 		listener();
 	}
 
 	private void initData() {
 		if (getIntent().getIntExtra(Constant.INT_SEARCH_TO, Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
 			curModel = SearchModel.shop;
-		} else if (getIntent().getIntExtra(Constant.INT_SEARCH_TO, Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
+		} else if (getIntent().getIntExtra(Constant.INT_SEARCH_TO,
+				Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
 			curModel = SearchModel.product;
 		} else {
 			curModel = SearchModel.shop;
@@ -82,7 +83,8 @@ public class SearchsActivity extends BaseActivity {
 	private void initView() {
 		iv_back = (ImageView) findViewById(R.id.iv_back);
 		iv_search = (ImageView) findViewById(R.id.iv_search);
-		
+		iv_noData = (CircleImageView1) findViewById(R.id.notData);
+
 		tv_sea = (TextView) findViewById(R.id.tv_sear);
 
 		et_sreach = (EditText) findViewById(R.id.et_search);
@@ -109,27 +111,29 @@ public class SearchsActivity extends BaseActivity {
 
 	@SuppressWarnings("deprecation")
 	private void initPopuWindow() {
-		popuv = (LinearLayout) getLayoutInflater().inflate(R.layout.search_popu, null); 
+		popuv = (LinearLayout) getLayoutInflater().inflate(
+				R.layout.search_popu, null);
 		ll_shop = (LinearLayout) popuv.findViewById(R.id.popu_shop);
 		ll_goods = (LinearLayout) popuv.findViewById(R.id.popu_goods);
-		popu = new PopupWindow(popuv, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-		
+		popu = new PopupWindow(popuv, LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, true);
+
 		popu.setTouchable(true);
 		popu.setOutsideTouchable(true);
-		// 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景  
-        popu.setBackgroundDrawable(new BitmapDrawable());
-        
-        popu.getContentView().setFocusableInTouchMode(true);
-        popu.getContentView().setFocusable(true);
-        
-        ll_goods.setOnClickListener(new OnClickListener() {
+		// 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+		popu.setBackgroundDrawable(new BitmapDrawable());
+
+		popu.getContentView().setFocusableInTouchMode(true);
+		popu.getContentView().setFocusable(true);
+
+		ll_goods.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				changeUi(UiModel.goods);
 				popu.dismiss();
 			}
 		});
-        ll_shop.setOnClickListener(new OnClickListener() {
+		ll_shop.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				changeUi(UiModel.shop);
@@ -137,7 +141,7 @@ public class SearchsActivity extends BaseActivity {
 			}
 		});
 	}
-	
+
 	private void addFoot() {
 		footLayout = (LinearLayout) getLayoutInflater().inflate(
 				R.layout.search_loadmore, null);
@@ -159,14 +163,14 @@ public class SearchsActivity extends BaseActivity {
 	}
 
 	private void loadSearch() {
-		SearchServer.onSearchProduct(scan_info, "0", "10", curModel == SearchModel.shop
-				, new OnSearchProductListener() {
+		SearchServer.onSearchProduct(scan_info, "0", "10",
+				curModel == SearchModel.shop, new OnSearchProductListener() {
 					@Override
 					public void onSearch(SearchProductInfo product) {
-						if (!product.isNull()) {
+						if (product != null && !product.isNull()) {
 							changeUi(UiModel.showData);
 							info = product;
-							searchsAdapter.upDateList(info.getData());	
+							searchsAdapter.upDateList(info.getData());
 							if (info != null && info.isMore()) {
 								changeUi(UiModel.footerToLoad);
 							} else {
@@ -186,8 +190,9 @@ public class SearchsActivity extends BaseActivity {
 					@Override
 					public void onSearch(SearchProductInfo product) {
 						info = product;
-						if (info != null) searchsAdapter.addFootDataList(info.getData());
-						//changeUi(UiModel.showData);
+						if (info != null)
+							searchsAdapter.addFootDataList(info.getData());
+						// changeUi(UiModel.showData);
 						if (info != null && info.isMore()) {
 							changeUi(UiModel.footerToLoad);
 						} else {
@@ -223,23 +228,15 @@ public class SearchsActivity extends BaseActivity {
 		ll_group.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				popu.showAsDropDown(ll_scan, - Utils.dipToPx(mAc,  8), 0);
+				popu.showAsDropDown(ll_scan, -Utils.dipToPx(mAc, 8), 0);
 			}
 		});
 	}
 
 	public enum UiModel {
-		footerToLoad, 
-		footerLoading, 
-		footerNoMore, 
-		loading, 
-		noData, 
-		normal, 
-		showData,
-		shop,
-		goods
+		footerToLoad, footerLoading, footerNoMore, loading, noData, normal, showData, shop, goods
 	}
-	
+
 	private void changeUi(UiModel m) {
 		switch (m) {
 		case footerToLoad:
@@ -269,6 +266,10 @@ public class SearchsActivity extends BaseActivity {
 			ll_loading.setVisibility(View.GONE);
 			ll_noData.setVisibility(View.VISIBLE);
 			lv_info.setVisibility(View.GONE);
+			iv_noData
+					.setImageResource(SearchModel.shop == curModel ? R.drawable.noshop
+							: SearchModel.product == curModel ? R.drawable.noproduct
+									: R.drawable.nomsg);
 			break;
 		case normal:
 			ll_loading.setVisibility(View.GONE);
@@ -285,7 +286,8 @@ public class SearchsActivity extends BaseActivity {
 			ll_shop.setSelected(true);
 			ll_goods.setSelected(false);
 			curModel = SearchModel.shop;
-			if (searchsAdapter != null) searchsAdapter.setToSearch(true);
+			if (searchsAdapter != null)
+				searchsAdapter.setToSearch(true);
 			isChangModel = true;
 			break;
 		case goods:
@@ -293,7 +295,8 @@ public class SearchsActivity extends BaseActivity {
 			ll_goods.setSelected(true);
 			ll_shop.setSelected(false);
 			curModel = SearchModel.product;
-			if (searchsAdapter != null) searchsAdapter.setToSearch(false);
+			if (searchsAdapter != null)
+				searchsAdapter.setToSearch(false);
 			isChangModel = true;
 			break;
 		}
