@@ -20,9 +20,21 @@
             android:layout_height="wrap_content"
             android:scrollbars="none" >
         </ListView>
+
+        <!--
+        <com.shangxian.art.view.SlidingListView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none" >
+        </com.shangxian.art.view.SlidingListView>
+        -->
+
         <include
             layout="@layout/refresh_empty"
             android:visibility="gone" />
+
         <include layout="@layout/loadind_big" />
     </RelativeLayout>
 
