@@ -21,10 +21,15 @@ public class SearchServer extends BaseServer {
 			@Override
 			public void onHttp(String res) {
 				if (l != null && !TextUtils.isEmpty(res)) {
-					Type type = new TypeToken<SearchProductInfo>() {
-					}.getType();
-					SearchProductInfo info = gson.fromJson(res, type);
-					l.onSearch(info);
+					try {
+						Type type = new TypeToken<SearchProductInfo>() {
+						}.getType();
+						SearchProductInfo info = gson.fromJson(res, type);
+						l.onSearch(info);
+					} catch (Exception e) {
+						e.printStackTrace();
+						l.onSearch(null);
+					}
 				} else {
 					l.onSearch(null);
 				}

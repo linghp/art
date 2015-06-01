@@ -59,6 +59,7 @@ public class HomeActivity extends BaseActivity implements
 	/** 首页轮播图地址 */
 	private ArrayList<String> imgList = new ArrayList<String>();
 	List<HomeadsBean> listHomeadsBean_ads = new ArrayList<HomeadsBean>();
+
 	/** 首页广告数据 */
 	// private List<String> tipsList = new ArrayList<String>();
 	/** 首页热门礼品 */
@@ -260,7 +261,7 @@ public class HomeActivity extends BaseActivity implements
 		} else {// 如果没有网且有缓存数据
 		}
 	}
-
+	
 	private void requestTask() {
 		if (HttpUtils.checkNetWork(this)) {
 			AbRequestParams params = new AbRequestParams();

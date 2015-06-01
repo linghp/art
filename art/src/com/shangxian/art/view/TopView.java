@@ -2,9 +2,11 @@ package com.shangxian.art.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +29,8 @@ public class TopView extends RelativeLayout {
 	
 	private Activity mActivity; // 当前activity
 	private View mRootView;
-	private View ll_center,et_search;
+	private View ll_center;
+	private EditText et_search;
 	//private Button btn_back;
 	private ImageView btn_left, btn_right;
 	private TextView tv_title;
@@ -57,7 +60,7 @@ public class TopView extends RelativeLayout {
 		//btn_back = (ImageView) mRootView.findViewById(R.id.btn_back);
 		btn_left = (ImageView) mRootView.findViewById(R.id.btn_left);
 		ll_center = mRootView.findViewById(R.id.ll_center);
-		et_search = mRootView.findViewById(R.id.et_search);
+		et_search = (EditText) mRootView.findViewById(R.id.et_search);
 		btn_right = (ImageView) mRootView.findViewById(R.id.btn_right);
 		rl_title = (RelativeLayout) mRootView.findViewById(R.id.rl_title);
 		rt_name = (TextView) mRootView.findViewById(R.id.topt_tv_right);
@@ -70,15 +73,19 @@ public class TopView extends RelativeLayout {
 		addView(mRootView, Global.PARAM_MP_WC);
 		
 		mRootView.post(new Runnable() {
-			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				LayoutParams params = (LayoutParams) mRootView.getLayoutParams();
 				params.height = CommonUtil.dip2px(Global.mContext, 49);
 				mRootView.setLayoutParams(params);
 			}
 		});
+		}
+	}
+	
+	public void setCneterHint(String name){
+		if (!TextUtils.isEmpty(name)) {
+			et_search.setHint(name);
 		}
 	}
 	

@@ -10,12 +10,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
+import com.shangxian.art.R;
 import com.shangxian.art.SafetyVerificationActivity;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.bean.UserInfo;
@@ -33,6 +37,9 @@ public class BaseActivity extends AbActivity {
 	protected AbHttpUtil httpUtil;
 	public static UserInfo curUserInfo;
 	protected LayoutInflater inflater;
+	private LinearLayout ll_nodata;
+	private ImageView iv_nodata;
+	protected TextView tv_nodata;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,57 @@ public class BaseActivity extends AbActivity {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		AliPayBase.initContext(this);
+	}
+
+	@Override
+	public void setContentView(int layoutResID) {
+		super.setContentView(layoutResID);
+		if (findViewById(R.id.nodata_ll) != null) {
+			ll_nodata = (LinearLayout) findViewById(R.id.nodata_ll);
+			iv_nodata = (ImageView) findViewById(R.id.nodata_icon);
+			tv_nodata = (TextView) findViewById(R.id.nodata_title);
+		}
+	}
+	
+	protected enum NoDataModel { 
+		noShop,
+		noProduct,
+		noCategory,
+		noMingxi,
+		noMsg,
+		noPingjia
+	}
+	
+	protected void showNoData(NoDataModel model){
+		if (ll_nodata != null) {
+			ll_nodata.setVisibility(View.VISIBLE);
+			switch (model) {
+			case noShop:
+				iv_nodata.setImageResource(R.drawable.noshop);
+				break;
+			case noProduct:
+				iv_nodata.setImageResource(R.drawable.noproduct);
+				break;
+			case noCategory:
+				iv_nodata.setImageResource(R.drawable.nocategory);
+				break;
+			case noMingxi:
+				iv_nodata.setImageResource(R.drawable.nomingxi);
+				break;
+			case noMsg:
+				iv_nodata.setImageResource(R.drawable.nomsg);
+				break;
+			case noPingjia:
+				iv_nodata.setImageResource(R.drawable.nopingjia);
+				break;
+			}
+		}
+	}
+	
+	protected void hideNoData() {
+		if (ll_nodata != null) {
+			ll_nodata.setVisibility(View.GONE);
+		}
 	}
 
 	protected void myToast(String str) {
@@ -107,24 +165,32 @@ public class BaseActivity extends AbActivity {
 
 	protected boolean isPayed(boolean isShowDialog) {
 		if (isShowDialog && !curUserInfo.isPayed()) {
-			final AlertDialog dialog = new AlertDialog.Builder(mAc).setTitle("提示")
+			final AlertDialog dialog = new AlertDialog.Builder(mAc)
+					.setTitle("提示")
 					.setMessage("系统检查您尚未设置支付密码，为提升您的用户体验，请尽快设置!")
-					.setNegativeButton("去设置", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							Bundle bundle = new Bundle();
-							bundle.putInt(Constant.INT_SAFE_PAY_NEW, SafetyVerificationActivity.PAY_PASS_NEW);
-							CommonUtil.gotoActivityWithData(mAc, SafetyVerificationActivity.class, bundle, false);
-						}
-					})
-					.setNeutralButton("取消", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					})
-					.create();
+					.setNegativeButton("去设置",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+									Bundle bundle = new Bundle();
+									bundle.putInt(
+											Constant.INT_SAFE_PAY_NEW,
+											SafetyVerificationActivity.PAY_PASS_NEW);
+									CommonUtil.gotoActivityWithData(mAc,
+											SafetyVerificationActivity.class,
+											bundle, false);
+								}
+							})
+					.setNeutralButton("取消",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+								}
+							}).create();
 			dialog.show();
 		}
 		return curUserInfo.isPayed();

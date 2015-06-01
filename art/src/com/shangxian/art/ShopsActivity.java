@@ -141,6 +141,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 				CommonUtil.dip2px(this, 20));
 		topView.showCenterSearch();
 		topView.setBack(R.drawable.back);// 返回
+		topView.setCneterHint("搜索店内商品");
+		topView.setCenterListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//myToast("搜索");
+				CommonUtil.gotoActivity(ShopsActivity.this, SearchsActivity.class, false);
+			}
+		});
 
 		mGridView = (ListView) this.findViewById(R.id.shops_mListView);
 		// mGridView = (GridLinearLayout) findViewById(R.id.shops_grid);

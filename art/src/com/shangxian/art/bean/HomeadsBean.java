@@ -21,16 +21,15 @@ public class HomeadsBean {
 	private Integer itemOrder;
 	@Expose
 	private Boolean single;
-	private String banner;
-
-	public String getBanner() {
+	@Expose
+	private Boolean banner;
+	public Boolean getBanner() {
 		return banner;
 	}
 
-	public void setBanner(String banner) {
+	public void setBanner(Boolean banner) {
 		this.banner = banner;
 	}
-
 	/**
 	 * 
 	 * @return The itemId

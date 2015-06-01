@@ -108,10 +108,10 @@
         android:visibility="gone" >
 
         <com.shangxian.art.view.CircleImageView1
-            android:id="@+id/searchs_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ainonggu" />
+            android:id="@+id/notData"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/noshop" />
         
         <TextView 
             android:layout_width="wrap_content"
