@@ -63,9 +63,9 @@ public class NearlyShopStat implements Serializable {
 	}
 
 	public boolean isNull() {
-		return status == Integer.MIN_VALUE && total == Integer.MIN_VALUE
-				&& size == Integer.MIN_VALUE && contents != null
-				&& contents.size() == 0;
+		return status == Integer.MIN_VALUE || total == Integer.MIN_VALUE
+				|| size == Integer.MIN_VALUE || contents != null
+				|| contents.size() == 0;
 	}
 
 	@Override

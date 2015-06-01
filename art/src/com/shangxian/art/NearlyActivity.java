@@ -318,15 +318,19 @@ public class NearlyActivity extends BaseActivity implements
 						if (stat != null && !stat.isNull()) {
 							NearlyActivity.this.stat = stat;
 							if (myListViewAdapter != null) {
+								hideNoData();
 								mListView.setVisibility(View.VISIBLE);
 								myListViewAdapter
 										.upDateList(NearlyActivity.this.stat
 												.getContents());
 								mAbPullToRefreshView.onHeaderRefreshFinish();
+							} else {
+								showNoData(NoDataModel.noShop);
 							}
 						} else {
 							mListView.setVisibility(View.GONE);
-							ll_nonetwork.setVisibility(View.VISIBLE);
+							//ll_nonetwork.setVisibility(View.VISIBLE);
+							showNoData(NoDataModel.noShop);
 						}
 					}
 				});

@@ -23,12 +23,14 @@
             android:divider="@null"
             android:dividerHeight="2dp"
             android:visibility="gone" />
-
-        <include
-            layout="@layout/no_network"
-            android:visibility="gone" />
-
-        <include layout="@layout/loadind_big" />
     </com.ab.view.pullview.AbPullToRefreshView>
+
+    <include layout="@layout/loadind_big" />
+
+    <include
+        layout="@layout/no_network"
+        android:visibility="gone" />
+
+    <include layout="@layout/no_data" />
 
 </RelativeLayout>
