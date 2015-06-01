@@ -8,7 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -36,11 +40,12 @@ import com.shangxian.art.view.TopView;
 public class DeliveryAddressActivity extends BaseActivity{
 
 	private ListView listview;
+	//	private SlidingListView listview;
 	private List<DeliveryAddressModel>list;
 	private DeliveryAddressAdapter adapter;
-	
+
 	Boolean isfromConfirmOrder = false;
-	
+
 	private View loading_big,ll_refresh_empty;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +65,16 @@ public class DeliveryAddressActivity extends BaseActivity{
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_activity_deliveryaddress));
 		listview = (ListView) findViewById(R.id.search_list);
+		//		listview = (SlidingListView) findViewById(R.id.search_list);
 
 		loading_big = findViewById(R.id.loading_big);//加载
 		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);//无数据
 	}
 	private void initData() {
-		
+
 		Intent intent = getIntent();
 		isfromConfirmOrder=intent.getBooleanExtra("isfromConfirmOrder", false);
-		
+
 	}
 	public static void startThisActivity(Context context) {
 		Intent intent = new Intent(context, DeliveryAddressActivity.class);
@@ -108,7 +114,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 						else {
 							loading_big.setVisibility(View.GONE);
 							ll_refresh_empty.setVisibility(View.GONE);
-							
+
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -131,7 +137,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
 			list.add(model);
 		}*/
-		
+
 		String url = "";
 		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
 		refreshTask(url);
@@ -157,16 +163,48 @@ public class DeliveryAddressActivity extends BaseActivity{
 					//确认订单
 					Intent intent = new Intent();
 					intent.putExtra("DeliveryAddressModel", list.get(position));
-				    DeliveryAddressActivity.this.setResult(RESULT_OK, intent);
-				    DeliveryAddressActivity.this.finish();
+					DeliveryAddressActivity.this.setResult(RESULT_OK, intent);
+					DeliveryAddressActivity.this.finish();
 				}else {
 					//修改地址 
 					Bundle bundle = new Bundle();
 					bundle.putBoolean("isRevise", true);
-//					bundle.putInt("id", list.get(position).getId());
+					//					bundle.putInt("id", list.get(position).getId());
 					bundle.putSerializable("DeliveryAddressModel", list.get(position));
 					CommonUtil.gotoActivityWithData(DeliveryAddressActivity.this, AddDeliveryAddressActivity.class, bundle,false);
 				}
+			}
+		});
+
+		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				System.out.println(">>>>>>>>>>>>>长按了"+position);
+				//对画框
+				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
+				multiDia.setTitle("请选择");//标题
+				multiDia.setSingleChoiceItems(new String[] {"删除","设为默认地址"}, 0, new DialogInterface.OnClickListener() {
+					//选项框
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						System.out.println("<<<<<<<<选择的是"+which);
+						
+					}
+				});
+				multiDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						System.out.println(">>>>>>>>>>");
+						
+					}
+				});
+				multiDia.setNegativeButton("取消", null);
+				multiDia.show(); 
+				
+				return true;
 			}
 		});
 

@@ -1,6 +1,7 @@
 package com.shangxian.art.adapter;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.JieSuanLiShiAdapter.ViewHolder;
 import com.shangxian.art.bean.IandEDetailsModel;
+import com.shangxian.art.utils.CommonUtil;
 
 public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 
@@ -37,10 +39,17 @@ public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getTradeTitle());
-		holder.time.setText(dates.get(position).getTransDate());
-		holder.parice.setText(dates.get(position).getTotalPrice()+"");
-		holder.type.setText(dates.get(position).getPayType());
+		holder.title.setText(dates.get(position).getTradeTitle());//购买商品
+		holder.time.setText(dates.get(position).getTransDate());//时间
+		holder.parice.setText("¥"+CommonUtil.priceConversion(dates.get(position).getTotalPrice()));//金额
+//		holder.type.setText(dates.get(position).getTradeType());//支出还是收入
+		//月份
+		if(dates.get(position).isIstitle()){
+			holder.month.setVisibility(View.VISIBLE);
+		    holder.month.setText(dates.get(position).getMonth()+"月");
+		}else{
+			holder.month.setVisibility(View.GONE);
+		}
 		return convertView;
 	}
 	public static class ViewHolder{
