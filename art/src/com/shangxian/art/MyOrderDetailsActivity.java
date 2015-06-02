@@ -203,7 +203,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 				public void onClick(View v) {
 					if(MyOrderActivity.currentFragment!=null){
 					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
-					ReimburseActivity.startThisActivity_Fragment(false,myOrderItem.getOrderNumber(), myOrderItem.getProductItemDtos().get(0).getId(),0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+					ReimburseActivity.startThisActivity_Fragment(false,myOrderDetailBean.getOrderNumber(), myOrderDetailBean.getOrderItems().get(0).getId(),0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
 					}
 				}
 			});

@@ -63,10 +63,21 @@
         <item name="android:onClick">onClick</item>
         <item name="android:focusable">true</item>
     </style>
-        <style name="filter_comment_layout">
+     <style name="filter_comment_layout">
         <item name="android:paddingLeft">16.0dip</item>
         <item name="android:paddingTop">12.0dip</item>
         <item name="android:paddingRight">16.0dip</item>
         <item name="android:paddingBottom">12.0dip</item>
+    </style>
+        <!-- 购物车，确认订单，我的订单的店铺条目 -->
+     <style name="item_shop_parent">
+        <item name="android:paddingLeft">10.0dip</item>
+        <item name="android:paddingTop">5.0dip</item>
+        <item name="android:paddingRight">10.0dip</item>
+        <item name="android:paddingBottom">5.0dip</item>
+    </style>
+     <style name="item_shop_shoplogo">
+        <item name="android:layout_width">21dp</item>
+        <item name="android:layout_height">21dp</item>
     </style>
 </resources>

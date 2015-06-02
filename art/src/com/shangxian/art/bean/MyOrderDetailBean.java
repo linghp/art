@@ -271,7 +271,7 @@ public Integer getOrderId() {
 	public class OrderItem {
 
 		@Expose
-		private Integer id;
+		private String id;
 		@Expose
 		private Object specs;
 		@Expose
@@ -310,10 +310,10 @@ public Integer getOrderId() {
 		public void setOrderItemStatus(String orderItemStatus) {
 			this.orderItemStatus = orderItemStatus;
 		}
-		public Integer getId() {
+		public String getId() {
 			return id;
 		}
-		public void setId(Integer id) {
+		public void setId(String id) {
 			this.id = id;
 		}
 		public Object getSpecs() {
