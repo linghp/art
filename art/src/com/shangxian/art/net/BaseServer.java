@@ -44,10 +44,12 @@ public class BaseServer {
 	 * 
 	 */
 	// public static final String HOST = "http://192.168.1.125:8888/art/api/";
-//	public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
-//	public static final String HOST = "http://192.168.0.197:8888/art/api/";
-	//public static final String HOSTtest= "http://192.168.0.116:8888/art/api/";
-	//public static final String HOST = "http://192.168.0.197:8888/art/api/";
+	// public static final String HOSTtest=
+	// "http://192.168.0.116:8888/art/api/";
+	// public static final String HOST = "http://192.168.0.197:8888/art/api/";
+	// public static final String HOSTtest=
+	// "http://192.168.0.116:8888/art/api/";
+	// public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
@@ -63,7 +65,7 @@ public class BaseServer {
 	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
 	protected static final String NET_ORDERDETAILS = HOST
 			+ "order/details?orderNumber=";// 订单详情
-	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款/退货申请
+	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -75,7 +77,7 @@ public class BaseServer {
 	protected static final String NET_NEW_LOGIN_PASSWORD = HOST
 			+ "user/password"; // 设置新的登录密码
 	protected static final String NET_UPDATA_LOGIN_PASSWORD = HOST
-			+ "user/password"; // 修改新的登录密码
+			+ "user/updatePassword"; // 修改新的登录密码
 	protected static final String NET_UPDATA_PAYPASSWORD = HOST
 			+ "user/password"; // 修改新的登录密码
 
@@ -92,9 +94,11 @@ public class BaseServer {
 	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
 	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
 	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
-	
-	public static final String NET_MYORDER_BACK_LIST = HOST + "orderReturnList/";//通过状态获取退货订单
-	protected static final String NET_CANCEL_REFUND = HOST + "orderCancelReturnList/"; //取消退货订单
+
+	public static final String NET_MYORDER_BACK_LIST = HOST
+			+ "orderReturnList/";// 通过状态获取退货订单
+	protected static final String NET_CANCEL_REFUND = HOST
+			+ "orderCancelReturnList/"; // 取消退货订单
 
 	/**
 	 * 
@@ -113,14 +117,26 @@ public class BaseServer {
 		mAbHttpUtil = AbHttpUtil.getInstance(mContext);
 		curUser = LocalUserInfo.getInstance(mContext).getUser();
 	}
-	
+
 	protected static RequestParams getParams() {
-		if (curUser != null && !curUser.isNull()) {
-			RequestParams params = new RequestParams();
+		RequestParams params = new RequestParams();
+		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
+		if (curUser != null && !curUser.isNull()) {	
 			params.addHeader("User-Token", curUser.getId() + "");
 			return params;
 		} else {
-			return new RequestParams();
+			return params;
+		}
+	}
+	
+	protected static RequestParams getJsonParams() {
+		RequestParams params = new RequestParams();
+		params.setContentType("application/json;charset=UTF-8");
+		if (curUser != null && !curUser.isNull()) {	
+			params.addHeader("User-Token", curUser.getId() + "");
+			return params;
+		} else {
+			return params;
 		}
 	}
 
@@ -426,7 +442,7 @@ public class BaseServer {
 	public static final int ERROR_GSON2ENTITY_EX = 0x00001012;
 	public static final int ERROR_CONN_EX = 0x00001013;
 
-	public static void toXUtils(HttpMethod method, String url,
+	public static void toXUtils(final HttpMethod method, final String url,
 			RequestParams params, final Type type, final CallBack call) {
 		if (call == null)
 			return;
@@ -448,7 +464,7 @@ public class BaseServer {
 						super.onCancelled();
 						call.onCancelled();
 					}
-					
+
 					@Override
 					public void onLoading(long total, long current,
 							boolean isUploading) {
@@ -470,12 +486,17 @@ public class BaseServer {
 										+ result_code + " , result == "
 										+ result);
 								if (type != null && !TextUtils.isEmpty(re)) {
-									Object o = gson.fromJson(re, type);
-									if (o == null) {
-										call.onSimpleFailure(ERROR_GSON2ENTITY_EX);
-									} else {
-										call.onSimpleSuccess(o);
-									}
+									try {
+										Object o = gson.fromJson(re, type);
+										if (o == null) {
+											call.onSimpleFailure(ERROR_GSON2ENTITY_EX);
+										} else {
+											call.onSimpleSuccess(o);
+										}
+									} catch (Exception e) {
+										e.printStackTrace();
+										call.onSimpleFailure(ERROR_JSON_EX);
+									}	
 								} else {
 									call.onSimpleSuccess(re);
 								}
