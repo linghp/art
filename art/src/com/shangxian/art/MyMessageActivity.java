@@ -26,6 +26,8 @@ public class MyMessageActivity extends BaseActivity{
 	private ListView listview;
 	private List<MyMessageModel>list;
 	private MyMessageAdapter adapter;
+	
+	private View loading_big,ll_refresh_empty;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,7 +46,8 @@ public class MyMessageActivity extends BaseActivity{
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_activity_my_message));
 		listview = (ListView) findViewById(R.id.search_list);
-		
+		loading_big = findViewById(R.id.loading_big);//加载
+		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);//无数据
 	}
 	private void initData() {
 		list = new ArrayList<MyMessageModel>();
@@ -57,6 +60,7 @@ public class MyMessageActivity extends BaseActivity{
 		}
 		adapter = new MyMessageAdapter(this, R.layout.item_mymessage, list);
 		listview.setAdapter(adapter);
+		loading_big.setVisibility(View.GONE);
 	}
 	private void initListener() {
 		listview.setOnItemClickListener(new OnItemClickListener() {
