@@ -8,21 +8,21 @@
 
     <LinearLayout
         android:id="@+id/ll_item"
+        style="@style/item_shop_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp" >
+        android:orientation="horizontal" >
 
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/item_shop_shoplogo"
             android:layout_marginLeft="5dp" />
 
         <TextView
@@ -63,22 +63,25 @@
         android:orientation="horizontal"
         android:padding="16dp" >
 
-        <TextView android:id="@+id/tv_allquantity"
+        <TextView
+            android:id="@+id/tv_allquantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="测试" />
 
-        <TextView  
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="实付：" />
-        <TextView android:id="@+id/tv_payment"
+
+        <TextView
+            android:id="@+id/tv_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:text="测试"
             android:textSize="@dimen/list_summary_size"
-            android:text="测试" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View
@@ -107,8 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:background="@drawable/greentodarkgreen"
-            android:textColor="@color/white"
-            android:text="付款" />
+            android:text="付款"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

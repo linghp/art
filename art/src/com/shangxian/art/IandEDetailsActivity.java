@@ -87,7 +87,18 @@ public class IandEDetailsActivity extends BaseActivity{
 							System.out.println(":::::::::::::::::str"+str);
 							
 							IandEDetailsResultModel resultModel = gson.fromJson(str, IandEDetailsResultModel.class);
+							
 							list = resultModel.getData();
+							String month = "";
+							for (IandEDetailsModel iandEDetailsModel : list) {
+								String str1 = iandEDetailsModel.getTransDate();
+								String spStr[] = str1.split("-");
+								iandEDetailsModel.setMonth(spStr[1]);
+								if(!month.equals(spStr[1])){
+									iandEDetailsModel.setIstitle(true);
+								}
+								month = spStr[1];
+							}
 							System.out.println(":::::::::::::::::list"+list);
 							if (list != null) {
 								adapter = new IandEDetailsAdapter(IandEDetailsActivity.this, R.layout.item_iandedetails, list);

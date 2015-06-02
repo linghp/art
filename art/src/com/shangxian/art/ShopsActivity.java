@@ -90,7 +90,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shops);
-
+		
 		initView();
 		initData();
 		initListener();
@@ -181,6 +181,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
+		
 		refreshTask(url);
 
 	}
@@ -224,6 +225,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								shopid = model.getId() + "";
 								mAbImageLoader.display(img, Constant.BASEURL
 										+ model.getLogo());// 图片
+								
 								mAbImageLoader
 										.display(shopsimg, Constant.BASEURL
 												+ model.getIndexLogo());// 商铺图标
@@ -234,9 +236,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								youhui.setText("" + model.getSpecialCount());// 优惠
 								phone.setText(model.getShopPhoneNumber());// 电话
 								address.setText(model.getShopAddress());// 地址
-								list = model.getProductDtos();
 								collectionimg.setSelected(model.getAttened());
-
+								//热销商品
+								list = model.getProductDtos();
 								if (list != null) {
 									if (adapter == null) {
 										// //给每项商品设置id
@@ -256,8 +258,12 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 										// adapter.upDateList(list);
 										adapter.updateData(list);
 									}
+								}else {
+									System.out.println(">>>>>>>>>>>>>>>>>>热销商品为空");
 								}
 
+							}else {
+								
 							}
 
 						}

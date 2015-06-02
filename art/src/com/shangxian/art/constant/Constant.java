@@ -7,6 +7,7 @@ public class Constant {
 	//public static final String BASEURL = "http://192.168.0.179:8888/art";
 	public static final String BASEURL = "http://www.ainonggu666.com";
 	public static final String CONTENT = "/api";
+	public static final String HOMEAD= "/ad/indexBanner";//首页轮播图片
 	public static final String HOME = "/ads";//动态布局的数据
 	public static final String CATEGORYS = "/categorys";//分类
 	public static final String CART = "/cart";//购物车

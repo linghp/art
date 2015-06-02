@@ -19,6 +19,22 @@ public class IandEDetailsModel implements Serializable{
 	private String payType;
 	@Expose
 	private String transDate;
+	private String month;
+	private boolean istitle;
+	
+	
+	public boolean isIstitle() {
+		return istitle;
+	}
+	public void setIstitle(boolean istitle) {
+		this.istitle = istitle;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
 	public Integer getTradeId() {
 		return tradeId;
 	}
@@ -66,7 +82,7 @@ public class IandEDetailsModel implements Serializable{
 		return "IandEDetailsModel [tradeId=" + tradeId + ", tradeNumber="
 				+ tradeNumber + ", tradeTitle=" + tradeTitle + ", totalPrice="
 				+ totalPrice + ", tradeType=" + tradeType + ", payType="
-				+ payType + ", transDate=" + transDate + "]";
+				+ payType + ", transDate=" + transDate + ", month=" + month
+				+ ", istitle=" + istitle + "]";
 	}
-
 }

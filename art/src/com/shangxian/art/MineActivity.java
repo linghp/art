@@ -95,13 +95,13 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void changeview() {
-		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==1) {//买家
+		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==2) {//买家
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
 			findViewById(R.id.ll_seller).setVisibility(View.GONE);
 			tv_username = (TextView) findViewById(R.id.tv_username);
 			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
-		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==2){//卖家
+		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)==1){//卖家
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
 			tv_username = (TextView) findViewById(R.id.tv_username);
@@ -200,8 +200,8 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item4:
 			// 我的消息
-			if (isLoginAndToLogin())
-				startActivity(new Intent(this, MyMessageActivity.class));
+//			if (isLoginAndToLogin())
+//				startActivity(new Intent(this, MyMessageActivity.class));
 			break;
 		case R.id.ll_my_item5:
 			// 我的预付

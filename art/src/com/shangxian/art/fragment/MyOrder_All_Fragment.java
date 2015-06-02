@@ -40,7 +40,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
 		OnHeaderRefreshListener, OnFooterLoadListener, OnItemClickListener {
 	private View view;
-	private TextView tv_empty;
+	private View v_empty;
 	private ListView listView;
 	private ProgressBar progressBar;
 	private AbPullToRefreshView mAbPullToRefreshView;
@@ -81,7 +81,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
-		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
+		v_empty = view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
 		progressBar = (ProgressBar) view.findViewById(R.id.progress_order);
 		mAbPullToRefreshView = (AbPullToRefreshView) view
@@ -183,12 +183,14 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		super.onDestroy();
 	}
 
-	public void update() {
-		if (tv_empty != null)
+	public void updateView_nocontent() {
+		if (v_empty != null)
 			if (mOrderItems.size() == 0) {
-				tv_empty.setVisibility(View.VISIBLE);
+				v_empty.setVisibility(View.VISIBLE);
+				//listView.setVisibility(View.GONE);
 			} else {
-				tv_empty.setVisibility(View.GONE);
+				v_empty.setVisibility(View.GONE);
+				//listView.setVisibility(View.VISIBLE);
 			}
 	}
 
@@ -205,11 +207,10 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 				mOrderItems.addAll(myOrderItemAll.getData());
 				// MyLogger.i(myOrderItemAll.getData().toString());
 				myOrderListAdapter.notifyDataSetChanged();
-			} else {
-
 			}
+			updateView_nocontent();
 		} else {
-
+			CommonUtil.toast("网络错误", getActivity());
 		}
 	}
 

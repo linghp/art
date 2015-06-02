@@ -30,7 +30,6 @@ public class HomeadsBean {
 	public void setBanner(Boolean banner) {
 		this.banner = banner;
 	}
-
 	/**
 	 * 
 	 * @return The itemId
