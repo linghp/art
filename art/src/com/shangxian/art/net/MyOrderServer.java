@@ -158,7 +158,7 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toCancelOrder(final MyOrderItem myOrderItem,
 			final OnHttpResultCancelOrderListener l) {
-		toGet(NET_CANCELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
+		toPostWithToken(NET_CANCELORDER + myOrderItem.getOrderNumber(),null, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				//MyLogger.i(res);
@@ -181,7 +181,7 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toDelOrder(final MyOrderItem myOrderItem,
 			final OnHttpResultDelOrderListener l) {
-		toGet(NET_DELORDER + myOrderItem.getOrderNumber(), new OnHttpListener() {
+		toPostWithToken(NET_DELORDER + myOrderItem.getOrderNumber(), null,new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				//MyLogger.i(res);

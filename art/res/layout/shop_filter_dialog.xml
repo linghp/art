@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:id="@+id/ll_filter"
     android:orientation="vertical" >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/txt_white"
         android:minHeight="80dp"
         android:orientation="vertical" >
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/line_bg" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,8 +26,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/line_bg" />
+            android:layout_height="1dp"
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +43,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
+                android:layout_height="1dp"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="3dp"
                 android:background="@color/transparentblack3" />
@@ -59,6 +62,8 @@
                     android:textColor="@color/txt_black1"
                     android:singleLine="true"
                     android:gravity="center"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
                     android:layout_toLeftOf="@+id/view"
                     android:layout_alignParentLeft="true"
                  	android:textSize="@dimen/list_title_size" />
@@ -79,6 +84,8 @@
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="最高"
                     android:padding="8dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:textColor="@color/txt_black1"
                     android:singleLine="true"
                     android:gravity="center"
@@ -89,6 +96,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/filter_bg"
@@ -99,4 +107,4 @@
             android:textSize="20dp" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

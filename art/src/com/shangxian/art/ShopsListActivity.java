@@ -187,6 +187,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			public void onFailure(int arg0, String arg1, Throwable arg2) {
 				mListView.setVisibility(View.GONE);
 				ll_nonetwork.setVisibility(View.VISIBLE);
+				loading_big.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -194,6 +195,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 				// TODO Auto-generated method stub
 				AbLogUtil.i(ShopsListActivity.this, arg1);
 				mListView.setVisibility(View.VISIBLE);
+				loading_big.setVisibility(View.GONE);
 				//解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -219,8 +221,15 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 								JSONObject jo = resultObjectArray.getJSONObject(i);
 								model.add(gson.fromJson(jo.toString(),ShopsListModel.class));
 							}*/
+							if(model!=null&&model.size()>0){
+								showNoData(NoDataModel.noShop);
+							}else{
+								hideNoData();
+							}
 							MyLogger.i(model.toString());
 							myListViewAdapter.notifyDataSetChanged();
+						}else{
+							
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
