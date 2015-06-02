@@ -28,7 +28,9 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
+import com.shangxian.art.bean.ClassityCommdityResultModel;
 import com.shangxian.art.bean.ShopsListModel;
+import com.shangxian.art.bean.ShopsListResultModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
@@ -49,9 +51,9 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 	//	private List<Map<String, Object>> list = null;
 	private ShopsListAdapter myListViewAdapter = null;
 	private AbLoadDialogFragment mDialogFragment = null;
-//	private int currentPage = 1;
-//	private int pageSize = 15;
-//	private int total = 50;
+	//	private int currentPage = 1;
+	//	private int pageSize = 15;
+	//	private int total = 50;
 
 	//数据请求
 	private AbHttpUtil httpUtil = null;
@@ -105,29 +107,28 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 		url = Constant.BASEURL + Constant.CONTENT + geturl;
 
 		model = new ArrayList<ShopsListModel>();
+		System.out.println(">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<url"+url);
 		refreshTask(url);
-
 		//		// ListView数据
 		//		list = new ArrayList<Map<String, Object>>();
 
 		// 使用自定义的Adapter(得到item中的控件)
-		myListViewAdapter = new ShopsListAdapter(this, model, R.layout.item_list);
-		mListView.setAdapter(myListViewAdapter);
+
 		// 显示进度框
-//		mDialogFragment = AbDialogUtil.showLoadDialog(this,
-//				R.drawable.progress_loading2, "查询中,请等一小会");
+		//		mDialogFragment = AbDialogUtil.showLoadDialog(this,
+		//				R.drawable.progress_loading2, "查询中,请等一小会");
 	}
 
 	private void initListener() {
-//		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
-//
-//			@Override
-//			public void onLoad() {
-//				// 下载网络数据
-//				refreshTask(url);
-//			}
-//
-//		});
+		//		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
+		//
+		//			@Override
+		//			public void onLoad() {
+		//				// 下载网络数据
+		//				refreshTask(url);
+		//			}
+		//
+		//		});
 
 
 		// item被点击事件
@@ -142,12 +143,12 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 
 	}
 
-//	public static void startThisActivity(String id,
-//			Context context) {
-//		Intent intent = new Intent(context, ShopsListActivity.class);
-//		intent.putExtra("id", id);
-//		context.startActivity(intent);
-//	}
+	//	public static void startThisActivity(String id,
+	//			Context context) {
+	//		Intent intent = new Intent(context, ShopsListActivity.class);
+	//		intent.putExtra("id", id);
+	//		context.startActivity(intent);
+	//	}
 
 	public static void startThisActivity_url(String url, Context context) {
 		Intent intent = new Intent(context, ShopsListActivity.class);
@@ -157,7 +158,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 	@Override
 	public void onFooterLoad(AbPullToRefreshView arg0) {
 		// TODO Auto-generated method stub
-//		loadMoreTask();
+		//		loadMoreTask();
 	}
 
 	@Override
@@ -202,13 +203,22 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 						String result_code = jsonObject.getString("result_code");
 						String reason = jsonObject.getString("reason");
 						if (result_code.equals("200")&&reason.equals("success")) {
-							JSONArray resultObjectArray = jsonObject.getJSONArray("result");
-							int length = resultObjectArray.length();
+							String str=jsonObject.getString("result");
+							ShopsListResultModel shopsListResultModel=gson.fromJson(str, ShopsListResultModel.class);
+							model = shopsListResultModel.getData();
+							if (model != null) {
+								myListViewAdapter = new ShopsListAdapter(ShopsListActivity.this, model, R.layout.item_list);
+								mListView.setAdapter(myListViewAdapter);
+								loading_big.setVisibility(View.GONE);
+							}else {
+								loading_big.setVisibility(View.VISIBLE);
+							}
+							/*int length = resultObjectArray.length();
 							model.clear();
 							for (int i = 0; i < length; i++) {
 								JSONObject jo = resultObjectArray.getJSONObject(i);
 								model.add(gson.fromJson(jo.toString(),ShopsListModel.class));
-							}
+							}*/
 							MyLogger.i(model.toString());
 							myListViewAdapter.notifyDataSetChanged();
 						}
@@ -221,7 +231,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			}
 		});
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -235,101 +245,101 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			break;
 		}
 	}
-//		AbLogUtil.prepareLog(this);
-//		AbTask mAbTask = new AbTask();
-//		final AbTaskItem item = new AbTaskItem();
-//		item.setListener(new AbTaskListListener() {
-//			@Override
-//			public List<?> getList() {
-//				List<Map<String, Object>> newList = null;
-//				try {
-//					Thread.sleep(1000);
-//					currentPage = 1;
-//					newList = new ArrayList<Map<String, Object>>();
-//					Map<String, Object> map = null;
-//
-//					for (int i = 0; i < pageSize; i++) {
-//						map = new HashMap<String, Object>();
-//						map.put("itemsIcon", mPhotoList.get(i));
-//						map.put("itemsTitle", "item" + (i + 1));
-//						map.put("itemsText", "item..." + (i + 1));
-//						newList.add(map);
-//
-//					}
-//				} catch (Exception e) {
-//				}
-//				return newList;
-//			}
-//
-//			@Override
-//			public void update(List<?> paramList) {
-//
-//				// 通知Dialog
-//				mDialogFragment.loadFinish();
-//				AbLogUtil.d(ShopsListActivity.this, "返回", true);
-//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
-//				model.clear();
-//				if (newList != null && newList.size() > 0) {
-//					model.addAll(newList);
-//					myListViewAdapter.notifyDataSetChanged();
-//					newList.clear();
-//				}
-//				mAbPullToRefreshView.onHeaderRefreshFinish();
-//			}
-//
-//		});
-//
-//		mAbTask.execute(item);
-//	}
-//	public void loadMoreTask() {
-//		AbTask mAbTask = new AbTask();
-//		final AbTaskItem item = new AbTaskItem();
-//		item.setListener(new AbTaskListListener() {
-//
-//			@Override
-//			public void update(List<?> paramList) {
-//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
-//				if (newList != null && newList.size() > 0) {
-//					model.addAll(newList);
-//					myListViewAdapter.notifyDataSetChanged();
-//					newList.clear();
-//				}
-//				mAbPullToRefreshView.onFooterLoadFinish();
-//			}
-//
-//			@Override
-//			public List<?> getList() {
-//				List<Map<String, Object>> newList = null;
-//				try {
-//					currentPage++;
-//					Thread.sleep(1000);
-//					newList = new ArrayList<Map<String, Object>>();
-//					Map<String, Object> map = null;
-//
-//					for (int i = 0; i < pageSize; i++) {
-//						map = new HashMap<String, Object>();
-//						map.put("itemsIcon", mPhotoList.get(i));
-//						map.put("itemsTitle", "item上拉"
-//								+ ((currentPage - 1) * pageSize + (i + 1)));
-//						map.put("itemsText", "item上拉..."
-//								+ ((currentPage - 1) * pageSize + (i + 1)));
-//						if ((model.size() + newList.size()) < total) {
-//							newList.add(map);
-//						}
-//					}
-//
-//				} catch (Exception e) {
-//					currentPage--;
-//					newList.clear();
-//					AbToastUtil.showToastInThread(ShopsListActivity.this,
-//							e.getMessage());
-//				}
-//				return newList;
-//			};
-//		});
-//
-//		mAbTask.execute(item);
-//	}
+	//		AbLogUtil.prepareLog(this);
+	//		AbTask mAbTask = new AbTask();
+	//		final AbTaskItem item = new AbTaskItem();
+	//		item.setListener(new AbTaskListListener() {
+	//			@Override
+	//			public List<?> getList() {
+	//				List<Map<String, Object>> newList = null;
+	//				try {
+	//					Thread.sleep(1000);
+	//					currentPage = 1;
+	//					newList = new ArrayList<Map<String, Object>>();
+	//					Map<String, Object> map = null;
+	//
+	//					for (int i = 0; i < pageSize; i++) {
+	//						map = new HashMap<String, Object>();
+	//						map.put("itemsIcon", mPhotoList.get(i));
+	//						map.put("itemsTitle", "item" + (i + 1));
+	//						map.put("itemsText", "item..." + (i + 1));
+	//						newList.add(map);
+	//
+	//					}
+	//				} catch (Exception e) {
+	//				}
+	//				return newList;
+	//			}
+	//
+	//			@Override
+	//			public void update(List<?> paramList) {
+	//
+	//				// 通知Dialog
+	//				mDialogFragment.loadFinish();
+	//				AbLogUtil.d(ShopsListActivity.this, "返回", true);
+	//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
+	//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+	//				model.clear();
+	//				if (newList != null && newList.size() > 0) {
+	//					model.addAll(newList);
+	//					myListViewAdapter.notifyDataSetChanged();
+	//					newList.clear();
+	//				}
+	//				mAbPullToRefreshView.onHeaderRefreshFinish();
+	//			}
+	//
+	//		});
+	//
+	//		mAbTask.execute(item);
+	//	}
+	//	public void loadMoreTask() {
+	//		AbTask mAbTask = new AbTask();
+	//		final AbTaskItem item = new AbTaskItem();
+	//		item.setListener(new AbTaskListListener() {
+	//
+	//			@Override
+	//			public void update(List<?> paramList) {
+	//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
+	//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+	//				if (newList != null && newList.size() > 0) {
+	//					model.addAll(newList);
+	//					myListViewAdapter.notifyDataSetChanged();
+	//					newList.clear();
+	//				}
+	//				mAbPullToRefreshView.onFooterLoadFinish();
+	//			}
+	//
+	//			@Override
+	//			public List<?> getList() {
+	//				List<Map<String, Object>> newList = null;
+	//				try {
+	//					currentPage++;
+	//					Thread.sleep(1000);
+	//					newList = new ArrayList<Map<String, Object>>();
+	//					Map<String, Object> map = null;
+	//
+	//					for (int i = 0; i < pageSize; i++) {
+	//						map = new HashMap<String, Object>();
+	//						map.put("itemsIcon", mPhotoList.get(i));
+	//						map.put("itemsTitle", "item上拉"
+	//								+ ((currentPage - 1) * pageSize + (i + 1)));
+	//						map.put("itemsText", "item上拉..."
+	//								+ ((currentPage - 1) * pageSize + (i + 1)));
+	//						if ((model.size() + newList.size()) < total) {
+	//							newList.add(map);
+	//						}
+	//					}
+	//
+	//				} catch (Exception e) {
+	//					currentPage--;
+	//					newList.clear();
+	//					AbToastUtil.showToastInThread(ShopsListActivity.this,
+	//							e.getMessage());
+	//				}
+	//				return newList;
+	//			};
+	//		});
+	//
+	//		mAbTask.execute(item);
+	//	}
 }

@@ -9,28 +9,34 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <com.ab.view.pullview.AbPullToRefreshView
-        android:id="@+id/mPullRefreshView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/top_title" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_title"
+        android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/mListView"
+        <com.ab.view.pullview.AbPullToRefreshView
+            android:id="@+id/mPullRefreshView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="@null"
-            android:dividerHeight="2dp"
+            android:layout_height="fill_parent" >
+
+            <ListView
+                android:id="@+id/mListView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:dividerHeight="2dp"
+                android:visibility="gone" />
+        </com.ab.view.pullview.AbPullToRefreshView>
+
+        <include layout="@layout/loadind_big" />
+
+        <include
+            layout="@layout/no_network"
             android:visibility="gone" />
-    </com.ab.view.pullview.AbPullToRefreshView>
 
-    <include layout="@layout/loadind_big" />
-
-    <include
-        layout="@layout/no_network"
-        android:visibility="gone" />
-
-    <include layout="@layout/no_data" />
+        <include layout="@layout/no_data" />
+    </LinearLayout>
 
 </RelativeLayout>
