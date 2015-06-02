@@ -17,7 +17,7 @@
         android:background="@color/txt_white2"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone" >
+         >
 
         <TextView
             android:id="@+id/classitycommodity_saixuan"

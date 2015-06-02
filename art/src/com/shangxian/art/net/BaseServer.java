@@ -64,6 +64,8 @@ public class BaseServer {
 	protected static final String NET_ORDERDETAILS = HOST
 			+ "order/details?orderNumber=";// 订单详情
 	protected static final String NET_REFUND = HOST+ "orderBuyerReturn/";//退款/退货申请
+	protected static final String NET_FILTER = "http://192.168.0.165:8888/art/api/product/find";//分类筛选
+	
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -192,7 +194,7 @@ public class BaseServer {
 					l.onHttp(null);
 				}
 			}
-
+           
 			@Override
 			public void onSuccess(int code, String res) {
 				System.out

@@ -3,7 +3,6 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -18,16 +17,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.http.AbHttpUtil;
+import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbLogUtil;
 import com.google.gson.Gson;
-import com.shangxian.art.adapter.ClassityCommodiyAdp;
 import com.shangxian.art.adapter.ClassityCommodiyAdp1;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ClassityCommdityResultModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.dialog.FilterDialog;
+import com.shangxian.art.dialog.FilterDialog.Filter_I;
+import com.shangxian.art.net.FilterServer;
+import com.shangxian.art.net.FilterServer.OnHttpResultFilterListener;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -36,7 +40,8 @@ import com.shangxian.art.view.TopView;
  * @author Administrator
  *
  */
-public class ClassifyCommodityActivity extends BaseActivity {
+public class ClassifyCommodityActivity extends BaseActivity implements
+		OnHttpResultFilterListener,Filter_I {
 	// 列表
 	private ListView list;
 	private List<ClassityCommdityModel> model;
@@ -45,6 +50,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 
 	// 底部选项
 	TextView shaixuan, xiaoliang, jiage, xinpin;
+	private String priceSort,dateSort, categoryId;
 
 	/*
 	 * //筛选popupwindow private PopupWindow popupWindow; private View view;
@@ -100,11 +106,12 @@ public class ClassifyCommodityActivity extends BaseActivity {
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
-		String id = getIntent().getStringExtra("id");
+		categoryId = getIntent().getStringExtra("id");
+		MyLogger.i(categoryId);
 		String geturl = getIntent().getStringExtra("url");
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/" + id + "/products";
+			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/products";
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
@@ -166,7 +173,7 @@ public class ClassifyCommodityActivity extends BaseActivity {
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
-				//请求
+				// 请求
 				AbLogUtil.i(ClassifyCommodityActivity.this, content);
 				model.clear();
 				if (!TextUtils.isEmpty(content)) {
@@ -176,18 +183,22 @@ public class ClassifyCommodityActivity extends BaseActivity {
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
-							String str=jsonObject.getString("result");
-							ClassityCommdityResultModel classityCommdityResultModel=gson.fromJson(str, ClassityCommdityResultModel.class);
+							String str = jsonObject.getString("result");
+							ClassityCommdityResultModel classityCommdityResultModel = gson
+									.fromJson(str,
+											ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
+							categoryId=model.get(0).getCategoryId()+"";
 							if (model != null) {
-								adapter = new ClassityCommodiyAdp1(ClassifyCommodityActivity.this,
+								adapter = new ClassityCommodiyAdp1(
+										ClassifyCommodityActivity.this,
 										R.layout.item_classitycommodity, model);
 								list.setAdapter(adapter);
 								adapter.notifyDataSetChanged();
 							}
 
 						}
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -220,27 +231,19 @@ public class ClassifyCommodityActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				System.out.println(">>>>>>>筛选");
-				shaixuan.setSelected(!shaixuan.isSelected());
-				if (shaixuan.isSelected()) {
-					//弹出
-
-				}
-				//				shaixuan.setTextColor(R.color.col_b1toma500);
-				// popupWindow.showAtLocation(v, MODE_APPEND, 0, 0);
-				// dialog.show();
+				resetFooterButton();
+				new FilterDialog(ClassifyCommodityActivity.this, ClassifyCommodityActivity.this).show();
 			}
 		});
 		xiaoliang.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				System.out.println(">>>>>>>销量");
-				xiaoliang.setSelected(!xiaoliang.isSelected());
-				if (xiaoliang.isSelected()) {
-					//弹出
+				if (!v.isFocused()) {
+				resetFooterButton();
+				v.setFocusable(true);
+				v.setFocusableInTouchMode(true);
+				v.requestFocus();
 				}
 			}
 		});
@@ -248,25 +251,45 @@ public class ClassifyCommodityActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				System.out.println(">>>>>>>价格");
-				jiage.setSelected(!jiage.isSelected());
-				if (jiage.isSelected()) {
-					//弹出
-
+				xiaoliang.setFocusable(false);
+				xinpin.setFocusable(false);
+				if (v.isFocused()) {
+					priceSort = "desc";
+					v.setFocusable(false);
+					v.setSelected(true);
+				} else if (v.isSelected()) {
+					priceSort = "";
+					v.setFocusable(false);
+					v.setSelected(false);
+				} else {
+					priceSort = "asc";
+					v.setFocusable(true);
+					v.setFocusableInTouchMode(true);
+					v.requestFocus();
 				}
+				AbRequestParams params = new AbRequestParams();
+				params.put("priceSort", priceSort);
+				params.put("categoryId", categoryId);
+				MyLogger.i("priceSort:"+priceSort+"---categoryId:"+categoryId);
+				FilterServer.toPostFilter(params,
+						ClassifyCommodityActivity.this);
 			}
 		});
 		xinpin.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				System.out.println(">>>>>>>新品");
-				xinpin.setSelected(!xinpin.isSelected());
-				if (xinpin.isSelected()) {
-					//弹出
-
+				if (!v.isFocused()) {
+				    resetFooterButton();
+					v.setFocusable(true);
+					v.setFocusableInTouchMode(true);
+					v.requestFocus();
+					dateSort="desc";
+					AbRequestParams params = new AbRequestParams();
+					params.put("dateSort", dateSort);
+					params.put("categoryId", categoryId);
+					FilterServer.toPostFilter(params,
+							ClassifyCommodityActivity.this);
 				}
 			}
 		});
@@ -279,11 +302,22 @@ public class ClassifyCommodityActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				Bundle bundle = new Bundle();
 				bundle.putBoolean("isother", true);
-				CommonUtil.gotoActivityWithDataForResult(ClassifyCommodityActivity.this, ShoppingcartActivity.class, bundle, 10086, false);
+				CommonUtil.gotoActivityWithDataForResult(
+						ClassifyCommodityActivity.this,
+						ShoppingcartActivity.class, bundle, 10086, false);
 			}
 		});
 	}
 
+	private void resetFooterButton(){
+		jiage.setSelected(false);
+		jiage.setFocusable(false);
+		xiaoliang.setFocusable(false);
+		xinpin.setFocusable(false);
+		priceSort="";
+		dateSort="";
+	}
+	
 	// 筛选dialog
 	private void initScreenDialog() {
 		// TODO Auto-generated method stub
@@ -295,6 +329,27 @@ public class ClassifyCommodityActivity extends BaseActivity {
 		// win.setAttributes(params);
 		// dialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
 		// dialog.show();
+	}
+
+	@Override
+	public void onHttpResultConfirmGoods(
+			ClassityCommdityResultModel classityCommdityResultModel) {
+		if (classityCommdityResultModel != null&&adapter!=null) {
+			model.clear();
+			model.addAll(classityCommdityResultModel.getData());
+			adapter.notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public void getData(String lowprice, String upprice) {
+		AbRequestParams params = new AbRequestParams();
+		params.put("minPrice", lowprice+"00");
+		params.put("maxPrice", upprice+"00");
+		params.put("categoryId", categoryId);
+		MyLogger.i("priceSort:"+priceSort+"---categoryId:"+categoryId);
+		FilterServer.toPostFilter(params,
+				ClassifyCommodityActivity.this);
 	}
 
 	/*
