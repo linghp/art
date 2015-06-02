@@ -264,7 +264,6 @@ public class SafetyVerificationActivity extends BaseActivity {
 					new HttpUtils().send(HttpMethod.GET,
 							Constant.NET_FINDWORD_CODE + phone, null,
 							new BaseCallBack<String>() {
-
 								@Override
 								public void onSimpleSuccess(
 										BaseBean<String> bean) {

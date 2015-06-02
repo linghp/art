@@ -39,6 +39,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.bean.MyLatLng;
 import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
@@ -114,6 +115,7 @@ public class CommodityContentActivity extends BaseActivity implements
 	private void listener() {
 //		tv_first.setOnClickListener(this);
 //		tv_second.setOnClickListener(this);
+		address.setOnClickListener(this);
 		next.setOnClickListener(new OnClickListener() {
 			// 跳转到商铺
 			@Override
@@ -142,7 +144,6 @@ public class CommodityContentActivity extends BaseActivity implements
 					return;
 				}
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, model);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
 				ShopLocInfo info = new ShopLocInfo();
 				info.setId(model.getShopId());
@@ -150,7 +151,7 @@ public class CommodityContentActivity extends BaseActivity implements
 				info.setPhoto(model.getShopLogo());
 				info.setAddress(model.getShopAddress());
 				//info.setLng(model.get);
-				bundle.putSerializable(Constant.INT_LOC_NEARLY_SHOPINFO, info);
+				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
 				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
 						LocationActivity.class, bundle, false);
 
@@ -532,6 +533,20 @@ public class CommodityContentActivity extends BaseActivity implements
 			break;
 		case R.id.ll_comment:
 			CommentActivity.startThisActivity("", this);
+			break;
+		case R.id.commoditycontent_address:
+			Bundle bundle = new Bundle();
+			bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+			ShopLocInfo info = new ShopLocInfo();
+			info.setId(model.getShopId());
+			info.setTitle(model.getName());
+			
+			info.setPhoto(model.getPhotos() != null ? model.getPhotos().get(0) : null);
+			info.setAddress(model.getShopAddress());
+			info.setLng(model.getLat());
+			bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
+			CommonUtil.gotoActivityWithData(mAc,
+					LocationActivity.class, bundle, false);
 			break;
 //		case R.id.text_one:
 //			setBackground_slide(0);

@@ -251,6 +251,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 										adapter.updateData(list);
 									}
 								}else {
+									
 									System.out.println(">>>>>>>>>>>>>>>>>>热销商品为空");
 								}
 

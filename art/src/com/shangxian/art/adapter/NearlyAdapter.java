@@ -87,7 +87,7 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 				info1.setPhoto(info.getIndexLogo());
 				info1.setAddress(info.getAddress());
 				info1.setLng(info.getLatLng());
-				bundle.putSerializable(Constant.INT_LOC_NEARLY_SHOPINFO, info1);
+				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info1);
 				CommonUtil.gotoActivityWithData(mAc,
 						LocationActivity.class, bundle, false);
 			}
