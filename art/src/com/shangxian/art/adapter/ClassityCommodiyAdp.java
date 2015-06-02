@@ -6,11 +6,13 @@ import android.app.Activity;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.shangxian.art.CommodityContentActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassityCommdityModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
@@ -45,10 +47,18 @@ public class ClassityCommodiyAdp extends EntityAdapter<ListCarGoodsBean>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getProductName());
+		final ListCarGoodsBean bean = getItem(position);
+		holder.title.setText(bean.getProductName());
 		//holder.summary.setText(dates.get(position).getReDetails());
-		holder.price.setText(CommonUtil.priceConversion((float)dates.get(position).getPrice())+"");
-		ImageLoader.getInstance().displayImage(Constant.BASEURL + getItem(position).getProductPhoto(), holder.img, Options.getListOptions());
+		holder.price.setText(CommonUtil.priceConversion((float) bean.getPrice())+"");
+		ImageLoader.getInstance().displayImage(Constant.BASEURL + bean.getProductPhoto(), holder.img, Options.getListOptions());
+		convertView.setOnClickListener(new OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				String res = bean.toString();
+				CommodityContentActivity.startThisActivity(bean.getProductId(), mAc);
+			}
+		});
 		return convertView;
 	}
 	public static class ViewHolder{
