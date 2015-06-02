@@ -74,8 +74,8 @@ public class FollowServer extends BaseServer {
 		});
 	}
 	
-	public void toDelFollowGoods(String id, Boolean isShop, final CallBack call){
-		toXUtils(HttpMethod.DELETE, (isShop ? NET_FOLLOW_SHOP_DEL : NET_FOLLOW_PRODUCT_DEL) + id, null, null, call);
+	public void toDelFollowGoods(String id, Boolean isShop, final CallBack call){		
+		toXUtils(HttpMethod.DELETE, (isShop ? NET_FOLLOW_SHOP_DEL : NET_FOLLOW_PRODUCT_DEL) + id, getParams(), null, call);
 	}
 	
 	public void toFollowList(Boolean isShop, final OnFollowInfoListener l){

@@ -195,7 +195,6 @@ public class GoodsDialog extends Dialog implements
 				mAbImageLoader.display(iv_icon, url);
 			}
 			edt.setText((num = listCarGoodsBean.getQuantity()) + "");
-			;
 			Map<String, List<String>> specMap = listCarGoodsBean.getSpecs();
 			// 测试数据
 			// Map<String, List<String>> specMap = new LinkedHashMap<String,

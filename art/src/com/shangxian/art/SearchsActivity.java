@@ -1,9 +1,11 @@
 package com.shangxian.art;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import m.framework.utils.Utils;
 
+import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.adapter.SearchsAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.DataTools;
@@ -11,8 +13,8 @@ import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.SearchServer;
-import com.shangxian.art.net.SearchServer.OnSearchProductListener;
 import com.shangxian.art.view.CircleImageView1;
 
 import android.graphics.drawable.BitmapDrawable;
@@ -163,43 +165,91 @@ public class SearchsActivity extends BaseActivity {
 	}
 
 	private void loadSearch() {
-		SearchServer.onSearchProduct(scan_info, "0", "10",
-				curModel == SearchModel.shop, new OnSearchProductListener() {
-					@Override
-					public void onSearch(SearchProductInfo product) {
-						if (product != null && !product.isNull()) {
-							changeUi(UiModel.showData);
-							info = product;
-							searchsAdapter.upDateList(info.getData());
-							if (info != null && info.isMore()) {
-								changeUi(UiModel.footerToLoad);
-							} else {
-								changeUi(UiModel.footerNoMore);
-							}
+//		SearchServer.onSearchProduct(scan_info, "0", "10",
+//				curModel == SearchModel.shop, null, new OnSearchProductListener() {
+//					@Override
+//					public void onSearch(SearchProductInfo product) {
+//						if (product != null && !product.isNull()) {
+//							changeUi(UiModel.showData);
+//							info = product;
+//							searchsAdapter.upDateList(info.getData());
+//							if (info != null && info.isMore()) {
+//								changeUi(UiModel.footerToLoad);
+//							} else {
+//								changeUi(UiModel.footerNoMore);
+//							}
+//						} else {
+//							changeUi(UiModel.noData);
+//						}
+//					}
+//				});
+		Type type = new TypeToken<SearchProductInfo>(){}.getType();
+		SearchServer.onSearchProduct(scan_info, "0", "10", curModel == SearchModel.shop, type, new CallBack() {	
+			@Override
+			public void onSimpleSuccess(Object res) {
+				if (res != null) {
+					info = (SearchProductInfo) res;
+					if (!info.isNull()) {
+						searchsAdapter.upDateList(info.getData());
+						changeUi(UiModel.showData);
+						if (info != null && info.isMore()) {
+							changeUi(UiModel.footerToLoad);
 						} else {
-							changeUi(UiModel.noData);
+							changeUi(UiModel.footerNoMore);
 						}
+					}else {
+						changeUi(UiModel.noData);
 					}
-				});
+				}
+			}
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				changeUi(UiModel.noData);
+			}
+		});
 	}
 
 	private void loadMore() {
-		SearchServer.onSearchProduct(scan_info, info.getStart() + "",
-				info.getPageSize() + "", curModel == SearchModel.shop,
-				new OnSearchProductListener() {
-					@Override
-					public void onSearch(SearchProductInfo product) {
-						info = product;
-						if (info != null)
-							searchsAdapter.addFootDataList(info.getData());
-						// changeUi(UiModel.showData);
+//		SearchServer.onSearchProduct(scan_info, info.getStart() + "",
+//				info.getPageSize() + "", curModel == SearchModel.shop,
+//				new OnSearchProductListener() {
+//					@Override
+//					public void onSearch(SearchProductInfo product) {
+//						info = product;
+//						if (info != null)
+//							searchsAdapter.addFootDataList(info.getData());
+//						// changeUi(UiModel.showData);
+//						if (info != null && info.isMore()) {
+//							changeUi(UiModel.footerToLoad);
+//						} else {
+//							changeUi(UiModel.footerNoMore);
+//						}
+//					}
+//				});
+		Type type = new TypeToken<SearchProductInfo>(){}.getType();
+		SearchServer.onSearchProduct(scan_info, (info.getStart() + 1) + "", "10", curModel == SearchModel.shop, type, new CallBack() {	
+			@Override
+			public void onSimpleSuccess(Object res) {
+				if (res != null) {
+					info = (SearchProductInfo) res;
+					if (!info.isNull()) {
+						searchsAdapter.upDateList(info.getData());
+						changeUi(UiModel.showData);
 						if (info != null && info.isMore()) {
 							changeUi(UiModel.footerToLoad);
 						} else {
 							changeUi(UiModel.footerNoMore);
 						}
 					}
-				});
+				}
+			}
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				changeUi(UiModel.noData);
+			}
+		});
 	}
 
 	private void listener() {
