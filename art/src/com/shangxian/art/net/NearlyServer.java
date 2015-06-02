@@ -15,7 +15,7 @@ import com.shangxian.art.utils.MyLogger;
 public class NearlyServer extends BaseServer {
 	public void toNearlyShop(String lng, int r, int index, final OnNearlyShopListener l) {
 		if (l == null) return; 
-		RequestParams params = new RequestParams();
+		RequestParams params = getParams();
 		params.addBodyParameter("location", lng);
 		params.addBodyParameter("radius", r + "");
 		params.addBodyParameter("page_index", index + "");

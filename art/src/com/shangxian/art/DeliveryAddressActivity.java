@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
+import com.ab.db.MyDBHelper;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
@@ -47,6 +48,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 	Boolean isfromConfirmOrder = false;
 
 	private View loading_big,ll_refresh_empty;
+	
+	private int delete = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -189,7 +192,14 @@ public class DeliveryAddressActivity extends BaseActivity{
 					//选项框
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						System.out.println("<<<<<<<<选择的是"+which);
+						if (which == 0) {
+							System.out.println("<<<<<<<<选择的是删除"+which);
+							
+							delete = 0;
+						}else {
+							System.out.println("<<<<<<<<选择的是设为默认地址"+which);
+							delete = 1;
+						}
 						
 					}
 				});
@@ -197,7 +207,14 @@ public class DeliveryAddressActivity extends BaseActivity{
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						System.out.println(">>>>>>>>>>");
+						if (delete == 0) {
+							System.out.println(">>>>>>>>>>确定+选择的是删除");
+							
+						}else {
+							System.out.println(">>>>>>>>>>确定+选择的是设为默认地址");
+							
+						}
+						
 						
 					}
 				});
