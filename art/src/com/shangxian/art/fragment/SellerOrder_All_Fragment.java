@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
-import com.shangxian.art.MyOrderActivity;
+import com.shangxian.art.SellerOrderActivity;
 import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.MyOrderListAdapter;
@@ -36,13 +36,14 @@ import com.shangxian.art.utils.MyLogger;
  * @author ling
  *
  */
-public class MyOrder_All_Fragment extends BaseFragment implements
+public class SellerOrder_All_Fragment extends BaseFragment implements
 		OnHttpResultListener, OnHttpResultMoreListener,
 		OnHeaderRefreshListener, OnFooterLoadListener, OnItemClickListener {
+	
 	private View view;
-	private View v_empty;
+	//private View v_empty;
 	private ListView listView;
-	private ProgressBar progressBar;
+	//private ProgressBar progressBar;
 	private AbPullToRefreshView mAbPullToRefreshView;
 
 	private MyOrderListAdapter myOrderListAdapter;
@@ -72,18 +73,18 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		super.onCreate(savedInstanceState);
 	}
 
-	public MyOrder_All_Fragment(String status) {
+	public SellerOrder_All_Fragment(String status) {
 		super();
 		this.status = status;
 	}
 
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
-				R.layout.layout_main_action_frame1,
+				R.layout.layout_main_action_frame,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
-		v_empty = view.findViewById(R.id.tv_empty);
+		//v_empty = view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
-		progressBar = (ProgressBar) view.findViewById(R.id.progress_order);
+		//progressBar = (ProgressBar) view.findViewById(R.id.progress_order);
 		mAbPullToRefreshView = (AbPullToRefreshView) view
 				.findViewById(R.id.mPullRefreshView);
 		// 设置进度条的样式
@@ -106,21 +107,14 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		// getData();
 		return view;
 	}
-	
-//	@Override
-//	public void onViewCreated(View view, Bundle savedInstanceState) {
-//		super.onViewCreated(view, savedInstanceState);
-//		changeUi(UiModel.loading);
-//	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		if (status.equals("")) {
-			((MyOrderActivity) getActivity()).initDateFirstFragment();
-
-		}
+//		if (status.equals("")) {
+//			((SellerOrderActivity) getActivity()).initDateFirstFragment();
+//		}
 	}
 
 	private void initListener() {
@@ -131,12 +125,9 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	}
 
 	public void getData() {
-		if (!isScrollListViewFresh) {
-			progressBar.setVisibility(View.VISIBLE);
-			//changeUi(UiModel.loading);
-		}
+		
 		MyLogger.i("status: " + status);
-		MyOrderServer.toGetOrder(status, this);
+		MyOrderServer.toGetSellerOrder(status, this);
 	}
 
 	@Override
@@ -160,6 +151,17 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		super.onStart();
 	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		changeUi(UiModel.loading);
+		if (!isScrollListViewFresh) {
+			//progressBar.setVisibility(View.VISIBLE);
+			changeUi(UiModel.loading);	
+		}
+		getData();
+	}
+	
 	@Override
 	public void onResume() {
 		MyLogger.i("");
@@ -191,27 +193,26 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	}
 
 	public void updateView_nocontent() {
-		if (v_empty != null)
+		//if (v_empty != null)
 			if (mOrderItems.size() == 0) {
-				v_empty.setVisibility(View.VISIBLE);
+				//v_empty.setVisibility(View.VISIBLE);
 				//listView.setVisibility(View.GONE);
-				//changeUi(UiModel.noData_noProduct);
+				changeUi(UiModel.loading);
 			} else {
 				//v_empty.setVisibility(View.GONE);
-				listView.setVisibility(View.VISIBLE);
-				//changeUi(UiModel.showData);
+				//listView.setVisibility(View.VISIBLE);
+				changeUi(UiModel.showData);
 			}
 	}
 
 	@Override
 	public void onHttpResult(MyOrderItem_all myOrderItemAll) {
 		isScrollListViewFresh = false;
-		progressBar.setVisibility(View.GONE);
-		
+		//progressBar.setVisibility(View.GONE);
 		mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (myOrderItemAll != null) {
 			// MyLogger.i(myOrderItemAll.toString());
-			//changeUi(UiModel.showData);
+			changeUi(UiModel.showData);
 			skip = 0;
 			mOrderItems.clear();
 			if (myOrderItemAll.getData() != null) {
@@ -221,8 +222,8 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 			}
 			updateView_nocontent();
 		} else {
-			CommonUtil.toast("网络错误", getActivity());
-			//changeUi(UiModel.noData_noProduct);
+			//CommonUtil.toast("网络错误", getActivity());
+			changeUi(UiModel.noData_noProduct);
 		}
 	}
 
@@ -257,7 +258,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	private void loadMore() {
 		skip += pageSize;
 		String json = "{\"skip\":" + skip + ",\"pageSize\":" + pageSize + "}";
-		MyOrderServer.toGetOrderMore(status, json, this);
+		MyOrderServer.toGetSellerOrderMore(status, json, this);
 	}
 
 	@Override

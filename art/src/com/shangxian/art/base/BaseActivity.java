@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
-public class BaseActivity extends AbActivity {
+public class BaseActivity extends AbActivity{
 	protected TopView topView;
 	protected LocalUserInfo share;
 	protected BaseActivity mAc;

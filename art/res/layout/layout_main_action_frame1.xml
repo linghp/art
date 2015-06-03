@@ -21,7 +21,7 @@
             android:smoothScrollbar="true" />
     </com.ab.view.pullview.AbPullToRefreshView>
 
-    <!-- <TextView
+ 	<TextView
         android:id="@+id/tv_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,9 +35,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:visibility="gone" /> -->
+        android:visibility="gone" /> 
 
-    <include 
+    <!-- <include 
         android:id="@+id/loading"
         layout="@layout/loadind_big" />
 
@@ -49,6 +49,6 @@
     <include 
         android:id="@+id/no_data"
         layout="@layout/no_data"
-        android:visibility="gone" />
+        android:visibility="gone" /> -->
 
 </FrameLayout>
