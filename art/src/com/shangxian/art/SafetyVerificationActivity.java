@@ -259,8 +259,8 @@ public class SafetyVerificationActivity extends BaseActivity {
 						return;
 					}
 					handler.sendEmptyMessage(codeing);
-					RequestParams params = new RequestParams();
-					params.addBodyParameter("phoneNumber", phone);
+					//RequestParams params = new RequestParams();
+					//params.addBodyParameter("phoneNumber", phone);
 					new HttpUtils().send(HttpMethod.GET,
 							Constant.NET_FINDWORD_CODE + phone, null,
 							new BaseCallBack<String>() {

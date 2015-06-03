@@ -19,9 +19,9 @@ public class Constant {
 	public static String GOODSDETAIL = "/product/%s/details";//商品详情
 	
 	public static final String HOST = "http://192.168.0.133:8888/art/";
-	public static final String NET_FINDWORD = BASEURL + CONTENT + "/user/findpassword";
+	public static final String NET_FINDWORD = BASEURL + CONTENT + "/findpassword";
 	//user/findpassword?newPassword=612714&captcha=903527&reNewPassword=612714&phoneNumber=15025496981
-	public static final String NET_FINDWORD_CODE = BASEURL + CONTENT + "/user/findpasswodCaptcha?phoneNumber=";
+	public static final String NET_FINDWORD_CODE = BASEURL + CONTENT + "/findpasswodCaptcha?phoneNumber=";
 //	public static final String SHOPSLIST = "/1/shops";
 	
 	
