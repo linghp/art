@@ -295,8 +295,12 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		return myOrderItem;
 	}
 
-	public void setMyOrderItem(MyOrderItem myOrderItem) {
-		this.myOrderItem = myOrderItem;
+	public void setMyOrderItem(MyOrderItem myOrderItem1) {
+		if(myOrderItem!=null){//从我的订单付款-》订单详情->退款，越界异常，这里只设置状态就可以保证里面的商品不为空
+			myOrderItem.setStatus(myOrderItem1.getStatus());
+		}else{
+		this.myOrderItem = myOrderItem1;
+		}
 	}
 
 }
