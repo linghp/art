@@ -67,6 +67,7 @@
     <string name="text_main_reimburse">退货申请</string>
     <string name="title_activity_refund">退款申请</string>
     <string name="text_refundstatus">退款状态：%s</string>
+    <string name="text_returngoodsstatus">退货状态：%s</string>
     <string name="title_activity_logisticsinformation">填写物流信息</string>
     <string name="title_activity_seller_order">卖家订单</string>
     <string name="title_activity_seller_order_manage">SellerOrderManageActivity</string>

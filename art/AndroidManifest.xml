@@ -470,8 +470,7 @@
         </activity>
         <activity
             android:name=".MyOrderDetailsActivity"
-            android:label="@string/title_activity_my_order_details"
-            android:launchMode="singleTask" >
+            android:label="@string/title_activity_my_order_details" >
         </activity>
         <activity
             android:name=".RefundOrderActivity"

@@ -279,13 +279,15 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		if (resultCode == getActivity().RESULT_OK) {
 			MyOrderItem myOrderItem_Return = (MyOrderItem) data
 					.getSerializableExtra("MyOrderItem");
-			MyLogger.i(myOrderItem_Return.toString());
 			if (myOrderItem != null && myOrderItem_Return != null) {
 				if (!myOrderItem.getStatus().equals(
 						myOrderItem_Return.getStatus())) {
 					myOrderItem.setStatus(myOrderItem_Return.getStatus());
 					myOrderListAdapter.notifyDataSetChanged();
 				}
+			}else if(data.getBooleanExtra("isdelete", false)){//订单详情中删除订单返回
+				mOrderItems.remove(myOrderItem);
+				myOrderListAdapter.notifyDataSetChanged();
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 		}
