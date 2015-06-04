@@ -52,22 +52,23 @@
     <string name="text_good_comment">好评(%d)</string>
     <string name="text_neutral_comment">中评(%d)</string>
     <string name="title_activity_comment">评论</string>
-    
     <string name="title_activity_searchs">SearchsActivity</string>
     <string name="text_register2_phone">验证码短信已发送到%s</string>
-     <!-- 订单详情 -->
+    <!-- 订单详情 -->
     <string name="title_activity_my_order_details">订单详情</string>
     <string name="text_order_Price">订单金额(含运费)：￥%s</string>
     <string name="text_shippingPrice">运费：￥%s</string>
     <string name="text_tradetime">成交时间：%s</string>
-      <!-- 收货信息 -->
+    <!-- 收货信息 -->
     <string name="text_receiver">收货人：%s</string>
     <string name="text_receiver_address">收货地址：%s</string>
-      <!-- 退款订单 -->
+    <!-- 退款订单 -->
     <string name="title_activity_refundorder">退款订单</string>
     <string name="text_main_reimburse">退货申请</string>
     <string name="title_activity_refund">退款申请</string>
     <string name="text_refundstatus">退款状态：%s</string>
     <string name="text_returngoodsstatus">退货状态：%s</string>
     <string name="title_activity_logisticsinformation">填写物流信息</string>
+    <string name="title_activity_seller_order">卖家订单</string>
+
 </resources>

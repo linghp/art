@@ -60,6 +60,7 @@ public class BaseServer {
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
+	protected static final String NET_SELLER_ORDERS = HOST + "orderList/";// 我的订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
 	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货

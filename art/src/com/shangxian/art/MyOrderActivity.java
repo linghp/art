@@ -82,6 +82,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,
 	public static String[] orderReturnStatus = { "NORMAL", "SUCCESS",
 			"WAIT_SELLER_APPROVAL", "WAIT_BUYER_DELIVERY", "WAIT_COMPLETED",
 			"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
+	
 	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
 			"等待卖家审核", "等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消",
 			"退货失败" };

@@ -77,6 +77,22 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
+	
+	public static void toGetSellerOrder(String status, final OnHttpResultListener l) {
+		toPostJson(NET_SELLER_ORDERS + status, "{}", new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResult(null);
+					} else {
+						l.onHttpResult(getMyOrderItemAll(res));
+					}
+				}
+			}
+		});
+	}
 
 	/**
 	 * 获取下一页
@@ -101,8 +117,26 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
+	
+	public static void toGetSellerOrderMore(String status, String json,
+			final OnHttpResultMoreListener l) {
+		toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultMore(null);
+					} else {
+						l.onHttpResultMore(getMyOrderItemAll(res));
+					}
+				}
+			}
+		});
+	}
 
 	protected static MyOrderItem_all getMyOrderItemAll(String content) {
+		
 		MyOrderItem_all myOrderItem_all = null;
 		try {
 			Gson gson = new Gson();
