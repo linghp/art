@@ -25,13 +25,16 @@ import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.fragment.MyOrder_All_Fragment;
+import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultConfirmGoodsListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
+import com.shangxian.art.net.SellerOrderServer;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.zxing.view.ViewfinderView;
 
-public class MyOrderListAdapter extends BaseAdapter implements
+public class MyOrderListAdapter1 extends BaseAdapter implements
 		OnHttpResultCancelOrderListener, OnHttpResultDelOrderListener,
 		OnHttpResultConfirmGoodsListener {
 	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
@@ -40,7 +43,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 	private LayoutInflater inflater;
 	private List<MyOrderItem> myOrderItems = new ArrayList<MyOrderItem>();
 
-	public MyOrderListAdapter(Context contex, Fragment fragment,
+	public MyOrderListAdapter1(Context contex, Fragment fragment,
 			List<MyOrderItem> myOrderItems) {
 		this.context = contex;
 		this.fragment = fragment;
@@ -78,7 +81,6 @@ public class MyOrderListAdapter extends BaseAdapter implements
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
-		;
 		final MyOrderItem myOrderItem = (MyOrderItem) getItem(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
@@ -93,7 +95,9 @@ public class MyOrderListAdapter extends BaseAdapter implements
 			holder.tv_payment = (TextView) convertView
 					.findViewById(R.id.tv_payment);
 			holder.tv_01 = (TextView) convertView.findViewById(R.id.tv_01);
+			holder.tv_01.setVisibility(View.GONE);
 			holder.tv_02 = (TextView) convertView.findViewById(R.id.tv_02);
+			holder.tv_03 = (TextView) convertView.findViewById(R.id.tv_03);
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
@@ -159,83 +163,83 @@ public class MyOrderListAdapter extends BaseAdapter implements
 
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
 			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])) {// 待付款
-				holder.tv_01.setText("取消订单");
-				holder.tv_02.setText("付款");
-				holder.tv_01.setVisibility(View.VISIBLE);
-				holder.tv_02.setVisibility(View.VISIBLE);
-				holder.tv_01.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// CommonUtil.toast("click", context);
-						MyOrderServer.toCancelOrder(myOrderItem,
-								MyOrderListAdapter.this);
-					}
-				});
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// CommonUtil.toast("click", context);
-						List<String> ordernumber = new ArrayList<String>();
-						ordernumber.add(myOrderItem.getOrderNumber());
-						((MyOrder_All_Fragment) fragment)
-								.setMyOrderItem(myOrderItem);
-						PayActivity.startThisActivity_Fragment(ordernumber,
-								CommonUtil.priceConversion(myOrderItem
-										.getTotalPrice()), (Activity) context,
-								fragment);
-					}
-				});
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.GONE);
+				holder.tv_03.setVisibility(View.VISIBLE);
+				holder.tv_03.setText("等待买家付款...");
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[7])) {// 已取消交易
 				holder.tv_01.setText("删除订单");
 				holder.tv_01.setVisibility(View.VISIBLE);
 				holder.tv_02.setVisibility(View.GONE);
+				holder.tv_03.setVisibility(View.GONE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						// CommonUtil.toast("click", context);
 						MyOrderServer.toDelOrder(myOrderItem,
-								MyOrderListAdapter.this);
+								MyOrderListAdapter1.this);
+						SellerOrderServer.toDelSellerOrder(myOrderItem,
+								new CallBack() {
+									@Override
+									public void onSimpleSuccess(Object res) {
+										String r = (String) res;
+										boolean isSuccess = Boolean.valueOf(r);
+										if (isSuccess) {
+											myOrderItems.remove(myOrderItem);
+											MyOrderListAdapter1.this
+													.notifyDataSetChanged();
+											CommonUtil.toast("删除成功", context);
+										} else {
+											CommonUtil.toast("删除失败", context);
+										}
+									}
+
+									@Override
+									public void onSimpleFailure(int code) {
+										CommonUtil.toast("删除失败", context);
+										
+										
+									}
+								});
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[2])) {// 待发货
 				if (isRefundStatus) {
-					holder.tv_02.setText("退款中");
-					holder.tv_02.setEnabled(false);
-				} else {
-					holder.tv_02.setText("退款");
+					holder.tv_02.setText("确认退款");
 					holder.tv_02.setEnabled(true);
+					holder.tv_02.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+
+						}
+					});
+				} else {
+					holder.tv_02.setText("发货");
+					holder.tv_02.setEnabled(true);
+					holder.tv_02.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+
+						}
+					});
 				}
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// CommonUtil.toast("click", context);
-						((MyOrder_All_Fragment) fragment)
-								.setMyOrderItem(myOrderItem);
-						ReimburseActivity.startThisActivity_Fragment(false,
-								myOrderItem.getOrderNumber(), myOrderItem
-										.getProductItemDtos().get(0).getId(),
-								0f, context, fragment);
-					}
-				});
+				holder.tv_03.setVisibility(View.GONE);
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[3])) {// 待收货
-				holder.tv_02.setText("确认收货");
 				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.VISIBLE);
+				holder.tv_02.setVisibility(View.GONE);
+				holder.tv_03.setVisibility(View.VISIBLE);
+				holder.tv_03.setText("等待买家收货...");
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						MyOrderServer.toConfirmGoods(myOrderItem,
-								MyOrderListAdapter.this);
+								MyOrderListAdapter1.this);
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(
@@ -281,6 +285,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 		public TextView goodsPrice;
 		public TextView tv_01;
 		public TextView tv_02;
+		public TextView tv_03;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
 	}
@@ -297,13 +302,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 
 	@Override
 	public void onHttpResultDelOrder(MyOrderItem myOrderItem) {
-		if (myOrderItem != null) {
-			myOrderItems.remove(myOrderItem);
-			this.notifyDataSetChanged();
-			CommonUtil.toast("删除成功", context);
-		} else {
-			CommonUtil.toast("删除失败", context);
-		}
+
 	}
 
 	@Override

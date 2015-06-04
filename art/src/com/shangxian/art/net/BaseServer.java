@@ -62,10 +62,12 @@ public class BaseServer {
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
 	protected static final String NET_SELLER_ORDERS = HOST + "orderList/";// 我的订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
+	protected static final String NET_SENDORDER = HOST + "sendOrder/";// 卖家发货
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
+	protected static final String NET_SELLER_DELORDER = HOST + "deleteSellerOrder/";// 卖家删除订单
 	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
-	protected static final String NET_ORDERDETAILS = HOST
-			+ "order/details?orderNumber=";// 订单详情 
+	protected static final String NET_ORDERDETAILS = HOST + "order/details?orderNumber=";// 订单详情 
+	protected static final String NET_SELLER_ORDERDETAILS = HOST + "sellerorderdails/";// 订单详情 
 	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
 	protected static final String NET_FILTER = HOST+"product/find";//分类筛选
 	//protected static final String NET_FILTER = "http://192.168.0.165:8888/art/api/product/find";//分类筛选
@@ -126,12 +128,23 @@ public class BaseServer {
 		RequestParams params = new RequestParams();
 		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
-			params.addHeader("User-Token", curUser.getId() + "");
+			params.addHeader("User-Token", /*curUser.getId() + ""*/"2");
 			return params;
 		} else {
 			return params;
 		}
 	}
+	
+//	protected static RequestParams getParams() {
+//		RequestParams params = new RequestParams();
+//		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
+//		if (curUser != null && !curUser.isNull()) {	
+//			params.addHeader("User-Token", /*curUser.getId() + ""*/"2");
+//			return params;
+//		} else {
+//			return params;
+//		}
+//	}
 	
 	protected static RequestParams getJsonParams() {
 		RequestParams params = new RequestParams();

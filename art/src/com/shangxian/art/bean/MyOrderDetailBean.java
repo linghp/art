@@ -21,7 +21,7 @@ public class MyOrderDetailBean implements Serializable {
 	@Expose
 	private String orderedDate;
 	@Expose
-	private Object tradeDate;
+	private String tradeDate;
 	@Expose
 	private String payType;
 	@Expose
@@ -47,7 +47,7 @@ public class MyOrderDetailBean implements Serializable {
 	@Expose
 	private ReceiverInfo receiverInfo;
 	@Expose
-	private Object returnCause;
+	private String returnCause;
 	@Expose
 	private Integer returnPrice;
 
@@ -78,11 +78,11 @@ public Integer getOrderId() {
 		this.orderedDate = orderedDate;
 	}
 
-	public Object getTradeDate() {
+	public String getTradeDate() {
 		return tradeDate;
 	}
 
-	public void setTradeDate(Object tradeDate) {
+	public void setTradeDate(String tradeDate) {
 		this.tradeDate = tradeDate;
 	}
 
@@ -182,11 +182,11 @@ public Integer getOrderId() {
 		this.receiverInfo = receiverInfo;
 	}
 
-	public Object getReturnCause() {
+	public String getReturnCause() {
 		return returnCause;
 	}
 
-	public void setReturnCause(Object returnCause) {
+	public void setReturnCause(String returnCause) {
 		this.returnCause = returnCause;
 	}
 

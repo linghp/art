@@ -1,5 +1,6 @@
 package com.shangxian.art.net;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.CommonBean;
@@ -37,24 +39,28 @@ public class MyOrderServer extends BaseServer {
 	public interface OnHttpResultOrderDetailsListener {
 		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean);
 	}
+
 	/*
 	 * 返回取消订单监听
 	 */
 	public interface OnHttpResultCancelOrderListener {
 		void onHttpResultCancelOrder(MyOrderItem myOrderItem);
 	}
+
 	/*
 	 * 返回删除订单监听
 	 */
 	public interface OnHttpResultDelOrderListener {
 		void onHttpResultDelOrder(MyOrderItem myOrderItem);
 	}
+
 	/*
 	 * 返回退款申请监听
 	 */
 	public interface OnHttpResultRefundListener {
 		void onHttpResultRefund(CommonBean<Object> commonBean);
 	}
+
 	/*
 	 * 返回确认收货监听
 	 */
@@ -66,7 +72,7 @@ public class MyOrderServer extends BaseServer {
 		toPostJson(NET_ORDERS + status, "{}", new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				//MyLogger.i(res);
+				// MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResult(null);
@@ -77,22 +83,7 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
-	
-	public static void toGetSellerOrder(String status, final OnHttpResultListener l) {
-		toPostJson(NET_SELLER_ORDERS + status, "{}", new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResult(null);
-					} else {
-						l.onHttpResult(getMyOrderItemAll(res));
-					}
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * 获取下一页
@@ -106,24 +97,7 @@ public class MyOrderServer extends BaseServer {
 		toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				//MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultMore(null);
-					} else {
-						l.onHttpResultMore(getMyOrderItemAll(res));
-					}
-				}
-			}
-		});
-	}
-	
-	public static void toGetSellerOrderMore(String status, String json,
-			final OnHttpResultMoreListener l) {
-		toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				//MyLogger.i(res);
+				// MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultMore(null);
@@ -135,8 +109,24 @@ public class MyOrderServer extends BaseServer {
 		});
 	}
 
+	// public static void toGetSellerOrderMore(String status, String json,
+	// final OnHttpResultMoreListener l) {
+	// toPostJson(NET_ORDERS + status, json, new OnHttpListener() {
+	// @Override
+	// public void onHttp(String res) {
+	// //MyLogger.i(res);
+	// if (l != null) {
+	// if (TextUtils.isEmpty(res)) {
+	// l.onHttpResultMore(null);
+	// } else {
+	// l.onHttpResultMore(getMyOrderItemAll(res));
+	// }
+	// }
+	// }
+	// });
+	// }
+
 	protected static MyOrderItem_all getMyOrderItemAll(String content) {
-		
 		MyOrderItem_all myOrderItem_all = null;
 		try {
 			Gson gson = new Gson();
@@ -160,7 +150,7 @@ public class MyOrderServer extends BaseServer {
 		toGet(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				//MyLogger.i(res);
+				// MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultOrderDetails(null);
@@ -171,10 +161,11 @@ public class MyOrderServer extends BaseServer {
 			}
 
 			private MyOrderDetailBean getMyOrderOrderDetails(String res) {
-				MyOrderDetailBean myOrderDetailBean=null;
+				MyOrderDetailBean myOrderDetailBean = null;
 				try {
 					Gson gson = new Gson();
-					myOrderDetailBean = gson.fromJson(res, MyOrderDetailBean.class);
+					myOrderDetailBean = gson.fromJson(res,
+							MyOrderDetailBean.class);
 					MyLogger.i(myOrderDetailBean.toString());
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -183,6 +174,7 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
+
 	/**
 	 * 取消订单
 	 * 
@@ -192,20 +184,23 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toCancelOrder(final MyOrderItem myOrderItem,
 			final OnHttpResultCancelOrderListener l) {
-		toPostWithToken(NET_CANCELORDER + myOrderItem.getOrderNumber(),null, new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				//MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultCancelOrder(null);
-					} else {
-						l.onHttpResultCancelOrder(getMyOrderItem(myOrderItem,res));
+		toPostWithToken(NET_CANCELORDER + myOrderItem.getOrderNumber(), null,
+				new OnHttpListener() {
+					@Override
+					public void onHttp(String res) {
+						// MyLogger.i(res);
+						if (l != null) {
+							if (TextUtils.isEmpty(res)) {
+								l.onHttpResultCancelOrder(null);
+							} else {
+								l.onHttpResultCancelOrder(getMyOrderItem(
+										myOrderItem, res));
+							}
+						}
 					}
-				}
-			}
-		});
+				});
 	}
+
 	/**
 	 * 删除订单
 	 * 
@@ -215,22 +210,27 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toDelOrder(final MyOrderItem myOrderItem,
 			final OnHttpResultDelOrderListener l) {
-		toPostWithToken(NET_DELORDER + myOrderItem.getOrderNumber(), null,new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				//MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultDelOrder(null);
-					} else {
-						l.onHttpResultDelOrder(getMyOrderItem(myOrderItem,res));
+		toPostWithToken(NET_DELORDER + myOrderItem.getOrderNumber(), null,
+				new OnHttpListener() {
+					@Override
+					public void onHttp(String res) {
+						// MyLogger.i(res);
+						if (l != null) {
+							if (TextUtils.isEmpty(res)) {
+								l.onHttpResultDelOrder(null);
+							} else {
+								l.onHttpResultDelOrder(getMyOrderItem(
+										myOrderItem, res));
+							}
+						}
 					}
-				}
-			}
-		});
+				});
 	}
 	
-	private static MyOrderItem getMyOrderItem(MyOrderItem myOrderItem,String content) {
+	
+
+	private static MyOrderItem getMyOrderItem(MyOrderItem myOrderItem,
+			String content) {
 		MyOrderItem myOrderItem2 = null;
 		try {
 			Gson gson = new Gson();
@@ -242,37 +242,40 @@ public class MyOrderServer extends BaseServer {
 		}
 		return myOrderItem2;
 	}
-	
+
 	/**
-	 *退款/退货申请
+	 * 退款/退货申请
 	 * 
 	 * @param status
 	 * @param json
 	 * @param l
 	 */
-	public static void toRequestRefund(String isGoods,String productid,String orderNumber,String totalPrice,String returnReason,String buyerMessege,
-			final OnHttpResultRefundListener l) {
+	public static void toRequestRefund(String isGoods, String productid,
+			String orderNumber, String totalPrice, String returnReason,
+			String buyerMessege, final OnHttpResultRefundListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("isGoods", isGoods));
 		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
 		pairs.add(new BasicNameValuePair("returnReason", returnReason));
 		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
-		toPostWithToken2(NET_REFUND+productid+"/"+ orderNumber, pairs,new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				//MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultRefund(null);
-					} else {
-						l.onHttpResultRefund(getCommonBean(res));
+		toPostWithToken2(NET_REFUND + productid + "/" + orderNumber, pairs,
+				new OnHttpListener() {
+					@Override
+					public void onHttp(String res) {
+						// MyLogger.i(res);
+						if (l != null) {
+							if (TextUtils.isEmpty(res)) {
+								l.onHttpResultRefund(null);
+							} else {
+								l.onHttpResultRefund(getCommonBean(res));
+							}
+						}
 					}
-				}
-			}
-		});
+				});
 	}
+
 	/**
-	 *确认收货
+	 * 确认收货
 	 * 
 	 * @param status
 	 * @param json
@@ -281,27 +284,29 @@ public class MyOrderServer extends BaseServer {
 	public static void toConfirmGoods(final MyOrderItem myOrderItem,
 			final OnHttpResultConfirmGoodsListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem.getOrderNumber()));
-		toPostWithToken(NET_CONFIRMGOODS, pairs,new OnHttpListener() {
+		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem
+				.getOrderNumber()));
+		toPostWithToken(NET_CONFIRMGOODS, pairs, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				//MyLogger.i(res);
+				// MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
 						l.onHttpResultConfirmGoods(null);
 					} else {
-						l.onHttpResultConfirmGoods(getMyOrderItem(myOrderItem,res));
+						l.onHttpResultConfirmGoods(getMyOrderItem(myOrderItem,
+								res));
 					}
 				}
 			}
 		});
 	}
 
-	public static void toCancelRefund(String id, final CallBack back){
+	public static void toCancelRefund(String id, final CallBack back) {
 		RequestParams params = getParams();
 		toXUtils(HttpMethod.POST, NET_CANCEL_REFUND, params, null, back);
 	}
-	
+
 	protected static CommonBean<Object> getCommonBean(String res) {
 		CommonBean<Object> commonBean = null;
 		try {
