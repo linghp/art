@@ -28,6 +28,7 @@ import com.shangxian.art.net.PasswordServer.OnNewSafeCodeListener;
 import com.shangxian.art.net.PasswordServer.OnSendCodeListener;
 import com.shangxian.art.net.call.BaseCallBack;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -278,6 +279,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 								@Override
 								public void onSimpleFailure(int code, String res) {
 									myToast("发送失败");
+									MyLogger.i(code+"发送失败:"+res);
 									handler.sendEmptyMessage(tocode);
 								}
 							});

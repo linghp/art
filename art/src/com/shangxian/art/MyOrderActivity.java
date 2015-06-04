@@ -272,4 +272,9 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		MyLogger.i("onActivityResult");
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }

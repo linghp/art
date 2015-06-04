@@ -10,30 +10,32 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
-import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.MyOrderDetailBean;
+import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
 import com.shangxian.art.bean.MyOrderDetailBean.ReceiverInfo;
 import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.ProductItemDto;
-import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.net.MyOrderServer;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
+import com.shangxian.art.net.MyOrderServer.OnHttpResultConfirmGoodsListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultOrderDetailsListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
-public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResultOrderDetailsListener,OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener{
+public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResultOrderDetailsListener,OnHttpResultCancelOrderListener,
+OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	private TopView topView;
 	private LinearLayout ll_goodsitem_add;
 	private ImageView iv_logo;
@@ -42,7 +44,7 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
     private MyOrderDetailBean myOrderDetailBean;
     private MyOrderItem myOrderItem;
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
-	
+	private String productid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,11 +55,13 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 
 	public static void startThisActivity(String ordernumber, Context context) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
 		((Activity)context).startActivityForResult(intent, 1);
 	}
 	public static void startThisActivity_MyOrder(String ordernumber, Context context,Fragment fragment) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
 		fragment.startActivityForResult(intent, 1);
 	}
@@ -130,30 +134,48 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 		((TextView)findViewById(R.id.car_storename)).setText(myOrderDetailBean.getSellerName());
 //        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 //				+ myOrderItem.getShopLogo());
+		String[] orderState=MyOrderActivity.orderState;
+		String[] orderReturnStatus=MyOrderActivity.orderReturnStatus;
 		ll_goodsitem_add.removeAllViews();
 		List<OrderItem> orderItems=myOrderDetailBean.getOrderItems();
-		for (OrderItem OrderItem : orderItems) {
+		final List<CheckBox> checkBoxs=new ArrayList<CheckBox>();
+		for (final OrderItem orderItem : orderItems) {
 			View child = inflater.inflate(
 					R.layout.list_car_goods_item, null);
 			ll_goodsitem_add.addView(child);
-			((TextView) child.findViewById(R.id.car_goodsname)).setText(OrderItem.getName());
+			((TextView) child.findViewById(R.id.car_goodsname)).setText(orderItem.getName());
 			//holder.goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 			//holder.goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child.findViewById(R.id.car_goods_price);
 			//final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
-			goodsNum.setText("x"+OrderItem.getQuantity());
-			goodsPrice.setText("￥"+CommonUtil.priceConversion(OrderItem.getPrice()));
-		    child.findViewById(R.id.check_goods).setVisibility(View.GONE);
+			CheckBox checkBox =  (CheckBox) child.findViewById(R.id.check_goods);
+			goodsNum.setText("x"+orderItem.getQuantity());
+			goodsPrice.setText("￥"+CommonUtil.priceConversion(orderItem.getUnitPrice()));
+			if(!((myOrderItem.getStatus().equals(orderState[2])||myOrderItem.getStatus().equals(orderState[4]))&&orderItem.getOrderItemStatus().equals(orderReturnStatus[0]))){
+				checkBox.setVisibility(View.GONE);
+			}else{
+				checkBoxs.add(checkBox);
+				checkBox.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						for (CheckBox checkBox : checkBoxs) {
+							checkBox.setChecked(false);
+						}
+							((CheckBox)v).setChecked(true);
+							productid=orderItem.getId();
+					}
+				});
+				
+			}
 			mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
-					+ OrderItem.getProductSacle());
+					+ orderItem.getProductSacle());
 		}
 		
 		//根据状态显示按钮
 		String status=myOrderDetailBean.getStatus();
-		String[] orderState=MyOrderActivity.orderState;
-		String[] orderReturnStatus=MyOrderActivity.orderReturnStatus;
 		if(status.equals(orderState[1])){
 			tv_01.setOnClickListener(new View.OnClickListener() {
 				
@@ -201,15 +223,61 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 				
 				@Override
 				public void onClick(View v) {
+					if(match()){
 					if(MyOrderActivity.currentFragment!=null){
 					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
-					ReimburseActivity.startThisActivity_Fragment(false,myOrderDetailBean.getOrderNumber(), myOrderDetailBean.getOrderItems().get(0).getId(),0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+					ReimburseActivity.startThisActivity_Fragment(false,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+					  }
+					}
+				}
+			});
+		}else if(myOrderItem.getStatus().equals(orderState[3])){//已取消交易
+			tv_01.setVisibility(View.GONE);
+			tv_02.setText("确认收货");
+			tv_02.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//CommonUtil.toast("click", context);
+					MyOrderServer.toConfirmGoods(myOrderItem, MyOrderDetailsActivity.this);
+				}
+			});
+		}else if(status.equals(orderState[4])){//已完成交易
+			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
+			MyLogger.i(status_temp);
+			if(TextUtils.isEmpty(status_temp)){
+				status_temp=orderReturnStatus[0];
+			}
+			if(status_temp.equals(orderReturnStatus[0])){
+			tv_02.setText("退货");
+			}else{
+			tv_02.setText("退货中");
+			tv_02.setEnabled(false);
+			}
+			tv_01.setVisibility(View.GONE);
+			tv_02.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(match()){
+					if(MyOrderActivity.currentFragment!=null){
+					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
+					ReimburseActivity.startThisActivity_Fragment(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+					   }
 					}
 				}
 			});
 		}
 	}
 	
+	protected boolean match() {
+		if(TextUtils.isEmpty(productid)){
+			myToast("请选择商品");
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void onHttpResultCancelOrder(MyOrderItem myOrderItem) {
 		if(myOrderItem!=null){
@@ -228,10 +296,21 @@ public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResult
 //			myOrderItems.remove(myOrderItem);
 //			this.notifyDataSetChanged();
 			CommonUtil.toast("删除成功", this);
-			setResult(RESULT_OK, new Intent().putExtra("MyOrderItem", myOrderItem));
+			setResult(RESULT_OK, new Intent().putExtra("isdelete", true));
 			finish();
 		}else{
 			CommonUtil.toast("删除失败", this);
 		}
+	}
+
+	@Override
+	public void onHttpResultConfirmGoods(MyOrderItem myOrderItem) {
+		if(myOrderItem!=null){
+			CommonUtil.toast("确认收货完成", this);
+			setResult(RESULT_OK, new Intent().putExtra("MyOrderItem", myOrderItem));
+			finish();
+	   }else{
+		CommonUtil.toast("确认收货完成失败", this);
+	  }
 	}
 }

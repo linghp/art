@@ -31,6 +31,7 @@ import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultConfirmGoodsListener;
 import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 
 public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCancelOrderListener,OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
@@ -98,6 +99,7 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 		
 			holder.ll_goodsitem_add.removeAllViews();
 			List<ProductItemDto> listCarGoodsBeans=myOrderItem.getProductItemDtos();
+			String status=myOrderItem.getStatus();
 			boolean isRefundStatus=false;//是否是normal
 			for (ProductItemDto productItemDto : listCarGoodsBeans) {
 				View child = inflater.inflate(
@@ -113,11 +115,16 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 				ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 				goodsNum.setText("x"+productItemDto.getQuantity());
 				goodsPrice.setText("￥"+CommonUtil.priceConversion(productItemDto.getPrice()));
-				String status=productItemDto.getOrderItemStatus();
-				if(!status.equals(MyOrderActivity.orderReturnStatus[0])){
+				String orderItemStatus=productItemDto.getOrderItemStatus();
+				MyLogger.i(position+"--"+status+"--"+orderItemStatus);
+				if(!orderItemStatus.equals(MyOrderActivity.orderReturnStatus[0])){
 					isRefundStatus=true;
 					car_goodsstatus.setVisibility(View.VISIBLE);
-					car_goodsstatus.setText(String.format(context.getResources().getString(R.string.text_refundstatus), MyOrderActivity.map_orderReturnStatusValue.get(status)));
+				   if(status.equals(MyOrderActivity.orderState[2])){
+					car_goodsstatus.setText(String.format(context.getResources().getString(R.string.text_refundstatus), MyOrderActivity.map_orderReturnStatusValue.get(orderItemStatus)));
+					}else{
+						car_goodsstatus.setText(String.format(context.getResources().getString(R.string.text_returngoodsstatus), MyOrderActivity.map_orderReturnStatusValue.get(orderItemStatus)));	
+					}
 				}else{
 					isRefundStatus=false;
 					car_goodsstatus.setVisibility(View.GONE);
@@ -222,7 +229,12 @@ public class MyOrderListAdapter extends BaseAdapter implements OnHttpResultCance
 				});
 			}
 			
-			
+				//为了点击退款/退货进入详情界面
+				if(myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])||myOrderItem.getStatus().equals(MyOrderActivity.orderState[4])){
+					holder.tv_02.setClickable(false);
+				}else{
+					holder.tv_02.setClickable(true);
+				}
 			}
 		return convertView;
 	}
