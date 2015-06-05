@@ -1,5 +1,10 @@
 package com.shangxian.art.net;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
+
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
@@ -17,18 +22,24 @@ public class AccountSecurityServer extends BaseServer{
 
 	//删除收货地址
 	public static void toGetDeleteAddress(String addressId,final OnHttpDeleteListener l){
-		AbRequestParams params = new AbRequestParams();	
-		System.out.println(">>>>>>>>>>删除的id"+addressId);
-		params.put("addressId", addressId);;
-		toGet(NET_DELETEADDRESS, params, new OnHttpListener() {
+		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		pairs.add(new BasicNameValuePair("addressId", addressId));
+		MyLogger.i(">>>>>>>>>>删除的id"+addressId);
+		toPostWithToken(NET_DELETEADDRESS, pairs, new OnHttpListener() {
 			
 			@Override
 			public void onHttp(String res) {
-				System.out.println(">>>>>>>>>>>删除收货地址"+res);
-				if (res == null) {
-					System.out.println(">>>>>>>>>>>>>删除失败");
+				MyLogger.i(">>>>>>>>>>>删除收货地址:"+res);
+				
+				if (res != null) {
+					MyLogger.i(">>>>>>>>>>>>>删除成功");
+					l.onHttpDelete(res);
+				}else {
+					MyLogger.i(">>>>>>>>>>>>>删除失敗");
+					l.onHttpDelete(res);
 				}
 			}
 		});
 	}
+
 }

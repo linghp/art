@@ -100,6 +100,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 			@Override
 			public void onResponse(String res) {
+				MyLogger.i(">>>>>>>>>>收货地址返回数据："+res);
 				list.clear();
 				if (!TextUtils.isEmpty(res)) {
 					Gson gson = new Gson();
@@ -118,15 +119,15 @@ public class DeliveryAddressActivity extends BaseActivity{
 							adapter.notifyDataSetChanged();
 							loading_big.setVisibility(View.GONE);
 						}
-						else {
-							loading_big.setVisibility(View.GONE);
-							ll_refresh_empty.setVisibility(View.GONE);
-
-						}
+						
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}else {
+					loading_big.setVisibility(View.GONE);
+					ll_refresh_empty.setVisibility(View.GONE);
+
 				}
 
 			}
@@ -147,7 +148,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 		String url = "";
 //		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-		url = BaseServer.HOST + "/receiving";
+		url = BaseServer.HOST + "receiving";
 		MyLogger.i(">>>>>>>>>>>>>>>>收货地址url："+url);
 		refreshTask(url);
 		super.onResume();
@@ -212,7 +213,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 								
 								@Override
 								public void onHttpDelete(String res) {
-									MyLogger.i(">>>>>>>>>>>>>删除后model"+res);
+									myToast(res);
+									onResume();
 								}
 							});
 							
