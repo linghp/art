@@ -116,7 +116,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		MyLogger.i(categoryId);
 		String geturl = getIntent().getStringExtra("url");
 		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/products";
+			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/productlist";
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
@@ -130,7 +130,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
 		// params.put("phone", "15889936624");
-		httpUtil.get(url, new AbStringHttpResponseListener() {
+		httpUtil.post(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onStart() {
