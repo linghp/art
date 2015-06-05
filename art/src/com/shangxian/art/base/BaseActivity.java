@@ -1,14 +1,13 @@
 package com.shangxian.art.base;
 
-import android.R.bool;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
 import com.ab.view.pullview.AbPullToRefreshView;
-import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.SafetyVerificationActivity;
@@ -56,6 +54,7 @@ public class BaseActivity extends AbActivity{
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		AliPayBase.initContext(this);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
 	@Override
