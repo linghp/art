@@ -36,6 +36,10 @@ public class MyOrderItem_all implements Serializable {
 
 	@Expose
 	private Integer pageIndex;
+	
+	public boolean isNull(){
+		return data == null || data.size() == 0;
+	}
 
 	public Integer getPageSize() {
 		return pageSize;

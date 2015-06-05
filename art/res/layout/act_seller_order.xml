@@ -59,6 +59,7 @@
             android:paddingRight="8dp" >
 
             <TextView
+                android:id="@+id/tv_tab2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,6 +90,7 @@
             android:paddingRight="8dp" >
 
             <TextView
+                android:id="@+id/tv_tab3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -119,6 +121,7 @@
             android:paddingRight="8dp" >
 
             <TextView
+                android:id="@+id/tv_tab4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

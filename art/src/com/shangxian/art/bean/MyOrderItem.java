@@ -240,6 +240,8 @@ public class MyOrderItem implements Serializable {
 		this.createDate = createDate;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "MyOrderItem [addressId=" + addressId + ", orderNumber="
@@ -247,7 +249,14 @@ public class MyOrderItem implements Serializable {
 				+ ", shopName=" + shopName + ", shopLogo=" + shopLogo
 				+ ", productItemDtos=" + productItemDtos + ", totalPrice="
 				+ totalPrice + ", totalQuantity=" + totalQuantity
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", buyerAddress="
+				+ buyerAddress + ", orderType=" + orderType
+				+ ", oneTimeStatus=" + oneTimeStatus + ", shippingNum="
+				+ shippingNum + ", shippingName=" + shippingName + ", buyerId="
+				+ buyerId + ", receiverName=" + receiverName + ", buyerName="
+				+ buyerName + ", productPrice=" + productPrice
+				+ ", shippingFee=" + shippingFee + ", orderId=" + orderId
+				+ ", orderTime=" + orderTime + "]";
 	}
 
 	@Override

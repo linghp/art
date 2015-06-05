@@ -168,7 +168,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		case R.id.ll_tab2:
 			// 订单管理
 			CommonUtil.gotoActivity(MineActivity.this,
-					SellerOrderActivity.class, false);
+					SellerOrderManageActivity.class, false);
 			break;
 		case R.id.ll_tab3:
 			// 商铺管理
