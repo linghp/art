@@ -410,7 +410,7 @@ public class LocationActivity extends BaseActivity implements
 					content.setText(info.getServiceDesc());
 					ImageLoader.getInstance().displayImage(
 							Constant.BASEURL + info.getIndexLogo(), icon,
-							Options.getListOptions());
+							Options.getListOptions(false));
 					mInfoWindow = new InfoWindow(BitmapDescriptorFactory
 							.fromView(view), marker.getPosition(), -47,
 							new OnInfoWindowClickListener() {
@@ -459,7 +459,7 @@ public class LocationActivity extends BaseActivity implements
 				content.setText(locInfo.getAddress());
 				ImageLoader.getInstance().displayImage(
 						Constant.BASEURL + locInfo.getPhoto(), icon,
-						Options.getListOptions());
+						Options.getListOptions(false));
 				LatLng ll = mark.getPosition();
 				mInfoWindow = new InfoWindow(BitmapDescriptorFactory
 						.fromView(view), ll, -47,

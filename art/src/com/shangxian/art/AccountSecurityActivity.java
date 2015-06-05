@@ -78,7 +78,7 @@ public class AccountSecurityActivity extends BaseActivity {
 		imageName = LocalUserInfo.getInstance(this).getUserInfo(
 				LocalUserInfo.USERPHOTO_FILENAME);
 		if (!TextUtils.isEmpty(imageName)) {
-			ImageLoader.getInstance().displayImage(Constant.BASEURL + imageName, iv_photo, Options.getListOptions());
+			ImageLoader.getInstance().displayImage(Constant.BASEURL + imageName, iv_photo, Options.getListOptions(true));
 		}
 	}
 
@@ -307,7 +307,7 @@ public class AccountSecurityActivity extends BaseActivity {
 										.getInstance().displayImage(
 												Constant.BASEURL + imgs.get(1),
 												iv_photo,
-												Options.getListOptions());
+												Options.getListOptions(true));
 							} catch (Exception e) {
 								e.printStackTrace();
 								myToast("上传失败");

@@ -8,6 +8,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
+import com.shangxian.art.bean.SellerRefoundstat;
 
 /**
  * 卖家订单
@@ -63,6 +64,30 @@ public class SellerOrderServer extends BaseServer {
 		Type type = new TypeToken<MyOrderItem_all>() {
 		}.getType();
 		toXUtils(HttpMethod.POST, NET_SELLER_ORDERS + status, params, type,
+				callBack);
+	}
+	
+	/** *****************************************************
+	 * 
+	 * 退货
+	 * 
+	 * ******************************************************/
+	
+	/**
+	 * 获取卖家退货订单列表
+	 * 
+	 * @param status
+	 * @param skip
+	 * @param callBack
+	 */
+	public static void toGetSellerReturnOrder(String status, String skip,
+			CallBack callBack){
+		RequestParams params = getParams();
+		params.addBodyParameter("skip", skip);
+		params.addBodyParameter("pageSize", "10");
+		Type type = new TypeToken<SellerRefoundstat>() {
+		}.getType();
+		toXUtils(HttpMethod.POST, NET_SELLER_RETURN_ORDERS + status, params, type,
 				callBack);
 	}
 }

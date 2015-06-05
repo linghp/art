@@ -50,7 +50,7 @@ public class FollowShopAdapter extends EntityAdapter<ListCarGoodsBean> {
 		
 		ImageLoader.getInstance().displayImage(
 				Constant.BASEURL + bean.getShopLogo(), holder.icon,
-				Options.getListOptions());
+				Options.getListOptions(true));
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

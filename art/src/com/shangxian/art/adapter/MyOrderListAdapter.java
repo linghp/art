@@ -128,6 +128,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 			goodsNum.setText("x" + productItemDto.getQuantity());
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(productItemDto.getPrice()));
+			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 			String status = productItemDto.getOrderItemStatus();
 			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
 				isRefundStatus = true;
@@ -140,11 +141,9 @@ public class MyOrderListAdapter extends BaseAdapter implements
 			} else {
 				isRefundStatus = false;
 				car_goodsstatus.setVisibility(View.GONE);
-				child.findViewById(R.id.check_goods).setVisibility(View.GONE);
-				mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
-						+ productItemDto.getProductSacle());
 			}
-
+			mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
+					+ productItemDto.getProductSacle());
 			if (myOrderItem != null) {
 				holder.storeName.setText(myOrderItem.getShopName());
 				holder.tv_state.setText(MyOrderActivity.map_orderStateValue

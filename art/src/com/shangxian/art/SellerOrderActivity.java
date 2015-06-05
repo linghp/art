@@ -9,6 +9,7 @@ import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
+import com.shangxian.art.fragment.SellerRefundOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
 import android.support.v4.app.Fragment;
@@ -124,10 +125,17 @@ public class SellerOrderActivity extends BaseActivity implements
 		}
 		curOrderType = toOrder;
 		
-		fragments.add(0, new SellerOrder_All_Fragment(""));
-		fragments.add(1, new SellerOrder_All_Fragment(orderState[1]));
-		fragments.add(2, new SellerOrder_All_Fragment(orderState[2]));
-		fragments.add(3, new SellerOrder_All_Fragment(orderState[3]));
+		if (isSendOrder()) {
+			fragments.add(0, new SellerOrder_All_Fragment(""));
+			fragments.add(1, new SellerOrder_All_Fragment(orderState[1]));
+			fragments.add(2, new SellerOrder_All_Fragment(orderState[2]));
+			fragments.add(3, new SellerOrder_All_Fragment(orderState[3]));
+		} else {
+			fragments.add(0, new SellerRefundOrder_All_Fragment(""));
+			fragments.add(1, new SellerRefundOrder_All_Fragment(orderReturnStatus[2]));
+			fragments.add(2, new SellerRefundOrder_All_Fragment(orderReturnStatus[3]));
+			fragments.add(3, new SellerRefundOrder_All_Fragment(orderReturnStatus[4]));
+		}
 
 		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
 				fragments);
