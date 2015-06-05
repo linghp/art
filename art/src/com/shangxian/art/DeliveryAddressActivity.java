@@ -34,6 +34,7 @@ import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -147,8 +148,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 		String url = "";
 //		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
 		url = BaseServer.HOST + "/receiving";
+		MyLogger.i(">>>>>>>>>>>>>>>>收货地址url："+url);
 		refreshTask(url);
-
 		super.onResume();
 	}
 	private void initListener() {
@@ -188,7 +189,6 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-				System.out.println(">>>>>>>>>>>>>长按了"+position);
 				//对画框
 				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
 				multiDia.setTitle("请选择");//标题
@@ -196,15 +196,10 @@ public class DeliveryAddressActivity extends BaseActivity{
 					//选项框
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						if (which == 0) {
-							System.out.println("<<<<<<<<选择的是删除"+which);
-							
+						if (which == 0) 
 							delete = 0;
-						}else {
-							System.out.println("<<<<<<<<选择的是设为默认地址"+which);
+						else 
 							delete = 1;
-						}
-						
 					}
 				});
 				multiDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -212,18 +207,17 @@ public class DeliveryAddressActivity extends BaseActivity{
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (delete == 0) {
-							System.out.println(">>>>>>>>>>确定+选择的是删除"+position);
+							//删除
 							AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {
 								
 								@Override
 								public void onHttpDelete(String res) {
-									System.out.println(">>>>>>>>>>>>>删除后model"+res);
-									
+									MyLogger.i(">>>>>>>>>>>>>删除后model"+res);
 								}
 							});
 							
 						}else {
-							System.out.println(">>>>>>>>>>确定+选择的是设为默认地址"+position);
+							MyLogger.i(">>>>>>>>>>确定+选择的是设为默认地址"+position);
 							
 						}
 						

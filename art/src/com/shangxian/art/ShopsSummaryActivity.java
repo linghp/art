@@ -21,6 +21,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.bean.ShopsSummaryModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
  * 商铺简介
@@ -96,7 +97,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
 		refreshTask(url);
-
+		MyLogger.i(url);
 	}
 	private void refreshTask(String url) {
 		httpUtil.get(url, new AbStringHttpResponseListener() {
@@ -121,7 +122,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {
-				System.out.println(">>>>>>>>>>>>>商铺简介"+arg1);
+				MyLogger.i(arg1);
 				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
