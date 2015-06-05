@@ -34,8 +34,8 @@
         <include
             layout="@layout/refresh_empty"
             android:visibility="gone" />
-
         <include layout="@layout/loadind_big" />
+        
     </RelativeLayout>
 
 </RelativeLayout>
