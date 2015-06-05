@@ -106,7 +106,7 @@ public class MyOrderListAdapter1 extends BaseAdapter implements
 			holder = (ViewHolder) convertView.getTag();
 		}
 		// 恢复状态
-		holder.tv_02.setEnabled(true);
+		//holder.tv_02.setEnabled(true);
 
 		holder.ll_goodsitem_add.removeAllViews();
 		List<ProductItemDto> listCarGoodsBeans = myOrderItem

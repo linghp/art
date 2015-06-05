@@ -51,7 +51,7 @@ public class ClassityCommodiyAdp extends EntityAdapter<ListCarGoodsBean>{
 		holder.title.setText(bean.getProductName());
 		//holder.summary.setText(dates.get(position).getReDetails());
 		holder.price.setText(CommonUtil.priceConversion((float) bean.getPrice())+"");
-		ImageLoader.getInstance().displayImage(Constant.BASEURL + bean.getProductPhoto(), holder.img, Options.getListOptions());
+		ImageLoader.getInstance().displayImage(Constant.BASEURL + bean.getProductPhoto(), holder.img, Options.getListOptions(true));
 		convertView.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
