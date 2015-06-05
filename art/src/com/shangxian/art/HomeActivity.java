@@ -293,7 +293,7 @@ public class HomeActivity extends BaseActivity implements
 											.getLayoutParams();
 									layoutParams.width = CommonUtil
 											.getScreenWidth(HomeActivity.this);
-									layoutParams.height = layoutParams.width * 1 / 3;
+									layoutParams.height = layoutParams.width * 1 / 2;
 									iv.setLayoutParams(layoutParams);
 									Imageloader_homePager.displayImage(
 											imgList.get(position), iv,
@@ -642,51 +642,6 @@ public class HomeActivity extends BaseActivity implements
 		// });
 	}
 
-	private void refreshTask() {
-		String url = "http://59.36.101.88:8013/app/shop/warehouse/custuihuosaomiao.asp?";
-		AbRequestParams params = new AbRequestParams();
-		params.put("shopid", "1019");
-		params.put("code", "88881110344801123456");
-		params.put("phone", "15889936624");
-		httpUtil.get(url, params, new AbStringHttpResponseListener() {
-
-			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onFinish() {
-				// AbDialogUtil.removeDialog(HomeActivity.this);
-				// mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
-				imgList.clear();
-				ArrayList<String> imgs = new ArrayList<String>();
-				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-				mDatas.setImgList(imgs);
-				if (mDatas != null) {
-					if (mDatas.getImgList() != null
-							&& mDatas.getImgList().size() > 0) {
-						imgList.addAll(mDatas.getImgList());
-						// viewPager.setVisibility(View.VISIBLE);
-						viewPager.setOnGetView(new OnGetView() {
-
-							@Override
-							public View getView(ViewGroup container,
-									int position) {
-								ImageView iv = new ImageView(HomeActivity.this);
-								// 设置图片的比例大小
-								iv.setScaleType(ImageView.ScaleType.FIT_XY);
-								LayoutParams layoutParams = iv
-										.getLayoutParams();
-								layoutParams.width = CommonUtil
-										.getScreenWidth(HomeActivity.this);
-								layoutParams.height = layoutParams.width * 1 / 2;
-								iv.setLayoutParams(layoutParams);
 //	private void refreshTask() {
 //		String url = "http://59.36.101.88:8013/app/shop/warehouse/custuihuosaomiao.asp?";
 //		AbRequestParams params = new AbRequestParams();
@@ -852,126 +807,6 @@ public class HomeActivity extends BaseActivity implements
 //			}
 //		});
 //	}
-
-								Imageloader_homePager.displayImage(
-										imgList.get(position), iv,
-										new Handler(), null);
-								container.addView(iv);
-								return iv;
-							}
-						});
-						viewPager.setAdapter(imgList.size());
-					}
-				}
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// AbToastUtil.showToast(HomeActivity.this, content);
-				AbLogUtil.i(HomeActivity.this, content);
-				// TestBean bean = (TestBean) AbJsonUtil.fromJson(content,
-				// TestBean.class);
-				// tv_tips.setText(bean.getPname());
-
-				imgList.clear();
-				// tipsList.clear();
-				// goods.clear();
-
-				ArrayList<String> imgs = new ArrayList<String>();
-				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-				imgs.add("http://img5.imgtn.bdimg.com/it/u=2421284418,1639597703&fm=15&gp=0.jpg");
-				imgs.add("http://img4.imgtn.bdimg.com/it/u=3412544834,2180569866&fm=15&gp=0.jpg");
-				imgs.add("http://img0.imgtn.bdimg.com/it/u=38005250,935145076&fm=15&gp=0.jpg");
-				// ArrayList<String> tips = new ArrayList<String>();
-				// tips.add("中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一中国通告一");
-				// ArrayList<GoodBean> goodlist = new ArrayList<GoodBean>();
-				// for (int i = 0; i < 3; i++) {
-				// GoodBean good = new GoodBean();
-				// //good.setContent("中国测试产品:" + i);
-				// //good.setPrice(1000 + i + "");
-				// good.setImg("http://b.hiphotos.baidu.com/image/pic/item/ae51f3deb48f8c54cdcbc85a38292df5e0fe7fae.jpg");
-				// goodlist.add(good);
-				// }
-
-				mDatas.setImgList(imgs);
-				// mDatas.setTipsList(tips);
-				// mDatas.setGoods(goodlist);
-
-				if (mDatas != null) {
-					if (mDatas.getImgList() != null
-							&& mDatas.getImgList().size() > 0) {
-						imgList.addAll(mDatas.getImgList());
-						// viewPager.setVisibility(View.VISIBLE);
-						viewPager.setOnGetView(new OnGetView() {
-
-							@Override
-							public View getView(ViewGroup container,
-									final int position) {
-								ImageView iv = new ImageView(HomeActivity.this);
-								// 设置轮播图片的比例大小1:3
-								iv.setScaleType(ImageView.ScaleType.FIT_XY);
-								LayoutParams layoutParams = viewPager
-										.getLayoutParams();
-								layoutParams.width = CommonUtil
-										.getScreenWidth(HomeActivity.this);
-								layoutParams.height = layoutParams.width * 1 / 2;
-								iv.setLayoutParams(layoutParams);
-								Imageloader_homePager.displayImage(
-										imgList.get(position), iv,
-										new Handler(), null);
-								container.addView(iv);
-								iv.setOnClickListener(new OnClickListener() {
-
-									@Override
-									public void onClick(View v) {
-
-										if (position == 0) {
-											System.out
-													.println(">>>>>>>>>>>>>>跳转到商品列表");
-										} else if (position == 1) {
-											System.out
-													.println(">>>>>>>>>>>>>>跳转到商铺列表");
-										} else if (position == 2) {
-											System.out
-													.println(">>>>>>>>>>>>>>跳转到商家情况");
-										} else if (position == 3) {
-											System.out
-													.println(">>>>>>>>>>>>>>跳转到商品详情");
-										} else {
-											System.out
-													.println(">>>>>>>>>>>>>>点击"
-															+ position);
-										}
-									}
-								});
-								return iv;
-							}
-						});
-						viewPager.setAdapter(imgList.size());
-					} else {
-						// viewPager.setVisibility(View.GONE);
-					}
-
-					// if (mDatas.getTipsList() != null
-					// && mDatas.getTipsList().size() > 0) {
-					// tipsList.addAll(mDatas.getTipsList());
-					// tv_tips.setVisibility(View.VISIBLE);
-					// tv_tips.setText(tipsList.get(0));
-					// } else {
-					// tv_tips.setVisibility(View.GONE);
-					// }
-
-					// if (mDatas.getGoods() != null
-					// && mDatas.getGoods().size() > 0) {
-					// goods.addAll(mDatas.getGoods());
-					// adp.updateData(goods);
-					// }
-				}
-
-				// addlayout();
-			}
-		});
-	}
 
 	/** 初始化头部VIEW */
 	private void initHeadView() {
