@@ -97,7 +97,7 @@ public class SellerOrderActivity extends BaseActivity implements
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle("订单管理");
+		
 
 		ll_tab1 = (LinearLayout) findViewById(R.id.ll_tab1);
 		ll_tab2 = (LinearLayout) findViewById(R.id.ll_tab2);
@@ -107,12 +107,6 @@ public class SellerOrderActivity extends BaseActivity implements
 		tv_tab2 = (TextView) findViewById(R.id.tv_tab2);
 		tv_tab3 = (TextView) findViewById(R.id.tv_tab3);
 		tv_tab4 = (TextView) findViewById(R.id.tv_tab4);
-
-		if (!isSendOrder()) {
-			tv_tab2.setText("待审核");
-			tv_tab3.setText("待退货");
-			tv_tab4.setText("待退款");
-		}
 		
 		vp_content = (ViewPager) findViewById(R.id.vp_content);
 	}
@@ -124,13 +118,21 @@ public class SellerOrderActivity extends BaseActivity implements
 			finish();
 		}
 		curOrderType = toOrder;
-		
+			
 		if (isSendOrder()) {
+			tv_tab2.setText("待付款");
+			tv_tab3.setText("待发货");
+			tv_tab4.setText("待收货");
+			topView.setTitle("发货订单管理");
 			fragments.add(0, new SellerOrder_All_Fragment(""));
 			fragments.add(1, new SellerOrder_All_Fragment(orderState[1]));
 			fragments.add(2, new SellerOrder_All_Fragment(orderState[2]));
 			fragments.add(3, new SellerOrder_All_Fragment(orderState[3]));
 		} else {
+			tv_tab2.setText("待审核");
+			tv_tab3.setText("待退货");
+			tv_tab4.setText("待退款");
+			topView.setTitle("退货订单管理");
 			fragments.add(0, new SellerRefundOrder_All_Fragment(""));
 			fragments.add(1, new SellerRefundOrder_All_Fragment(orderReturnStatus[2]));
 			fragments.add(2, new SellerRefundOrder_All_Fragment(orderReturnStatus[3]));
@@ -171,10 +173,6 @@ public class SellerOrderActivity extends BaseActivity implements
 			}
 		});
 	}
-
-//	public void initDateFirstFragment() {
-//		((SellerOrder_All_Fragment) fragments.get(curIndex)).getData();
-//	}
 
 	@Override
 	public void onClick(View v) {

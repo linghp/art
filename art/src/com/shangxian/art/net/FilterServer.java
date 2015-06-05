@@ -56,9 +56,9 @@ public class FilterServer extends BaseServer{
 		return classityCommdityResultModel;
 	}
 	
-	public static void toGetMore(String url,AbRequestParams params, final OnHttpResultMoreListener l) {
+	public static void toPostMore(String url,AbRequestParams params, final OnHttpResultMoreListener l) {
 		if(params==null){
-		toGet_ab_noparams(url,  new OnHttpListener() {
+			toPost(url,  null,new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				//MyLogger.i(res);

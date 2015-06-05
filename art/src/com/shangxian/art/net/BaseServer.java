@@ -1,4 +1,4 @@
-﻿package com.shangxian.art.net;
+package com.shangxian.art.net;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -644,3 +644,4 @@ public class BaseServer {
 		void onPayment(boolean res);
 	}
 }
+
