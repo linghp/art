@@ -34,9 +34,7 @@ import com.shangxian.art.net.SellerOrderServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.zxing.view.ViewfinderView;
 
-public class MyOrderListAdapter1 extends BaseAdapter implements
-		OnHttpResultCancelOrderListener, OnHttpResultDelOrderListener,
-		OnHttpResultConfirmGoodsListener {
+public class MyOrderListAdapter1 extends BaseAdapter {
 	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
 	private Context context;
 	private Fragment fragment;
@@ -106,7 +104,7 @@ public class MyOrderListAdapter1 extends BaseAdapter implements
 			holder = (ViewHolder) convertView.getTag();
 		}
 		// 恢复状态
-		//holder.tv_02.setEnabled(true);
+		// holder.tv_02.setEnabled(true);
 
 		holder.ll_goodsitem_add.removeAllViews();
 		List<ProductItemDto> listCarGoodsBeans = myOrderItem
@@ -177,8 +175,6 @@ public class MyOrderListAdapter1 extends BaseAdapter implements
 					@Override
 					public void onClick(View v) {
 						// CommonUtil.toast("click", context);
-						MyOrderServer.toDelOrder(myOrderItem,
-								MyOrderListAdapter1.this);
 						SellerOrderServer.toDelSellerOrder(myOrderItem,
 								new CallBack() {
 									@Override
@@ -198,61 +194,54 @@ public class MyOrderListAdapter1 extends BaseAdapter implements
 									@Override
 									public void onSimpleFailure(int code) {
 										CommonUtil.toast("删除失败", context);
-										
-										
+
 									}
 								});
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[2])) {// 待发货
-				if (isRefundStatus) {
-					holder.tv_02.setText("确认退款");
-					holder.tv_02.setEnabled(true);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-
-						}
-					});
-				} else {
-					holder.tv_02.setText("发货");
-					holder.tv_02.setEnabled(true);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-
-						}
-					});
-				}
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_03.setVisibility(View.GONE);
+				
+				holder.tv_02.setText("发货");
+				
+				holder.tv_02.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						SellerOrderServer.toSellerSendOrder(myOrderItem.getOrderId() + "", new CallBack() {
+							@Override
+							public void onSimpleSuccess(Object res) {
+								CommonUtil.toast("发货成功", context);
+							}
+							
+							@Override
+							public void onSimpleFailure(int code) {
+								CommonUtil.toast("发货失败", context);
+							}
+						});
+					}
+				});
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[3])) {// 待收货
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_03.setVisibility(View.VISIBLE);
 				holder.tv_03.setText("等待买家收货...");
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						MyOrderServer.toConfirmGoods(myOrderItem,
-								MyOrderListAdapter1.this);
-					}
-				});
 			} else if (myOrderItem.getStatus().equals(
 					MyOrderActivity.orderState[4])) {// 已完成交易
-				if (isRefundStatus) {
-					holder.tv_02.setText("退货中");
-					holder.tv_02.setEnabled(false);
-				} else {
-					holder.tv_02.setText("退货");
-					holder.tv_02.setEnabled(true);
-				}
+			// if (isRefundStatus) {
+			// holder.tv_02.setText("退货中");
+			// holder.tv_02.setEnabled(false);
+			// } else {
+			// holder.tv_02.setText("退货");
+			// holder.tv_02.setEnabled(true);
+			// }
+				holder.tv_03.setVisibility(View.VISIBLE);
+				holder.tv_03.setText("完成交易");
 				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.VISIBLE);
+				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -288,30 +277,5 @@ public class MyOrderListAdapter1 extends BaseAdapter implements
 		public TextView tv_03;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
-	}
-
-	@Override
-	public void onHttpResultCancelOrder(MyOrderItem myOrderItem) {
-		if (myOrderItem != null) {
-			this.notifyDataSetChanged();
-			CommonUtil.toast("取消成功", context);
-		} else {
-			CommonUtil.toast("取消失败", context);
-		}
-	}
-
-	@Override
-	public void onHttpResultDelOrder(MyOrderItem myOrderItem) {
-
-	}
-
-	@Override
-	public void onHttpResultConfirmGoods(MyOrderItem myOrderItem) {
-		if (myOrderItem != null) {
-			CommonUtil.toast("确认收货完成", context);
-			this.notifyDataSetChanged();
-		} else {
-			CommonUtil.toast("确认收货完成失败", context);
-		}
 	}
 }
