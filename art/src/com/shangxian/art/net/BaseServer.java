@@ -108,6 +108,11 @@ public class BaseServer {
 			+ "orderCancelReturnList/"; // 取消退货订单
 
 	/**
+	 * 账户与安全  设置  
+	 */
+//	protected static final String NET_DELIVERYADDRESS = HOST + "receiving";//收货地址管理
+	protected static final String NET_DELETEADDRESS = HOST + "receiving/delte";//删除收货地址
+	/**
 	 * 
 	 * ----------------------------------------------------------------
 	 * 
@@ -178,6 +183,52 @@ public class BaseServer {
 				}
 			}
 
+			@Override
+			public void onSuccess(int code, String res) {
+				System.out.println("http ======================" + res
+						+ "=========================");
+				if (l != null) {
+					if (code != 200) {
+						l.onHttp(null);
+					} else {
+						try {
+							JSONObject json = new JSONObject(res);
+							int result_code = json.getInt("result_code");
+							if (result_code == 200) {
+								l.onHttp(json.getString("result"));
+							} else {
+								l.onHttp(null);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+							l.onHttp(null);
+						}
+						// l.onHttp(res);
+					}
+				}
+			}
+		});
+	}
+	protected static void toGet_ab_noparams(String url,
+			final OnHttpListener l) {
+		mAbHttpUtil.get(url, new AbStringHttpResponseListener() {
+			@Override
+			public void onStart() {
+			}
+			
+			@Override
+			public void onFinish() {
+			}
+			
+			@Override
+			public void onFailure(int code, String res, Throwable t) {
+				System.out.println("http ======================" + "失败"
+						+ "=========================");
+				if (l != null) {
+					l.onHttp(null);
+				}
+			}
+			
 			@Override
 			public void onSuccess(int code, String res) {
 				System.out.println("http ======================" + res
@@ -394,7 +445,24 @@ public class BaseServer {
 			}
 		});
 	}
-
+	/**
+	 * 原生的数据，不要解析
+	 */
+	protected static void toGet_token_original(String url, final OnHttpListener l) {
+		HttpClients.getDo(url, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+				if(!TextUtils.isEmpty(res)){
+							l.onHttp(res);
+				}else{
+						l.onHttp(null);
+				}
+				}
+			}
+		});
+	}
+	
 	protected static void toPostWithToken2(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {

@@ -28,9 +28,13 @@ import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.AccountSecurityServer;
+import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -50,6 +54,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private View loading_big,ll_refresh_empty;
 	
 	private int delete = 0;
+	DeliveryAddressModel model;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,7 +74,6 @@ public class DeliveryAddressActivity extends BaseActivity{
 		topView.setTitle(getString(R.string.title_activity_deliveryaddress));
 		listview = (ListView) findViewById(R.id.search_list);
 		//		listview = (SlidingListView) findViewById(R.id.search_list);
-
 		loading_big = findViewById(R.id.loading_big);//加载
 		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);//无数据
 	}
@@ -142,9 +146,10 @@ public class DeliveryAddressActivity extends BaseActivity{
 		}*/
 
 		String url = "";
-		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+//		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+		url = BaseServer.HOST + "/receiving";
+		MyLogger.i(">>>>>>>>>>>>>>>>收货地址url："+url);
 		refreshTask(url);
-
 		super.onResume();
 	}
 	private void initListener() {
@@ -183,8 +188,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				System.out.println(">>>>>>>>>>>>>长按了"+position);
+					final int position, long id) {
 				//对画框
 				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
 				multiDia.setTitle("请选择");//标题
@@ -192,15 +196,10 @@ public class DeliveryAddressActivity extends BaseActivity{
 					//选项框
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						if (which == 0) {
-							System.out.println("<<<<<<<<选择的是删除"+which);
-							
+						if (which == 0) 
 							delete = 0;
-						}else {
-							System.out.println("<<<<<<<<选择的是设为默认地址"+which);
+						else 
 							delete = 1;
-						}
-						
 					}
 				});
 				multiDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -208,10 +207,17 @@ public class DeliveryAddressActivity extends BaseActivity{
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (delete == 0) {
-							System.out.println(">>>>>>>>>>确定+选择的是删除");
+							//删除
+							AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {
+								
+								@Override
+								public void onHttpDelete(String res) {
+									MyLogger.i(">>>>>>>>>>>>>删除后model"+res);
+								}
+							});
 							
 						}else {
-							System.out.println(">>>>>>>>>>确定+选择的是设为默认地址");
+							MyLogger.i(">>>>>>>>>>确定+选择的是设为默认地址"+position);
 							
 						}
 						

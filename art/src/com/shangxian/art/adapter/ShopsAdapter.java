@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.ab.util.AbToastUtil;
+import com.shangxian.art.HomeActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.constant.Constant;
@@ -45,6 +47,16 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			holder.ll_first = (LinearLayout) convertView.findViewById(R.id.item_shops_linear1);
 			holder.title = (TextView) convertView.findViewById(R.id.item_shops_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_shops_img);
+			// 设置图片的比例大小
+			holder.img.setScaleType(ImageView.ScaleType.FIT_XY);
+			LayoutParams layoutParams = holder.img
+					.getLayoutParams();
+			layoutParams.width = (CommonUtil
+					.getScreenWidth(mContext) - CommonUtil
+					.dip2px(mContext, 40)) / 2;
+			layoutParams.height = layoutParams.width * 13 / 10;
+			holder.img.setLayoutParams(layoutParams);
+			
 			holder.price = (TextView) convertView.findViewById(R.id.item_shops_price);
 
 			holder.ll_second = (LinearLayout) convertView.findViewById(R.id.item_shops_linear2);

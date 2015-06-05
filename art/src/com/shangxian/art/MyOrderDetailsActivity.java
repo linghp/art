@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
 import com.shangxian.art.bean.MyOrderDetailBean.ReceiverInfo;
@@ -106,15 +107,17 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	}
 
 	@Override
-	public void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean) {
+	public void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean,CommonBean commonBean) {
 		if(myOrderDetailBean!=null){
 			this.myOrderDetailBean=myOrderDetailBean;
 			myOrderItem.setOrderNumber(myOrderDetailBean.getOrderNumber());
 			myOrderItem.setTotalPrice(myOrderDetailBean.getTotalPrice());
 			myOrderItem.setStatus(myOrderDetailBean.getStatus());
 			updateViews();
+		}else if(commonBean!=null){
+			myToast(commonBean.getResult());
 		}else{
-			
+			myToast("查询失败");
 		}
 	}
 

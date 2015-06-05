@@ -24,12 +24,16 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp" >
 
             <ImageView
                 android:id="@+id/shops_shopsimg"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/alipaypayment" />
 
             <LinearLayout
@@ -77,7 +81,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/txt_black3" />
@@ -88,7 +92,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp" >
+            android:paddingBottom="5dp" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -178,7 +182,10 @@
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
 
         <LinearLayout
             android:id="@+id/shops_call"
@@ -186,8 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="4dp" >
+            android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -214,8 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="4dp" >
+            android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -226,6 +231,8 @@
                 android:id="@+id/shops_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:text="重庆市沙坪坝区" />
@@ -238,7 +245,10 @@
         android:layout_marginTop="20dp"
         android:background="@color/txt_white"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
 
         <TextView
             android:layout_width="wrap_content"

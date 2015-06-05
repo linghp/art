@@ -127,6 +127,9 @@ public class HttpClients {
 				} catch (IOException e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
+				}catch (Exception e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -162,7 +165,8 @@ public class HttpClients {
 					postMethod.setHeader("Content-Type",
 							"application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
-						postMethod.addHeader("User-Token", user_token + "");
+//						postMethod.addHeader("User-Token", user_token + "");
+						postMethod.addHeader("User-Token", 2 + "");
 					}
 					// 将参数填入POST
 					// Entity中
@@ -202,6 +206,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}
@@ -279,6 +286,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}
@@ -362,6 +372,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}

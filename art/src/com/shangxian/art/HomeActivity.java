@@ -293,7 +293,7 @@ public class HomeActivity extends BaseActivity implements
 											.getLayoutParams();
 									layoutParams.width = CommonUtil
 											.getScreenWidth(HomeActivity.this);
-									layoutParams.height = layoutParams.width * 1 / 3;
+									layoutParams.height = layoutParams.width * 1 / 2;
 									iv.setLayoutParams(layoutParams);
 									Imageloader_homePager.displayImage(
 											imgList.get(position), iv,
@@ -847,7 +847,7 @@ public class HomeActivity extends BaseActivity implements
 				.getLayoutParams();
 		params.width = AbSharedUtil.getInt(HomeActivity.this,
 				Global.KEY_SCREEN_WIDTH);
-		params.height = (int) (params.width / 3);
+		params.height = (int) (params.width / 2);
 		viewPager.setLayoutParams(params);
 
 	}

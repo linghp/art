@@ -9,8 +9,9 @@
     
     <ImageView 
         android:id="@+id/item_commodity_img"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:src="@drawable/image_loading"/>
     
     <LinearLayout 

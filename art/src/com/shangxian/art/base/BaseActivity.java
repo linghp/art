@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
+import com.ab.view.pullview.AbPullToRefreshView;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.LoginActivity;
 import com.shangxian.art.R;
@@ -41,6 +42,7 @@ public class BaseActivity extends AbActivity{
 	private LinearLayout ll_nodata;
 	private ImageView iv_nodata;
 	protected TextView tv_nodata;
+	protected AbPullToRefreshView mAbPullToRefreshView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,18 @@ public class BaseActivity extends AbActivity{
 			ll_nodata = (LinearLayout) findViewById(R.id.nodata_ll);
 			iv_nodata = (ImageView) findViewById(R.id.nodata_icon);
 			tv_nodata = (TextView) findViewById(R.id.nodata_title);
+		}
+		initRefreshView();
+	}
+	
+	private void initRefreshView() {
+		mAbPullToRefreshView = (AbPullToRefreshView)findViewById(R.id.mPullRefreshView);
+		if(mAbPullToRefreshView!=null){
+			// 设置进度条的样式
+			mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
+					this.getResources().getDrawable(R.drawable.progress_circular));
+			mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
+					this.getResources().getDrawable(R.drawable.progress_circular));
 		}
 	}
 	
