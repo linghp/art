@@ -275,7 +275,7 @@ public class LocationActivity extends BaseActivity implements
 
 	private void shops() {
 		locInfo = (ShopLocInfo) getIntent().getSerializableExtra(
-				Constant.INT_LOC_NEARLY_SHOPINFO);
+				Constant.INT_SHOPS_2_LOC);
 		if (locInfo == null) {
 			throw new NullPointerException("ShopLocInfo is null");
 		}

@@ -1,486 +1,462 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shangxian.art"
-    android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="1.0" >
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="21" />
-    <!-- 使用网络功能所需权限 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.INTERNET" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
-    </uses-permission>
-    <!-- SDK离线地图和cache功能需要读写外部存储器 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.CAMERA" />
+<manifest android:versionName="1.0" android:versionCode="1" android:installLocation="auto" package="com.shangxian.art" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+<uses-sdk android:targetSdkVersion="21" android:minSdkVersion="11"/>
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-
-    <!-- 百度地图相关 -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!-- 电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- sharesdk -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-
-    <!-- 推送 -->
-    <!-- Required 自定义用来收发消息的相关权限 -->
-    <permission
-        android:name="com.shangxian.art.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-    <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="com.shangxian.art.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-    <application
-        android:name=".base.MyApplication"
-        android:allowBackup="false"
-        android:icon="@drawable/ainonggu"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-
-        <!-- 测试key -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="wVx47v9LtmNLozGme6VnGfwZ" />
-
-        <!-- 共用key -->
+<!-- 使用网络功能所需权限 -->
 
 
-        <!--
-             <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
-        -->
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"> </uses-permission>
 
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" >
-        </service>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"> </uses-permission>
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"> </uses-permission>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
-        <activity
-            android:name="com.alipay.sdk.auth.AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
-        </activity>
-        <activity
-            android:name=".ClassificationActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".ShoppingcartActivity"
-            android:label="@string/title_activity_shoppingcart" >
-        </activity>
-        <activity
-            android:name=".NearlyActivity"
-            android:label="@string/title_activity_nearly" >
-        </activity>
-        <activity
-            android:name=".ShopsListActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".MineActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".ClassifyCommodityActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".CommodityContentActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".ShopsActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".ShopsSummaryActivity"
-            android:label="@string/title_activity_classification" >
-        </activity>
-        <activity
-            android:name=".MerchandiseControlActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".NongHeBaoActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".IandEDetailsActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".IandEDetailsContentActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".MyConcernActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".MyMessageActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".DeliveryAddressActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".AddDeliveryAddressActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".ChangePasswordActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".SafetyVerificationActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".PhoneValidateActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".IDCationActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".LogisticsNotifyActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".BalanceActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".CashActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".IdValidateActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".ProfitActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".RechargeActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".ShangPinWeiHuActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".DeliveryServiceActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".AddGoodsActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".AddParentClassActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".AddSubClassActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".SearchActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".BenQiJieSuanActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".JinJiJieSuanActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".AskJieSuanActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".YiJieSuanActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".JieSuanLiShiActivity"
-            android:label="@string/title_activity_mine" >
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_classification" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<uses-permission android:name="android.permission.INTERNET"> </uses-permission>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"> </uses-permission>
 
-                <data
-                    android:host="my.com"
-                    android:scheme="m" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".RegistActivity"
-            android:label="@string/title_activity_regist" >
-        </activity>
-        <activity android:name=".AccountSecurityActivity" >
-        </activity>
-        <activity android:name=".LocationActivity" >
-        </activity>
-        <activity
-            android:name=".ConfirmOrderActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" >
-        </activity>
-        <activity
-            android:name=".RegistSogoActivity"
-            android:label="@string/title_activity_regist_sogo" >
-        </activity>
-        <activity
-            android:name=".zxing.CaptureActivity"
-            android:label="@string/title_activity_regist_sogo" >
-        </activity>
-        <activity
-            android:name=".PayActivity"
-            android:label="@string/title_activity_pay" >
-        </activity>
-        <activity
-            android:name=".MyOrderActivity"
-            android:label="@string/title_activity_my_order" >
-        </activity>
-        <!-- sharesdk -->
-        <activity
-            android:name="cn.sharesdk.framework.ShareSDKUIShell"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"> </uses-permission>
 
-            <!--
-            	AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter
-            	的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 
-            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
-            -->
-            <meta-data
-                android:name="AuthorizeAdapter"
-                android:value="cn.sharesdk.demo.MyAdapter" />
-
-            <!--
-            	QZoneWebShareAdapter表示一个继承自cn.sharesdk.tencent.qzone.QZoneWebShareAdapter
-            	的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。 
-            	开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
-            	
-            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
-            -->
-            <!--
-            	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
-            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
-            -->
-            <intent-filter>
-                <data android:scheme="db-7janx53ilz11gbs" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <!--
-            	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
-            	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
-            -->
-            <intent-filter>
-                <data android:scheme="tencent100371282" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
-
-        <!-- 微信分享回调 -->
-        <activity
-            android:name="cn.sharesdk.demo.wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- 极光推送 -->
-        <!-- Required SDK核心功能 -->
-        <activity
-            android:name="cn.jpush.android.ui.PushActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.shangxian.art" />
-            </intent-filter>
-        </activity>
-        <!-- Required  SDK核心功能 -->
-        <service
-            android:name="cn.jpush.android.service.DownloadService"
-            android:enabled="true"
-            android:exported="false" >
-        </service>
-        <!-- Required SDK 核心功能 -->
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-            </intent-filter>
-        </service>
-        <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >
-            <intent-filter android:priority="1000" >
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!-- Required  显示通知栏 -->
-                <category android:name="com.shangxian.art" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <!-- Optional -->
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <!-- Required SDK核心功能 -->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-        <!-- User defined.    用户自定义的广播接收器 -->
-        <receiver
-            android:name=".receiver.MyPushReceiver"
-            android:enabled="true" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!-- Required  用户注册SDK的intent -->
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!-- Required  用户接收SDK消息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!-- Required  用户接收SDK通知栏信息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- Required  用户打开自定义通知栏的intent -->
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.shangxian.art" />
-            </intent-filter>
-        </receiver>
-        <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="9b3c36406fb9a5112b901325" />
-        <!-- </>值来自开发者平台取得的AppKey -->
+<!-- SDK离线地图和cache功能需要读写外部存储器 -->
 
 
-        <!-- alipay sdk begin -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"> </uses-permission>
 
-        <!-- alipay sdk end -->
+<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"> </uses-permission>
 
-        <activity
-            android:name=".CommentActivity"
-            android:label="@string/title_activity_comment" >
-        </activity>
-        <activity
-            android:name=".SearchsActivity"
-            android:label="@string/title_activity_searchs" >
-        </activity>
-        <activity
-            android:name=".MyOrderDetailsActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_my_order_details" >
-        </activity>
-        <activity
-            android:name=".RefundOrderActivity"
-            android:label="@string/title_activity_refundorder" >
-        </activity>
-        <activity
-            android:name=".ReimburseActivity"
-            android:label="@string/title_activity_refund" >
-        </activity>
-    </application>
+<uses-permission android:name="android.permission.CAMERA"/>
+
+<uses-feature android:name="android.hardware.camera"/>
+
+<uses-feature android:name="android.hardware.camera.autofocus"/>
+
+<uses-permission android:name="android.permission.VIBRATE"/>
+
+<uses-permission android:name="android.permission.FLASHLIGHT"/>
+
+<!-- 百度地图相关 -->
+
+
+<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+
+<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+
+<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+
+<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+<uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+
+<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+<!-- 电话权限 -->
+
+
+<uses-permission android:name="android.permission.CALL_PHONE"/>
+
+<!-- sharesdk -->
+
+
+<uses-permission android:name="android.permission.GET_TASKS"/>
+
+<!-- 推送 -->
+
+
+<!-- Required 自定义用来收发消息的相关权限 -->
+
+
+<permission android:name="com.shangxian.art.permission.JPUSH_MESSAGE" android:protectionLevel="signature"/>
+
+<!-- Required 一些系统要求的权限，如访问网络等 -->
+
+
+<uses-permission android:name="com.shangxian.art.permission.JPUSH_MESSAGE"/>
+
+<uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+
+<uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+
+-<application android:name=".base.MyApplication" android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@drawable/ainonggu" android:allowBackup="false">
+
+<!-- 测试key -->
+
+
+<meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="wVx47v9LtmNLozGme6VnGfwZ"/>
+
+<!-- 共用key -->
+
+
+<!-- <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="dGHcYKhKixnFGtAp9yHwR2lY" /> -->
+
+
+<service android:name="com.baidu.location.f" android:process=":remote" android:enabled="true"> </service>
+
+
+-<activity android:name=".MainActivity" android:label="@string/app_name">
+
+
+-<intent-filter>
+
+<action android:name="android.intent.action.MAIN"/>
+
+<category android:name="android.intent.category.LAUNCHER"/>
+
+</intent-filter>
+
+</activity>
+
+<activity android:name="com.alipay.sdk.app.H5PayActivity" android:screenOrientation="behind" android:exported="false" android:configChanges="orientation|keyboardHidden|navigation"> </activity>
+
+<activity android:name="com.alipay.sdk.auth.AuthActivity" android:screenOrientation="behind" android:exported="false" android:configChanges="orientation|keyboardHidden|navigation"> </activity>
+
+<activity android:name=".HomeActivity" android:label="@string/title_activity_home"> </activity>
+
+<activity android:name=".ClassificationActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".ShoppingcartActivity" android:label="@string/title_activity_shoppingcart"> </activity>
+
+<activity android:name=".NearlyActivity" android:label="@string/title_activity_nearly"> </activity>
+
+<activity android:name=".SellerOrderDetailsActivity" android:label="@string/title_activity_nearly"> </activity>
+
+<activity android:name=".ShopsListActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".MineActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".ClassifyCommodityActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".CommodityContentActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".ShopsActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".ShopsSummaryActivity" android:label="@string/title_activity_classification"> </activity>
+
+<activity android:name=".MerchandiseControlActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".NongHeBaoActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".IandEDetailsActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".MyConcernActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".MyMessageActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".DeliveryAddressActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".AddDeliveryAddressActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".ChangePasswordActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".SafetyVerificationActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".PhoneValidateActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".IDCationActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".LogisticsNotifyActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".BalanceActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".CashActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".IdValidateActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".ProfitActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".RechargeActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".ShangPinWeiHuActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".DeliveryServiceActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".AddGoodsActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".AddParentClassActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".AddSubClassActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".SearchActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".BenQiJieSuanActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".JinJiJieSuanActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".AskJieSuanActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".YiJieSuanActivity" android:label="@string/title_activity_mine"> </activity>
+
+<activity android:name=".JieSuanLiShiActivity" android:label="@string/title_activity_mine"> </activity>
+
+
+-<activity android:name=".LoginActivity" android:label="@string/title_activity_classification">
+
+
+-<intent-filter>
+
+<action android:name="android.intent.action.VIEW"/>
+
+<category android:name="android.intent.category.DEFAULT"/>
+
+<category android:name="android.intent.category.BROWSABLE"/>
+
+<data android:scheme="m" android:host="my.com"/>
+
+</intent-filter>
+
+</activity>
+
+<activity android:name=".RegistActivity" android:label="@string/title_activity_regist"> </activity>
+
+<activity android:name=".AccountSecurityActivity"> </activity>
+
+<activity android:name=".LocationActivity"> </activity>
+
+<activity android:name=".ConfirmOrderActivity" android:windowSoftInputMode="stateHidden|adjustPan"> </activity>
+
+<activity android:name=".RegistSogoActivity" android:label="@string/title_activity_regist_sogo"> </activity>
+
+<activity android:name=".zxing.CaptureActivity" android:label="@string/title_activity_regist_sogo"> </activity>
+
+<activity android:name=".PayActivity" android:label="@string/title_activity_pay"> </activity>
+
+<activity android:name=".MyOrderActivity" android:label="@string/title_activity_my_order"> </activity>
+
+<!-- sharesdk -->
+
+
+
+-<activity android:name="cn.sharesdk.framework.ShareSDKUIShell" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
+
+<!-- AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter 的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。 -->
+
+
+<meta-data android:name="AuthorizeAdapter" android:value="cn.sharesdk.demo.MyAdapter"/>
+
+<!-- QZoneWebShareAdapter表示一个继承自cn.sharesdk.tencent.qzone.QZoneWebShareAdapter 的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。 开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。 <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" /> -->
+
+
+<!-- Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是 “db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权 -->
+
+
+
+-<intent-filter>
+
+<data android:scheme="db-7janx53ilz11gbs"/>
+
+<action android:name="android.intent.action.VIEW"/>
+
+<category android:name="android.intent.category.BROWSABLE"/>
+
+<category android:name="android.intent.category.DEFAULT"/>
+
+</intent-filter>
+
+<!-- 如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW 事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置， 则分享结束以后不能得到正确的回调 -->
+
+
+
+-<intent-filter>
+
+<data android:scheme="tencent100371282"/>
+
+<action android:name="android.intent.action.VIEW"/>
+
+<category android:name="android.intent.category.DEFAULT"/>
+
+<category android:name="android.intent.category.BROWSABLE"/>
+
+</intent-filter>
+
+</activity>
+
+<!-- 微信分享回调 -->
+
+
+<activity android:name="cn.sharesdk.demo.wxapi.WXEntryActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:screenOrientation="portrait" android:exported="true" android:configChanges="keyboardHidden|orientation|screenSize"/>
+
+<!-- 极光推送 -->
+
+
+<!-- Required SDK核心功能 -->
+
+
+
+-<activity android:name="cn.jpush.android.ui.PushActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="orientation|keyboardHidden">
+
+
+-<intent-filter>
+
+<action android:name="cn.jpush.android.ui.PushActivity"/>
+
+<category android:name="android.intent.category.DEFAULT"/>
+
+<category android:name="com.shangxian.art"/>
+
+</intent-filter>
+
+</activity>
+
+<!-- Required SDK核心功能 -->
+
+
+<service android:name="cn.jpush.android.service.DownloadService" android:enabled="true" android:exported="false"> </service>
+
+<!-- Required SDK 核心功能 -->
+
+
+
+-<service android:name="cn.jpush.android.service.PushService" android:enabled="true" android:exported="false">
+
+
+-<intent-filter>
+
+<action android:name="cn.jpush.android.intent.REGISTER"/>
+
+<action android:name="cn.jpush.android.intent.REPORT"/>
+
+<action android:name="cn.jpush.android.intent.PushService"/>
+
+<action android:name="cn.jpush.android.intent.PUSH_TIME"/>
+
+</intent-filter>
+
+</service>
+
+<!-- Required SDK核心功能 -->
+
+
+
+-<receiver android:name="cn.jpush.android.service.PushReceiver" android:enabled="true">
+
+
+-<intent-filter android:priority="1000">
+
+<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
+
+<!-- Required 显示通知栏 -->
+
+
+<category android:name="com.shangxian.art"/>
+
+</intent-filter>
+
+
+-<intent-filter>
+
+<action android:name="android.intent.action.USER_PRESENT"/>
+
+<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+
+</intent-filter>
+
+<!-- Optional -->
+
+
+
+-<intent-filter>
+
+<action android:name="android.intent.action.PACKAGE_ADDED"/>
+
+<action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
+<data android:scheme="package"/>
+
+</intent-filter>
+
+</receiver>
+
+<!-- Required SDK核心功能 -->
+
+
+<receiver android:name="cn.jpush.android.service.AlarmReceiver"/>
+
+<!-- User defined. 用户自定义的广播接收器 -->
+
+
+
+-<receiver android:name=".receiver.MyPushReceiver" android:enabled="true">
+
+
+-<intent-filter>
+
+<action android:name="cn.jpush.android.intent.REGISTRATION"/>
+
+<!-- Required 用户注册SDK的intent -->
+
+
+<action android:name="cn.jpush.android.intent.UNREGISTRATION"/>
+
+<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+
+<!-- Required 用户接收SDK消息的intent -->
+
+
+<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+
+<!-- Required 用户接收SDK通知栏信息的intent -->
+
+
+<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
+
+<!-- Required 用户打开自定义通知栏的intent -->
+
+
+<action android:name="cn.jpush.android.intent.CONNECTION"/>
+
+<!-- 接收网络变化 连接/断开 since 1.6.3 -->
+
+
+<category android:name="com.shangxian.art"/>
+
+</intent-filter>
+
+</receiver>
+
+<!-- Required . Enable it you can get statistics data with channel -->
+
+
+<meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+
+<meta-data android:name="JPUSH_APPKEY" android:value="9b3c36406fb9a5112b901325"/>
+
+<!-- </>值来自开发者平台取得的AppKey -->
+
+
+<!-- alipay sdk begin -->
+
+
+<activity android:name="com.alipay.sdk.app.H5PayActivity" android:screenOrientation="behind" android:exported="false" android:configChanges="orientation|keyboardHidden|navigation" android:windowSoftInputMode="adjustResize|stateHidden"> </activity>
+
+<!-- alipay sdk end -->
+
+
+<activity android:name=".CommentActivity" android:label="@string/title_activity_comment"> </activity>
+
+<activity android:name=".SearchsActivity" android:label="@string/title_activity_searchs"> </activity>
+
+<activity android:name=".MyOrderDetailsActivity" android:label="@string/title_activity_my_order_details"> </activity>
+
+<activity android:name=".RefundOrderActivity" android:label="@string/title_activity_refundorder"> </activity>
+
+<activity android:name=".ReimburseActivity" android:label="@string/title_activity_refund"> </activity>
+
+<activity android:name=".SellerOrderActivity" android:label="@string/title_activity_seller_order"> </activity>
+
+<activity android:name=".SellerOrderManageActivity" android:label="@string/title_activity_seller_order_manage"> </activity>
+
+</application>
 
 </manifest>

@@ -62,14 +62,15 @@ public class BaseServer {
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
+	protected static final String NET_SELLER_ORDERS = HOST + "orderList/";// 我的订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
+	protected static final String NET_SENDORDER = HOST + "sendOrder/";// 卖家发货
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
+	protected static final String NET_SELLER_DELORDER = HOST + "deleteSellerOrder/";// 卖家删除订单
 	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
-	protected static final String NET_ORDERDETAILS = HOST
-			+ "order/details?orderNumber=";// 订单详情
+	protected static final String NET_ORDERDETAILS = HOST + "order/details?orderNumber=";// 订单详情 
+	protected static final String NET_SELLER_ORDERDETAILS = HOST + "sellerorderdails/";// 订单详情 
 	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
-	protected static final String NET_FILTER = "http://192.168.0.165:8888/art/api/product/find";//分类筛选
-	
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -131,12 +132,23 @@ public class BaseServer {
 		RequestParams params = new RequestParams();
 		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
-			params.addHeader("User-Token", curUser.getId() + "");
+			params.addHeader("User-Token", /*curUser.getId() + ""*/"2");
 			return params;
 		} else {
 			return params;
 		}
 	}
+	
+//	protected static RequestParams getParams() {
+//		RequestParams params = new RequestParams();
+//		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
+//		if (curUser != null && !curUser.isNull()) {	
+//			params.addHeader("User-Token", /*curUser.getId() + ""*/"2");
+//			return params;
+//		} else {
+//			return params;
+//		}
+//	}
 	
 	protected static RequestParams getJsonParams() {
 		RequestParams params = new RequestParams();
@@ -169,6 +181,52 @@ public class BaseServer {
 				}
 			}
 
+			@Override
+			public void onSuccess(int code, String res) {
+				System.out.println("http ======================" + res
+						+ "=========================");
+				if (l != null) {
+					if (code != 200) {
+						l.onHttp(null);
+					} else {
+						try {
+							JSONObject json = new JSONObject(res);
+							int result_code = json.getInt("result_code");
+							if (result_code == 200) {
+								l.onHttp(json.getString("result"));
+							} else {
+								l.onHttp(null);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+							l.onHttp(null);
+						}
+						// l.onHttp(res);
+					}
+				}
+			}
+		});
+	}
+	protected static void toGet_ab_noparams(String url,
+			final OnHttpListener l) {
+		mAbHttpUtil.get(url, new AbStringHttpResponseListener() {
+			@Override
+			public void onStart() {
+			}
+			
+			@Override
+			public void onFinish() {
+			}
+			
+			@Override
+			public void onFailure(int code, String res, Throwable t) {
+				System.out.println("http ======================" + "失败"
+						+ "=========================");
+				if (l != null) {
+					l.onHttp(null);
+				}
+			}
+			
 			@Override
 			public void onSuccess(int code, String res) {
 				System.out.println("http ======================" + res
@@ -385,7 +443,24 @@ public class BaseServer {
 			}
 		});
 	}
-
+	/**
+	 * 原生的数据，不要解析
+	 */
+	protected static void toGet_token_original(String url, final OnHttpListener l) {
+		HttpClients.getDo(url, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				if (l != null) {
+				if(!TextUtils.isEmpty(res)){
+							l.onHttp(res);
+				}else{
+						l.onHttp(null);
+				}
+				}
+			}
+		});
+	}
+	
 	protected static void toPostWithToken2(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {

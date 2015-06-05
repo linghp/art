@@ -81,6 +81,7 @@ public class HttpClients {
 							"application/json;charset=UTF-8");
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("User-Token", user_token + "");
+						//postMethod.addHeader("User-Token", 2 + "");
 						MyLogger.i("user-token--" + user_token);
 					}
 					if (!TextUtils.isEmpty(json)) {
@@ -124,6 +125,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}
@@ -204,6 +208,9 @@ public class HttpClients {
 				} catch (IOException e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
+				}catch (Exception e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -279,6 +286,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}
@@ -362,6 +372,9 @@ public class HttpClients {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				} catch (IOException e) {
+					postHandler.sendEmptyMessage(FAIL);
+					e.printStackTrace();
+				}catch (Exception e) {
 					postHandler.sendEmptyMessage(FAIL);
 					e.printStackTrace();
 				}

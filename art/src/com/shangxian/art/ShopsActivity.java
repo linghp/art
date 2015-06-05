@@ -159,6 +159,11 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		// price2= (TextView) findViewById(R.id.shops_price2);
 		initHeadView();
 		mGridView.addHeaderView(headView);
+		adapter = new ShopsAdapter(
+				ShopsActivity.this);
+		list = new ArrayList<ProductDto>();
+		adapter.updateData(list);
+		mGridView.setAdapter(adapter);
 		// 图片下载器
 		mAbImageLoader = AbImageLoader.newInstance(mAc);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
@@ -168,7 +173,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 
 	private void initData() {
 		// TODO Auto-generated method stub
-		list = new ArrayList<ProductDto>();
 		model = new ShopsModel();
 		// 请求解析数据
 		httpUtil = AbHttpUtil.getInstance(this);
@@ -179,7 +183,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/" + id;
 		} else {
-			url = Constant.BASEURL + Constant.CONTENT + geturl;
+			String[] geturls=geturl.split("/");
+			geturl=geturls[geturls.length-1];
+			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
 		
 		refreshTask(url);
@@ -200,7 +206,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 
 	private void refreshTask(String url) {
 		// TODO Auto-generated method stub
-		httpUtil.get(url, new AbStringHttpResponseListener() {
+		httpUtil.post(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {
@@ -241,19 +247,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								list = model.getProductDtos();
 								if (list != null) {
 									if (adapter == null) {
-										// //给每项商品设置id
-										// for (int i = 0; i < list.size(); i++)
-										// {
-										// ProductDto p = new ProductDto();
-										// p.setId(i);
-										// list.add(p);
-										// }
-										adapter = new ShopsAdapter(
-												ShopsActivity.this);
-										// adapter = new ShopsAdapter(this);
-										adapter.updateData(list);
-										mGridView.setAdapter(adapter);
-										// mGridView.bindLinearLayout();
+										
 									} else {
 										// adapter.upDateList(list);
 										adapter.updateData(list);

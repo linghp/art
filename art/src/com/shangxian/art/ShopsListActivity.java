@@ -169,7 +169,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 
 	//
 	public void refreshTask(String url) {
-		httpUtil.get(url, new AbStringHttpResponseListener() {
+		httpUtil.post(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onStart() {
@@ -207,6 +207,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 						if (result_code.equals("200")&&reason.equals("success")) {
 							String str=jsonObject.getString("result");
 							ShopsListResultModel shopsListResultModel=gson.fromJson(str, ShopsListResultModel.class);
+							if(shopsListResultModel!=null){
 							model = shopsListResultModel.getData();
 							if (model != null) {
 								myListViewAdapter = new ShopsListAdapter(ShopsListActivity.this, model, R.layout.item_list);
@@ -228,6 +229,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 							}
 							MyLogger.i(model.toString());
 							myListViewAdapter.notifyDataSetChanged();
+							}
 						}else{
 							
 						}

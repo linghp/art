@@ -1,6 +1,7 @@
 package com.shangxian.art.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,6 +55,23 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private Boolean _new;
 
+	@Expose
+	private List<Double> lag = new ArrayList<Double>();
+	public List<Double> getLag() {
+		return lag;
+	}
+
+	public void setLag(List<Double> lag) {
+		this.lag = lag;
+	}
+
+	public MyLatLng getLat(){
+		if (lag != null && lag.size() > 0) {
+			return new MyLatLng(lag.get(1), lag.get(0));
+		}
+		return null;
+	}
+	
 	@Expose
 	private Boolean attened;
 

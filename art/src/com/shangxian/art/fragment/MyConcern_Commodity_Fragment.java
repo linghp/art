@@ -27,9 +27,9 @@ import android.widget.TextView;
  * @author Administrator
  *
  */
-public class MyConcern_Commodity_Fragment extends Fragment{
+public class MyConcern_Commodity_Fragment extends BaseFragment{
 	private View view;
-	private TextView tv_empty;
+	//private TextView tv_empty;
 	private ListView listView;
 	private ClassityCommodiyAdp adapter;
 	private SearchProductInfo info;
@@ -47,11 +47,17 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 		return view;
 	}
 	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		changeUi(UiModel.loading);
+	}
+	
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
-		tv_empty = (TextView) view.findViewById(R.id.tv_empty);
+		//tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
 		mListRefreshView = (AbPullToRefreshView) view.findViewById(R.id.mPullRefreshView);
 		
@@ -81,12 +87,13 @@ public class MyConcern_Commodity_Fragment extends Fragment{
 				mListRefreshView.onHeaderRefreshFinish();
 				mListRefreshView.onFooterLoadFinish();
 				if (info != null && !info.isNull()) {
+					changeUi(UiModel.showData);
 					MyConcern_Commodity_Fragment.this.info = info;
 					if (adapter != null) {
 						adapter.upDateList(info.getData());
 					}
 				} else {
-					
+					changeUi(UiModel.noData_noProduct);
 				}
 			}
 		});

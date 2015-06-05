@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.R;
+import com.shangxian.art.ShopsActivity;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
@@ -40,13 +42,21 @@ public class FollowShopAdapter extends EntityAdapter<ListCarGoodsBean> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		ListCarGoodsBean bean = getItem(position);
+		final ListCarGoodsBean bean = getItem(position);
 		holder.title.setText(bean.getShopName());
+		holder.price.setVisibility(View.INVISIBLE);
 //		holder.title.setText("¥" + CommonUtil.priceConversion(bean.getPrice())
 //				+ "/起");
+		
 		ImageLoader.getInstance().displayImage(
 				Constant.BASEURL + bean.getShopLogo(), holder.icon,
 				Options.getListOptions());
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ShopsActivity.startThisActivity(bean.getShopId(), mAc);
+			}
+		});
 		return convertView;
 	}
 

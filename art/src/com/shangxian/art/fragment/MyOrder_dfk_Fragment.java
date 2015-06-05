@@ -42,7 +42,7 @@ public class MyOrder_dfk_Fragment extends Fragment {
 
 	public void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
-				R.layout.layout_main_action_frame,
+				R.layout.layout_main_action_frame1,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 
 		tv_empty = (TextView) view.findViewById(R.id.tv_empty);

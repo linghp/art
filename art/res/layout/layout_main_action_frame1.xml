@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.ab.view.pullview.AbPullToRefreshView
+        android:id="@+id/mPullRefreshView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/grey300" >
+
+        <ListView
+            android:id="@+id/lv_action"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/grey300"
+            android:dividerHeight="8dp"
+            android:fastScrollEnabled="true"
+            android:scrollbars="none"
+            android:smoothScrollbar="true" />
+    </com.ab.view.pullview.AbPullToRefreshView>
+
+ 	<TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="抱歉，没有找到相关订单"
+        android:textSize="@dimen/list_title_size"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress_order"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone" /> 
+
+    <!-- <include 
+        android:id="@+id/loading"
+        layout="@layout/loadind_big" />
+
+    <include
+        android:id="@+id/no_work" 
+        layout="@layout/no_network"
+        android:visibility="gone" />
+
+    <include 
+        android:id="@+id/no_data"
+        layout="@layout/no_data"
+        android:visibility="gone" /> -->
+
+</FrameLayout>

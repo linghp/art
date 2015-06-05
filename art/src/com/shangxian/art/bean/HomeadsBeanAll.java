@@ -1,11 +1,73 @@
 package com.shangxian.art.bean;
 
+import java.util.List;
+
 /**
- * 商品bean
- * @author Administrator
+ * 首页轮播
+ * @author ling
  *
  */
 import com.google.gson.annotations.Expose;
+
+public class HomeadsBeanAll{
+	@Expose
+	private Integer itemId;
+	@Expose
+	private String adViewType;
+	@Expose
+	private List<HomeadsBean> indexDtos;
+	@Expose
+	private HomeadsBean indexDto;
+	
+
+public Integer getItemId() {
+		return itemId;
+	}
+
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+
+	public String getAdViewType() {
+		return adViewType;
+	}
+
+
+	public void setAdViewType(String adViewType) {
+		this.adViewType = adViewType;
+	}
+
+
+	public List<HomeadsBean> getIndexDtos() {
+		return indexDtos;
+	}
+
+
+	public void setIndexDtos(List<HomeadsBean> indexDtos) {
+		this.indexDtos = indexDtos;
+	}
+
+
+	public HomeadsBean getIndexDto() {
+		return indexDto;
+	}
+
+
+	public void setIndexDto(HomeadsBean indexDto) {
+		this.indexDto = indexDto;
+	}
+
+
+@Override
+	public String toString() {
+		return "HomeadsBeanAll [itemId=" + itemId + ", adViewType="
+				+ adViewType + ", indexDtos=" + indexDtos + ", indexDto="
+				+ indexDto + "]";
+	}
+
+
 
 public class HomeadsBean {
 
@@ -140,4 +202,5 @@ public class HomeadsBean {
 				+ ", banner=" + banner + "]";
 	}
 
+}
 }

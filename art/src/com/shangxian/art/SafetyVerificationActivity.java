@@ -28,6 +28,7 @@ import com.shangxian.art.net.PasswordServer.OnNewSafeCodeListener;
 import com.shangxian.art.net.PasswordServer.OnSendCodeListener;
 import com.shangxian.art.net.call.BaseCallBack;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -259,12 +260,11 @@ public class SafetyVerificationActivity extends BaseActivity {
 						return;
 					}
 					handler.sendEmptyMessage(codeing);
-					RequestParams params = new RequestParams();
-					params.addBodyParameter("phoneNumber", phone);
+					//RequestParams params = new RequestParams();
+					//params.addBodyParameter("phoneNumber", phone);
 					new HttpUtils().send(HttpMethod.GET,
 							Constant.NET_FINDWORD_CODE + phone, null,
 							new BaseCallBack<String>() {
-
 								@Override
 								public void onSimpleSuccess(
 										BaseBean<String> bean) {
@@ -279,6 +279,7 @@ public class SafetyVerificationActivity extends BaseActivity {
 								@Override
 								public void onSimpleFailure(int code, String res) {
 									myToast("发送失败");
+									MyLogger.i(code+"发送失败:"+res);
 									handler.sendEmptyMessage(tocode);
 								}
 							});

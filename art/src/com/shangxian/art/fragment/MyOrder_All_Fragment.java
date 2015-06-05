@@ -79,7 +79,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
-				R.layout.layout_main_action_frame,
+				R.layout.layout_main_action_frame1,
 				(ViewGroup) getActivity().findViewById(R.id.vp_content), false);
 		v_empty = view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
@@ -106,6 +106,12 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		// getData();
 		return view;
 	}
+	
+//	@Override
+//	public void onViewCreated(View view, Bundle savedInstanceState) {
+//		super.onViewCreated(view, savedInstanceState);
+//		changeUi(UiModel.loading);
+//	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -127,6 +133,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	public void getData() {
 		if (!isScrollListViewFresh) {
 			progressBar.setVisibility(View.VISIBLE);
+			//changeUi(UiModel.loading);
 		}
 		MyLogger.i("status: " + status);
 		MyOrderServer.toGetOrder(status, this);
@@ -188,9 +195,11 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 			if (mOrderItems.size() == 0) {
 				v_empty.setVisibility(View.VISIBLE);
 				//listView.setVisibility(View.GONE);
+				//changeUi(UiModel.noData_noProduct);
 			} else {
-				v_empty.setVisibility(View.GONE);
-				//listView.setVisibility(View.VISIBLE);
+				//v_empty.setVisibility(View.GONE);
+				listView.setVisibility(View.VISIBLE);
+				//changeUi(UiModel.showData);
 			}
 	}
 
@@ -198,9 +207,11 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 	public void onHttpResult(MyOrderItem_all myOrderItemAll) {
 		isScrollListViewFresh = false;
 		progressBar.setVisibility(View.GONE);
+		
 		mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (myOrderItemAll != null) {
 			// MyLogger.i(myOrderItemAll.toString());
+			//changeUi(UiModel.showData);
 			skip = 0;
 			mOrderItems.clear();
 			if (myOrderItemAll.getData() != null) {
@@ -211,6 +222,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 			updateView_nocontent();
 		} else {
 			CommonUtil.toast("网络错误", getActivity());
+			//changeUi(UiModel.noData_noProduct);
 		}
 	}
 
@@ -226,7 +238,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 				CommonUtil.toast("已到最后一页", getActivity());
 			}
 		} else {
-
+			skip -= pageSize;
 		}
 	}
 
@@ -267,13 +279,15 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		if (resultCode == getActivity().RESULT_OK) {
 			MyOrderItem myOrderItem_Return = (MyOrderItem) data
 					.getSerializableExtra("MyOrderItem");
-			MyLogger.i(myOrderItem_Return.toString());
 			if (myOrderItem != null && myOrderItem_Return != null) {
 				if (!myOrderItem.getStatus().equals(
 						myOrderItem_Return.getStatus())) {
 					myOrderItem.setStatus(myOrderItem_Return.getStatus());
 					myOrderListAdapter.notifyDataSetChanged();
 				}
+			}else if(data.getBooleanExtra("isdelete", false)){//订单详情中删除订单返回
+				mOrderItems.remove(myOrderItem);
+				myOrderListAdapter.notifyDataSetChanged();
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 		}
@@ -283,8 +297,12 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		return myOrderItem;
 	}
 
-	public void setMyOrderItem(MyOrderItem myOrderItem) {
-		this.myOrderItem = myOrderItem;
+	public void setMyOrderItem(MyOrderItem myOrderItem1) {
+		if(myOrderItem!=null){//从我的订单付款-》订单详情->退款，越界异常，这里只设置状态就可以保证里面的商品不为空
+			myOrderItem.setStatus(myOrderItem1.getStatus());
+		}else{
+		this.myOrderItem = myOrderItem1;
+		}
 	}
 
 }

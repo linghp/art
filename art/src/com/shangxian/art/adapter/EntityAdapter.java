@@ -26,6 +26,7 @@ public abstract class EntityAdapter<T> extends BaseAdapter{
         this.dates = dates;
         inflater = LayoutInflater.from(mAc);
         upDateList(dates);
+        
     }
 
     protected View inflater(){
