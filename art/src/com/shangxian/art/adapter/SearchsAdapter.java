@@ -57,7 +57,7 @@ public class SearchsAdapter extends EntityAdapter<ListCarGoodsBean> {
 			}
 		});
 		holder.time.setVisibility(View.INVISIBLE);
-		ImageLoader.getInstance().displayImage(Constant.BASEURL + (isShop ? bean.getLogo() : bean.getPhoto()), holder.icon, Options.getListOptions());
+		ImageLoader.getInstance().displayImage(Constant.BASEURL + (isShop ? bean.getLogo() : bean.getPhoto()), holder.icon, Options.getListOptions(false));
 		return convertView;
 	}
 	

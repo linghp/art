@@ -12,7 +12,7 @@ import android.graphics.BitmapFactory;
 
 public class Options {
 	/** 新闻列表中用到的图片加载配置 */
-	public static DisplayImageOptions getListOptions() {
+	public static DisplayImageOptions getListOptions(Boolean isCacheOnDisc) {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				// // 设置图片在下载期间显示的图片
 				.showImageOnLoading(R.drawable.image_loading)
@@ -21,7 +21,7 @@ public class Options {
 				// // 设置图片加载/解码过程中错误时候显示的图片
 				.showImageOnFail(R.drawable.image_error).cacheInMemory(true)
 				// 设置下载的图片是否缓存在内存中
-				.cacheOnDisc(true)
+				.cacheOnDisc(isCacheOnDisc)
 				// 设置下载的图片是否缓存在SD卡中
 				.considerExifParams(true)
 				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)// 设置图片以如何的编码方式显示
@@ -36,7 +36,7 @@ public class Options {
 				// 。preProcessor(BitmapProcessor preProcessor)
 				.resetViewBeforeLoading(true)// 设置图片在下载前是否重置，复位
 				// .displayer(new RoundedBitmapDisplayer(20))//是否设置为圆角，弧度为多少
-				.displayer(new FadeInBitmapDisplayer(100))// 淡入
+				//.displayer(new FadeInBitmapDisplayer(100))// 淡入
 				.build();
 		return options;
 	}
