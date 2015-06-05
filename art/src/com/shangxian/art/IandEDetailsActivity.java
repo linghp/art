@@ -10,6 +10,9 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -121,7 +124,16 @@ public class IandEDetailsActivity extends BaseActivity{
 	}
 
 	private void initListener() {
+		listview.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				System.out.println(">>>>>>>>>>>>>>>"+list.get(position).getTradeId());
+				IandEDetailsContentActivity.startThisActivity(list.get(position).getTradeId()+"", IandEDetailsActivity.this);
+			}
+		});
+		
 
 	}
 }

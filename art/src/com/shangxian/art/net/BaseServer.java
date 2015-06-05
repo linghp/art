@@ -49,8 +49,10 @@ public class BaseServer {
 	// public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	// public static final String HOSTtest=
 	// "http://192.168.0.116:8888/art/api/";
-	// public static final String HOST = "http://192.168.0.197:8888/art/api/";
+//	 public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
+//	 public static final String HOST = "http://192.168.0.186:8888/art/api/";
+
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
 	protected static final String NET_ACCOUNT = HOST + "account";// 首页广告列表
@@ -102,6 +104,11 @@ public class BaseServer {
 	protected static final String NET_CANCEL_REFUND = HOST
 			+ "orderCancelReturnList/"; // 取消退货订单
 
+	/**
+	 * 账户与安全  设置  
+	 */
+//	protected static final String NET_DELIVERYADDRESS = HOST + "/receiving";//收货地址管理
+	protected static final String NET_DELETEADDRESS = HOST + "/receiving/delte";//删除收货地址
 	/**
 	 * 
 	 * ----------------------------------------------------------------

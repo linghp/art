@@ -28,6 +28,9 @@ import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.AccountSecurityServer;
+import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -50,6 +53,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 	private View loading_big,ll_refresh_empty;
 	
 	private int delete = 0;
+	DeliveryAddressModel model;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,7 +73,6 @@ public class DeliveryAddressActivity extends BaseActivity{
 		topView.setTitle(getString(R.string.title_activity_deliveryaddress));
 		listview = (ListView) findViewById(R.id.search_list);
 		//		listview = (SlidingListView) findViewById(R.id.search_list);
-
 		loading_big = findViewById(R.id.loading_big);//加载
 		ll_refresh_empty = findViewById(R.id.ll_refresh_empty);//无数据
 	}
@@ -142,7 +145,8 @@ public class DeliveryAddressActivity extends BaseActivity{
 		}*/
 
 		String url = "";
-		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+//		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+		url = BaseServer.HOST + "/receiving";
 		refreshTask(url);
 
 		super.onResume();
@@ -183,7 +187,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+					final int position, long id) {
 				System.out.println(">>>>>>>>>>>>>长按了"+position);
 				//对画框
 				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
@@ -208,10 +212,18 @@ public class DeliveryAddressActivity extends BaseActivity{
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (delete == 0) {
-							System.out.println(">>>>>>>>>>确定+选择的是删除");
+							System.out.println(">>>>>>>>>>确定+选择的是删除"+position);
+							AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {
+								
+								@Override
+								public void onHttpDelete(String res) {
+									System.out.println(">>>>>>>>>>>>>删除后model"+res);
+									
+								}
+							});
 							
 						}else {
-							System.out.println(">>>>>>>>>>确定+选择的是设为默认地址");
+							System.out.println(">>>>>>>>>>确定+选择的是设为默认地址"+position);
 							
 						}
 						

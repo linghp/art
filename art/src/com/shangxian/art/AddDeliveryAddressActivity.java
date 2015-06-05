@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.view.TopView;
@@ -127,7 +128,8 @@ public class AddDeliveryAddressActivity extends BaseActivity{
 
 					//添加地址
 					String url = "";
-					url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+//					url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+					url = BaseServer.HOST + "/receiving";
 					refreshTask(url);
 
 				}else {
