@@ -108,8 +108,8 @@ public class BaseServer {
 	/**
 	 * 账户与安全  设置  
 	 */
-//	protected static final String NET_DELIVERYADDRESS = HOST + "/receiving";//收货地址管理
-	protected static final String NET_DELETEADDRESS = HOST + "/receiving/delte";//删除收货地址
+//	protected static final String NET_DELIVERYADDRESS = HOST + "receiving";//收货地址管理
+	protected static final String NET_DELETEADDRESS = HOST + "receiving/delte";//删除收货地址
 	/**
 	 * 
 	 * ----------------------------------------------------------------
