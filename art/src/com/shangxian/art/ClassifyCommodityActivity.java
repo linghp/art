@@ -194,7 +194,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 									.fromJson(str,
 											ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
-							categoryId=model.get(0).getCategoryId()+"";
+							//categoryId=model.get(0).getCategoryId()+"";
 							if (model != null) {
 								adapter = new ClassityCommodiyAdp1(
 										ClassifyCommodityActivity.this,
@@ -407,10 +407,10 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 			params.put("categoryId", categoryId);
 			params.put("pageSize", pageSize+"");
 			params.put("skip", skip+"");
-			FilterServer.toGetMore(Constant.NET_FILTER,params,
+			FilterServer.toPostMore(Constant.NET_FILTER,params,
 					ClassifyCommodityActivity.this);
 		}else{
-			FilterServer.toGetMore(url+"?pageSize="+pageSize+"&skip="+skip, null, this);
+			FilterServer.toPostMore(url+"?pageSize="+pageSize+"&skip="+skip, null, this);
 		}
 		MyLogger.i(priceSort+"--"+dateSort+"--"+categoryId+"--"+pageSize+"--"+skip);
 	}
