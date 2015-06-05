@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.SellerOrderActivity;
 import com.shangxian.art.bean.SellerRefoundOrderInfo;
 import com.shangxian.art.bean.SellerRefoundOrderProductInfo;
 import com.shangxian.art.constant.Constant;
@@ -65,7 +66,7 @@ public class SellerRefoundOrderAdapter extends
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		holder.ll_goodsitem_add.removeAllViews();
 		SellerRefoundOrderInfo sellerRefoundOrderInfo = getItem(position);
 		List<SellerRefoundOrderProductInfo> listCarGoodsBeans = sellerRefoundOrderInfo
@@ -112,66 +113,60 @@ public class SellerRefoundOrderAdapter extends
 					+ sellerRefoundOrderProductInfo.getProductSacle(),
 					goodsImg, options);
 		}
-		
+
 		if (sellerRefoundOrderInfo != null) {
 			holder.storeName.setText(sellerRefoundOrderInfo.getShippingName());
 			holder.tv_state.setText(MyOrderActivity.map_orderStateValue
 					.get(sellerRefoundOrderInfo.getStatus()));
-			holder.tv_allquantity.setText("共" + sellerRefoundOrderInfo.getTotalQuantity()
-					+ "件商品");
+			holder.tv_allquantity.setText("共"
+					+ sellerRefoundOrderInfo.getTotalQuantity() + "件商品");
 			holder.tv_payment.setText("￥"
-					+ CommonUtil.priceConversion(sellerRefoundOrderInfo.getTotalPrice()));
-//			loader.display(Constant.BASEURL
-//					+ sellerRefoundOrderInfo.gets,holder.iv_logo, );
+					+ CommonUtil.priceConversion(sellerRefoundOrderInfo
+							.getTotalPrice()));
+
+
 
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
-			if (sellerRefoundOrderInfo.getStatus().equals(MyOrderActivity.orderState[1])) {// 待付款
+			if (sellerRefoundOrderInfo.getStatus().equals(
+					SellerOrderActivity.orderReturnStatus[2])) { // 待审核
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_03.setVisibility(View.VISIBLE);
 				holder.tv_03.setText("等待买家付款...");
 			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					MyOrderActivity.orderState[7])) {// 已取消交易
+					SellerOrderActivity.orderReturnStatus[7])) { // 待
 				holder.tv_01.setText("删除订单");
 				holder.tv_01.setVisibility(View.VISIBLE);
 				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_03.setVisibility(View.GONE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
 					@Override
-					public void onClick(View v) {						
+					public void onClick(View v) {
+
+						// TODO: ================================ 删除订单  ====================================
 						
-						//TODO: ================================ 删除订单 ====================================
 						
 					}
 				});
 			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					MyOrderActivity.orderState[2])) {// 待发货
-				if (isRefundStatus) {
-					holder.tv_02.setText("确认退款");
-					holder.tv_02.setEnabled(true);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							
-							//TODO: =======================================================================
-							
-						}
-					});
-				} else {
-					holder.tv_02.setText("发货");
-					holder.tv_02.setEnabled(true);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							
-							//TODO: =======================================================================
-							
-						}
-					});
-				}
+					MyOrderActivity.orderState[2])) {// 待退款
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
 				holder.tv_03.setVisibility(View.GONE);
+				
+				holder.tv_02.setText("确认退款");
+				
+				holder.tv_02.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+						// TODO:=======================================================================
+						
+						
+					}
+
+				});
 			} else if (sellerRefoundOrderInfo.getStatus().equals(
 					MyOrderActivity.orderState[3])) {// 待收货
 				holder.tv_01.setVisibility(View.GONE);
@@ -182,8 +177,9 @@ public class SellerRefoundOrderAdapter extends
 
 					@Override
 					public void onClick(View v) {
+
+						// TODO:=======================================================================
 						
-						//TODO: =======================================================================
 						
 					}
 				});
@@ -202,9 +198,9 @@ public class SellerRefoundOrderAdapter extends
 
 					@Override
 					public void onClick(View v) {
-						
-						//TODO: ===============================================
-						
+
+						// TODO: ===============================================
+
 					}
 				});
 			}
