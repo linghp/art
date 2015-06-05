@@ -20,19 +20,25 @@ public class FilterServer extends BaseServer{
 	 * 返回确认收货监听
 	 */
 	public interface OnHttpResultFilterListener {
-		void onHttpResultConfirmGoods(ClassityCommdityResultModel classityCommdityResultModel);
+		void onHttpResultFilter(ClassityCommdityResultModel classityCommdityResultModel);
+	}
+	/*
+	 * 返回更多监听
+	 */
+	public interface OnHttpResultMoreListener {
+		void onHttpResultMore(ClassityCommdityResultModel classityCommdityResultModel);
 	}
 
-	public static void toPostFilter(AbRequestParams params, final OnHttpResultFilterListener l) {
-		toPost(NET_FILTER, params, new OnHttpListener() {
+	public static void toPostFilter(String url,AbRequestParams params, final OnHttpResultFilterListener l) {
+		toPost(url, params, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultConfirmGoods(null);
+						l.onHttpResultFilter(null);
 					} else {
-						l.onHttpResultConfirmGoods(getClassityCommdityResultModel(res));
+						l.onHttpResultFilter(getClassityCommdityResultModel(res));
 					}
 				}
 			}
@@ -48,5 +54,37 @@ public class FilterServer extends BaseServer{
 			e.printStackTrace();
 		}
 		return classityCommdityResultModel;
+	}
+	
+	public static void toGetMore(String url,AbRequestParams params, final OnHttpResultMoreListener l) {
+		if(params==null){
+		toGet_ab_noparams(url,  new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultMore(null);
+					} else {
+						l.onHttpResultMore(getClassityCommdityResultModel(res));
+					}
+				}
+			}
+		});
+	}else{
+		toPost(url, params, new OnHttpListener() {
+			@Override
+			public void onHttp(String res) {
+				//MyLogger.i(res);
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onHttpResultMore(null);
+					} else {
+						l.onHttpResultMore(getClassityCommdityResultModel(res));
+					}
+				}
+			}
+		});
+		}
 	}
 }

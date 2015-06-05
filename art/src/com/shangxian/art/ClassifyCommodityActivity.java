@@ -20,6 +20,9 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbLogUtil;
+import com.ab.view.pullview.AbPullToRefreshView;
+import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
+import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassityCommodiyAdp1;
 import com.shangxian.art.base.BaseActivity;
@@ -30,28 +33,31 @@ import com.shangxian.art.dialog.FilterDialog;
 import com.shangxian.art.dialog.FilterDialog.Filter_I;
 import com.shangxian.art.net.FilterServer;
 import com.shangxian.art.net.FilterServer.OnHttpResultFilterListener;
+import com.shangxian.art.net.FilterServer.OnHttpResultMoreListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
- * 分类---> 商品展示
+ * 分类/首页---> 商品展示list
  * 
  * @author Administrator
  *
  */
 public class ClassifyCommodityActivity extends BaseActivity implements
-		OnHttpResultFilterListener,Filter_I {
+		OnHttpResultFilterListener,Filter_I,OnHeaderRefreshListener, OnFooterLoadListener,OnHttpResultMoreListener {
 	// 列表
 	private ListView list;
 	private List<ClassityCommdityModel> model;
 	private ClassityCommodiyAdp1 adapter;
 	private AbHttpUtil httpUtil = null;
-
 	// 底部选项
 	TextView shaixuan, xiaoliang, jiage, xinpin;
-	private String priceSort,dateSort, categoryId;
+	private String priceSort,dateSort, categoryId,lowprice,upprice;
 
+	private String url="";
+	private int skip = 0; // 从第skip+1条开始查询
+	private final int pageSize = 10;
 	/*
 	 * //筛选popupwindow private PopupWindow popupWindow; private View view;
 	 * private TextView shopslist,classifylist;//商铺列表、分类列表
@@ -109,18 +115,17 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		categoryId = getIntent().getStringExtra("id");
 		MyLogger.i(categoryId);
 		String geturl = getIntent().getStringExtra("url");
-		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/products";
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
 		model = new ArrayList<ClassityCommdityModel>();
-		refreshTask(url);
+		refreshTask();
 
 	}
 
-	private void refreshTask(String url) {
+	private void refreshTask() {
 		// AbRequestParams params = new AbRequestParams();
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
@@ -134,7 +139,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 			@Override
 			public void onFinish() {
 				// AbDialogUtil.removeDialog(HomeActivity.this);
-				// mAbPullToRefreshView.onHeaderRefreshFinish();
+				 mAbPullToRefreshView.onHeaderRefreshFinish();
 			}
 
 			@Override
@@ -175,6 +180,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				// 请求
 				AbLogUtil.i(ClassifyCommodityActivity.this, content);
+				skip=0;
 				model.clear();
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -209,7 +215,10 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	}
 
 	private void listener() {
-		// TODO Auto-generated method stub
+		// 设置监听器
+		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
+		mAbPullToRefreshView.setOnFooterLoadListener(this);
+		
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -269,10 +278,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 				}
 				AbRequestParams params = new AbRequestParams();
 				params.put("priceSort", priceSort);
-				params.put("categoryId", categoryId);
-				MyLogger.i("priceSort:"+priceSort+"---categoryId:"+categoryId);
-				FilterServer.toPostFilter(params,
-						ClassifyCommodityActivity.this);
+				initdata2(params);
 			}
 		});
 		xinpin.setOnClickListener(new OnClickListener() {
@@ -287,9 +293,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 					dateSort="desc";
 					AbRequestParams params = new AbRequestParams();
 					params.put("dateSort", dateSort);
-					params.put("categoryId", categoryId);
-					FilterServer.toPostFilter(params,
-							ClassifyCommodityActivity.this);
+					initdata2(params);
 				}
 			}
 		});
@@ -309,6 +313,14 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		});
 	}
 
+	private void initdata2(AbRequestParams params) {
+		skip=0;
+		params.put("categoryId", categoryId);
+		url=Constant.NET_FILTER;
+		FilterServer.toPostFilter(Constant.NET_FILTER,params,
+				ClassifyCommodityActivity.this);
+	}
+	
 	private void resetFooterButton(){
 		jiage.setSelected(false);
 		jiage.setFocusable(false);
@@ -316,6 +328,8 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		xinpin.setFocusable(false);
 		priceSort="";
 		dateSort="";
+		lowprice="";
+		upprice="";
 	}
 	
 	// 筛选dialog
@@ -332,9 +346,11 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onHttpResultConfirmGoods(
+	public void onHttpResultFilter(
 			ClassityCommdityResultModel classityCommdityResultModel) {
+		 mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (classityCommdityResultModel != null&&adapter!=null) {
+			skip=0;
 			model.clear();
 			model.addAll(classityCommdityResultModel.getData());
 			adapter.notifyDataSetChanged();
@@ -344,14 +360,60 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	@Override
 	public void getData(String lowprice, String upprice) {
 		AbRequestParams params = new AbRequestParams();
-		params.put("minPrice", lowprice+"00");
-		params.put("maxPrice", upprice+"00");
-		params.put("categoryId", categoryId);
-		MyLogger.i("priceSort:"+priceSort+"---categoryId:"+categoryId);
-		FilterServer.toPostFilter(params,
-				ClassifyCommodityActivity.this);
+		this.lowprice=lowprice+"00";
+		this.upprice=upprice+"00";
+		params.put("minPrice", this.lowprice);
+		params.put("maxPrice", this.upprice);
+		initdata2(params);
 	}
 
+	@Override
+	public void onFooterLoad(AbPullToRefreshView view) {
+		loadMore();
+	}
+
+	@Override
+	public void onHeaderRefresh(AbPullToRefreshView view) {
+		if(url.endsWith("find")){
+			AbRequestParams params = new AbRequestParams();
+			if(!TextUtils.isEmpty(priceSort)){
+				params.put("priceSort", priceSort);	
+			}else if(!TextUtils.isEmpty(dateSort)){
+				params.put("dateSort", dateSort);
+			}else if(!TextUtils.isEmpty(lowprice)){
+				params.put("minPrice", this.lowprice);
+				params.put("maxPrice", this.upprice);	
+			}
+			params.put("categoryId", categoryId);
+			FilterServer.toPostFilter(Constant.NET_FILTER,params,
+					ClassifyCommodityActivity.this);
+		}else{
+			refreshTask();
+		}
+	}
+
+	private void loadMore() {
+		skip += pageSize;
+		if(url.endsWith("find")){
+			AbRequestParams params = new AbRequestParams();
+			if(!TextUtils.isEmpty(priceSort)){
+				params.put("priceSort", priceSort);	
+			}else if(!TextUtils.isEmpty(dateSort)){
+				params.put("dateSort", dateSort);
+			}else if(!TextUtils.isEmpty(lowprice)){
+				params.put("minPrice", this.lowprice);
+				params.put("maxPrice", this.upprice);	
+			}
+			params.put("categoryId", categoryId);
+			params.put("pageSize", pageSize+"");
+			params.put("skip", skip+"");
+			FilterServer.toGetMore(Constant.NET_FILTER,params,
+					ClassifyCommodityActivity.this);
+		}else{
+			FilterServer.toGetMore(url+"?pageSize="+pageSize+"&skip="+skip, null, this);
+		}
+		MyLogger.i(priceSort+"--"+dateSort+"--"+categoryId+"--"+pageSize+"--"+skip);
+	}
 	/*
 	 * //筛选popupwindow private void initScreenPopupWindow() { // TODO
 	 * Auto-generated method stub LayoutInflater inflater =
@@ -383,4 +445,22 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	 * 
 	 * } }); }
 	 */
+
+	@Override
+	public void onHttpResultMore(
+			ClassityCommdityResultModel classityCommdityResultModel) {
+		MyLogger.i("onHttpResultMore");
+		mAbPullToRefreshView.onFooterLoadFinish();
+		if(classityCommdityResultModel!=null){
+			List<ClassityCommdityModel> classityCommdityModels=classityCommdityResultModel.getData();
+			if(classityCommdityModels!=null&&classityCommdityModels.size()>0){
+			model.addAll(classityCommdityResultModel.getData());
+			adapter.notifyDataSetChanged();
+			}else{
+				myToast("已到最后一页");
+			}
+		}else{
+			skip -= pageSize;
+		}
+	}
 }

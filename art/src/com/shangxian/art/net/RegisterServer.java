@@ -82,8 +82,12 @@ public class RegisterServer extends BaseServer {
 								commonBean.setResult_code("200");
 								commonBean.setReason("success");
 							    commonBean.setObject(userInfo);
+							}else{
+								commonBean=gson.fromJson(res, CommonBean.class);
 							}
 						} catch (JSONException e) {
+							e.printStackTrace();
+						}catch (Exception e) {
 							e.printStackTrace();
 						}
 						l.onHttpResult(commonBean);

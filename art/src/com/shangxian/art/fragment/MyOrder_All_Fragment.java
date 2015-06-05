@@ -238,7 +238,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 				CommonUtil.toast("已到最后一页", getActivity());
 			}
 		} else {
-
+			skip -= pageSize;
 		}
 	}
 

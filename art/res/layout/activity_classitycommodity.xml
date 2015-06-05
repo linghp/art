@@ -78,14 +78,18 @@
             android:textColor="@color/col_b1toma500"
             android:textSize="@dimen/list_min_size" />
     </LinearLayout>
-
+    <com.ab.view.pullview.AbPullToRefreshView
+        android:id="@+id/mPullRefreshView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/top_title"
+        android:layout_above="@id/classitycommodity_linear"
+        android:background="@color/grey300" >
     <ListView
         android:id="@+id/classitycommodity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/classitycommodity_linear"
-        android:layout_below="@id/top_title"
+        android:layout_height="fill_parent"
         android:scrollbars="none" >
     </ListView>
-
+    </com.ab.view.pullview.AbPullToRefreshView>
 </RelativeLayout>

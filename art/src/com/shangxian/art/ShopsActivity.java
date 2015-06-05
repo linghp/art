@@ -183,7 +183,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/" + id;
 		} else {
-			url = Constant.BASEURL + Constant.CONTENT + geturl;
+			String[] geturls=geturl.split("/");
+			geturl=geturls[geturls.length-1];
+			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
 		
 		refreshTask(url);
@@ -204,7 +206,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 
 	private void refreshTask(String url) {
 		// TODO Auto-generated method stub
-		httpUtil.get(url, new AbStringHttpResponseListener() {
+		httpUtil.post(url, new AbStringHttpResponseListener() {
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {

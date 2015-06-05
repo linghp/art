@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.text.TextUtils;
 
@@ -35,7 +37,7 @@ public class MyOrderServer extends BaseServer {
 	 * 返回订单详情监听
 	 */
 	public interface OnHttpResultOrderDetailsListener {
-		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean);
+		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean,CommonBean commonBean);
 	}
 	/*
 	 * 返回取消订单监听
@@ -157,15 +159,31 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toGetOrderDetails(String ordernumber,
 			final OnHttpResultOrderDetailsListener l) {
-		toGet(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
+		toGet_token_original(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				//MyLogger.i(res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultOrderDetails(null);
+						l.onHttpResultOrderDetails(null,null);
 					} else {
-						l.onHttpResultOrderDetails(getMyOrderOrderDetails(res));
+						try {
+							JSONObject json = new JSONObject(res);
+							int result_code = json.getInt("result_code");
+							if (result_code == 200) {
+								l.onHttpResultOrderDetails(getMyOrderOrderDetails(json.getString("result")),null);
+							} else {
+								CommonBean	commonBean=gson.fromJson(res, CommonBean.class);
+								if(commonBean!=null){
+								l.onHttpResultOrderDetails(null,commonBean);
+								}
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}

@@ -17,6 +17,8 @@ public class Constant {
 	public static final String DELCART = "/del/cart";//删除购物车
 	public static final String PRODUCT = "/product";//商品信息
 	public static String GOODSDETAIL = "/product/%s/details";//商品详情
+	public static final String NET_FILTER = BASEURL+CONTENT+"/product/find";//分类筛选
+	//public static final String NET_FILTER = "http://192.168.0.142:8888/art/api/product/find";//分类筛选
 	
 	public static final String HOST = "http://192.168.0.133:8888/art/";
 	public static final String NET_FINDWORD = BASEURL + CONTENT + "/findpassword";

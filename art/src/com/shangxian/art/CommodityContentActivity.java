@@ -246,7 +246,9 @@ public class CommodityContentActivity extends BaseActivity implements
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + Constant.PRODUCT + "/" + id;
 		} else {
-			url = Constant.BASEURL + Constant.CONTENT + geturl;
+			String[] geturls=geturl.split("/");
+			geturl=geturls[geturls.length-1];
+			url = Constant.BASEURL + Constant.CONTENT +Constant.PRODUCT+"/"+ geturl;
 		}
 		System.out.println(">>>>>>>>>>>url" + url);
 		refreshTask(url);
