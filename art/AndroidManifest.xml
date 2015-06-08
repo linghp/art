@@ -182,6 +182,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".ReviewsProductActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".MyMessageActivity"
             android:label="@string/title_activity_mine" >
         </activity>

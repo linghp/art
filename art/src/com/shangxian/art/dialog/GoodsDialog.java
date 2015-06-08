@@ -77,7 +77,7 @@ public class GoodsDialog extends Dialog implements
 	public interface GoodsDialogConfirmNowBuyListener {
 		void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean);
 	}
-
+	
 	// 商品详情加入购物车模块
 	public GoodsDialog(Context context,
 			GoodsDialogConfirmListener confirmListener) {
