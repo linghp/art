@@ -190,6 +190,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					final int position, long id) {
+				delete = 0;
 				//对画框
 				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
 				multiDia.setTitle("请选择");//标题
@@ -209,8 +210,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 					public void onClick(DialogInterface dialog, int which) {
 						if (delete == 0) {
 							//删除
-							AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {
-								
+							AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {								
 								@Override
 								public void onHttpDelete(String res) {
 									myToast(res);
@@ -220,15 +220,20 @@ public class DeliveryAddressActivity extends BaseActivity{
 							
 						}else {
 							MyLogger.i(">>>>>>>>>>确定+选择的是设为默认地址"+position);
-							
+							//设为默认地址
+							AccountSecurityServer.toGetDefaultAddress(list.get(position).getId(), new OnHttpDeleteListener() {
+								
+								@Override
+								public void onHttpDelete(String res) {
+									MyLogger.i("设为默认地址》》》》》》》》》》》》："+res);
+									myToast(res);
+								}
+							});
 						}
-						
-						
 					}
 				});
 				multiDia.setNegativeButton("取消", null);
 				multiDia.show(); 
-				
 				return true;
 			}
 		});

@@ -36,7 +36,7 @@ import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
-public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmListener{
+public class ListCarAdapter extends BaseAdapter{
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private ShoppingcartActivity shoppingcartActivity;
 	private LayoutInflater inflater;
@@ -217,7 +217,7 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 			holder.updata.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity,ListCarAdapter.this,item.listCarGoodsBean);
+					GoodsDialog dialog =  new GoodsDialog(shoppingcartActivity,shoppingcartActivity,item.listCarGoodsBean);
 					dialog.show();
 				}
 			});
@@ -466,11 +466,6 @@ public class ListCarAdapter extends BaseAdapter implements GoodsDialogConfirmLis
 		public String goodsid;
 		public String storeid;
 		public ImageView updata;
-	}
-
-	@Override
-	public void goodsDialogConfirm(String str) {
-		this.notifyDataSetChanged();
 	}
 
 }

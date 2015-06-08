@@ -41,5 +41,26 @@ public class AccountSecurityServer extends BaseServer{
 			}
 		});
 	}
+	//设为默认地址
+	public static void toGetDefaultAddress(String addressId,final OnHttpDeleteListener l){
+		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		pairs.add(new BasicNameValuePair("addressId", addressId));
+		MyLogger.i(">>>>>>>>>>删除的id"+addressId);
+		toPostWithToken(NET_DEFAULTADDRESS, pairs, new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(">>>>>>>>>>>设为默认收货地址:"+res);
+				
+				if (res != null) {
+					MyLogger.i(">>>>>>>>>>>>>设置成功");
+					l.onHttpDelete("设置默认地址成功");
+				}else {
+					MyLogger.i(">>>>>>>>>>>>>设置失敗");
+					l.onHttpDelete("设置默认地址失败");
+				}
+			}
+		});
+	}
 
 }

@@ -59,6 +59,7 @@ public class GoodsDialog extends Dialog implements
 	private CommodityContentModel commodityContentModel;
 	private GoodsDialogConfirmListener confirmListener;
 	private GoodsDialogConfirmNowBuyListener confirmNowBuyListener;
+	private GoodsDialogEditListener editListener;
 	private String json;
 	private boolean isallselected;// 商品详情时用于判断是否还有没有选择的规格属性
 	private boolean isNowBuy;
@@ -77,7 +78,10 @@ public class GoodsDialog extends Dialog implements
 	public interface GoodsDialogConfirmNowBuyListener {
 		void goodsDialogConfirmNowBuy(ListCarGoodsBean listCarGoodsBean);
 	}
-
+	public interface GoodsDialogEditListener {
+		void goodsDialogEdit(ListCarGoodsBean listCarGoodsBean,ListCarGoodsBean newListCarGoodsBean);
+	}
+	
 	// 商品详情加入购物车模块
 	public GoodsDialog(Context context,
 			GoodsDialogConfirmListener confirmListener) {
@@ -99,12 +103,12 @@ public class GoodsDialog extends Dialog implements
 
 	// 购物车模块
 	public GoodsDialog(Context context,
-			GoodsDialogConfirmListener confirmListener,
+			GoodsDialogEditListener editListener,
 			ListCarGoodsBean listCarGoodsBean) {
 		super(context, android.R.style.Theme_Translucent);
 		this.context = context;
 		this.listCarGoodsBean = listCarGoodsBean;
-		this.confirmListener = confirmListener;
+		this.editListener = editListener;
 		init();
 	}
 
@@ -433,9 +437,10 @@ public class GoodsDialog extends Dialog implements
 			if (num > 0) {
 				// 购物车
 				if (listCarGoodsBean != null) {
-					listCarGoodsBean.setSelectedSpec(specSelectedStrs);
-					listCarGoodsBean.setQuantity(num);
-					confirmListener.goodsDialogConfirm("");
+					ListCarGoodsBean newListCarGoodsBean=new ListCarGoodsBean();
+					newListCarGoodsBean.setSelectedSpec(specSelectedStrs);
+					newListCarGoodsBean.setQuantity(num);
+					editListener.goodsDialogEdit(listCarGoodsBean,newListCarGoodsBean);
 					dismiss();
 				} else if(commodityContentModel!=null){// 商品详情
 					if (isallselected) {
