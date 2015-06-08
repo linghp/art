@@ -72,9 +72,9 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	
 	Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			Global.sellerReFundOrder = null;
 			if (myOrderListAdapter != null) {
 				myOrderListAdapter.removeItem(Global.sellerReFundOrder);
+				Global.sellerReFundOrder = null;
 			}
 		};
 	};
@@ -102,6 +102,7 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		MyLogger.i("");
 		super.onCreate(savedInstanceState);
+		removeSllerRefoundOrderThread.start();
 	}
 
 	public SellerRefundOrder_All_Fragment(String status) {
@@ -166,10 +167,12 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 				if (res != null) {
 					changeUi(UiModel.showData);
 					refoundstat = (SellerRefoundstat) res;
-					if (refoundstat != null) {
+					if (refoundstat != null && !refoundstat.isNull()) {
 						if (!refoundstat.isNull() && myOrderListAdapter != null) {
 							myOrderListAdapter.upDateList(refoundstat.getData());
 						}
+					} else {
+						changeUi(UiModel.noData_noProduct);
 					}
 				} else {
 					changeUi(UiModel.noData_noProduct);

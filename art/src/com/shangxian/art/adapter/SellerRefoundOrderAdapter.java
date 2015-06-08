@@ -3,6 +3,7 @@ package com.shangxian.art.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +36,21 @@ public class SellerRefoundOrderAdapter extends
 
 	private ImageLoader loader;
 	private DisplayImageOptions options;
+	private Fragment mFragment;
 
 	public SellerRefoundOrderAdapter(Activity mAc, int layoutId,
 			List<SellerRefoundOrderInfo> dates) {
 		super(mAc, layoutId, dates);
 		loader = ImageLoader.getInstance();
 		options = Options.getListOptions(true);
+	}
+	
+	public SellerRefoundOrderAdapter(Fragment mAc, int layoutId,
+			List<SellerRefoundOrderInfo> dates) {
+		super(mAc.getActivity(), layoutId, dates);
+		loader = ImageLoader.getInstance();
+		options = Options.getListOptions(true);
+		this.mFragment = mAc;
 	}
 
 	public void removeItem(SellerRefoundOrderInfo info) {
@@ -135,7 +145,7 @@ public class SellerRefoundOrderAdapter extends
 			@Override
 			public void onClick(View v) {
 				SellerOrderReturnDetailsActivity.startThisActivity(position, sellerRefoundOrderInfo,
-						mAc);
+						mFragment);
 			}
 		});
 		
@@ -207,6 +217,8 @@ public class SellerRefoundOrderAdapter extends
 				changeTextViewShow(holder, null, null, "已拒绝签收");
 			} else if (SellerOrderActivity.orderReturnStatus[6].equals(status)){
 				changeTextViewShow(holder, null, null, "已签收，退款成功");
+			} else if (status.equals(SellerOrderActivity.orderReturnStatus[1])) {
+				changeTextViewShow(holder, null, null, "退款成功");
 			}
 		}
 		return convertView;

@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import java.io.ObjectOutputStream.PutField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,12 +118,12 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * @param mAc
 	 */
 	public static void startThisActivity(int position,
-			SellerRefoundOrderInfo sellerRefoundOrderInfo, Activity mAc) {
-		Intent intent = new Intent(mAc, SellerOrderReturnDetailsActivity.class);
+			SellerRefoundOrderInfo sellerRefoundOrderInfo, Fragment mAc) {
+		Intent intent = new Intent(mAc.getActivity(), SellerOrderReturnDetailsActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(INT_SELLER_RETURN, sellerRefoundOrderInfo);
 		bundle.putInt(INT_SELLER_INDEX, position);
-		mAc.startActivityForResult(intent, 1);
+		mAc.startActivityForResult(intent.putExtras(bundle), 1);
 	}
 
 	private void initDatas() {
@@ -152,30 +153,34 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		tv_02 = (TextView) findViewById(R.id.tv_02);
 		tv_03 = (TextView) findViewById(R.id.tv_03);
 		findViewById(R.id.tv_noaddress).setVisibility(View.GONE);
+
+		updateViews();
 	}
 
 	private void updateViews() {
 		((TextView) findViewById(R.id.tv_header_01))
-				.setText(MyOrderActivity.map_orderStateValue
+				.setText(SellerOrderActivity.map_orderReturnStatusValue
 						.get(sellerRefundOrder.getStatus()));
 		((TextView) findViewById(R.id.tv_header_02)).setText(String.format(
 				getString(R.string.text_order_Price),
 				CommonUtil.priceConversion(sellerRefundOrder.getTotalPrice())));
 		((TextView) findViewById(R.id.tv_header_03)).setVisibility(View.GONE);
-		;
 
-		// ReceiverInfo receiverInfo=myOrderDetailBean.getReceiverInfo();
-		// ((TextView)findViewById(R.id.tv_receiver)).setText(String.format(getString(R.string.text_receiver),
-		// receiverInfo.getReceiverName()));
-		// ((TextView)findViewById(R.id.tv_address)).setText(String.format(getString(R.string.text_receiver_address),
-		// receiverInfo.getDeliveryAddress()));
-		// ((TextView)findViewById(R.id.tv_phone)).setText(receiverInfo.getReceiverTel());
+		((TextView) findViewById(R.id.tv_receiver)).setText(String.format(
+				getString(R.string.text_receiver),
+				sellerRefundOrder.getReceiverName()));
+		((TextView) findViewById(R.id.tv_address)).setText(String.format(
+				getString(R.string.text_receiver_address),
+				sellerRefundOrder.getBuyerAddress()));
+		((TextView) findViewById(R.id.tv_phone)).setText(sellerRefundOrder
+				.getBuyerName());
 
-		// ((TextView)findViewById(R.id.tv_tradetime)).setText(String.format(getString(R.string.text_tradetime),
-		// myOrderDetailBean.getOrderedDate()));
+		((TextView) findViewById(R.id.tv_tradetime)).setText(
+				"退货时间:"+ sellerRefundOrder.getReturnOrderTime());
 
 		// 动态添加商品
-		// ((TextView)findViewById(R.id.car_storename)).setText(myOrderDetailBean.getSellerName());
+		((TextView) findViewById(R.id.car_storename)).setText(sellerRefundOrder
+				.getShippingName());
 		// mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 		// + myOrderItem.getShopLogo());
 		ll_goodsitem_add.removeAllViews();
@@ -205,7 +210,6 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 
 			((CheckBox) child.findViewById(R.id.check_goods))
 					.setVisibility(View.GONE);
-			;
 
 			ImageLoader.getInstance().displayImage(
 					Constant.BASEURL
@@ -393,8 +397,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * 
 	 * @param productId
 	 */
-	public static void check_fialure(final SellerRefoundOrderInfo sellerRefundOrder,
-			String productId) {
+	public static void check_fialure(
+			final SellerRefoundOrderInfo sellerRefundOrder, String productId) {
 		SellerOrderServer.toSellerReturnOrderFialure(
 				sellerRefundOrder.getOrderNumber(), productId,
 				sellerRefundOrder.getReturnOrderNum(), new CallBack() {

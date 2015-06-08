@@ -17,11 +17,11 @@ public class MyOrderItem implements Serializable {
 	@Expose
 	private String addressId;
 	@Expose
-	public String orderNumber;
+	public String orderNumber="";
 	@Expose
 	private String status;
 	@Expose
-	public String shopId;
+	public String shopId="";
 	@Expose
 	private String shopName;
 	@Expose

@@ -23,6 +23,7 @@ import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.SellerOrderDetailsActivity;
 import com.shangxian.art.adapter.MyOrderListAdapter;
+import com.shangxian.art.adapter.MyOrderListAdapter1;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.net.CallBack;
@@ -46,7 +47,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 	private ListView listView;
 	private AbPullToRefreshView mAbPullToRefreshView;
 
-	private MyOrderListAdapter myOrderListAdapter;
+	private MyOrderListAdapter1 myOrderListAdapter;
 	private List<MyOrderItem> mOrderItems = new ArrayList<MyOrderItem>();
 	private MyOrderItem myOrderItem;
 	private MyOrderItem_all all;
@@ -94,7 +95,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		myOrderListAdapter = new MyOrderListAdapter(getActivity(), this,
+		myOrderListAdapter = new MyOrderListAdapter1(getActivity(), this,
 				mOrderItems);
 		listView.setAdapter(myOrderListAdapter);
 	}
@@ -274,33 +275,43 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 			long id) {
 		myOrderItem = mOrderItems.get(position);
 		SellerOrderDetailsActivity.startThisActivity_MyOrder(
-				myOrderItem.getOrderId() + "", getActivity(), this);
+				myOrderItem.getOrderId() + "", position, this);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		MyLogger.i(requestCode + "--" + resultCode);
 		if (resultCode == getActivity().RESULT_OK) {
-			MyOrderItem myOrderItem_Return = (MyOrderItem) data
-					.getSerializableExtra("MyOrderItem");
-			MyLogger.i(myOrderItem_Return.toString());
-			if (myOrderItem != null && myOrderItem_Return != null) {
-				if (!myOrderItem.getStatus().equals(
-						myOrderItem_Return.getStatus())) {
-					myOrderItem.setStatus(myOrderItem_Return.getStatus());
-					myOrderListAdapter.notifyDataSetChanged();
-				}
-			}
-			super.onActivityResult(requestCode, resultCode, data);
+//			MyOrderItem myOrderItem_Return = (MyOrderItem) data
+//					.getSerializableExtra("MyOrderItem");
+//			MyLogger.i(myOrderItem_Return.toString());
+//			if (myOrderItem != null && myOrderItem_Return != null) {
+//				if (!myOrderItem.getStatus().equals(
+//						myOrderItem_Return.getStatus())) {
+//					myOrderItem.setStatus(myOrderItem_Return.getStatus());
+//					myOrderListAdapter.notifyDataSetChanged();
+//				}
+//			}
+//			super.onActivityResult(requestCode, resultCode, data);
+			int index = data.getIntExtra("res", -1);
+			removeItem(index);
 		}
 	}
 
-	public MyOrderItem getMyOrderItem() {
-		return myOrderItem;
+//	public MyOrderItem getMyOrderItem() {
+//		return myOrderItem;
+//	}
+//
+//	public void setMyOrderItem(MyOrderItem myOrderItem) {
+//		this.myOrderItem = myOrderItem;
+//	}
+	
+	public void removeItem(int index){
+		if (index >= 0 && mOrderItems != null && mOrderItems.size() > 0 && index < mOrderItems.size()) {
+			mOrderItems.remove(index);
+			if (myOrderListAdapter != null) {
+				myOrderListAdapter.notifyDataSetChanged();
+			}
+		}
 	}
-
-	public void setMyOrderItem(MyOrderItem myOrderItem) {
-		this.myOrderItem = myOrderItem;
-	}
-
 }
