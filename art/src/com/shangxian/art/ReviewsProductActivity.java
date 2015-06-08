@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
@@ -19,7 +20,7 @@ public class ReviewsProductActivity extends BaseActivity {
 	private TextView tv_quxiao,tv_tijiao,tv_gongkai,tv_niming;
 	private RatingBar ratingbar;
 	private LinearLayout ll_view;
-	float rating = 0;
+	float ratings = 0;
 	
 
 	@Override
@@ -51,7 +52,7 @@ public class ReviewsProductActivity extends BaseActivity {
 
 	private void initData() {
 		// 设置评星星级
-		ratingbar.setRating(rating);
+//		ratingbar.setRating(ratings);
 		//添加布局
 		View child = inflater.inflate(
 				R.layout.item_reviewsproduct, null);
@@ -59,6 +60,15 @@ public class ReviewsProductActivity extends BaseActivity {
 	}
 
 	private void initListener() {
+		ratingbar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+			
+			@Override
+			public void onRatingChanged(RatingBar ratingBar, float rating,
+					boolean fromUser) {
+				myToast(""+rating);
+				
+			}
+		});
 		tv_quxiao.setOnClickListener(new OnClickListener() {
 			//取消
 			@Override
@@ -99,6 +109,7 @@ public class ReviewsProductActivity extends BaseActivity {
 			}
 		});
 
+		
 	}
 
 }
