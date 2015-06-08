@@ -21,13 +21,17 @@ public class SellerOrderManageActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_seller_order_manage);
-		TopView top = (TopView) findViewById(R.id.top_title);
-		top.showTitle();
-		top.setTitle("购物车");
-		top.showTitle();
-		top.setBack(R.drawable.back);// 返回
-		top.showRightBtn();
-		top.hideCenterSearch();
+		initView();
+	}
+
+	private void initView() {
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle("订单管理");
 	}
 
 	public void doClick_send(View v) {
