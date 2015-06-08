@@ -64,7 +64,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class CommodityContentActivity extends BaseActivity implements
-		OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConfirmNowBuyListener{
+OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConfirmNowBuyListener{
 	private TagViewPager viewPager = null;
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
@@ -73,9 +73,9 @@ public class CommodityContentActivity extends BaseActivity implements
 	private ImageView commoditycontent_shoucang;
 	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu;
 	private View rl_footer;
-//	private TextView tv_first, tv_second;
-//	private ImageView img_first, img_second;
-	private LinearLayout dingwei, shangpu;
+	//	private TextView tv_first, tv_second;
+	//	private ImageView img_first, img_second;
+	private LinearLayout dingwei, shangpu, ll_guige;
 	private WebView webView;
 	// 判断是否收藏
 	//boolean iscollection = false;
@@ -112,123 +112,6 @@ public class CommodityContentActivity extends BaseActivity implements
 		context.startActivity(intent);
 	}
 
-	private void listener() {
-//		tv_first.setOnClickListener(this);
-//		tv_second.setOnClickListener(this);
-		address.setOnClickListener(this);
-		next.setOnClickListener(new OnClickListener() {
-			// 跳转到商铺
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// CommonUtil.gotoActivity(CommodityContentActivity.this,
-				// ShopsActivity.class, false);
-				ShopsActivity.startThisActivity(shopid,
-						CommodityContentActivity.this);
-			}
-		});
-		shangpu.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				ShopsActivity.startThisActivity(shopid,
-						CommodityContentActivity.this);
-			}
-		});
-		dingwei.setOnClickListener(new OnClickListener() {
-			// 跳转到定位
-			@Override
-			public void onClick(View v) {
-				if (/*model == null*/true) {
-					return;
-				}
-				Bundle bundle = new Bundle();
-				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-				ShopLocInfo info = new ShopLocInfo();
-				info.setId(model.getShopId());
-				info.setTitle(model.getShopName());
-				info.setPhoto(model.getShopLogo());
-				info.setAddress(model.getShopAddress());
-				//info.setLng(model.get);
-				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
-				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-						LocationActivity.class, bundle, false);
-
-			}
-		});
-		call.setOnClickListener(new OnClickListener() {
-			// 跳转到打电话
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
-						+ "18696636812"));
-				startActivity(intent);
-			}
-		});
-		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
-			// 收藏
-			@Override
-			public void onClick(View v) {
-				if (isLoginAndToLogin()) {
-					if (model == null) {
-						commoditycontent_shoucang.setSelected(false);
-						myToast("关注失败！");
-					} else {
-						commoditycontent_shoucang
-								.setSelected(!commoditycontent_shoucang
-										.isSelected());
-						if (!commoditycontent_shoucang.isSelected()) {
-							new FollowServer().toDelFollowGoods(
-									model.getCategoryId(), false,
-									new CallBack() {
-										@Override
-										public void onSimpleSuccess(Object res) {
-											myToast("取消关注成功");
-										}
-
-										@Override
-										public void onSimpleFailure(int code) {
-											myToast("取消关注失败");
-											commoditycontent_shoucang
-													.setSelected(!commoditycontent_shoucang
-															.isSelected());
-										}
-									});
-						} else {
-							new FollowServer().toFollowGoods(
-									model.getCategoryId(),
-									new OnFollowListener() {
-										@Override
-										public void onFollow(boolean isFollow) {
-											if (!isFollow) {
-												myToast("关注失败");
-												commoditycontent_shoucang
-														.setSelected(!commoditycontent_shoucang
-																.isSelected());
-											} else {
-												myToast("关注成功");
-											}
-										}
-									});
-						}
-					}
-				}
-			}
-		});
-		topView.setRightBtnListener(new OnClickListener() {
-			// title右按钮（购物车） 跳转到购物车
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putBoolean("isother", true);
-				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-						ShoppingcartActivity.class, bundle, false);
-			}
-		});
-
-	}
 
 	String geturl;
 
@@ -250,7 +133,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			geturl=geturls[geturls.length-1];
 			url = Constant.BASEURL + Constant.CONTENT +Constant.PRODUCT+"/"+ geturl;
 		}
-		System.out.println(">>>>>>>>>>>url" + url);
+		MyLogger.i("商品详情url：" + url);
 		refreshTask(url);
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
@@ -263,45 +146,45 @@ public class CommodityContentActivity extends BaseActivity implements
 		});
 	}
 
-//	private void refreshTask_detail(String url) {
-//		// AbRequestParams params = new AbRequestParams();
-//		// params.put("shopid", "1019");
-//		// params.put("code", "88881110344801123456");
-//		// params.put("phone", "15889936624");
-//		httpUtil.get(url, new AbStringHttpResponseListener() {
-//
-//			@Override
-//			public void onStart() {
-//				MyLogger.i("");
-//			}
-//
-//			@Override
-//			public void onFinish() {
-//				MyLogger.i("");
-//				// AbDialogUtil.removeDialog(HomeActivity.this);
-//				// mAbPullToRefreshView.onHeaderRefreshFinish();
-//			}
-//
-//			@Override
-//			public void onFailure(int statusCode, String content,
-//					Throwable error) {
-//				MyLogger.i(content);
-//			}
-//
-//			@Override
-//			public void onSuccess(int statusCode, String content) {
-//				// AbToastUtil.showToast(HomeActivity.this, content);
-//				// imgList.clear();
-//				MyLogger.i(content);
-//				if (!TextUtils.isEmpty(content)) {
-//					webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
-//				}
-//
-//			}
-//		});
-//	}
-	
-	
+	//	private void refreshTask_detail(String url) {
+	//		// AbRequestParams params = new AbRequestParams();
+	//		// params.put("shopid", "1019");
+	//		// params.put("code", "88881110344801123456");
+	//		// params.put("phone", "15889936624");
+	//		httpUtil.get(url, new AbStringHttpResponseListener() {
+	//
+	//			@Override
+	//			public void onStart() {
+	//				MyLogger.i("");
+	//			}
+	//
+	//			@Override
+	//			public void onFinish() {
+	//				MyLogger.i("");
+	//				// AbDialogUtil.removeDialog(HomeActivity.this);
+	//				// mAbPullToRefreshView.onHeaderRefreshFinish();
+	//			}
+	//
+	//			@Override
+	//			public void onFailure(int statusCode, String content,
+	//					Throwable error) {
+	//				MyLogger.i(content);
+	//			}
+	//
+	//			@Override
+	//			public void onSuccess(int statusCode, String content) {
+	//				// AbToastUtil.showToast(HomeActivity.this, content);
+	//				// imgList.clear();
+	//				MyLogger.i(content);
+	//				if (!TextUtils.isEmpty(content)) {
+	//					webView.loadDataWithBaseURL(null,content,"text/html","utf-8", null);
+	//				}
+	//
+	//			}
+	//		});
+	//	}
+
+
 	private void refreshTask(String url) {
 		// AbRequestParams params = new AbRequestParams();
 		// params.put("shopid", "1019");
@@ -357,7 +240,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			public void onSuccess(int statusCode, String content) {
 				// AbToastUtil.showToast(HomeActivity.this, content);
 				// imgList.clear();
-				MyLogger.i(content);
+				MyLogger.i("商品详情数据:"+content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
 					try {
@@ -433,12 +316,12 @@ public class CommodityContentActivity extends BaseActivity implements
 		commoditycontent_jieshao.setText(model.getName().toString().trim());
 		commoditycontent_jiage.setText("￥"
 				+ CommonUtil.priceConversion(model.getPromotionPrice()));
-		// guige.setText(model.get);//规格
+		//		 guige.setText(model.getSpecs().get("房间"));//规格
 		dianpu.setText(model.getShopName());
 		address.setText(model.getShopAddress());// 地址
 		// 图片的下载
 		mAbImageLoader
-				.display(shopsimg, Constant.BASEURL + model.getShopLogo());
+		.display(shopsimg, Constant.BASEURL + model.getShopLogo());
 		// System.out.println("**************"+(float)model.getEvaluateScore());
 		// System.out.println("**************"+ (float)
 		// ((float)model.getEvaluateScore()/100*5));
@@ -470,15 +353,16 @@ public class CommodityContentActivity extends BaseActivity implements
 		dianpu = (TextView) findViewById(R.id.commoditycontent_shopstxt);
 		shopsimg = (ImageView) findViewById(R.id.commoditycontent_dianpuimg);
 		dingwei = (LinearLayout) findViewById(R.id.commoditycontent_dingwei);
+		ll_guige = (LinearLayout) findViewById(R.id.commoditycontent_guigelinear);
 		call = (ImageView) findViewById(R.id.commoditycontent_call);
 		next = (ImageView) findViewById(R.id.commoditycontent_next4);
 		address = (TextView) findViewById(R.id.commoditycontent_address);
 		shangpu = (LinearLayout) findViewById(R.id.commoditycontent_shangpu);
 		webView = (WebView) findViewById(R.id.webView);
-//		tv_first = (TextView) findViewById(R.id.text_one);
-//		tv_second = (TextView) findViewById(R.id.text_two);
-//		img_first = (ImageView) findViewById(R.id.image_one);
-//		img_second = (ImageView) findViewById(R.id.image_two);
+		//		tv_first = (TextView) findViewById(R.id.text_one);
+		//		tv_second = (TextView) findViewById(R.id.text_two);
+		//		img_first = (ImageView) findViewById(R.id.image_one);
+		//		img_second = (ImageView) findViewById(R.id.image_two);
 
 		webView.getSettings().setJavaScriptEnabled(true);
 
@@ -524,7 +408,7 @@ public class CommodityContentActivity extends BaseActivity implements
 				dotask_addcart();
 			}
 			break;
-		case R.id.tv_nowbuy://加入购物车
+		case R.id.tv_nowbuy://加入购物车（立即购买）
 			if (isLoginAndToLogin()) {
 				doNowBuy();
 			}
@@ -542,7 +426,7 @@ public class CommodityContentActivity extends BaseActivity implements
 			ShopLocInfo info = new ShopLocInfo();
 			info.setId(model.getShopId());
 			info.setTitle(model.getName());
-			
+
 			info.setPhoto(model.getPhotos() != null ? model.getPhotos().get(0) : null);
 			info.setAddress(model.getShopAddress());
 			info.setLng(model.getLat());
@@ -550,43 +434,168 @@ public class CommodityContentActivity extends BaseActivity implements
 			CommonUtil.gotoActivityWithData(mAc,
 					LocationActivity.class, bundle, false);
 			break;
-//		case R.id.text_one:
-//			setBackground_slide(0);
-//			break;
-//		case R.id.text_two:
-//			setBackground_slide(1);
-//			break;
+			//		case R.id.text_one:
+			//			setBackground_slide(0);
+			//			break;
+			//		case R.id.text_two:
+			//			setBackground_slide(1);
+			//			break;
 		default:
 			break;
 		}
 	}
+	private void listener() {
+		//		tv_first.setOnClickListener(this);
+		//		tv_second.setOnClickListener(this);
+		address.setOnClickListener(this);
+		next.setOnClickListener(new OnClickListener() {
+			// 跳转到商铺
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// CommonUtil.gotoActivity(CommodityContentActivity.this,
+				// ShopsActivity.class, false);
+				ShopsActivity.startThisActivity(shopid,
+						CommodityContentActivity.this);
+			}
+		});
+		ll_guige.setOnClickListener(new OnClickListener() {
 
-//	private void setBackground_slide(int position) {
-//		img_first.setBackgroundResource(R.color.transparent);
-//		img_second.setBackgroundResource(R.color.transparent);
-//
-//		tv_first.setTextColor(Color.parseColor("#333333"));
-//		tv_second.setTextColor(Color.parseColor("#333333"));
-//
-//		switch (position) {
-//		case 0:
-//			img_first.setBackgroundResource(R.color.blue);
-//			tv_first.setTextColor(getResources().getColor(R.color.blue));
-//			webView.loadUrl("http://baidu.com");
-//			break;
-//		case 1:
-//			img_second.setBackgroundResource(R.color.blue);
-//			tv_second.setTextColor(getResources().getColor(R.color.blue));
-//			webView.loadUrl("http://www.taobao.com/");
-//			break;
-//		}
-//	}
+			@Override
+			public void onClick(View v) {
+				//规格
+				select_specifications();
+			}
+		});
+		shangpu.setOnClickListener(new OnClickListener() {
+			//商铺
+			@Override
+			public void onClick(View v) {
+
+				ShopsActivity.startThisActivity(shopid,
+						CommodityContentActivity.this);
+			}
+		});
+		dingwei.setOnClickListener(new OnClickListener() {
+			// 跳转到定位
+			@Override
+			public void onClick(View v) {
+				if (/*model == null*/true) {
+					return;
+				}
+				Bundle bundle = new Bundle();
+				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+				ShopLocInfo info = new ShopLocInfo();
+				info.setId(model.getShopId());
+				info.setTitle(model.getShopName());
+				info.setPhoto(model.getShopLogo());
+				info.setAddress(model.getShopAddress());
+				//info.setLng(model.get);
+				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
+				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+						LocationActivity.class, bundle, false);
+
+			}
+		});
+		call.setOnClickListener(new OnClickListener() {
+			// 跳转到打电话
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+						+ "18696636812"));
+				startActivity(intent);
+			}
+		});
+		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
+			// 收藏
+			@Override
+			public void onClick(View v) {
+				if (isLoginAndToLogin()) {
+					if (model == null) {
+						commoditycontent_shoucang.setSelected(false);
+						myToast("关注失败！");
+					} else {
+						commoditycontent_shoucang
+						.setSelected(!commoditycontent_shoucang
+								.isSelected());
+						if (!commoditycontent_shoucang.isSelected()) {
+							new FollowServer().toDelFollowGoods(
+									model.getCategoryId(), false,
+									new CallBack() {
+										@Override
+										public void onSimpleSuccess(Object res) {
+											myToast("取消关注成功");
+										}
+
+										@Override
+										public void onSimpleFailure(int code) {
+											myToast("取消关注失败");
+											commoditycontent_shoucang
+											.setSelected(!commoditycontent_shoucang
+													.isSelected());
+										}
+									});
+						} else {
+							new FollowServer().toFollowGoods(
+									model.getCategoryId(),
+									new OnFollowListener() {
+										@Override
+										public void onFollow(boolean isFollow) {
+											if (!isFollow) {
+												myToast("关注失败");
+												commoditycontent_shoucang
+												.setSelected(!commoditycontent_shoucang
+														.isSelected());
+											} else {
+												myToast("关注成功");
+											}
+										}
+									});
+						}
+					}
+				}
+			}
+		});
+		topView.setRightBtnListener(new OnClickListener() {
+			// title右按钮（购物车） 跳转到购物车
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("isother", true);
+				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+						ShoppingcartActivity.class, bundle, false);
+			}
+		});
+
+	}
+
+	//	private void setBackground_slide(int position) {
+	//		img_first.setBackgroundResource(R.color.transparent);
+	//		img_second.setBackgroundResource(R.color.transparent);
+	//
+	//		tv_first.setTextColor(Color.parseColor("#333333"));
+	//		tv_second.setTextColor(Color.parseColor("#333333"));
+	//
+	//		switch (position) {
+	//		case 0:
+	//			img_first.setBackgroundResource(R.color.blue);
+	//			tv_first.setTextColor(getResources().getColor(R.color.blue));
+	//			webView.loadUrl("http://baidu.com");
+	//			break;
+	//		case 1:
+	//			img_second.setBackgroundResource(R.color.blue);
+	//			tv_second.setTextColor(getResources().getColor(R.color.blue));
+	//			webView.loadUrl("http://www.taobao.com/");
+	//			break;
+	//		}
+	//	}
 
 	/**
 	 * 快捷分享项目现在添加为不同的平台添加不同分享内容的方法。 本类用于演示如何区别Twitter的分享内容和其他平台分享内容。
 	 */
 	public class ShareContentCustomizeDemo implements
-			ShareContentCustomizeCallback {
+	ShareContentCustomizeCallback {
 
 		public void onShare(Platform platform, ShareParams paramsToShare) {
 			if (QZone.NAME.equals(platform.getName())) {
@@ -599,13 +608,21 @@ public class CommodityContentActivity extends BaseActivity implements
 	}
 
 	private void dotask_addcart() {
+		//加入购物车
 		GoodsDialog dialog = new GoodsDialog(this, this);
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}
 
 	private void doNowBuy() {
+		//立即购买
 		GoodsDialog dialog = new GoodsDialog(this, this,true);
+		dialog.setCommodityContent(model);
+		dialog.show();
+	}
+	private void select_specifications() {
+		//选择规格
+		GoodsDialog dialog = new GoodsDialog(this, 0);
 		dialog.setCommodityContent(model);
 		dialog.show();
 	}
@@ -649,7 +666,7 @@ public class CommodityContentActivity extends BaseActivity implements
 		listCarGoodsBeans.add(listCarGoodsBean);
 		listCarStoreBean.setItemDtos(listCarGoodsBeans);
 		listCarStoreBeans.add(listCarStoreBean);
-		
+
 		ConfirmOrderActivity.startThisActivity(this, listCarStoreBeans, listCarGoodsBean.getPromotionPrice(), true);
 	}
 }

@@ -81,7 +81,7 @@ public class GoodsDialog extends Dialog implements
 	public interface GoodsDialogEditListener {
 		void goodsDialogEdit(ListCarGoodsBean listCarGoodsBean,ListCarGoodsBean newListCarGoodsBean);
 	}
-
+	
 	// 商品详情加入购物车模块
 	public GoodsDialog(Context context,
 			GoodsDialogConfirmListener confirmListener) {

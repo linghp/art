@@ -61,8 +61,9 @@ public class ShopsSummaryActivity extends BaseActivity{
 		topView=(TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.setRightBtnDrawable(R.drawable.collection);
-		topView.setTitle("商铺简介");
 		topView.setBack(R.drawable.back);//返回
+		topView.setTitle("商铺简介");
+		topView.showTitle();
 		topView.hideCenterSearch();
 
 		shopsimg = (ImageView) findViewById(R.id.shopssummary_shopsimg);
@@ -137,9 +138,12 @@ public class ShopsSummaryActivity extends BaseActivity{
 							if (model != null) {
 								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getLogo());//图片
 								shopsname.setText(model.getName());//店铺名
-//								guanzu.setText(model.getConsignee()+"");//关注
+								//								guanzu.setText(model.getConsignee()+"");//关注
 								zhanggui.setText(model.getOwner());//掌柜
-								phone.setText(model.getPhoneNumbers().get(0)+"");//电话
+								if (model.getPhoneNumbers() != null) {
+									phone.setText(model.getPhoneNumbers().get(0)+"");//电话
+								}
+
 								address.setText(model.getAddress());//地址
 								summary.setText(model.getDetails());//简介
 							}
