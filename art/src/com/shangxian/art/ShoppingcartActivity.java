@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ import com.shangxian.art.bean.ListCarStoreBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.DeleteDialog;
 import com.shangxian.art.dialog.DeleteDialog.Delete_I;
+import com.shangxian.art.dialog.GoodsDialog.GoodsDialogEditListener;
+import com.shangxian.art.dialog.RefreshDialog;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.net.HttpUtils;
@@ -48,7 +51,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I {
+		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I,GoodsDialogEditListener {
 	private ListView listcar;
 	public CheckBox selecteall;
 	// private static ListCarAdapter adapter;
@@ -67,6 +70,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	boolean isother = false;
 
+	private Dialog refreshDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -547,5 +552,15 @@ public class ShoppingcartActivity extends BaseActivity implements
 				isFromConfirmOrderAct = false;// 当结算完成时，确认订单销毁，返回到此要刷新
 			}
 		}
+	}
+
+	@Override
+	public void goodsDialogEdit(ListCarGoodsBean listCarGoodsBean,ListCarGoodsBean newListCarGoodsBean) {
+		refreshDialog=new RefreshDialog(this, 0); 
+		refreshDialog.show();
+		listCarGoodsBean.setSelectedSpec(newListCarGoodsBean.getSelectedSpec());
+		listCarGoodsBean.setQuantity(newListCarGoodsBean.getQuantity());
+		adapter.notifyDataSetChanged();
+		refreshDialog.dismiss();
 	}
 }
