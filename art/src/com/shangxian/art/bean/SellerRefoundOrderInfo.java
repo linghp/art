@@ -81,6 +81,10 @@ public class SellerRefoundOrderInfo implements Serializable {
 
 	@Expose
 	private String shippingNum;
+	
+	public boolean isNull(){
+		return status == null || returnOrderNum == null || returnOrderItemDtos == null || returnOrderItemDtos.size() == 0;
+	}
 
 	public String getStatus() {
 		return status;

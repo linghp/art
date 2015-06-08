@@ -3,8 +3,10 @@ package com.shangxian.art.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.SellerOrderActivity;
+import com.shangxian.art.SellerOrderReturnDetailsActivity;
 import com.shangxian.art.bean.SellerRefoundOrderInfo;
 import com.shangxian.art.bean.SellerRefoundOrderProductInfo;
 import com.shangxian.art.constant.Constant;
@@ -40,8 +43,22 @@ public class SellerRefoundOrderAdapter extends
 		options = Options.getListOptions(true);
 	}
 
+	public void removeItem(SellerRefoundOrderInfo info) {
+		if (info != null && dates.contains(info)) {
+			dates.remove(info);
+			notifyDataSetChanged();
+		}
+	}
+	
+	public void removeItem(int position){
+		if (position >= 0 && dates.size() > 0 && (dates.size() -1) >= position) {
+			dates.remove(position);
+			notifyDataSetChanged();
+		}
+	}
+	
 	@Override
-	public View initView(int position, View convertView, ViewGroup parent) {
+	public View initView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater();
@@ -68,10 +85,10 @@ public class SellerRefoundOrderAdapter extends
 		}
 
 		holder.ll_goodsitem_add.removeAllViews();
-		SellerRefoundOrderInfo sellerRefoundOrderInfo = getItem(position);
+		final SellerRefoundOrderInfo sellerRefoundOrderInfo = getItem(position);
 		List<SellerRefoundOrderProductInfo> listCarGoodsBeans = sellerRefoundOrderInfo
 				.getReturnOrderItemDtos();
-		boolean isRefundStatus = false;// 是否是normal
+		//boolean isRefundStatus = false;// 是否是normal
 		for (SellerRefoundOrderProductInfo sellerRefoundOrderProductInfo : listCarGoodsBeans) {
 			View child = LayoutInflater.from(mAc).inflate(
 					R.layout.list_car_goods_item, null);
@@ -95,118 +112,121 @@ public class SellerRefoundOrderAdapter extends
 					+ CommonUtil.priceConversion(sellerRefoundOrderProductInfo
 							.getProductPrice()));
 			String status = sellerRefoundOrderInfo.getStatus();
-			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
-				isRefundStatus = true;
-				car_goodsstatus.setVisibility(View.VISIBLE);
-				car_goodsstatus
-						.setText(String.format(
-								mAc.getResources().getString(
-										R.string.text_refundstatus),
-								MyOrderActivity.map_orderReturnStatusValue
-										.get(status)));
-			} else {
-				isRefundStatus = false;
-				car_goodsstatus.setVisibility(View.GONE);
-			}
+//			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
+//				isRefundStatus = true;
+//				car_goodsstatus.setVisibility(View.VISIBLE);
+//				car_goodsstatus
+//						.setText(String.format(
+//								mAc.getResources().getString(
+//										R.string.text_refundstatus),
+//								MyOrderActivity.map_orderReturnStatusValue
+//										.get(status)));
+//			} else {
+//				isRefundStatus = false;
+//				car_goodsstatus.setVisibility(View.GONE);
+//			}
 			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 			loader.displayImage(Constant.BASEURL
 					+ sellerRefoundOrderProductInfo.getProductSacle(),
 					goodsImg, options);
 		}
-
+		
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SellerOrderReturnDetailsActivity.startThisActivity(position, sellerRefoundOrderInfo,
+						mAc);
+			}
+		});
+		
+		changeTextViewShow(holder, null, null, "正在加载...");
+		
 		if (sellerRefoundOrderInfo != null) {
 			holder.storeName.setText(sellerRefoundOrderInfo.getShippingName());
-			holder.tv_state.setText(MyOrderActivity.map_orderStateValue
-					.get(sellerRefoundOrderInfo.getStatus()));
+			holder.tv_state
+					.setText(SellerOrderActivity.map_orderReturnStatusValue
+							.get(sellerRefoundOrderInfo.getStatus()));
 			holder.tv_allquantity.setText("共"
 					+ sellerRefoundOrderInfo.getTotalQuantity() + "件商品");
 			holder.tv_payment.setText("￥"
 					+ CommonUtil.priceConversion(sellerRefoundOrderInfo
 							.getTotalPrice()));
 
-
-
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
-			if (sellerRefoundOrderInfo.getStatus().equals(
-					SellerOrderActivity.orderReturnStatus[2])) { // 待审核
-				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.VISIBLE);
-				holder.tv_03.setText("等待买家付款...");
-			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					SellerOrderActivity.orderReturnStatus[7])) { // 待
-				holder.tv_01.setText("删除订单");
-				holder.tv_01.setVisibility(View.VISIBLE);
-				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.GONE);
-				holder.tv_01.setOnClickListener(new View.OnClickListener() {
+			String status = sellerRefoundOrderInfo.getStatus();
+			if (status.equals(SellerOrderActivity.orderReturnStatus[2])) { // 待审核
+				changeTextViewShow(holder, "审核不通过", "审核通过", null);
+				holder.tv_01.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
-						// TODO: ================================ 删除订单  ====================================
-						
-						
+						SellerOrderReturnDetailsActivity.check_fialure(
+								sellerRefoundOrderInfo, sellerRefoundOrderInfo
+										.getReturnOrderItemDtos().get(0)
+										.getId()
+										+ "");
 					}
 				});
-			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					MyOrderActivity.orderState[2])) {// 待退款
-				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.VISIBLE);
-				holder.tv_03.setVisibility(View.GONE);
-				
-				holder.tv_02.setText("确认退款");
-				
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
 
+				holder.tv_02.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
-						// TODO:=======================================================================
-						
-						
+						SellerOrderReturnDetailsActivity.seller_operation(
+								sellerRefoundOrderInfo, sellerRefoundOrderInfo
+										.getReturnOrderItemDtos().get(0)
+										.getId()
+										+ "");
 					}
-
 				});
-			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					MyOrderActivity.orderState[3])) {// 待收货
-				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.VISIBLE);
-				holder.tv_03.setText("等待买家收货...");
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
+			} else if (status.equals(SellerOrderActivity.orderReturnStatus[3])) { // 待
+				changeTextViewShow(holder, null, null, "审核成功，等待买家发货...");
+			} else if (status.equals(MyOrderActivity.orderState[4])) {// 待退款
+				changeTextViewShow(holder, "拒绝签收", "确认签收", null);
+				holder.tv_01.setOnClickListener(new OnClickListener() {	
 					@Override
 					public void onClick(View v) {
-
-						// TODO:=======================================================================
-						
-						
+						SellerOrderReturnDetailsActivity.competed_refuse(
+								sellerRefoundOrderInfo, sellerRefoundOrderInfo
+										.getReturnOrderItemDtos().get(0)
+										.getId()
+										+ "");
 					}
 				});
-			} else if (sellerRefoundOrderInfo.getStatus().equals(
-					MyOrderActivity.orderState[4])) {// 已完成交易
-				if (isRefundStatus) {
-					holder.tv_02.setText("退货中");
-					holder.tv_02.setEnabled(false);
-				} else {
-					holder.tv_02.setText("退货");
-					holder.tv_02.setEnabled(true);
-				}
-				holder.tv_01.setVisibility(View.GONE);
-				holder.tv_02.setVisibility(View.VISIBLE);
-				holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
+				holder.tv_02.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-
-						// TODO: ===============================================
-
+						SellerOrderReturnDetailsActivity.seller_operation(
+								sellerRefoundOrderInfo, sellerRefoundOrderInfo
+										.getReturnOrderItemDtos().get(0)
+										.getId()
+										+ "");
 					}
 				});
+			} else if (status.equals(SellerOrderActivity.orderReturnStatus[8])) {
+				changeTextViewShow(holder, null, null, "审核未通过");
+			} else if (SellerOrderActivity.orderReturnStatus[5].equals(status)) {
+				changeTextViewShow(holder, null, null, "已拒绝签收");
+			} else if (SellerOrderActivity.orderReturnStatus[6].equals(status)){
+				changeTextViewShow(holder, null, null, "已签收，退款成功");
 			}
-
 		}
 		return convertView;
+	}
+
+	private void changeTextViewShow(ViewHolder holder, String tv_01_title,
+			String tv_02_title, String tv_03_title) {
+		holder.tv_01.setText(tv_01_title);
+		holder.tv_02.setText(tv_02_title);
+		holder.tv_03.setText(tv_03_title);
+
+		holder.tv_01
+				.setVisibility(!TextUtils.isEmpty(tv_01_title) ? View.VISIBLE
+						: View.GONE);
+		holder.tv_02
+				.setVisibility(!TextUtils.isEmpty(tv_02_title) ? View.VISIBLE
+						: View.GONE);
+		holder.tv_03
+				.setVisibility(!TextUtils.isEmpty(tv_03_title) ? View.VISIBLE
+						: View.GONE);
 	}
 
 	private class ViewHolder {

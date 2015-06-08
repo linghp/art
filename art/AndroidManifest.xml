@@ -134,6 +134,10 @@
             android:label="@string/title_activity_shoppingcart" >
         </activity>
         <activity
+            android:name="com.shangxian.art.SellerOrderReturnDetailsActivity"
+            android:label="@string/title_activity_shoppingcart" >
+        </activity>
+        <activity
             android:name=".NearlyActivity"
             android:label="@string/title_activity_nearly" >
         </activity>

@@ -1,5 +1,7 @@
 package com.shangxian.art.constant;
 
+import com.shangxian.art.bean.SellerRefoundOrderInfo;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -39,4 +41,8 @@ public class Global {
 	public static LinearLayout.LayoutParams PARAM_MP_MP = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
+	
+	public static boolean isSellerOrderReturnDetailsActivityIsShow = false;
+
+	public static SellerRefoundOrderInfo sellerReFundOrder = null;
 }

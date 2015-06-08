@@ -345,6 +345,10 @@ public class CommonUtil {
 	public static void toast(String str, Context context) {
 		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
 	}
+	
+	public static void toast(String str) {
+		Toast.makeText(Global.mContext, str, Toast.LENGTH_SHORT).show();
+	}
 
 	// 获取屏幕的宽度
 	public static int getScreenWidth(Context context) {

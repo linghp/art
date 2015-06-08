@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.RefundOrderActivity;
+import com.shangxian.art.SellerOrderReturnDetailsActivity;
 import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.adapter.MyRefundOrderListAdapter;
 import com.shangxian.art.adapter.SellerRefoundOrderAdapter;
@@ -36,6 +38,7 @@ import com.shangxian.art.bean.RefundOrderInfo_all;
 import com.shangxian.art.bean.Refund_stat;
 import com.shangxian.art.bean.SellerRefoundOrderInfo;
 import com.shangxian.art.bean.SellerRefoundstat;
+import com.shangxian.art.constant.Global;
 import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.MyOrderServer;
@@ -66,7 +69,32 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 
 	protected SellerRefoundstat refoundstat;
 	private SellerRefoundstat myOrderItem;
+	
+	Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			Global.sellerReFundOrder = null;
+			if (myOrderListAdapter != null) {
+				myOrderListAdapter.removeItem(Global.sellerReFundOrder);
+			}
+		};
+	};
 
+	Thread removeSllerRefoundOrderThread = new Thread(){
+		public void run() {
+			while (true){
+				if (Global.sellerReFundOrder != null) {
+					handler.sendEmptyMessage(0);
+				} else {
+					try {
+						Thread.sleep(400);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+	};
+	
 	public void setNeedFresh(boolean isNeedFresh) {
 	}
 
@@ -96,10 +124,11 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		myOrderListAdapter = new SellerRefoundOrderAdapter(getActivity(), R.layout.list_myorder_item, alls);
+		myOrderListAdapter = new SellerRefoundOrderAdapter(getActivity(),
+				R.layout.list_myorder_item, alls);
 		listView.setAdapter(myOrderListAdapter);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -214,60 +243,43 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	}
 
 	private void loadMore() {
-		SellerOrderServer.toGetSellerReturnOrder(status, refoundstat.getStart() + "",
-				new CallBack() {
-					@Override
-					public void onSimpleSuccess(Object res) {
-						mAbPullToRefreshView.onHeaderRefreshFinish();
-						alls.clear();
-						changeUi(UiModel.showData);
-						if (res != null) {
-							refoundstat = (SellerRefoundstat) res;
-							if (refoundstat != null && !refoundstat.isNull() && myOrderListAdapter != null) {
-								myOrderListAdapter.addFootDataList(alls);
-							}
-						}
+		SellerOrderServer.toGetSellerReturnOrder(status, refoundstat.getStart()
+				+ "", new CallBack() {
+			@Override
+			public void onSimpleSuccess(Object res) {
+				mAbPullToRefreshView.onHeaderRefreshFinish();
+				alls.clear();
+				changeUi(UiModel.showData);
+				if (res != null) {
+					refoundstat = (SellerRefoundstat) res;
+					if (refoundstat != null && !refoundstat.isNull()
+							&& myOrderListAdapter != null) {
+						myOrderListAdapter.addFootDataList(alls);
 					}
+				}
+			}
 
-					@Override
-					public void onSimpleFailure(int code) {
-						// changeUi(UiModel.);
-						mAbPullToRefreshView.onHeaderRefreshFinish();
-						MyLogger.i("failure >>>>> " + code + " ,res >>>>> ");
-					}
-				});
-		// params.
+			@Override
+			public void onSimpleFailure(int code) {
+				// changeUi(UiModel.);
+				mAbPullToRefreshView.onHeaderRefreshFinish();
+				MyLogger.i("failure >>>>> " + code + " ,res >>>>> ");
+			}
+		});
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		//myOrderItem = alls.get(position);
-		// Intent intent = new Intent(getActivity(),
-		// MyOrderDetailsActivity.class);
-		// intent.putExtra(MyOrderDetailsActivity.INTENTDATAKEY,
-		// myOrderItem.getOrderNumber());
-		// startActivityForResult(intent, 1);
-		// MyOrderDetailsActivity.startThisActivity_MyOrder(
-		// myOrderItem.getOrderNumber(), getActivity(), this);
+		
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// MyLogger.i(requestCode + "--" + resultCode);
-		// if (resultCode == getActivity().RESULT_OK) {
-		// MyOrderItem myOrderItem_Return = (MyOrderItem) data
-		// .getSerializableExtra("MyOrderItem");
-		// MyLogger.i(myOrderItem_Return.toString());
-		// if (myOrderItem != null && myOrderItem_Return != null) {
-		// if (!myOrderItem.getStatus().equals(
-		// myOrderItem_Return.getStatus())) {
-		// myOrderItem.setStatus(myOrderItem_Return.getStatus());
-		// myOrderListAdapter.notifyDataSetChanged();
-		// }
-		// }
-		// super.onActivityResult(requestCode, resultCode, data);
-		// }
+		if (resultCode == getActivity().RESULT_OK) {
+			if (myOrderListAdapter != null) {
+				myOrderListAdapter.removeItem(data.getIntExtra("res", Integer.MIN_VALUE));
+			}
+		}
 	}
-
 }

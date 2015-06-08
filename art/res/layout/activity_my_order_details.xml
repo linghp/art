@@ -153,5 +153,14 @@
             android:background="@drawable/greentodarkgreen"
             android:text="付款"
             android:textColor="@color/white" />
+        
+        <TextView
+            android:id="@+id/tv_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="付款..."
+            android:textColor="@color/main_col500_1"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>
