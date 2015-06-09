@@ -134,7 +134,7 @@
             android:label="@string/title_activity_shoppingcart" >
         </activity>
         <activity
-            android:name="com.shangxian.art.SellerOrderReturnDetailsActivity"
+            android:name=".SellerOrderReturnDetailsActivity"
             android:label="@string/title_activity_shoppingcart" >
         </activity>
         <activity
@@ -544,6 +544,10 @@
         <activity
             android:name=".SellerOrderManageActivity"
             android:label="@string/title_activity_seller_order_manage" >
+        </activity>
+        <activity
+            android:name=".BuyerReturnOrderActivity"
+            android:label="@string/title_activity_buyer_order" >
         </activity>
     </application>
 

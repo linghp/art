@@ -3,7 +3,10 @@ package com.shangxian.art.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,8 @@ public abstract class EntityAdapter<T> extends BaseAdapter{
     protected List<T> dates;
     protected int layoutId;
     protected Activity mAc;
+	protected Fragment mFragment;
+	protected ImageLoader imageLoader = ImageLoader.getInstance();;
 
     public EntityAdapter(Activity mAc, int layoutId, List<T> dates){
         this.mAc = mAc;
@@ -26,7 +31,15 @@ public abstract class EntityAdapter<T> extends BaseAdapter{
         this.dates = dates;
         inflater = LayoutInflater.from(mAc);
         upDateList(dates);
-        
+    }
+    
+    public EntityAdapter(Fragment fragment, int layoutId, List<T> dates){
+    	this.mAc = fragment.getActivity();
+    	this.mFragment = fragment;
+    	this.layoutId = layoutId;
+    	this.dates = dates;
+    	inflater = LayoutInflater.from(mAc);
+    	upDateList(dates);
     }
 
     protected View inflater(){
@@ -80,6 +93,30 @@ public abstract class EntityAdapter<T> extends BaseAdapter{
             }
         }
         notifyDataSetChanged();
+    }
+    
+    /**
+     * 移除datas里的单个数据 by data
+     * 
+     * @param data
+     */
+    public void removeDataItem(T data){
+    	if (dates.contains(data)) {
+			dates.remove(data);
+			notifyDataSetChanged();
+		}
+    }
+    
+    /**
+     * 移除datas里的单个数据，根据data下标
+     * 
+     * @param position
+     */
+    public void removeDataItem(int position){
+    	if (position >= 0 && dates.size() > 0 && dates.size() > position) {
+    		dates.remove(position);
+			notifyDataSetChanged();
+		}
     }
 
     protected void changData(int postition, T t){
