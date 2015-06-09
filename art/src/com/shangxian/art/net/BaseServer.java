@@ -109,6 +109,10 @@ public class BaseServer {
 			+ "orderReturnList/";// 通过状态获取退货订单
 	protected static final String NET_CANCEL_REFUND = HOST
 			+ "orderCancelReturnList/"; // 取消退货订单
+	
+	protected static final String NET_BUYER_RETURN_LIST = HOST + "orderReturnList/";
+	protected static final String NET_BUYER_DELETE_REUTRN_ORDER = HOST + "deleteBuyerOrder/"; //买家删除订单
+	protected static final String NET_BUYER_CANCEL_RETURN_ORDER = HOST + "orderCancelReturnList/"; //买家删除订单
 
 	/**
 	 * 账户与安全  设置  
@@ -138,7 +142,7 @@ public class BaseServer {
 		RequestParams params = new RequestParams();
 		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
-			params.addHeader("User-Token", /*curUser.getId() + ""*/"2");
+			params.addHeader("User-Token", curUser.getId() + "");
 			return params;
 		} else {
 			return params;
