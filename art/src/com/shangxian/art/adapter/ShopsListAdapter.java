@@ -56,8 +56,6 @@ public class ShopsListAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// 图片下载器
 		mAbImageLoader = AbImageLoader.newInstance(mContext);
-		mAbImageLoader.setMaxWidth(150);
-		mAbImageLoader.setMaxHeight(150);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);

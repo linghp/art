@@ -32,8 +32,6 @@ public class ClassificationAdp extends EntityAdapter<ClassificationModel> {
 			List<ClassificationModel> dates) {
 		super(mAc, layoutId, dates);
 		mAbImageLoader = AbImageLoader.newInstance(mAc);
-		mAbImageLoader.setMaxWidth(100);
-		mAbImageLoader.setMaxHeight(100);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
