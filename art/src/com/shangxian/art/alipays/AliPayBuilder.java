@@ -1,5 +1,7 @@
 package com.shangxian.art.alipays;
 
+import com.shangxian.art.constant.Constant;
+
 /**
  * 支付宝数据封装类
  * 
@@ -16,7 +18,7 @@ public class AliPayBuilder {
 	private String total_fee;                                                    // 商品金额
 
 	private String notify_url = "&notify_url=" + "\""
-			+ "http://test.peoit.com/api/login" + "\"";                          // 服务器异步通知页面路径
+			+ Constant.BASEURL + "/api/pay/notifyAlipay" + "\"";                          // 服务器异步通知页面路径
 	private String service = "&service=\"mobile.securitypay.pay\"";              // 服务接口名称， 固定值
 	private String payment_type = "&payment_type=\"1\"";                         // 支付类型， 固定值
 	private String _input_charset = "&_input_charset=\"utf-8\"";                 // 参数编码， 固定值

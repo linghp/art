@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-
+<!-- 未选中时的图案 -->
     <item
         android:id="@+android:id/background"
         android:drawable="@drawable/star_off">
     </item>
-
-    <SPAN>
-    </SPAN>
-
+<!-- 未选中时的图案 -->
     <item
         android:id="@+android:id/secondaryProgress"
         android:drawable="@drawable/star_off">
     </item>
+    <!-- 选中时的图案 -->
     <item
         android:id="@+android:id/progress"
         android:drawable="@drawable/star_on">
