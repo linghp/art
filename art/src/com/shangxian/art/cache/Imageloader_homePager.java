@@ -56,19 +56,20 @@ public class Imageloader_homePager {
 					connection.setConnectTimeout(20000);
 					connection.setReadTimeout(20000);
 					InputStream is = connection.getInputStream();
-					// 获取创建Bitmap的选项对象
-					Options options = new Options();
-					// 设置图片大小为原图片的1/2
-					options.inJustDecodeBounds = false;
-					if (Build.MODEL.equals("HUAWEI U9510E")) {
-						options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-					} else {
-						options.inPreferredConfig = Bitmap.Config.RGB_565;
-					}
-					options.inPurgeable = true;
-					options.inInputShareable = true;
-					Bitmap bitmap = BitmapFactory.decodeStream(is, null,
-							options);
+//					// 获取创建Bitmap的选项对象
+//					Options options = new Options();
+//					// 设置图片大小为原图片的1/2
+//					options.inJustDecodeBounds = false;
+//					if (Build.MODEL.equals("HUAWEI U9510E")) {
+//						options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//					} else {
+//						options.inPreferredConfig = Bitmap.Config.RGB_565;
+//					}
+//					options.inPurgeable = true;
+//					options.inInputShareable = true;
+//					Bitmap bitmap = BitmapFactory.decodeStream(is, null,
+//							options);
+					Bitmap bitmap = BitmapFactory.decodeStream(is);
 					if (bitmap != null) {
 						imageCache.put(url, bitmap);
 						hd.post(new DisplayImageTask(imageView,

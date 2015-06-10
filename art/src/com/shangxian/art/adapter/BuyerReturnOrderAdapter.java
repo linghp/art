@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shangxian.art.LogisticsInformationActivity;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.BuyerReturnOrderInfo;
@@ -103,11 +104,13 @@ public class BuyerReturnOrderAdapter extends
 
 		String[] orderReturnStatusValue = { "正常，不退货", "退款成功", "等待卖家审核",
 				"等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消", "退货失败" };
-		
-		// TODO: 跳转界面 -----------------------------------------------------------------------
+
+		// TODO: 跳转界面
+		// -----------------------------------------------------------------------
 
 		if (orderReturnStatus[1].equals(status)
-				|| orderReturnStatus[8].equals(status) || orderReturnStatus[6].equals(status)) {
+				|| orderReturnStatus[8].equals(status)
+				|| orderReturnStatus[6].equals(status)) {
 			changeTextViewShow(holder, "删除订单", null,
 					orderReturnStatus[8].equals(status) ? "退货失败" : "退款成功");
 			holder.tv_01.setOnClickListener(new OnClickListener() {
@@ -156,15 +159,17 @@ public class BuyerReturnOrderAdapter extends
 			holder.tv_02.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					
+					LogisticsInformationActivity.startThisActivity(mFragment,
+							buyerReturnOrderProductInfos.get(0).getId() + "",
+							position, buyerReturnOrderInfo.getReturnOrderNum());
 				}
 			});
 		} else if (orderReturnStatus[4].equals(status)) {
 			changeTextViewShow(holder, null, null, "已发货,等待卖家签收...");
 		} else if (orderReturnStatus[5].equals(status)) {
-			//changeTextViewShow(holder, null, null, tv_03_title);
-			
-			// TODO:  卖家拒绝签收  -------------------------------------------------
+			// changeTextViewShow(holder, null, null, tv_03_title);
+
+			// TODO: 卖家拒绝签收 -------------------------------------------------
 		}
 
 		return convertView;

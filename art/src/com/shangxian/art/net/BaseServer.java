@@ -113,6 +113,8 @@ public class BaseServer {
 	protected static final String NET_BUYER_RETURN_LIST = HOST + "orderReturnList/";
 	protected static final String NET_BUYER_DELETE_REUTRN_ORDER = HOST + "deleteBuyerOrder/"; //买家删除订单
 	protected static final String NET_BUYER_CANCEL_RETURN_ORDER = HOST + "orderCancelReturnList/"; //买家删除订单
+	protected static final String NET_BUYER_GET_EXPRESS = HOST + "order/distribution"; //获取快递信息
+	protected static final String NET_BUYER_RETURN_EXPRESS = HOST + "orderBuyerReturn/"; //上传退货信息
 
 	/**
 	 * 账户与安全  设置  

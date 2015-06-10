@@ -38,7 +38,7 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 	private BuyerReturnOrderInfo buyerReturnOrderInfo;
 	private List<BuyerReturnOrderProductInfo> buyerReturnOrderProductInfos = new ArrayList<BuyerReturnOrderProductInfo>();
 	private ImageLoader loader;
-	
+
 	String[] orderState = { "NORMAL", "SUCCESS", "WAIT_SELLER_APPROVAL",
 			"WAIT_BUYER_DELIVERY", "WAIT_COMPLETED", "COMPLETED_REFUSE",
 			"ORDER_RETURNING", "CANCELLED", "FAILURE" };
@@ -160,7 +160,8 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 		final String status = buyerReturnOrderInfo.getStatus();
 		if (status.equals(orderState[2])) {
 			changeTextViewShow("取消退货", null, "等待卖家审核");
-			tv_01.setOnClickListener(new View.OnClickListener() { // CURRENT: //														// 待审核...
+			tv_01.setOnClickListener(new View.OnClickListener() { // CURRENT: //
+																	// // 待审核...
 				@Override
 				public void onClick(View v) {
 					new BuyerOrderServer().toBuyerCancelReturnOrder(
@@ -205,12 +206,20 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 			});
 		} else if (status.equals(orderState[3])) {// CURRENT: 等待买家发货...
 			changeTextViewShow(null, "退货", "卖家审核通过");
+			tv_02.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					LogisticsInformationActivity.startThisActivity(mAc,
+							buyerReturnOrderProductInfos.get(0).getId() + "",
+							index, buyerReturnOrderInfo.getReturnOrderNum());
+				}
+			});
 		} else if (orderState[4].equals(status)) {// CURRENT: 买家已发货,等待卖家签收...
 			changeTextViewShow(null, null, "等待卖家签收...");
 		} else if (orderState[5].equals(status)) {
-			//changeTextViewShow(null, null, "已拒绝签收");
-			// TODO: 
-		} 
+			// changeTextViewShow(null, null, "已拒绝签收");
+			// TODO:
+		}
 	}
 
 	/**
@@ -240,5 +249,10 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 		bundle.putInt("res", index);
 		setResult(RESULT_OK, new Intent().putExtras(bundle));
 		super.finish();
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		finish();
 	}
 }
