@@ -293,7 +293,7 @@ public class TagViewPager extends RelativeLayout implements
 		case MotionEvent.ACTION_DOWN:
 			mDownX = event.getX();
 			mDownY = event.getY();
-		//	getParent().requestDisallowInterceptTouchEvent(true); // 按下时禁止父View拦截Touch事件
+			//getParent().requestDisallowInterceptTouchEvent(true); // 按下时禁止父View拦截Touch事件
 			break;
 		case MotionEvent.ACTION_MOVE:
 //			if (Math.abs(event.getX() - mDownX) > Math.abs(event.getY()
@@ -304,7 +304,7 @@ public class TagViewPager extends RelativeLayout implements
 			break;
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:
-			getParent().requestDisallowInterceptTouchEvent(false);
+			//getParent().requestDisallowInterceptTouchEvent(false);
 			break;
 		}
 		return super.dispatchTouchEvent(event);
