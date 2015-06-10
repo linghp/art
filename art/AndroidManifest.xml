@@ -556,6 +556,10 @@
          <activity
             android:name=".PhotoViewPagerActivity">
         </activity>
+        <activity
+            android:name=".CommentToActivity"
+            android:label="@string/mine_goodscomment" >
+        </activity>
     </application>
 
 </manifest>
