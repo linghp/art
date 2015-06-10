@@ -160,7 +160,7 @@ public class BuyerReturnOrderAdapter extends
 				}
 			});
 		} else if (orderReturnStatus[4].equals(status)) {
-			changeTextViewShow(holder, null, null, "买家已发货,等待卖家签收");
+			changeTextViewShow(holder, null, null, "已发货,等待卖家签收...");
 		} else if (orderReturnStatus[5].equals(status)) {
 			//changeTextViewShow(holder, null, null, tv_03_title);
 			
