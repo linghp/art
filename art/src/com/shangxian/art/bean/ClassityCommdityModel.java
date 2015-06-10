@@ -15,7 +15,7 @@ public class ClassityCommdityModel implements Serializable{
 	@Expose
 	private String name;
 	@Expose
-	private String reDetails;
+	private String reDetails="";
 	@Expose
 	private Integer originalPrice;
 	@Expose

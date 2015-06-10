@@ -26,8 +26,6 @@ public class ClassityCommodiyAdp1 extends EntityAdapter<ClassityCommdityModel>{
 			List<ClassityCommdityModel> dates) {
 		super(mAc, layoutId, dates);
 		mAbImageLoader = AbImageLoader.newInstance(mAc);
-		mAbImageLoader.setMaxWidth(100);
-		mAbImageLoader.setMaxHeight(100);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
