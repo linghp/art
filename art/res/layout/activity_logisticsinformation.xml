@@ -27,45 +27,95 @@
         android:background="@color/txt_white"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:onClick="pullClick"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="8dp"
+        android:gravity="center_vertical" >
 
         <TextView
-            android:id="@+id/logisticsinfomation_tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="快递公司"
             android:textColor="@color/txt_black1"
             android:textSize="@dimen/list_summary_size" />
-
-        <EditText
-            android:id="@+id/logisticsinfomation_et1"
+<!-- 
+        <TextView
+            android:id="@+id/logistt_tv_expressCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/regist_et_bg_sel"
-            android:hint="请输入快递公司"
-            android:padding="5dp"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/pulldown"
+            android:gravity="center"
+            android:hint="请选择快递公司"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:singleLine="true"
             android:textColor="@color/txt_black1"
+            android:textColorHint="@color/main_col300_1"
             android:textSize="@dimen/list_summary_size"
-            android:visibility="visible" />
+            android:visibility="gone" /> -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/regist_et_bg_sel"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/logiste_et_expressCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="请填写快递公司"
+                android:background="@color/transparent"
+                android:padding="8dp"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size"
+                android:visibility="visible" />
+            
+            <View 
+                android:layout_width="1dp"
+                android:layout_height="20sp"
+                android:background="@color/transparentblack4"/>
+            
+            <ImageView 
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/pulldown"
+                android:scaleType="centerInside"
+                android:onClick="pullClick"/>
+        </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/logisticsinfomation_linear1"
+        android:background="@color/transparentblack5" />
 
     <LinearLayout
         android:id="@+id/logisticsinfomation_linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logisticsinfomation_linear1"
+        android:layout_below="@id/line"
         android:background="@color/txt_white"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp" >
 
         <TextView
-            android:id="@+id/logisticsinfomation_tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="运单编号"
@@ -73,52 +123,58 @@
             android:textSize="@dimen/list_summary_size" />
 
         <EditText
-            android:id="@+id/logisticsinfomation_et2"
+            android:id="@+id/logiste_et_expressNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/regist_et_bg_sel"
-            android:hint="请输入运单编号"
-            android:padding="5dp"
+            android:hint="请填写运单编号"
+            android:padding="8dp"
             android:textColor="@color/txt_black1"
             android:textSize="@dimen/list_summary_size"
             android:visibility="visible" />
     </LinearLayout>
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
-       android:layout_marginBottom="50dp"
-       android:gravity="bottom"
-       android:orientation="horizontal"
-       android:padding="15dp" >
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/logisticsinfomation_linear2"
+        android:background="@color/txt_white" />
 
-       <TextView
-           android:id="@+id/logisticsinfomation_tv4"
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:layout_weight="1"
-           android:background="@drawable/soge_not_bg_sel"
-           android:gravity="center_horizontal"
-           android:onClick="doClick"
-           android:padding="8dp"
-           android:text="取消"
-           android:textColor="@color/txt_whitetoback"
-           android:textSize="@dimen/list_title_size" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:background="@color/txt_white"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="8dp" >
 
-       <TextView
-           android:id="@+id/logisticsinfomation_tv5"
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="10dp"
-           android:layout_weight="1"
-           android:background="@drawable/soge_next_bg_sel"
-           android:gravity="center_horizontal"
-           android:padding="8dp"
-           android:text="提交"
-           android:textColor="@color/txt_whitetoback"
-           android:textSize="@dimen/list_title_size" />
-   </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/soge_not_bg_sel"
+            android:gravity="center_horizontal"
+            android:onClick="backClick"
+            android:padding="8dp"
+            android:text="取消"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/soge_next_bg_sel"
+            android:gravity="center_horizontal"
+            android:onClick="submitClick"
+            android:padding="8dp"
+            android:text="提交"
+            android:textColor="@color/txt_whitetoback"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
 
 </RelativeLayout>

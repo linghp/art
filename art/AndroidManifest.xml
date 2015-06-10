@@ -182,6 +182,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".IandEDetailsContentActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".MyConcernActivity"
             android:label="@string/title_activity_mine" >
         </activity>
@@ -549,7 +553,7 @@
             android:name=".BuyerReturnOrderActivity"
             android:label="@string/title_activity_buyer_order" >
         </activity>
-        <activity
+         <activity
             android:name=".PhotoViewPagerActivity">
         </activity>
     </application>

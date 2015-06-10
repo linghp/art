@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -8,20 +9,20 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ab.image.AbImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.MyOrderDetailBean;
-import com.shangxian.art.bean.MyOrderDetailBean.ReceiverInfo;
-import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
+import com.shangxian.art.bean.BuyerReturnOrderInfo;
+import com.shangxian.art.bean.BuyerReturnOrderProductInfo;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
-import com.shangxian.art.net.SellerOrderServer;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.TopView;
 
 public class BuyerReturnOrderDetailsActivity extends BaseActivity {
@@ -29,73 +30,50 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 	private LinearLayout ll_goodsitem_add;
 	private ImageView iv_logo;
 	private TextView tv_storeName, tv_01, tv_02;
-	private final static String INTENTDATAKEY = "ordernumber";
+	private final static String INT_BUYER_RETURN_ORDER = "ordernumber";
 	private final static String INT_INDEX = "int_index";
-	private MyOrderDetailBean myOrderDetailBean;
-	private MyOrderItem myOrderItem;
-	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
 	private TextView tv_03;
 	private int index;
+
+	private BuyerReturnOrderInfo buyerReturnOrderInfo;
+	private List<BuyerReturnOrderProductInfo> buyerReturnOrderProductInfos = new ArrayList<BuyerReturnOrderProductInfo>();
+	private ImageLoader loader;
+
+	String[] orderState = { "NORMAL", "SUCCESS", "WAIT_SELLER_APPROVAL",
+			"WAIT_BUYER_DELIVERY", "WAIT_COMPLETED", "COMPLETED_REFUSE",
+			"ORDER_RETURNING", "CANCELLED", "FAILURE" };
+	String[] orderReturnStatus = { "正常，不退货", "退款成功", "等待卖家审核", "等待买家退货",
+			"买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消", "退货失败" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_order_details);
-		initViews();
+		loader = ImageLoader.getInstance();
 		initData();
+		initViews();
 	}
 
-	public static void startThisActivity_MyOrder(String ordernumber, int index,
+	public static void startThisActivity_MyOrder(
+			BuyerReturnOrderInfo buyerReturnOrderInfo, int index,
 			Fragment fragment) {
-		Intent intent = new Intent(fragment.getActivity(), BuyerReturnOrderDetailsActivity.class);
-		intent.putExtra(INTENTDATAKEY, ordernumber);
-		intent.putExtra(INT_INDEX, index);
+		Intent intent = new Intent(fragment.getActivity(),
+				BuyerReturnOrderDetailsActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(INT_BUYER_RETURN_ORDER, buyerReturnOrderInfo);
+		bundle.putInt(INT_INDEX, index);
 		fragment.startActivityForResult(intent, 1);
 	}
 
 	private void initData() {
-		String ordernumber = getIntent().getStringExtra(INTENTDATAKEY);
-		index = getIntent().getIntExtra(INT_INDEX, -1);
-		if (!TextUtils.isEmpty(ordernumber)) {
-			myOrderItem = new MyOrderItem();
-			myOrderItem.setOrderNumber(ordernumber);
-			SellerOrderServer.toGetSellerOrderDetails(ordernumber,
-					new CallBack() {
-						@Override
-						public void onSimpleSuccess(Object res) {
-							if (res != null) {
-								myOrderDetailBean = (MyOrderDetailBean) res;
-								myOrderItem.setOrderNumber(myOrderDetailBean
-										.getOrderNumber());
-								myOrderItem.setTotalPrice(myOrderDetailBean
-										.getTotalPrice());
-								myOrderItem.setStatus(myOrderDetailBean
-										.getStatus());
-								updateViews();
-							} else {
-								myToast("请求失败");
-							}
-						}
-
-						@Override
-						public void onSimpleFailure(int code) {
-							myToast("http请求失败");
-						}
-					});
+		if (getIntent().getSerializableExtra(INT_BUYER_RETURN_ORDER) != null) {
+			buyerReturnOrderInfo = (BuyerReturnOrderInfo) getIntent()
+					.getSerializableExtra(INT_BUYER_RETURN_ORDER);
+			index = getIntent().getIntExtra(INT_INDEX, -1);
+		} else {
+			myToast("请求数据异常");
+			finish();
 		}
-
-		mAbImageLoader_logo = AbImageLoader.newInstance(this);
-		mAbImageLoader_goodsImg = AbImageLoader.newInstance(this);
-		mAbImageLoader_logo.setMaxWidth(100);
-		mAbImageLoader_logo.setMaxHeight(100);
-		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
-		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
-		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
-		mAbImageLoader_goodsImg.setMaxWidth(100);
-		mAbImageLoader_goodsImg.setMaxHeight(100);
-		mAbImageLoader_goodsImg.setLoadingImage(R.drawable.image_loading);
-		mAbImageLoader_goodsImg.setErrorImage(R.drawable.image_error);
-		mAbImageLoader_goodsImg.setEmptyImage(R.drawable.image_empty);
 	}
 
 	private void initViews() {
@@ -114,46 +92,47 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 		tv_02 = (TextView) findViewById(R.id.tv_02);
 		tv_03 = (TextView) findViewById(R.id.tv_03);
 		findViewById(R.id.tv_noaddress).setVisibility(View.GONE);
+
+		updateViews();
 	}
 
 	private void updateViews() {
 		((TextView) findViewById(R.id.tv_header_01))
-				.setText(MyOrderActivity.map_orderStateValue
-						.get(myOrderDetailBean.getStatus()));
-		((TextView) findViewById(R.id.tv_header_02)).setText(String.format(
-				getString(R.string.text_order_Price),
-				CommonUtil.priceConversion(myOrderDetailBean.getTotalPrice())));
-		((TextView) findViewById(R.id.tv_header_03))
-				.setText(String.format(getString(R.string.text_shippingPrice),
-						CommonUtil.priceConversion(myOrderDetailBean
-								.getShippingFee())));
+				.setText(SellerOrderActivity.map_orderReturnStatusValue
+						.get(buyerReturnOrderInfo.getStatus()));
+		((TextView) findViewById(R.id.tv_header_02))
+				.setText(String.format(getString(R.string.text_order_Price),
+						CommonUtil.priceConversion(buyerReturnOrderInfo
+								.getTotalPrice())));
+		((TextView) findViewById(R.id.tv_header_03)).setVisibility(View.GONE);
 
-		ReceiverInfo receiverInfo = myOrderDetailBean.getReceiverInfo();
 		((TextView) findViewById(R.id.tv_receiver)).setText(String.format(
 				getString(R.string.text_receiver),
-				receiverInfo.getReceiverName()));
+				buyerReturnOrderInfo.getReceiverName()));
 		((TextView) findViewById(R.id.tv_address)).setText(String.format(
 				getString(R.string.text_receiver_address),
-				receiverInfo.getDeliveryAddress()));
-		((TextView) findViewById(R.id.tv_phone)).setText(receiverInfo
-				.getReceiverTel());
+				buyerReturnOrderInfo.getBuyerAddress()));
+		((TextView) findViewById(R.id.tv_phone)).setText(buyerReturnOrderInfo
+				.getBuyerName());
 
-		((TextView) findViewById(R.id.tv_tradetime)).setText(String.format(
-				getString(R.string.text_tradetime),
-				myOrderDetailBean.getOrderedDate()));
+		((TextView) findViewById(R.id.tv_tradetime)).setText("退货时间:"
+				+ buyerReturnOrderInfo.getReturnOrderTime());
 
 		// 动态添加商品
-		((TextView) findViewById(R.id.car_storename)).setText(myOrderDetailBean
-				.getSellerName());
+		((TextView) findViewById(R.id.car_storename))
+				.setText(buyerReturnOrderInfo.getShippingName());
 		// mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
 		// + myOrderItem.getShopLogo());
 		ll_goodsitem_add.removeAllViews();
-		List<OrderItem> orderItems = myOrderDetailBean.getOrderItems();
-		for (OrderItem OrderItem : orderItems) {
+		buyerReturnOrderProductInfos = buyerReturnOrderInfo
+				.getReturnOrderItemDtos();
+		for (int i = 0; i < buyerReturnOrderProductInfos.size(); i++) {
+			BuyerReturnOrderProductInfo sellerRefoundOrderProductInfo = buyerReturnOrderProductInfos
+					.get(i);
 			View child = inflater.inflate(R.layout.list_car_goods_item, null);
 			ll_goodsitem_add.addView(child);
 			((TextView) child.findViewById(R.id.car_goodsname))
-					.setText(OrderItem.getName());
+					.setText(sellerRefoundOrderProductInfo.getName());
 			// holder.goodsImg = (ImageView)
 			// child.findViewById(R.id.car_goodsimg);
 			// holder.goodsAttr = (TextView)
@@ -161,79 +140,85 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child
 					.findViewById(R.id.car_goods_price);
-			// final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
-			goodsNum.setText("x" + OrderItem.getQuantity());
+			goodsNum.setText("x" + sellerRefoundOrderProductInfo.getQuantity());
 			goodsPrice.setText("￥"
-					+ CommonUtil.priceConversion(OrderItem.getPrice()));
-			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
-			mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
-					+ OrderItem.getProductSacle());
+					+ CommonUtil.priceConversion(sellerRefoundOrderProductInfo
+							.getNowPrice()));
+
+			((CheckBox) child.findViewById(R.id.check_goods))
+					.setVisibility(View.GONE);
+
+			ImageLoader.getInstance().displayImage(
+					Constant.BASEURL
+							+ sellerRefoundOrderProductInfo.getProductSacle(),
+					goodsImg, Options.getListOptions(false));
 		}
 
 		// 根据状态显示按钮
-		String status = myOrderDetailBean.getStatus();
-		String[] orderState = { "PENDING", "SUBMITTED", "PAID", "SHIPPING",
-				"COMPLETED", "ORDER_RETURNING", "EVALUATE", "CANCELLED" };
-		// public static String[] orderStateValues = { "未提交", "待付款", "待发货",
-		// "待收货",
-		// "已完成交易", "退款中", "待评价", "已取消交易" };
-		if (status.equals(orderState[1])) {
-			changeTextViewShow(null, null, "等待买家付款...");
-		} else if (status.equals(orderState[2])) {
-			changeTextViewShow(null, "发货", null);
-			tv_02.setOnClickListener(new OnClickListener() {
+		final String status = buyerReturnOrderInfo.getStatus();
+		if (status.equals(orderState[2])) {
+			changeTextViewShow("取消退货", null, "等待卖家审核");
+			tv_01.setOnClickListener(new View.OnClickListener() { // CURRENT: //
+																	// // 待审核...
 				@Override
 				public void onClick(View v) {
-					SellerOrderServer.toSellerSendOrder(myOrderItem.getOrderId() + "", new CallBack() {
-						@Override
-						public void onSimpleSuccess(Object res) {
-							myToast("发货成功");
-							setResult(RESULT_OK, new Intent().putExtra("res", index));
-							finish();
-						}
-						
-						@Override
-						public void onSimpleFailure(int code) {
-							myToast("发货失败");
-						}
-					});
-				}
-			});
-		} else if (status.equals(orderState[3])) {
-			changeTextViewShow(null, null, "等待买家收货...");
-		} else if (status.equals(orderState[4])) {
-			changeTextViewShow(null, null, "已完成交易");
-		} else if (status.equals(orderState[6])) {
-			changeTextViewShow(null, null, "等待买家评价...");
-		} else if (status.equals(orderState[7])) {
-			changeTextViewShow("删除订单", null, null);
-			tv_03.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					SellerOrderServer.toDelSellerOrder(myOrderItem,
+					new BuyerOrderServer().toBuyerCancelReturnOrder(
+							buyerReturnOrderProductInfos.get(0).getId() + "",
+							buyerReturnOrderInfo.getReturnOrderNum(),
 							new CallBack() {
 								@Override
 								public void onSimpleSuccess(Object res) {
-									String r = (String) res;
-									boolean isSuccess = Boolean.valueOf(r);
-									if (isSuccess) {
-										myToast("删除成功");
-										setResult(RESULT_OK, new Intent().putExtra("res", index));
-										finish();	
-									} else {
-										myToast("删除失败");
-									}
+									myToast("取消成功");
+									finish();
 								}
 
 								@Override
 								public void onSimpleFailure(int code) {
-									myToast("删除失败");
+									myToast("取消退货失败");
 								}
 							});
 				}
 			});
+		} else if (status.equals(orderState[1]) || orderState[8].equals(status)
+				|| orderState[6].equals(status)) { // CURRENT: 退货成功...
+			changeTextViewShow("删除订单", null,
+					orderState[8].equals(status) ? "退货失败" : "退款成功");
+			tv_01.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					new BuyerOrderServer().toBuyerDeleteReturnOrder(
+							buyerReturnOrderInfo.getReturnOrderNum(),
+							new CallBack() {
+								@Override
+								public void onSimpleSuccess(Object res) {
+									CommonUtil.toast("删除成功");
+									finish();
+								}
+
+								@Override
+								public void onSimpleFailure(int code) {
+									CommonUtil.toast("删除失败");
+								}
+							});
+				}
+			});
+		} else if (status.equals(orderState[3])) {// CURRENT: 等待买家发货...
+			changeTextViewShow(null, "退货", "卖家审核通过");
+			tv_02.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					LogisticsInformationActivity.startThisActivity(mAc,
+							buyerReturnOrderProductInfos.get(0).getId() + "",
+							index, buyerReturnOrderInfo.getReturnOrderNum());
+				}
+			});
+		} else if (orderState[4].equals(status)) {// CURRENT: 买家已发货,等待卖家签收...
+			changeTextViewShow(null, null, "等待卖家签收...");
+		} else if (orderState[5].equals(status)) {
+			// changeTextViewShow(null, null, "已拒绝签收");
+			// TODO:
 		}
 	}
 
@@ -256,5 +241,18 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 				: View.GONE);
 		tv_03.setVisibility(!TextUtils.isEmpty(tv_03_title) ? View.VISIBLE
 				: View.GONE);
+	}
+
+	@Override
+	public void finish() {
+		Bundle bundle = new Bundle();
+		bundle.putInt("res", index);
+		setResult(RESULT_OK, new Intent().putExtras(bundle));
+		super.finish();
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		finish();
 	}
 }
