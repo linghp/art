@@ -3,13 +3,15 @@ package com.shangxian.art;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.view.TopView;
 
 public class LogisticsInformationActivity extends BaseActivity{
 
-	private EditText et_company,et_number;//公司、快递单号
+	private EditText et_number;//快递单号
+	private TextView tv_gongsi;//快递公司
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
