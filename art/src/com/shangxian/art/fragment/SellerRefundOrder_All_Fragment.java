@@ -25,7 +25,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.MyOrderDetailsActivity;
 import com.shangxian.art.R;
-import com.shangxian.art.RefundOrderActivity;
 import com.shangxian.art.SellerOrderReturnDetailsActivity;
 import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.adapter.MyRefundOrderListAdapter;

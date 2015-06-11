@@ -335,6 +335,9 @@
         </activity>
 
         <!-- sharesdk -->
+        
+        <activity
+            android:name="com.shangxian.art.LogisticsInformationActivity"></activity>
 
 -
         <activity

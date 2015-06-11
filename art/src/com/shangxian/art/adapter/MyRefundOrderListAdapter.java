@@ -17,20 +17,13 @@ import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.shangxian.art.MyOrderActivity;
-import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
-import com.shangxian.art.RefundOrderActivity;
-import com.shangxian.art.ReimburseActivity;
-import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.ProductItemDto;
+import com.shangxian.art.SellerOrderActivity;
 import com.shangxian.art.bean.RefundOrderInfo;
 import com.shangxian.art.bean.RefundOrderInfo_all;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.MyOrderServer;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.utils.CommonUtil;
 
 public class MyRefundOrderListAdapter extends BaseAdapter /*implements*/
@@ -129,7 +122,7 @@ public class MyRefundOrderListAdapter extends BaseAdapter /*implements*/
 		}
 
 		if (myOrderItem != null) {
-			holder.storeName.setText(RefundOrderActivity.map_orderStateValue.get(myOrderItem.getStatus()));
+			holder.storeName.setText(SellerOrderActivity.map_orderStateValue.get(myOrderItem.getStatus()));
 			holder.tv_state.setText(MyOrderActivity.map_orderStateValue
 					.get(myOrderItem.getStatus()));
 			holder.tv_allquantity.setText("共" + myOrderItem.getTotalQuantity()
@@ -140,7 +133,7 @@ public class MyRefundOrderListAdapter extends BaseAdapter /*implements*/
 //					+ myOrderItem.getProductSacle());
 
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
-			if (myOrderItem.getStatus().equals(RefundOrderActivity.orderState[0])) {// 待付款
+			if (myOrderItem.getStatus().equals(SellerOrderActivity.orderState[0])) {// 待付款
 				holder.tv_01.setText("取消退货");
 				holder.tv_02.setText("付款");
 				holder.tv_01.setVisibility(View.VISIBLE);

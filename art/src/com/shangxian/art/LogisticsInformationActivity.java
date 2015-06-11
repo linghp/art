@@ -14,6 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private String productId;
 	private String orderNum;
 	private int itemIndex;
+	private LinearLayout ll_view;
 
 	private static final String INT_productId = "int_productId";
 	private static final String INT_orderNum = "int_orderNum";
@@ -99,6 +101,8 @@ public class LogisticsInformationActivity extends BaseActivity {
 
 		et_expressCompany = (EditText) findViewById(R.id.logiste_et_expressCompany);
 		et_expressNum = (EditText) findViewById(R.id.logiste_et_expressNum);
+		
+		ll_view = (LinearLayout) findViewById(R.id.logisticsinfomation_linear);
 
 		loadPopupWindowData();
 		initPupowindow();
@@ -135,9 +139,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private void initPupowindow() {
 		popuView = getLayoutInflater().inflate(
 				R.layout.activity_logisticsinformation_popu, null);
-		popuWindowHelper = new PopupWindowHelper(popuView,
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-
+		
 		lv_express = (ListView) popuView.findViewById(R.id.logistl_lv_info);
 		expresAdapter = new ExpressPopuAdapter(mAc,
 				R.layout.activity_logisticsinformation_popu_list, expressInfos);
@@ -150,6 +152,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 					expresAdapter.changeIndex(position);
 					et_expressCompany.setText(expressInfos.get(position)
 							.getName());
+					popuWindowHelper.dismiss();
 				}
 			}
 		});
@@ -162,6 +165,9 @@ public class LogisticsInformationActivity extends BaseActivity {
 	 */
 	public void pullClick(View v) {
 		if (expressInfos != null && expressInfos.size() > 0) {
+			popuWindowHelper = new PopupWindowHelper(popuView,
+					ll_view.getWidth() + CommonUtil.dip2px(mAc, 16), LayoutParams.WRAP_CONTENT, true);
+
 			popuWindowHelper.showAsDropDown(et_expressCompany,
 					CommonUtil.dip2px(mAc, 8), 0);
 		} else {

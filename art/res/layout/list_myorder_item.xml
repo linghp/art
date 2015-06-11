@@ -119,6 +119,7 @@
             android:layout_height="wrap_content"
             android:text="等待买家付款..."
             android:textColor="@color/main_col500_1"
+            android:layout_marginLeft="16dp"
             android:visibility="gone" />
     </LinearLayout>
 
