@@ -12,7 +12,7 @@ import com.shangxian.art.bean.ExpressInfo;
 
 public class ExpressPopuAdapter extends EntityAdapter<ExpressInfo> {
 
-	private int index;
+	private int index = -1;
 	
 	public ExpressPopuAdapter(Activity mAc, int layoutId,
 			List<ExpressInfo> dates) {
@@ -35,9 +35,9 @@ public class ExpressPopuAdapter extends EntityAdapter<ExpressInfo> {
 			title = (TextView) convertView.getTag();
 		}
 		if (position == index) {
-			convertView.setSelected(true);
+			title.setSelected(true);
 		} else {
-			convertView.setSelected(false);
+			title.setSelected(false);
 		}
 		title.setText(getItem(position).getName());
 		return convertView;

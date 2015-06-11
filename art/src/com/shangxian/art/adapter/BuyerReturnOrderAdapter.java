@@ -166,12 +166,39 @@ public class BuyerReturnOrderAdapter extends
 			});
 		} else if (orderReturnStatus[4].equals(status)) {
 			changeTextViewShow(holder, null, null, "已发货,等待卖家签收...");
-		} else if (orderReturnStatus[5].equals(status)) {
-			// changeTextViewShow(holder, null, null, tv_03_title);
+		} else if (orderReturnStatus[5].equals(status)) { // TODO: 卖家拒绝签收 ----------
+			changeTextViewShow(holder, "删除订单", null, "卖家拒绝签收");
+			new BuyerOrderServer().toBuyerDeleteReturnOrder(
+					buyerReturnOrderInfo.getReturnOrderNum(),
+					new CallBack() {
+						@Override
+						public void onSimpleSuccess(Object res) {
+							CommonUtil.toast("删除成功");
+							removeDataItem(position);
+						}
 
-			// TODO: 卖家拒绝签收 -------------------------------------------------
+						@Override
+						public void onSimpleFailure(int code) {
+							CommonUtil.toast("删除失败");
+						}
+					});
+		} else if (orderReturnStatus[7].equals(status)) {
+			changeTextViewShow(holder, "删除订单", null, "订单已取消");
+			new BuyerOrderServer().toBuyerDeleteReturnOrder(
+					buyerReturnOrderInfo.getReturnOrderNum(),
+					new CallBack() {
+						@Override
+						public void onSimpleSuccess(Object res) {
+							CommonUtil.toast("删除成功");
+							removeDataItem(position);
+						}
+
+						@Override
+						public void onSimpleFailure(int code) {
+							CommonUtil.toast("删除失败");
+						}
+					});
 		}
-
 		return convertView;
 	}
 

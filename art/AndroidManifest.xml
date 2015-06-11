@@ -335,6 +335,9 @@
         </activity>
 
         <!-- sharesdk -->
+        
+        <activity
+            android:name="com.shangxian.art.LogisticsInformationActivity"></activity>
 
 -
         <activity
@@ -555,6 +558,10 @@
         </activity>
          <activity
             android:name=".PhotoViewPagerActivity">
+        </activity>
+        <activity
+            android:name=".CommentToActivity"
+            android:label="@string/mine_goodscomment" >
         </activity>
     </application>
 

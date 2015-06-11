@@ -223,7 +223,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		case R.id.ll_my_item8:
 			// 退货/售后
 			if (HttpUtils.checkNetWork(this) && isLoginAndToLogin()) {
-				startActivity(new Intent(this, RefundOrderActivity.class));
+				startActivity(new Intent(this, BuyerReturnOrderActivity.class));
 			}
 			break;
 		case R.id.ll_my_item9:
