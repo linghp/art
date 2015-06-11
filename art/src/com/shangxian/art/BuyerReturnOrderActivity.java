@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.fragment.BuyerReturnOrderFragment;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
@@ -32,6 +33,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 	private TextView tv_tab4;
 	private ViewPager vp_content;
 	private List<Fragment> fragments = new ArrayList<Fragment>();
+	private FragmentViewPagerAdp adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +77,18 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 			"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
 
 	private void initDatas() {
-		tv_tab2.setText("待付款");
-		tv_tab3.setText("待发货");
-		tv_tab4.setText("待收货");
-		topView.setTitle("发货订单管理");
+		tv_tab2.setText("待审核");
+		tv_tab3.setText("待退货");
+		tv_tab4.setText("待退款");
+		topView.setTitle("退货订单管理");
 		fragments.add(0, new BuyerReturnOrderFragment(""));
 		fragments.add(1, new BuyerReturnOrderFragment(orderReturnStatus[2]));
 		fragments.add(2, new BuyerReturnOrderFragment(orderReturnStatus[3]));
 		fragments.add(3, new BuyerReturnOrderFragment(orderReturnStatus[4]));
+		
+		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
+				fragments);
+		vp_content.setAdapter(adapter);
 	}
 
 	private void initViews() {
