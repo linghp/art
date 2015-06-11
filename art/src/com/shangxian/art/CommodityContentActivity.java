@@ -80,11 +80,11 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 	// 判断是否收藏
 	//boolean iscollection = false;
 
-	private AbHttpUtil httpUtil = null;
+	private AbHttpUtil httpUtil;
 	private CommodityContentModel model;
 	private String shopid;
 
-	private AbImageLoader mAbImageLoader = null;
+	private AbImageLoader mAbImageLoader;
 
 	RatingBar ratingbar;
 	float rating = 0;
@@ -265,11 +265,19 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 
 								@Override
 								public View getView(ViewGroup container,
-										int position) {
+									final	int position) {
 									ImageView iv = new ImageView(
 											CommodityContentActivity.this);
-
-									iv.setScaleType(ImageView.ScaleType.FIT_XY);
+									//iv.setTag(position);
+									iv.setOnClickListener(new OnClickListener() {
+										
+										@Override
+										public void onClick(View v) {
+											if(imgList.size()>0)
+												PhotoViewPagerActivity.startThisActivity(CommodityContentActivity.this, imgList,position);
+										}
+									});
+									iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 									LayoutParams layoutParams = viewPager
 											.getLayoutParams();
 									layoutParams.width = CommonUtil
@@ -434,12 +442,6 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			CommonUtil.gotoActivityWithData(mAc,
 					LocationActivity.class, bundle, false);
 			break;
-			//		case R.id.text_one:
-			//			setBackground_slide(0);
-			//			break;
-			//		case R.id.text_two:
-			//			setBackground_slide(1);
-			//			break;
 		default:
 			break;
 		}

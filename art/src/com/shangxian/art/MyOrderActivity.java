@@ -67,6 +67,7 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,
 
 	// @"未提交",@"PENDING",@"待付款",@"SUBMITTED",@"待发货",@"PAID",@"待收货",@"SHIPPING",@"已完成交易"
 	// ,@"COMPLETED",@"退款中",@"ORDER_RETURNING",@"待评价",@"EVALUATE",@"已取消交易",@"CANCELLED"
+	//EVALUATE_COMPLETED,//已评价
 	// 0 1 2 3 4 5 6 7
 	public static String[] orderState = { "PENDING", "SUBMITTED", "PAID",
 			"SHIPPING", "COMPLETED", "ORDER_RETURNING", "EVALUATE", "CANCELLED" };
