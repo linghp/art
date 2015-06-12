@@ -9,6 +9,8 @@ import org.apache.http.message.BasicNameValuePair;
 import com.ab.http.AbRequestParams;
 import com.baidu.mapapi.map.Text;
 import com.google.gson.reflect.TypeToken;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.utils.MyLogger;
@@ -76,5 +78,24 @@ public class PayServer extends BaseServer {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 扫码支付
+	 * 
+	 * @param pass
+	 * @param toid
+	 * @param amount
+	 * @param type
+	 * @param call
+	 */
+	public void toPayment(String pass, int toid, int amount, String type,CallBack call){
+		RequestParams params = getParams();
+		params.addBodyParameter("from", curUser.getId() + "");
+		params.addBodyParameter("to", toid + "");
+		params.addBodyParameter("amount", amount + "");
+		params.addBodyParameter("payPassword", pass);
+		params.addBodyParameter("payType", type);
+		toXUtils(HttpMethod.POST, NET_PAYMENT, params, null, call);
 	}
 }
