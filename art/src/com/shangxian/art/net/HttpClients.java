@@ -380,94 +380,9 @@ public class HttpClients {
 	}
 	
 	
-	// post请求
-		public static void toPost1(final String baseUrl,
-				final List<BasicNameValuePair> pairs, final HttpCilentListener l) {
-			final Handler postHandler = new Handler() {
-				public void handleMessage(android.os.Message msg) {
-					int what = msg.what;
-					switch (what) {
-					case FAIL:
-						l.onResponse(null);
-						break;
-					case SUCCESS:
-						String res = (String) msg.obj;
-						l.onResponse(res);
-						break;
-					}
-				};
-			};
-			// final String user_token = ParkApplication.getPrefer().getString(
-			// Constants.USER_TOKEN, null);
-			final int user_token = LocalUserInfo.getInstance(mContext).getInt(
-					Constant.PRE_USER_ID, Integer.MIN_VALUE);
-			final HttpClient httpClient = getHttpClient();
-//			httpClient.getParams().setParameter(Http, "UTF-8");
-			executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						HttpPost postMethod = new HttpPost(baseUrl);
-//						 postMethod.setHeader("Content-Type", "charset=UTF-8");
-						if (user_token != Integer.MIN_VALUE) {
-							postMethod.addHeader("User-Token", user_token + "");
-						}
-						/*  StringEntity se = new StringEntity(new UrlEncodedFormEntity(pairs, "utf-8"));
-						  postMethod.setEntity(se);
-						 */
-						postMethod.setEntity(new UrlEncodedFormEntity(pairs,
-								"UTF-8"));
-						// 将参数填入POST
-						// Entity中
-						// 执行POST方法
-						HttpResponse response = httpClient.execute(postMethod);
-						MyLogger.i("respone:" + response);
-						if (TextUtils.isEmpty(response.toString())
-								|| response.getStatusLine().getStatusCode() != 200) {
-							int s = response.getStatusLine().getStatusCode();
-							MyLogger.i("Code():"
-									+ response.getStatusLine().getStatusCode());
-							if (!TextUtils.isEmpty(response.toString())) {
-								MyLogger.i("respone:" + response.toString());
-							}
-							postHandler.sendEmptyMessage(FAIL);
-							return;
-						} else {
-							StringBuilder builder = new StringBuilder();
-							BufferedReader bufferedReader2 = new BufferedReader(
-									new InputStreamReader(response.getEntity()
-											.getContent()));
-							String str2 = "";
-							for (String s = bufferedReader2.readLine(); s != null; s = bufferedReader2
-									.readLine()) {
-								builder.append(s);
-							}
-							Message message = Message.obtain(postHandler, SUCCESS,
-									builder.toString());
-							postHandler.sendMessage(message);
-							MyLogger.d("response: =================="
-									+ builder.toString() + "==================");
-						}
-					} catch (UnsupportedEncodingException e) {
-						postHandler.sendEmptyMessage(FAIL);
-						e.printStackTrace();
-					} catch (ClientProtocolException e) {
-						postHandler.sendEmptyMessage(FAIL);
-						e.printStackTrace();
-					} catch (IOException e) {
-						postHandler.sendEmptyMessage(FAIL);
-						e.printStackTrace();
-					}catch (Exception e) {
-						postHandler.sendEmptyMessage(FAIL);
-						e.printStackTrace();
-					}
-				}
-			});
-		}
 	// 得到HttpClient
 	public static HttpClient getHttpClient() {
 		HttpParams mHttpParams = new BasicHttpParams();
-//		HttpProtocolParams.setContentCharset(mHttpParams, "utf-8");
 		//HttpProtocolParams.setContentCharset(mHttpParams, "utf-8");
 		// 设置网络链接超时
 		// 即:Set the timeout in milliseconds until a connection is established.

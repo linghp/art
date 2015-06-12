@@ -53,7 +53,7 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 	Boolean isRevise = false;// 是否为修改地址
 	String id = "-1";
 	DeliveryAddressModel deliveryAddressModel;
-	List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+	//List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,19 +153,19 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 					// model.setId(id);
 
 					// 添加地址
-					String url = "";
-					// url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-					url = BaseServer.HOST + "receivingAddOrUpdate";
-
-					params.add(new BasicNameValuePair("receiverName",
-							receiverName));
-					params.add(new BasicNameValuePair("receiverTel",
-							receiverTel));
-					params.add(new BasicNameValuePair("deliveryAddress",
-							deliveryAddress));
-					params.add(new BasicNameValuePair("isDefault", "false"));
-					params.add(new BasicNameValuePair("id", id));
-					MyLogger.i(">>>>>>>>>>保存收货地址的数据：" + params.toString());
+//					String url = "";
+//					// url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+//					url = BaseServer.HOST + "receivingAddOrUpdate";
+//
+//					params.add(new BasicNameValuePair("receiverName",
+//							receiverName));
+//					params.add(new BasicNameValuePair("receiverTel",
+//							receiverTel));
+//					params.add(new BasicNameValuePair("deliveryAddress",
+//							deliveryAddress));
+//					params.add(new BasicNameValuePair("isDefault", "false"));
+//					params.add(new BasicNameValuePair("id", id));
+//					MyLogger.i(">>>>>>>>>>保存收货地址的数据：" + params.toString());
 					new AccountSecurityServer().toAddDeliveiveAdress(id,
 							receiverName, receiverTel, deliveryAddress,
 							false + "", new CallBack() {
@@ -198,53 +198,4 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 		});
 	}
 
-	// 添加地址
-	private void refreshTask(String url) {
-		HttpClients.toPost1(url, params, new HttpCilentListener() {
-
-			@Override
-			public void onResponse(String res) {
-				MyLogger.i(">>>>>>>>>>>>保存地址" + res);
-				JSONObject jsonObject;
-				try {
-					jsonObject = new JSONObject(res);
-
-					String result_code = jsonObject.getString("result_code");
-					if (result_code.equals("200")) {
-						// JSONArray str=jsonObject.getJSONArray("result");
-						myToast("保存地址成功");
-						finish();
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					myToast("保存地址失败");
-				}
-
-			}
-		});
-
-		/*
-		 * Gson gson = new Gson(); String json = gson.toJson(model);
-		 * System.out.println("<<<<<<<<<<<<<<json"+json);
-		 */
-		/*
-		 * HttpClients.postDo(url, json, new HttpCilentListener() {
-		 * 
-		 * @Override public void onResponse(String res) { JSONObject jsonObject;
-		 * try { jsonObject = new JSONObject(res);
-		 * System.out.println(">>>>>>>>>>>>"+res); String result_code =
-		 * jsonObject.getString("result_code"); if (result_code.equals("200")) {
-		 * // JSONArray str=jsonObject.getJSONArray("result");
-		 * myToast("保存地址成功"); finish(); } } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); myToast("保存地址失败"); }
-		 * } });
-		 */
-	}
-	/*
-	 * //修改地址 private void refreshTask1(String url1) {
-	 * System.out.println(">>>>>>>>>>>>>修改地址");
-	 * 
-	 * }
-	 */
 }

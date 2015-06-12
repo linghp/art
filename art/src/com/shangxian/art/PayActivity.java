@@ -385,7 +385,7 @@ public class PayActivity extends BaseActivity {
 								new OnPaymentListener() {
 									@Override
 									public void onPayment(String res) {
-										if (res.equals("true")) {
+										if (res!=null&&res.equals("true")) {
 											myToast("支付成功");
 											finish();
 										} else {
