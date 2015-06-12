@@ -14,23 +14,35 @@ import android.widget.TextView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
-import com.shangxian.art.adapter.NearlyAdapter;
+import com.shangxian.art.adapter.CommentToAdapter;
+import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.MyOrderItem;
+import com.shangxian.art.bean.MyOrderItem_all;
+import com.shangxian.art.net.CommentServer;
+import com.shangxian.art.net.CommentServer.OnHttpResultListener;
 import com.shangxian.art.net.HttpUtils;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
+/**
+ * @Description 商品评价（我的待评价已评价）
+ * @author ling
+ * @date 2015年6月11日
+ */
 public class CommentToActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener {
+		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener,OnHttpResultListener {
 
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mListView = null;
 	private View ll_nonetwork, loading_big;
 
 	private List<MyOrderItem> mOrderItems = new ArrayList<MyOrderItem>();
-	private NearlyAdapter myListViewAdapter = null;
+	private CommentToAdapter myListViewAdapter = null;
 
 	private TextView tv_reload;
+	private int skip = 0; // 从第skip+1条开始查询
+	private final int pageSize = 10;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +64,7 @@ public class CommentToActivity extends BaseActivity implements
 		// list = new ArrayList<Map<String, Object>>();
 
 		// 使用自定义的Adapter
-//		myListViewAdapter = new NearlyAdapter(mAc, R.layout.nearly_item,
-//				stat != null && !stat.isNull() ? stat.getContents() : null);
+		myListViewAdapter = new CommentToAdapter(this, mOrderItems);
 		mListView.setAdapter(myListViewAdapter);
 
 		// item被点击事件
@@ -72,6 +83,7 @@ public class CommentToActivity extends BaseActivity implements
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
 		mListView = (ListView) this.findViewById(R.id.mListView);
+		mListView.setVisibility(View.GONE);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
 		
@@ -98,10 +110,10 @@ public class CommentToActivity extends BaseActivity implements
 	private int curPage = 0;
 	private void refreshTask() {
 		if (!HttpUtils.checkNetWork(mAc) ) {
-			mListView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
+		CommentServer.toPostMyComment(this);
 //		new NearlyServer().toNearlyShop(lng, 10000, 0,
 //				new OnNearlyShopListener() {
 //					@Override
@@ -151,6 +163,7 @@ public class CommentToActivity extends BaseActivity implements
 //						}
 //					}
 //				});
+		mAbPullToRefreshView.onFooterLoadFinish();
 	}
 
 	@Override
@@ -173,6 +186,29 @@ public class CommentToActivity extends BaseActivity implements
 			break;
 		default:
 			break;
+		}
+	}
+
+	@Override
+	public void onHttpResult(MyOrderItem_all myOrderItemAll) {
+		loading_big.setVisibility(View.GONE);
+		
+		mAbPullToRefreshView.onHeaderRefreshFinish();
+		if (myOrderItemAll != null) {
+			// MyLogger.i(myOrderItemAll.toString());
+			//changeUi(UiModel.showData);
+			mListView.setVisibility(View.VISIBLE);
+			skip = 0;
+			mOrderItems.clear();
+			if (myOrderItemAll.getData() != null) {
+				mOrderItems.addAll(myOrderItemAll.getData());
+				// MyLogger.i(myOrderItemAll.getData().toString());
+				myListViewAdapter.notifyDataSetChanged();
+			}
+			//updateView_nocontent();
+		} else {
+			CommonUtil.toast("网络错误", this);
+			//changeUi(UiModel.noData_noProduct);
 		}
 	}
 

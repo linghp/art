@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +22,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 
 import android.content.Context;
 import android.os.Handler;
@@ -32,7 +30,6 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.net.BaseServer.OnHttpListener;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 
@@ -385,6 +382,7 @@ public class HttpClients {
 	// 得到HttpClient
 	public static HttpClient getHttpClient() {
 		HttpParams mHttpParams = new BasicHttpParams();
+		//HttpProtocolParams.setContentCharset(mHttpParams, "utf-8");
 		// 设置网络链接超时
 		// 即:Set the timeout in milliseconds until a connection is established.
 		HttpConnectionParams.setConnectionTimeout(mHttpParams, 20 * 1000);

@@ -20,6 +20,7 @@ import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.ReimburseActivity;
+import com.shangxian.art.ReviewsProductActivity;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
@@ -32,19 +33,17 @@ import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
-public class MyOrderListAdapter extends BaseAdapter implements
+public class CommentToAdapter extends BaseAdapter implements
 		OnHttpResultCancelOrderListener, OnHttpResultDelOrderListener,
 		OnHttpResultConfirmGoodsListener {
 	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
 	private Context context;
-	private Fragment fragment;
 	private LayoutInflater inflater;
 	private List<MyOrderItem> myOrderItems = new ArrayList<MyOrderItem>();
 
-	public MyOrderListAdapter(Context contex, Fragment fragment,
+	public CommentToAdapter(Context contex,
 			List<MyOrderItem> myOrderItems) {
 		this.context = contex;
-		this.fragment = fragment;
 		this.myOrderItems = myOrderItems;
 		inflater = LayoutInflater.from(contex);
 		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
@@ -157,122 +156,25 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						+ myOrderItem.getShopLogo());
 
 				// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
-				if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[1])) {// 待付款
-					holder.tv_01.setText("取消订单");
-					holder.tv_02.setText("付款");
-					holder.tv_01.setVisibility(View.VISIBLE);
-					holder.tv_02.setVisibility(View.VISIBLE);
-					holder.tv_01.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// CommonUtil.toast("click", context);
-							MyOrderServer.toCancelOrder(myOrderItem,
-									MyOrderListAdapter.this);
-						}
-					});
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// CommonUtil.toast("click", context);
-							List<String> ordernumber = new ArrayList<String>();
-							ordernumber.add(myOrderItem.getOrderNumber());
-							((MyOrder_All_Fragment) fragment)
-									.setMyOrderItem(myOrderItem);
-							PayActivity.startThisActivity_Fragment(ordernumber,
-									CommonUtil.priceConversion(myOrderItem
-											.getTotalPrice()),
-									(Activity) context, fragment);
-						}
-					});
-				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[7])) {// 已取消交易
-					holder.tv_01.setText("删除订单");
-					holder.tv_01.setVisibility(View.VISIBLE);
-					holder.tv_02.setVisibility(View.GONE);
-					holder.tv_01.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// CommonUtil.toast("click", context);
-							MyOrderServer.toDelOrder(myOrderItem,
-									MyOrderListAdapter.this);
-						}
-					});
-				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[2])) {// 待发货
-					if (isRefundStatus) {
-						holder.tv_02.setText("退款中");
-						holder.tv_02.setEnabled(false);
-					} else {
-						holder.tv_02.setText("退款");
-						holder.tv_02.setEnabled(true);
-					}
+				 if (myOrderItem.getStatus().equals(
+						MyOrderActivity.orderState[6])) {// 待评价
+					holder.tv_02.setText("评价");
 					holder.tv_01.setVisibility(View.GONE);
 					holder.tv_02.setVisibility(View.VISIBLE);
 					holder.tv_02.setOnClickListener(new View.OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							// CommonUtil.toast("click", context);
-							((MyOrder_All_Fragment) fragment)
-									.setMyOrderItem(myOrderItem);
-							ReimburseActivity.startThisActivity_Fragment(false,
-									myOrderItem.getOrderNumber(), myOrderItem
-											.getProductItemDtos().get(0)
-											.getId(), 0f, context, fragment);
+							ReviewsProductActivity.startThisActivity(myOrderItem.getOrderNumber(),myOrderItem.getBuyerId()+"",myOrderItem.getProductItemDtos(), context);
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[3])) {// 待收货
-					holder.tv_02.setText("确认收货");
+						MyOrderActivity.orderState[8])) {// 已评价
+					holder.tv_02.setEnabled(false);
+					holder.tv_02.setText("已评价");
 					holder.tv_01.setVisibility(View.GONE);
 					holder.tv_02.setVisibility(View.VISIBLE);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							MyOrderServer.toConfirmGoods(myOrderItem,
-									MyOrderListAdapter.this);
-						}
-					});
-				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
-								MyOrderActivity.orderState[6])) {// 已完成交易或者待评价
-					if (isRefundStatus) {
-						holder.tv_02.setText("退货中");
-						holder.tv_02.setEnabled(false);
-					} else {
-						holder.tv_02.setText("退货");
-						holder.tv_02.setEnabled(true);
-					}
-					holder.tv_01.setVisibility(View.GONE);
-					holder.tv_02.setVisibility(View.VISIBLE);
-					holder.tv_02.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							((MyOrder_All_Fragment) fragment)
-									.setMyOrderItem(myOrderItem);
-							ReimburseActivity.startThisActivity_Fragment(true,
-									myOrderItem.getOrderNumber(), myOrderItem
-											.getProductItemDtos().get(0)
-											.getId(), 0f, context, fragment);
-						}
-					});
 				} 
-
-			}
-
-			// 为了点击退款/退货进入详情界面
-			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])
-					|| myOrderItem.getStatus().equals(
-							MyOrderActivity.orderState[4])) {
-				holder.tv_02.setClickable(false);
-			} else {
-				holder.tv_02.setClickable(true);
 			}
 		}
 		return convertView;

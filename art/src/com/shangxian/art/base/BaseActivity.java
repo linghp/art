@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
+import com.ab.image.AbImageLoader;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.shangxian.art.LoginActivity;
 import com.shangxian.art.R;
@@ -41,6 +42,7 @@ public class BaseActivity extends AbActivity{
 	private ImageView iv_nodata;
 	protected TextView tv_nodata;
 	protected AbPullToRefreshView mAbPullToRefreshView;
+	protected AbImageLoader mAbImageLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,11 @@ public class BaseActivity extends AbActivity{
 		httpUtil.setTimeout(Constant.timeOut);
 		AliPayBase.initContext(this);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		mAbImageLoader = AbImageLoader.newInstance(this);
+		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader.setErrorImage(R.drawable.image_error);
+		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
 	}
 
 	@Override
