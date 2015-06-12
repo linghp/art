@@ -132,6 +132,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		SellerOrderServer.toGetSellerOrder(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				if (res != null) {
 					all = (MyOrderItem_all) res;
 					if (!all.isNull()) {
@@ -149,6 +150,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 
 			@Override
 			public void onSimpleFailure(int code) {
+				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				changeUi(UiModel.noData_noProduct);
 			}
 		});
@@ -246,6 +248,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 				all == null ? "0" : all.getStart() + "", new CallBack() {
 					@Override
 					public void onSimpleSuccess(Object res) {
+						mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 						if (res != null) {
 							all = (MyOrderItem_all) res;
 							if (!all.isNull()) {
@@ -265,7 +268,9 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 
 					@Override
 					public void onSimpleFailure(int code) {
-						// changeUi(UiModel.noData_noProduct);
+						mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
+						CommonUtil.toast("加载失败");
+//						changeUi(UiModel.noData_noProduct);
 					}
 				});
 	}
