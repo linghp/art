@@ -27,6 +27,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 发货订单的退货订单
+ * @author Administrator
+ *
+ */
 public class SellerOrderActivity extends BaseActivity implements
 		OnClickListener {
 	private LinearLayout ll_tab1;
