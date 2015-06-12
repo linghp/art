@@ -10,13 +10,12 @@ import android.widget.ListView;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import com.shangxian.art.BuyerReturnOrderActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.BuyerReturnOrderAdapter;
 import com.shangxian.art.bean.BuyerReturnOrderStat;
-import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
-import com.shangxian.art.net.RegisterServer.OnHttpResultListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
@@ -34,6 +33,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	private BuyerReturnOrderAdapter buyerReturnOrderAdapter;
 	private String status;
 	private BuyerReturnOrderStat buyerReturnOrderStat;
+	private BuyerOrderServer server;
 
 	public void setNeedFresh(boolean isNeedFresh) {
 	}
@@ -71,20 +71,20 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 			Bundle savedInstanceState) {
 		initMainView();
 		initListener();
+		server = new BuyerOrderServer();
 		return view;
 	}
-/*	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
-		super.onViewCreated(view, savedInstanceState);
-	}*/
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		if (status.equals("")) {
-			getData();
+			((BuyerReturnOrderActivity) getActivity()).initDateFirstFragment();
+
 		}
 	}
+
 
 	private void initListener() {
 		// 设置监听器
@@ -92,9 +92,12 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		mAbPullToRefreshView.setOnFooterLoadListener(this);
 	}
 
+	
+	
 	public void getData() {
 		MyLogger.i("status:》》》》》》》》》》 " + status);
-		new BuyerOrderServer().toBuyerReturnList(status, "0", new CallBack() {
+		
+		server.toBuyerReturnList(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
 				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
@@ -139,7 +142,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	}
 
 	private void loadMore() {
-		new BuyerOrderServer().toBuyerReturnList(status, buyerReturnOrderStat.getStart() + "", new CallBack() {
+		server.toBuyerReturnList(status, buyerReturnOrderStat.getStart() + "", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
 				mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多

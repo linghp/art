@@ -104,6 +104,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 2){//卖家
 			ll_loginbefore.setVisibility(View.GONE);
 			ll_loginafter.setVisibility(View.VISIBLE);
+			findViewById(R.id.ll_seller).setVisibility(View.VISIBLE);
 			tv_username = (TextView) findViewById(R.id.tv_username);
 			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
 		}else {//未登录
@@ -116,7 +117,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		// changeview();
+		changeview();
 	}
 
 	@Override
