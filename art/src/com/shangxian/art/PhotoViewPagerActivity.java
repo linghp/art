@@ -18,6 +18,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.alipay.apmobilesecuritysdk.face.APSecuritySdk.InitResultListener;
@@ -33,6 +34,7 @@ import com.shangxian.art.view.HackyViewPager;
 public class PhotoViewPagerActivity extends BaseActivity {
 	
 	private ViewPager mViewPager;
+	private TextView textView;
 	private MenuItem menuLockItem;
 	private List<String> photos;
 	private int position;
@@ -40,15 +42,17 @@ public class PhotoViewPagerActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_viewpager);
+//        textView = (TextView) findViewById(R.id.viewparent_tv);
         mViewPager = (HackyViewPager) findViewById(R.id.view_pager);
 		setContentView(mViewPager);
 		initData();
 		if(photos!=null&&photos.size()>0){
 		mViewPager.setAdapter(new SamplePagerAdapter(photos,this));
 		mViewPager.setCurrentItem(position);
+//		textView.setText(""+position);
 		}
 	}
-    
+
 	private void initData() {
 		Intent intent = getIntent();
 		photos=(List<String>) intent.getSerializableExtra("photos");
@@ -62,6 +66,7 @@ public class PhotoViewPagerActivity extends BaseActivity {
 		intent.putExtra("position",position);
 		context.startActivity(intent);
 	}
+	
 
 	static class SamplePagerAdapter extends PagerAdapter {
 		private List<String> photos;
