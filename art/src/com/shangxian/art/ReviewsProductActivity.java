@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -28,12 +27,14 @@ import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
+import com.lidroid.xutils.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.constant.Global;
 import com.shangxian.art.photochooser.ImagePagerActivity;
 import com.shangxian.art.photochooser.PhotoOperate;
 import com.shangxian.art.photochooser.PhotoPickActivity;
@@ -50,7 +51,7 @@ public class ReviewsProductActivity extends BaseActivity {
 	private LinearLayout ll_view;
 	private float ratings = 0;
 	
-	private String ordernumber, userid,comment;
+	private String ordernumber, userid,comment,productId;
 	private List<ProductItemDto> productItemDtos;
 
 	private int ratingValue=-1;
@@ -144,6 +145,9 @@ public class ReviewsProductActivity extends BaseActivity {
 		ordernumber=intent.getStringExtra("ordernumber");
 		userid=intent.getStringExtra("userid");
 		productItemDtos=(List<ProductItemDto>) intent.getSerializableExtra("productItemDtos");
+		if(productItemDtos!=null){
+			productId=productItemDtos.get(0).getId();
+		}
 	}
 
 	private void initListener() {
@@ -168,7 +172,8 @@ public class ReviewsProductActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
              if(match()){
-            	 
+            	 showProgressDialog(true);
+            	 uploadComment();
              }
 			}
 		});
@@ -213,6 +218,22 @@ public class ReviewsProductActivity extends BaseActivity {
 		}
 		return true;
 	}
+	
+    void uploadComment() {
+    	RequestParams params = new RequestParams();
+        for (PhotoData item : mData) {
+        	  File file = new File(Global.getPath(this, item.uri));
+              params.addBodyParameter("photo", file);
+        }
+        
+        params.addQueryStringParameter("comment", comment);
+        params.addQueryStringParameter("anonymous", isAnonymous+"");
+        params.addQueryStringParameter("salesOrderId", ordernumber);
+        params.addQueryStringParameter("productId", productId);
+        params.addQueryStringParameter("userId", userid);
+        params.addQueryStringParameter("level", ratingValue+"");
+    }
+
 
 	//-------------------------------以下为添加图片模块----------------------------------------------
 	public static final int PHOTO_MAX_COUNT = 6;

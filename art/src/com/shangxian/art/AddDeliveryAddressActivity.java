@@ -53,7 +53,7 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 	Boolean isRevise = false;// 是否为修改地址
 	String id = "-1";
 	DeliveryAddressModel deliveryAddressModel;
-	List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+	//List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,19 +153,19 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 					// model.setId(id);
 
 					// 添加地址
-					String url = "";
-					// url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-					url = BaseServer.HOST + "receivingAddOrUpdate";
-
-					params.add(new BasicNameValuePair("receiverName",
-							receiverName));
-					params.add(new BasicNameValuePair("receiverTel",
-							receiverTel));
-					params.add(new BasicNameValuePair("deliveryAddress",
-							deliveryAddress));
-					params.add(new BasicNameValuePair("isDefault", "false"));
-					params.add(new BasicNameValuePair("id", id));
-					MyLogger.i(">>>>>>>>>>保存收货地址的数据：" + params.toString());
+//					String url = "";
+//					// url = Constant.BASEURL + Constant.CONTENT + "/receiving";
+//					url = BaseServer.HOST + "receivingAddOrUpdate";
+//
+//					params.add(new BasicNameValuePair("receiverName",
+//							receiverName));
+//					params.add(new BasicNameValuePair("receiverTel",
+//							receiverTel));
+//					params.add(new BasicNameValuePair("deliveryAddress",
+//							deliveryAddress));
+//					params.add(new BasicNameValuePair("isDefault", "false"));
+//					params.add(new BasicNameValuePair("id", id));
+//					MyLogger.i(">>>>>>>>>>保存收货地址的数据：" + params.toString());
 					new AccountSecurityServer().toAddDeliveiveAdress(id,
 							receiverName, receiverTel, deliveryAddress,
 							false + "", new CallBack() {

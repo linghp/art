@@ -1,6 +1,7 @@
 package com.shangxian.art.base;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -25,6 +26,7 @@ import com.shangxian.art.SafetyVerificationActivity;
 import com.shangxian.art.alipays.AliPayBase;
 import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.dialog.RefreshDialog;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
@@ -43,6 +45,7 @@ public class BaseActivity extends AbActivity{
 	protected TextView tv_nodata;
 	protected AbPullToRefreshView mAbPullToRefreshView;
 	protected AbImageLoader mAbImageLoader;
+	protected  Dialog refreshDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class BaseActivity extends AbActivity{
 		httpUtil.setTimeout(Constant.timeOut);
 		AliPayBase.initContext(this);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		refreshDialog=new RefreshDialog(this, 0); 
 		
 		mAbImageLoader = AbImageLoader.newInstance(this);
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
@@ -216,4 +220,12 @@ public class BaseActivity extends AbActivity{
 		}
 		return curUserInfo.isPayed();
 	}
+	
+    protected void showProgressDialog(boolean show) {
+        if (show) {
+            refreshDialog.show();
+        } else {
+        	refreshDialog.hide();
+        }
+    }
 }

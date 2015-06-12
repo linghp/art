@@ -17,8 +17,8 @@
         android:background="@drawable/delivery_address" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -26,8 +26,8 @@
 
         <RelativeLayout
             android:id="@+id/rl_address2"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/tv_receiver"
@@ -47,11 +47,13 @@
 
             <TextView
                 android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/tv_receiver"
                 android:layout_marginTop="5dp"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:text="收货地址:"
                 android:textSize="@dimen/list_summary_size" />
         </RelativeLayout>
