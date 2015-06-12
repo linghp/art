@@ -13,8 +13,10 @@ import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.shangxian.art.R;
 import com.shangxian.art.adapter.BuyerReturnOrderAdapter;
 import com.shangxian.art.bean.BuyerReturnOrderStat;
+import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
+import com.shangxian.art.net.RegisterServer.OnHttpResultListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
@@ -24,7 +26,7 @@ import com.shangxian.art.utils.MyLogger;
  * @author libo
  */
 public class BuyerReturnOrderFragment extends BaseFragment implements
-OnHeaderRefreshListener, OnFooterLoadListener {
+OnHeaderRefreshListener, OnFooterLoadListener{
 	private View view;
 	private ListView listView;
 	private AbPullToRefreshView mAbPullToRefreshView;
@@ -67,11 +69,21 @@ OnHeaderRefreshListener, OnFooterLoadListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		MyLogger.i("");
 		initMainView();
 		initListener();
-		getData();
 		return view;
+	}
+/*	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+		super.onViewCreated(view, savedInstanceState);
+	}*/
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (status.equals("")) {
+			getData();
+		}
 	}
 
 	private void initListener() {
@@ -81,10 +93,11 @@ OnHeaderRefreshListener, OnFooterLoadListener {
 	}
 
 	public void getData() {
-		MyLogger.i("status: " + status);
+		MyLogger.i("status:》》》》》》》》》》 " + status);
 		new BuyerOrderServer().toBuyerReturnList(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				MyLogger.i("退款订单>>>>>>>>"+res);
 
 				if (res != null) {
@@ -103,6 +116,7 @@ OnHeaderRefreshListener, OnFooterLoadListener {
 			}
 			@Override
 			public void onSimpleFailure(int code) {
+				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				changeUi(UiModel.noData_noProduct);
 			}
 		});
@@ -116,25 +130,22 @@ OnHeaderRefreshListener, OnFooterLoadListener {
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView view) {
-
 		getData();
-		mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 	}
 
 	@Override
 	public void onFooterLoad(AbPullToRefreshView view) {
-
 		loadMore();
-		mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 	}
 
 	private void loadMore() {
 		new BuyerOrderServer().toBuyerReturnList(status, buyerReturnOrderStat.getStart() + "", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 				MyLogger.i("退款订单>>>>>>>>"+res);
-
 				if (res != null) {
+
 					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
 					if (!buyerReturnOrderStat.isNull()) {
 						if (buyerReturnOrderAdapter != null) {
@@ -151,6 +162,7 @@ OnHeaderRefreshListener, OnFooterLoadListener {
 			}
 			@Override
 			public void onSimpleFailure(int code) {
+				mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 				CommonUtil.toast("加载失败");
 			}
 		});

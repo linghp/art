@@ -8,6 +8,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.BuyerReturnOrderStat;
 import com.shangxian.art.bean.ExpressInfo;
+import com.shangxian.art.utils.MyLogger;
 
 /**
  * 买家联网操作
@@ -22,12 +23,13 @@ public class BuyerOrderServer extends BaseServer {
 	 * @param skip
 	 * @param back
 	 */
-	public void toBuyerReturnList(String status, String skip, CallBack back) {
+	public synchronized void toBuyerReturnList(String status, String skip, CallBack back) {
 		RequestParams params = getParams();
 		params.addBodyParameter("skip", skip);
 		params.addBodyParameter("pageSize", "10");
 		Type type = new TypeToken<BuyerReturnOrderStat>() {
 		}.getType();
+		MyLogger.i("退货订单请求地址："+NET_BUYER_RETURN_LIST + status);
 		toXUtils(HttpMethod.POST, NET_BUYER_RETURN_LIST + status, params, type,
 				back);
 	}
