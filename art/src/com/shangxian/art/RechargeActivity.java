@@ -104,7 +104,7 @@ public class RechargeActivity extends BaseActivity implements OnPayListener{
 
 	@Override
 	public void onSuccess(String res) {
-		
+		//MyLogger.i(res);
 	}
 
 	@Override

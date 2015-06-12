@@ -1,5 +1,8 @@
 package com.shangxian.art.alipays;
 
+import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
+
 /**
  * 支付宝支付接口
  * 
@@ -61,7 +64,9 @@ public class AliPayServer extends AliPayBase{
 	 */
 	public static void toRecharge(String good_name, String good_det,
 			String good_price, OnPayListener l){
-		String order = AliPayBuilder.createAliPayOrder(getOutTradeNo(), good_name, good_det, good_price).toSign();
+		String order_id="R"+CommonUtil.getUUID();
+		MyLogger.i(order_id);
+		String order = AliPayBuilder.createAliPayOrder(order_id, good_name, good_det, good_price).toSign();
 		pay(order, l);
 	}
 	
