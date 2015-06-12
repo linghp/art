@@ -239,7 +239,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[4])) {// 已完成交易
+						MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
+								MyOrderActivity.orderState[6])) {// 已完成交易或者待评价
 					if (isRefundStatus) {
 						holder.tv_02.setText("退货中");
 						holder.tv_02.setEnabled(false);
@@ -261,7 +262,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 											.getId(), 0f, context, fragment);
 						}
 					});
-				}
+				} 
 
 			}
 

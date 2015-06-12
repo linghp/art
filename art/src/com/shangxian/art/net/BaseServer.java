@@ -51,7 +51,7 @@ public class BaseServer {
 	// "http://192.168.0.116:8888/art/api/";
 //	 public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
-//	 public static final String HOST = "http://192.168.0.186:8888/art/api/";
+ //public static final String HOST = "http://192.168.0.199:8888/art/api/";
 
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
@@ -74,7 +74,8 @@ public class BaseServer {
 	protected static final String NET_SELLER_ORDERDETAILS = HOST + "sellerorderdails/";// 订单详情 
 	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
 	protected static final String NET_FILTER = HOST+"product/find";//分类筛选
-	//protected static final String NET_FILTER = "http://192.168.0.165:8888/art/api/product/find";//分类筛选
+	protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
+	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
 	
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
@@ -101,8 +102,8 @@ public class BaseServer {
 	public static final String NET_FOLLOW_SHOP_LIST = HOST + "aats?type=shop"; // 获取商铺关注列表
 
 	protected static final String NET_UPLOAD_IMG = HOST + "user/uploadPhoto"; // 上传图片
-	protected static final String NET_SOGO_REGIST_CODE = HOST + "user/captcha/"; // 商铺入驻验证码
-	protected static final String NET_SOGO_REGIST = HOST + "user/registration"; // 商铺入驻
+	protected static final String NET_SOGO_REGIST_CODE = HOST + "captcha/"; // 商铺入驻验证码
+	protected static final String NET_SOGO_REGIST = HOST + "regist/shop"; // 商铺入驻
 	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
 
 	public static final String NET_MYORDER_BACK_LIST = HOST
@@ -545,6 +546,8 @@ public class BaseServer {
 				new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException e, String msg) {
+						e.printStackTrace();
+						MyLogger.i(msg);
 						call.onSimpleFailure(ERROR_CONN_EX);
 					}
 

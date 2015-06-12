@@ -66,7 +66,7 @@ public class CommodityContentModel implements Serializable {
 	}
 
 	public MyLatLng getLat(){
-		if (lag != null && lag.size() > 1) {
+		if (lag != null && lag.size() > 1&&lag.get(1)!=null&&lag.get(0)!=null) {
 			return new MyLatLng(lag.get(1), lag.get(0));
 		}
 		return null;

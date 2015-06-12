@@ -60,7 +60,7 @@ public class MainActivity extends TabActivity implements OnClickListener{
 
 		first.setIndicator(createContent("首页", R.drawable.first_tab));
 		second.setIndicator(createContent("分类", R.drawable.second_tab));
-		third.setIndicator(createContent("购物车", R.drawable.third_tab));
+		third.setIndicator(createContent("购物篮", R.drawable.third_tab));
 		fourth.setIndicator(createContent("附近", R.drawable.fourth_tab));
 		fifth.setIndicator(createContent("我的", R.drawable.fifth_tab));
 
@@ -102,7 +102,7 @@ public class MainActivity extends TabActivity implements OnClickListener{
 		} else if (tabId.equals("2")) {
 			tabhost.setCurrentTabByTag("分类");
 		} else if (tabId.equals("3")&&isLoginAndToLogin()) {
-			tabhost.setCurrentTabByTag("购物车");
+			tabhost.setCurrentTabByTag("购物篮");
 		} else if (tabId.equals("4")) {
 			tabhost.setCurrentTabByTag("活动");
 		}else if (tabId.equals("5")) {

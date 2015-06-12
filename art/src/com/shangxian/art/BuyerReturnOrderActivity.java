@@ -6,6 +6,7 @@ import java.util.List;
 import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.fragment.BuyerReturnOrderFragment;
+import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
@@ -21,6 +22,11 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 退款订单
+ * @author Administrator
+ *
+ */
 public class BuyerReturnOrderActivity extends BaseActivity implements
 		OnClickListener {
 
@@ -43,7 +49,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		initDatas();
 		Listener();
 	}
-
+	
 	private void Listener() {
 		ll_tab1.setOnClickListener(this);
 		ll_tab2.setOnClickListener(this);
@@ -58,6 +64,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 			public void onPageSelected(int position) {
 				changeUi(position);
 				curIndex = position;
+				((BuyerReturnOrderFragment)fragments.get(position)).getData();
 			}
 
 			@Override
@@ -72,6 +79,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		});
 	}
 
+	//正常、成功、等待卖方批准、等待买方交付、等待已完成、已完成REFUSE、顺序返回、已取消、失败
 	public static String[] orderReturnStatus = { "NORMAL", "SUCCESS",
 			"WAIT_SELLER_APPROVAL", "WAIT_BUYER_DELIVERY", "WAIT_COMPLETED",
 			"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
@@ -80,7 +88,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		tv_tab2.setText("待审核");
 		tv_tab3.setText("待退货");
 		tv_tab4.setText("待退款");
-		topView.setTitle("退货订单管理");
+		topView.setTitle("退款订单管理");
 		fragments.add(0, new BuyerReturnOrderFragment(""));
 		fragments.add(1, new BuyerReturnOrderFragment(orderReturnStatus[2]));
 		fragments.add(2, new BuyerReturnOrderFragment(orderReturnStatus[3]));
@@ -110,8 +118,13 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		tv_tab4 = (TextView) findViewById(R.id.tv_tab4);
 
 		vp_content = (ViewPager) findViewById(R.id.vp_content);
+//		vp_content.setOffscreenPageLimit(0);
 	}
 
+	public void initDateFirstFragment() {
+		((BuyerReturnOrderFragment) fragments.get(0)).getData();
+	}
+	
 	private void changeUi(int i) {
 		ll_tab1.setSelected(false);
 		ll_tab2.setSelected(false);
@@ -145,4 +158,6 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 	public void onClick(View v) {
 		changeUi(v.getId());
 	}
+	
+	
 }

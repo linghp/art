@@ -1,6 +1,5 @@
 package com.shangxian.art.net;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.json.JSONObject;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.CommonBean;
