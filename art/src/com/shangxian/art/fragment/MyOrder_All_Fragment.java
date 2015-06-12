@@ -141,7 +141,6 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 
 	@Override
 	public void onStart() {
-		MyLogger.i("");
 		if (myOrderItem != null) {
 			if (!TextUtils.isEmpty(returnStatus)) {// 当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
 				if (returnStatus.equals(DELETE)) {

@@ -6,6 +6,7 @@ import java.util.List;
 import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.fragment.BuyerReturnOrderFragment;
+import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
@@ -48,7 +49,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		initDatas();
 		Listener();
 	}
-
+	
 	private void Listener() {
 		ll_tab1.setOnClickListener(this);
 		ll_tab2.setOnClickListener(this);
@@ -63,6 +64,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 			public void onPageSelected(int position) {
 				changeUi(position);
 				curIndex = position;
+				((BuyerReturnOrderFragment)fragments.get(position)).getData();
 			}
 
 			@Override
@@ -116,8 +118,13 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		tv_tab4 = (TextView) findViewById(R.id.tv_tab4);
 
 		vp_content = (ViewPager) findViewById(R.id.vp_content);
+//		vp_content.setOffscreenPageLimit(0);
 	}
 
+	public void initDateFirstFragment() {
+		((BuyerReturnOrderFragment) fragments.get(0)).getData();
+	}
+	
 	private void changeUi(int i) {
 		ll_tab1.setSelected(false);
 		ll_tab2.setSelected(false);
@@ -151,4 +158,6 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 	public void onClick(View v) {
 		changeUi(v.getId());
 	}
+	
+	
 }

@@ -29,6 +29,7 @@ import com.shangxian.art.dialog.PayPasswordDialog.OnScanedListener;
 import com.shangxian.art.net.BaseServer.OnAccountSumListener;
 import com.shangxian.art.net.BaseServer.OnPayListener;
 import com.shangxian.art.net.BaseServer.OnPaymentListener;
+import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.PayServer;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.SwitchButton;
@@ -301,8 +302,9 @@ public class PayActivity extends BaseActivity {
 		intent.putExtra("totalprice", totalprice);
 		mAc.startActivityForResult(intent, 1000);
 	}
+
 	public static void startThisActivity_Fragment(List<String> orderids,
-			float totalprice, Activity mAc,Fragment fragment) {
+			float totalprice, Activity mAc, Fragment fragment) {
 		Intent intent = new Intent(mAc, PayActivity.class);
 		intent.putExtra("orderids", (Serializable) orderids);
 		intent.putExtra("totalprice", totalprice);
@@ -355,7 +357,7 @@ public class PayActivity extends BaseActivity {
 					// myToast(pass);
 					if (isOrder) {
 						PayOrderInfo info = new PayOrderInfo();
-						//info.setAmount((int) (lastMon));
+						// info.setAmount((int) (lastMon));
 						info.setOrderNumber(orderids);
 						info.setPayPassword(pass);
 						info.setPayType(type);
@@ -365,13 +367,17 @@ public class PayActivity extends BaseActivity {
 								if (res) {
 									myToast("支付成功");
 									Intent data = new Intent();
-									MyOrderItem myOrderItem=new MyOrderItem();
-									myOrderItem.setStatus(MyOrderActivity.orderState[2]);
+									MyOrderItem myOrderItem = new MyOrderItem();
+									myOrderItem
+											.setStatus(MyOrderActivity.orderState[2]);
 									MyLogger.i(myOrderItem.toString());
 									data.putExtra("pay_order_res", true);
 									data.putExtra("MyOrderItem", myOrderItem);
-									if(orderids.size()==1){
-									MyOrderDetailsActivity.startThisActivity(orderids.get(0), PayActivity.this);
+									if (orderids.size() == 1) {
+										MyOrderDetailsActivity
+												.startThisActivity(
+														orderids.get(0),
+														PayActivity.this);
 									}
 									setResult(RESULT_OK, data);
 									finish();
@@ -381,16 +387,29 @@ public class PayActivity extends BaseActivity {
 							}
 						});
 					} else {
-						PayServer.toPayment(pass, 3, (int) (lastMon), type,
-								new OnPaymentListener() {
+						// PayServer.toPayment(pass, 3, (int) (lastMon), type,
+						// new OnPaymentListener() {
+						// @Override
+						// public void onPayment(String res) {
+						// if (res.equals("true")) {
+						// myToast("支付成功");
+						// finish();
+						// } else {
+						// myToast("支付失败");
+						// }
+						// }
+						// });
+						new PayServer().toPayment(pass, 17, (int) (lastMon),
+								type, new CallBack() {
 									@Override
-									public void onPayment(String res) {
-										if (res!=null&&res.equals("true")) {
-											myToast("支付成功");
-											finish();
-										} else {
-											myToast("支付失败");
-										}
+									public void onSimpleSuccess(Object res) {
+										myToast("支付成功");
+										finish();
+									}
+
+									@Override
+									public void onSimpleFailure(int code) {
+										myToast("支付失败");
 									}
 								});
 					}
@@ -405,7 +424,7 @@ public class PayActivity extends BaseActivity {
 			myToast("请输入支付金额");
 			return false;
 		}
-		if (onlineMon > 0  && isZhi) {
+		if (onlineMon > 0 && isZhi) {
 			toAlipay(isBi || isYuan);
 			return false;
 		}
@@ -414,17 +433,15 @@ public class PayActivity extends BaseActivity {
 			return false;
 		}
 		return isPayed(true);
-		//return true;
 	}
-	
+
 	/**
 	 * 支付宝支付
 	 * 
 	 */
 	private void toAlipay(final boolean isToOkPay) {
 		if (isZhi) {
-			AliPayServer.toPay(null, "测试商品", "测试商品1",
-					onlineMon + "",
+			AliPayServer.toPay(null, "测试商品", "测试商品1", onlineMon + "",
 					new com.shangxian.art.alipays.AliPayBase.OnPayListener() {
 						@Override
 						public void onSuccess(String res) {
