@@ -563,6 +563,18 @@
             android:name=".CommentToActivity"
             android:label="@string/mine_goodscomment" >
         </activity>
+        <!-- 以下三个为图片选择器的 -->
+         <activity
+            android:name="com.shangxian.art.photochooser.PhotoPickActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".com.shangxian.art.photochooserPhotoPickDetailActivity"
+            android:label="@string/app_name" />
+         <activity
+            android:name="com.shangxian.art.photochooser.ImagePagerActivity"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

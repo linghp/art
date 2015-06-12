@@ -468,6 +468,7 @@ public class HttpClients {
 	public static HttpClient getHttpClient() {
 		HttpParams mHttpParams = new BasicHttpParams();
 //		HttpProtocolParams.setContentCharset(mHttpParams, "utf-8");
+		//HttpProtocolParams.setContentCharset(mHttpParams, "utf-8");
 		// 设置网络链接超时
 		// 即:Set the timeout in milliseconds until a connection is established.
 		HttpConnectionParams.setConnectionTimeout(mHttpParams, 20 * 1000);

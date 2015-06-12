@@ -210,8 +210,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item6:
 			// 商品评价
-			CommonUtil.gotoActivity(MineActivity.this,
-					ReviewsProductActivity.class, false);
+			startActivity(new Intent(this, CommentToActivity.class));
 			break;
 		case R.id.ll_my_item7:
 			// 账户与安全

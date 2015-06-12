@@ -35,6 +35,7 @@ public class MyOrderItem implements Serializable {
 	@Expose
 	private String createDate;
 
+	//我的评论
 	@Expose
 	private String buyerAddress;
 	@Expose
@@ -45,12 +46,26 @@ public class MyOrderItem implements Serializable {
 	private String shippingNum;
 	@Expose
 	private String shippingName;
+	@Expose
+private String shippingId;
+@Expose
+private String receiverName;
+@Expose
+private String buyerName;
+@Expose
+private Integer productPrice;
+@Expose
+private Integer shippingFee;
+@Expose
+private Integer orderId;
+@Expose
+private String orderTime;
 
 	/** 卖家 **/
-
 	@Expose
 	private Integer buyerId;
 
+	
 	public String getBuyerAddress() {
 		return buyerAddress;
 	}
@@ -61,6 +76,14 @@ public class MyOrderItem implements Serializable {
 
 	public String getOrderType() {
 		return orderType;
+	}
+
+	public String getShippingId() {
+		return shippingId;
+	}
+
+	public void setShippingId(String shippingId) {
+		this.shippingId = shippingId;
 	}
 
 	public void setOrderType(String orderType) {
@@ -146,19 +169,6 @@ public class MyOrderItem implements Serializable {
 	public void setOrderTime(String orderTime) {
 		this.orderTime = orderTime;
 	}
-
-	@Expose
-	private String receiverName;
-	@Expose
-	private String buyerName;
-	@Expose
-	private Integer productPrice;
-	@Expose
-	private Integer shippingFee;
-	@Expose
-	private Integer orderId;
-	@Expose
-	private String orderTime;
 
 	public String getAddressId() {
 		return addressId;
@@ -252,11 +262,12 @@ public class MyOrderItem implements Serializable {
 				+ ", createDate=" + createDate + ", buyerAddress="
 				+ buyerAddress + ", orderType=" + orderType
 				+ ", oneTimeStatus=" + oneTimeStatus + ", shippingNum="
-				+ shippingNum + ", shippingName=" + shippingName + ", buyerId="
-				+ buyerId + ", receiverName=" + receiverName + ", buyerName="
-				+ buyerName + ", productPrice=" + productPrice
-				+ ", shippingFee=" + shippingFee + ", orderId=" + orderId
-				+ ", orderTime=" + orderTime + "]";
+				+ shippingNum + ", shippingName=" + shippingName
+				+ ", shippingId=" + shippingId + ", receiverName="
+				+ receiverName + ", buyerName=" + buyerName + ", productPrice="
+				+ productPrice + ", shippingFee=" + shippingFee + ", orderId="
+				+ orderId + ", orderTime=" + orderTime + ", buyerId=" + buyerId
+				+ "]";
 	}
 
 	@Override
