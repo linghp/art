@@ -93,10 +93,15 @@ public class RechargeActivity extends BaseActivity implements OnPayListener{
 			@Override
 			public void onClick(View v) {
 				String money=et_money.getText().toString().trim();
-				if(!TextUtils.isEmpty(money)&&money.charAt(0)>='0'&&money.charAt(0)<='9'){
-				AliPayServer.toRecharge("充值", "充值", money, RechargeActivity.this);
-				}else{
+				int userid=getUserId();
+				if(userid>0){
+					if(!TextUtils.isEmpty(money)&&money.charAt(0)>='0'&&money.charAt(0)<='9'){
+				AliPayServer.toRecharge("充值", userid+"", money, RechargeActivity.this);
+				     }else{
 					myToast("请输入充值金额或检查格式");
+				   }
+				}else{
+					myToast("请登录");
 				}
 			}
 		});
@@ -105,6 +110,7 @@ public class RechargeActivity extends BaseActivity implements OnPayListener{
 	@Override
 	public void onSuccess(String res) {
 		//MyLogger.i(res);
+		finish();
 	}
 
 	@Override

@@ -104,9 +104,10 @@ public class MainActivity extends TabActivity implements OnClickListener{
 		} else if (tabId.equals("3")&&isLoginAndToLogin()) {
 			tabhost.setCurrentTabByTag("购物篮");
 		} else if (tabId.equals("4")) {
-			tabhost.setCurrentTabByTag("活动");
+			tabhost.setCurrentTabByTag("附近");
+			NearlyActivity.isMainClick=true;
 		}else if (tabId.equals("5")) {
-			tabhost.setCurrentTabByTag("活动");
+			tabhost.setCurrentTabByTag("我的");
 		}
 	}
 	

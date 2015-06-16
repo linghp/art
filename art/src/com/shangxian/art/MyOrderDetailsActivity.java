@@ -131,6 +131,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		((TextView)findViewById(R.id.tv_address)).setText(String.format(getString(R.string.text_receiver_address), receiverInfo.getDeliveryAddress()));
 		((TextView)findViewById(R.id.tv_phone)).setText(receiverInfo.getReceiverTel());
 		
+		((TextView)findViewById(R.id.tv_ordernumber)).setText(String.format(getString(R.string.text_ordernumber), myOrderDetailBean.getOrderNumber()));
+		((TextView)findViewById(R.id.tv_nhbnumber)).setText(String.format(getString(R.string.text_nhbnumber), myOrderDetailBean.getOrderId()));
 		((TextView)findViewById(R.id.tv_tradetime)).setText(String.format(getString(R.string.text_tradetime), myOrderDetailBean.getOrderedDate()));
 		
 		//动态添加商品
@@ -245,7 +247,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					MyOrderServer.toConfirmGoods(myOrderItem, MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(status.equals(orderState[4])){//已完成交易
+		}else if(status.equals(orderState[4])||status.equals(orderState[6])){//已完成交易
 			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
 			MyLogger.i(status_temp);
 			if(TextUtils.isEmpty(status_temp)){

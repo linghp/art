@@ -249,7 +249,6 @@ public class MyOrderServer extends BaseServer {
 			String content) {
 		MyOrderItem myOrderItem2 = null;
 		try {
-			Gson gson = new Gson();
 			myOrderItem2 = gson.fromJson(content, MyOrderItem.class);
 			MyLogger.i(myOrderItem2.toString());
 			myOrderItem.setStatus(myOrderItem2.getStatus());

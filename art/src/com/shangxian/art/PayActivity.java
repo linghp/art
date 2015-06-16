@@ -315,6 +315,12 @@ public class PayActivity extends BaseActivity {
 		switch (view.getId()) {
 		case R.id.payt_tv_cancel:
 			// myToast("放弃");
+			if (orderids.size() == 1) {
+				MyOrderDetailsActivity
+						.startThisActivity(
+								orderids.get(0),
+								PayActivity.this);
+			}
 			finish();
 			break;
 		case R.id.payt_tv_ok:

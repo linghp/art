@@ -8,20 +8,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
-import com.alipay.apmobilesecuritysdk.face.APSecuritySdk.InitResultListener;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.view.HackyViewPager;
@@ -91,6 +87,13 @@ public class PhotoViewPagerActivity extends BaseActivity {
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
 			PhotoView photoView = new PhotoView(container.getContext());
+			photoView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					((Activity)context).finish();
+				}
+			});
 			//photoView.setImageResource(sDrawables[position]);
 
 			// Now just add PhotoView to ViewPager and return it

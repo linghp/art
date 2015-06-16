@@ -83,7 +83,6 @@ public class CommentToActivity extends BaseActivity implements
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
 		mListView = (ListView) this.findViewById(R.id.mListView);
-		mListView.setVisibility(View.GONE);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
 		
@@ -143,8 +142,6 @@ public class CommentToActivity extends BaseActivity implements
 
 	public void loadMoreTask() {
 		if (!HttpUtils.checkNetWork(mAc)) {
-			mListView.setVisibility(View.GONE);
-			ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
 //		new NearlyServer().toNearlyShop(lng, 10000, ++ curPage,
@@ -179,7 +176,7 @@ public class CommentToActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_reload:
-			mListView.setVisibility(View.GONE);
+			mAbPullToRefreshView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.GONE);
 			loading_big.setVisibility(View.VISIBLE);
 			refreshTask(); 
@@ -197,7 +194,7 @@ public class CommentToActivity extends BaseActivity implements
 		if (myOrderItemAll != null) {
 			// MyLogger.i(myOrderItemAll.toString());
 			//changeUi(UiModel.showData);
-			mListView.setVisibility(View.VISIBLE);
+			mAbPullToRefreshView.setVisibility(View.VISIBLE);
 			skip = 0;
 			mOrderItems.clear();
 			if (myOrderItemAll.getData() != null) {

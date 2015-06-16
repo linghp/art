@@ -57,7 +57,7 @@ public class AliPayServer extends AliPayBase{
 	 * @param good_name
 	 *            // 商品名(不为空)
 	 * @param good_det
-	 *            // 商品详情(不为空)
+	 *            // 现在变成用户id(不为空)
 	 * @param good_price
 	 *            // 商品价格(不为空)
 	 * @param l           
@@ -67,6 +67,7 @@ public class AliPayServer extends AliPayBase{
 		String order_id="R"+CommonUtil.getUUID();
 		MyLogger.i(order_id);
 		String order = AliPayBuilder.createAliPayOrder(order_id, good_name, good_det, good_price).toSign();
+		MyLogger.i(order);
 		pay(order, l);
 	}
 	

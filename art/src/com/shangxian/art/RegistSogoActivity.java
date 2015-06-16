@@ -450,6 +450,15 @@ public class RegistSogoActivity extends BaseActivity implements OnClickListener{
 				public void onSimpleFailure(int code) {
 					myToast("注册失败，请重试");
 				}
+				
+				@Override
+				public void onDetailFailure(String res) {
+					if(!TextUtils.isEmpty(res)){
+					myToast("注册失败,"+res);
+					}else{
+						onSimpleFailure(0);	
+					}
+				}
 			});
 		}
 	}

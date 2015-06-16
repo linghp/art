@@ -185,7 +185,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 
 			@Override
 			public void onFailure(int arg0, String arg1, Throwable arg2) {
-				mListView.setVisibility(View.GONE);
+				mAbPullToRefreshView.setVisibility(View.GONE);
 				ll_nonetwork.setVisibility(View.VISIBLE);
 				loading_big.setVisibility(View.GONE);
 			}
@@ -194,7 +194,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			public void onSuccess(int arg0, String arg1) {
 				// TODO Auto-generated method stub
 				AbLogUtil.i(ShopsListActivity.this, arg1);
-				mListView.setVisibility(View.VISIBLE);
+				mAbPullToRefreshView.setVisibility(View.VISIBLE);
 				loading_big.setVisibility(View.GONE);
 				//解析
 				if (!TextUtils.isEmpty(arg1)) {
@@ -247,7 +247,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_reload:
-			mListView.setVisibility(View.GONE);
+			mAbPullToRefreshView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.GONE);
 			loading_big.setVisibility(View.VISIBLE);
 			initData();

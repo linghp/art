@@ -10,6 +10,10 @@ public abstract class CallBack extends RequestCallBack<String> {
 	
 	public abstract void onSimpleFailure(int code);
 	
+
+	public void onDetailFailure(String msg) {
+		
+	}
 	@Override
 	public void onFailure(HttpException e, String msg) {
 		

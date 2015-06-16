@@ -32,12 +32,13 @@ import com.shangxian.art.adapter.CommentListAdapter;
 import com.shangxian.art.adapter.ImageListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.fragment.CommentFragment;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
- * 评论
- * @author Administrator
+ * 商品评论（从商品详情点入）
+ * @author ling
  *
  */
 public class CommentActivity extends BaseActivity implements
@@ -49,6 +50,9 @@ public class CommentActivity extends BaseActivity implements
 	private View ll_nonetwork, loading_big;
 	private String all_str, good_str, neutral_str, bad_str;
 
+	private CommentFragment firstFragment,secondFragment,thirdFragment,fourthFragment;
+	public static String[] url_parts={"productCommentsList","getpositive","getzero","getNegative"};
+	
 	private CommentListAdapter commentListAdapter;
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -163,7 +167,14 @@ public class CommentActivity extends BaseActivity implements
 		txt_good_comment_count = (TextView) findViewById(R.id.txt_good_comment_count);
 		txt_neutral_comment_count = (TextView) findViewById(R.id.txt_neutral_comment_count);
 		txt_bad_comment_count = (TextView) findViewById(R.id.txt_bad_comment_count);
-
+		
+		firstFragment=new CommentFragment(url_parts[0]);
+		secondFragment=new CommentFragment(url_parts[1]);
+		thirdFragment=new CommentFragment(url_parts[2]);
+		fourthFragment=new CommentFragment(url_parts[3]);
+		getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, firstFragment,"firstFragment").commit();
+		//firstFragment.getData();
+		
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
@@ -259,24 +270,28 @@ public class CommentActivity extends BaseActivity implements
 			txt_good_comment_count.setSelected(false);
 			txt_neutral_comment_count.setSelected(false);
 			txt_bad_comment_count.setSelected(false);
+			getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, firstFragment,"firstFragment").commit();
 			break;
 		case R.id.txt_good_comment_count:
 			txt_all_comment_count.setSelected(false);
 			txt_good_comment_count.setSelected(true);
 			txt_neutral_comment_count.setSelected(false);
 			txt_bad_comment_count.setSelected(false);
+			getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, secondFragment,"secondFragment").commit();
 			break;
 		case R.id.txt_neutral_comment_count:
 			txt_all_comment_count.setSelected(false);
 			txt_good_comment_count.setSelected(false);
 			txt_neutral_comment_count.setSelected(true);
 			txt_bad_comment_count.setSelected(false);
+			getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, thirdFragment,"thirdFragment").commit();
 			break;
 		case R.id.txt_bad_comment_count:
 			txt_all_comment_count.setSelected(false);
 			txt_good_comment_count.setSelected(false);
 			txt_neutral_comment_count.setSelected(false);
 			txt_bad_comment_count.setSelected(true);
+			getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, fourthFragment,"fourthFragment").commit();
 			break;
 
 		default:

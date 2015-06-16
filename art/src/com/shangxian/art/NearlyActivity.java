@@ -72,6 +72,8 @@ public class NearlyActivity extends BaseActivity implements
 
 	private TextView tv_reload;
 
+	public static boolean isMainClick;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class NearlyActivity extends BaseActivity implements
 		// mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		// mAbTitleBar.setLogoLine(R.drawable.line);
 		initLoc();
-		
+
 		for (int i = 0; i < 23; i++) {
 			mPhotoList.add(Constant.BASEURL1
 					+ "content/templates/amsoft/images/rand/" + i + ".jpg");
@@ -118,8 +120,7 @@ public class NearlyActivity extends BaseActivity implements
 
 			}
 		});
-
-		refreshTask();
+			refreshTask();
 	}
 
 	private void initLoc() {
@@ -129,7 +130,7 @@ public class NearlyActivity extends BaseActivity implements
 		} else {
 			myToast("获取位置失败");
 		}
-		
+
 		try {
 			lng = ll.longitude + "," + ll.latitude;
 		} catch (Exception e) {
@@ -144,6 +145,7 @@ public class NearlyActivity extends BaseActivity implements
 		mListView = (ListView) this.findViewById(R.id.mListView);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
+		setNoData(NoDataModel.noShop, "抱歉,附近没有店铺");
 	}
 
 	@Override
@@ -204,8 +206,9 @@ public class NearlyActivity extends BaseActivity implements
 	//
 	// mAbTask.execute(item);
 	// }
-	
+
 	private int curPage = 0;
+
 	private void refreshTask() {
 		// String url = Constant.BASEURL + Constant.CONTENT +
 		// Constant.CATEGORYS;
@@ -305,7 +308,8 @@ public class NearlyActivity extends BaseActivity implements
 		//
 		// });
 		if (!HttpUtils.checkNetWork(mAc) || TextUtils.isEmpty(lng)) {
-			mListView.setVisibility(View.GONE);
+			mAbPullToRefreshView.setVisibility(View.GONE);
+			ll_loading_big.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
@@ -316,21 +320,24 @@ public class NearlyActivity extends BaseActivity implements
 						curPage = 0;
 						MyLogger.i(stat != null ? stat.toString() : "null");
 						if (stat != null && !stat.isNull()) {
+							MyLogger.i(stat.isNull() + "");
 							NearlyActivity.this.stat = stat;
 							if (myListViewAdapter != null) {
-								hideNoData();
-								mListView.setVisibility(View.VISIBLE);
+								// hideNoData();
+								mAbPullToRefreshView
+										.setVisibility(View.VISIBLE);
 								myListViewAdapter
 										.upDateList(NearlyActivity.this.stat
 												.getContents());
 								mAbPullToRefreshView.onHeaderRefreshFinish();
 							} else {
-								showNoData(NoDataModel.noShop);
+								showNoData();
 							}
 						} else {
-							mListView.setVisibility(View.GONE);
-							//ll_nonetwork.setVisibility(View.VISIBLE);
-							showNoData(NoDataModel.noShop);
+							mAbPullToRefreshView.setVisibility(View.GONE);
+							ll_loading_big.setVisibility(View.GONE);
+							ll_nonetwork.setVisibility(View.GONE);
+							showNoData();
 						}
 					}
 				});
@@ -387,11 +394,11 @@ public class NearlyActivity extends BaseActivity implements
 		//
 		// mAbTask.execute(item);
 		if (!HttpUtils.checkNetWork(mAc) || TextUtils.isEmpty(lng)) {
-			mListView.setVisibility(View.GONE);
-			ll_nonetwork.setVisibility(View.VISIBLE);
+			// mListView.setVisibility(View.GONE);
+			// ll_nonetwork.setVisibility(View.VISIBLE);
 			return;
 		}
-		new NearlyServer().toNearlyShop(lng, 10000, ++ curPage,
+		new NearlyServer().toNearlyShop(lng, 10000, ++curPage,
 				new OnNearlyShopListener() {
 					@Override
 					public void onNearly(NearlyShopStat stat) {
@@ -421,7 +428,13 @@ public class NearlyActivity extends BaseActivity implements
 		topView.setTitle("附近");
 		topView.showTitle();
 		topView.setRightBtnDrawable(R.drawable.map);
-		topView.setCenterListener((MainActivity)getParent());
+		topView.setCenterListener((MainActivity) getParent());
+		MyLogger.i(isMainClick + "");
+		if (isMainClick) {
+			ll_loading_big.setVisibility(View.VISIBLE);
+			refreshTask();
+			isMainClick = false;
+		}
 	}
 
 	public void onPause() {
@@ -432,10 +445,10 @@ public class NearlyActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_reload:
-			mListView.setVisibility(View.GONE);
+			mAbPullToRefreshView.setVisibility(View.GONE);
 			ll_nonetwork.setVisibility(View.GONE);
 			loading_big.setVisibility(View.VISIBLE);
-			refreshTask(); 
+			refreshTask();
 			break;
 		default:
 			break;

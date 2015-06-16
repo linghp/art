@@ -27,7 +27,6 @@ public class BalanceActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance);
 		initView();
-		initData();
 		initListener();
 	}
 
@@ -54,11 +53,18 @@ public class BalanceActivity extends BaseActivity {
 					System.out
 					.println("account ======================+++++++++++++++++"
 							+ info == null ? "null" : info.toString());
-					ainongbi.setText(String.format("%.2f", info.getAlb()));
-					ainongyuan.setText(String.format("%.2f", info.getAly()));
+					ainongbi.setText(String.format("%.2f", info.getAlb()/100));
+					ainongyuan.setText(String.format("%.2f", info.getAly()/100));
 				}
 			}
 		});
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		initData();
 	}
 
 	private void initListener() {

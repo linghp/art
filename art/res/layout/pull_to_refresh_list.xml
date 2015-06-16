@@ -18,7 +18,7 @@
         <com.ab.view.pullview.AbPullToRefreshView
             android:id="@+id/mPullRefreshView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"  android:visibility="gone">
 
             <ListView
                 android:id="@+id/mListView"
@@ -27,7 +27,7 @@
                 android:cacheColorHint="#00000000"
                 android:divider="@null"
                 android:dividerHeight="2dp"
-                android:visibility="gone" />
+                />
         </com.ab.view.pullview.AbPullToRefreshView>
 
         <include layout="@layout/loadind_big" />

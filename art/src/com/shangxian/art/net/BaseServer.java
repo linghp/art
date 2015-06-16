@@ -76,7 +76,7 @@ public class BaseServer {
 	protected static final String NET_FILTER = HOST+"product/find";//分类筛选
 	protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
 	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
-	
+	protected static final String NET_COMMENTCOUNT = HOST+"getLevelAll?productId=";//获取商品的评论数量个数的统计
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -410,6 +410,7 @@ public class BaseServer {
 		HttpClients.toPost(url, pairs, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
+				MyLogger.i(res);
 				if (l != null) {
 					// l.onHttp(res);
 					try {
@@ -573,6 +574,7 @@ public class BaseServer {
 					@Override
 					public void onSuccess(ResponseInfo res) {
 						String result = String.valueOf(res.result);
+						MyLogger.i(result);
 						JSONObject json;
 						int result_code = Integer.MIN_VALUE;
 						try {
@@ -580,6 +582,7 @@ public class BaseServer {
 							result_code = json.getInt("result_code");
 							if (result_code == 200) {
 								String re = json.getString("result");
+								MyLogger.i(re);
 								System.out.println("xUtils -------> code == "
 										+ result_code + " , result == "
 										+ result);
@@ -598,6 +601,9 @@ public class BaseServer {
 								} else {
 									call.onSimpleSuccess(re);
 								}
+							}else if(result_code == 400){
+								String re = json.getString("result");
+									call.onDetailFailure(re);
 							} else {
 								call.onSimpleFailure(result_code);
 							}

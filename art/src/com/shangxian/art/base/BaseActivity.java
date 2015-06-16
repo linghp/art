@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,8 +41,8 @@ public class BaseActivity extends AbActivity{
 	protected AbHttpUtil httpUtil;
 	public static UserInfo curUserInfo;
 	protected LayoutInflater inflater;
-	private LinearLayout ll_nodata;
-	private ImageView iv_nodata;
+	protected View ll_nodata,ll_loading_big;
+	protected ImageView iv_nodata;
 	protected TextView tv_nodata;
 	protected AbPullToRefreshView mAbPullToRefreshView;
 	protected AbImageLoader mAbImageLoader;
@@ -52,8 +53,8 @@ public class BaseActivity extends AbActivity{
 		super.onCreate(savedInstanceState);
 		MyLogger.i(getClass().getSimpleName());
 		share = LocalUserInfo.getInstance(this);
-		curUserInfo = share.getUser();
 		app = MyApplication.getInstance();
+		curUserInfo = share.getUser();
 		inflater = LayoutInflater.from(this);
 		mAc = this;
 		httpUtil = AbHttpUtil.getInstance(this);
@@ -72,9 +73,13 @@ public class BaseActivity extends AbActivity{
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
 		if (findViewById(R.id.nodata_ll) != null) {
-			ll_nodata = (LinearLayout) findViewById(R.id.nodata_ll);
+			ll_nodata = findViewById(R.id.nodata_ll);
 			iv_nodata = (ImageView) findViewById(R.id.nodata_icon);
 			tv_nodata = (TextView) findViewById(R.id.nodata_title);
+		}
+		ll_loading_big=findViewById(R.id.loading_big);
+		if(ll_loading_big==null){
+			ll_loading_big=new View(this);
 		}
 		initRefreshView();
 	}
@@ -121,6 +126,36 @@ public class BaseActivity extends AbActivity{
 			case noPingjia:
 				iv_nodata.setImageResource(R.drawable.nopingjia);
 				break;
+				
+			}
+		}
+	}
+	protected void setNoData(NoDataModel model,String str){
+		if (ll_nodata != null) {
+			ll_nodata.setVisibility(View.VISIBLE);
+			switch (model) {
+			case noShop:
+				iv_nodata.setImageResource(R.drawable.noshop);
+				break;
+			case noProduct:
+				iv_nodata.setImageResource(R.drawable.noproduct);
+				break;
+			case noCategory:
+				iv_nodata.setImageResource(R.drawable.nocategory);
+				break;
+			case noMingxi:
+				iv_nodata.setImageResource(R.drawable.nomingxi);
+				break;
+			case noMsg:
+				iv_nodata.setImageResource(R.drawable.nomsg);
+				break;
+			case noPingjia:
+				iv_nodata.setImageResource(R.drawable.nopingjia);
+				break;
+				
+			}
+			if(!TextUtils.isEmpty(str)){
+				tv_nodata.setText(str);
 			}
 		}
 	}
@@ -128,6 +163,11 @@ public class BaseActivity extends AbActivity{
 	protected void hideNoData() {
 		if (ll_nodata != null) {
 			ll_nodata.setVisibility(View.GONE);
+		}
+	}
+	protected void showNoData() {
+		if (ll_nodata != null) {
+			ll_nodata.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -225,7 +265,12 @@ public class BaseActivity extends AbActivity{
         if (show) {
             refreshDialog.show();
         } else {
-        	refreshDialog.hide();
+        	refreshDialog.dismiss();
         }
+    }
+    
+    protected int getUserId(){
+    	curUserInfo = share.getUser();
+    	return curUserInfo.getId();
     }
 }
