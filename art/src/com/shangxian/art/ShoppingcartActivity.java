@@ -11,10 +11,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -51,7 +54,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ShoppingcartActivity extends BaseActivity implements
-		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I,GoodsDialogEditListener {
+		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I,GoodsDialogEditListener,OnItemClickListener {
 	private ListView listcar;
 	public CheckBox selecteall;
 	// private static ListCarAdapter adapter;
@@ -77,6 +80,13 @@ public class ShoppingcartActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shoppingcart);
 		initViews();
+	}
+	
+	public static void startThisActivity(Boolean isother, Context context) {
+		Intent intent = new Intent(context, ShoppingcartActivity.class);
+		intent.putExtra("isother", isother);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		context.startActivity(intent);
 	}
 
 	private void initdata() {
@@ -202,7 +212,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
 		btn_settlement.setOnClickListener(this);
-
+		listcar.setOnItemClickListener(this);
+		
 		mAbPullToRefreshView.setLoadMoreEnable(false);
 		// 设置进度条的样式
 		mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
@@ -360,7 +371,8 @@ public class ShoppingcartActivity extends BaseActivity implements
 		case R.id.btn_right:
 			if (adapter != null && listCarItem.size() > 0) {
 				if (selectedCount() > 0) {
-					new DeleteDialog(this, this, "确定要删除所选的商品？").show();
+					//new DeleteDialog(this, this, "确定要删除所选的商品？").show();
+					doDelete();
 				} else {
 					myToast("请选择要删除的商品");
 				}
@@ -562,5 +574,23 @@ public class ShoppingcartActivity extends BaseActivity implements
 		listCarGoodsBean.setQuantity(newListCarGoodsBean.getQuantity());
 		adapter.notifyDataSetChanged();
 		refreshDialog.dismiss();
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MyLogger.i("");
+		CarItem carItem=listCarItem.get(position);
+		if (carItem.type == CarItem.SECTION) {
+			ListCarStoreBean listCarStoreBean=carItem.listCarStoreBean;
+			if(listCarStoreBean!=null){
+				ShopsActivity.startThisActivity(listCarStoreBean.getShopId(), this);
+			}
+		}else{
+			ListCarGoodsBean listCarGoodsBean=carItem.listCarGoodsBean;
+			if(listCarGoodsBean!=null){
+				CommodityContentActivity.startThisActivity(listCarGoodsBean.getProductId(), this);
+			}
+		}
 	}
 }

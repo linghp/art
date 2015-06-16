@@ -150,13 +150,13 @@ public class ListCarAdapter extends BaseAdapter{
 				holder.check_store.setChecked(false);
 			}
 			//点击跳转到商铺详情界面
-			convertView.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-//					Intent intent=new Intent(context, StoreDetail.class);
-//					intent.putExtra("storeId", item.listCarStoreBean.storeid);
-//					context.startActivity(intent);
-				}
-			});	
+//			convertView.setOnClickListener(new OnClickListener() {
+//				public void onClick(View v) {
+////					Intent intent=new Intent(context, StoreDetail.class);
+////					intent.putExtra("storeId", item.listCarStoreBean.storeid);
+////					context.startActivity(intent);
+//				}
+//			});	
 		} else {
 			convertView = inflater.inflate(R.layout.list_car_goods_item, null);
 			holder.goodsName = (TextView) convertView.findViewById(R.id.car_goodsname);
