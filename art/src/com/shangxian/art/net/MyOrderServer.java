@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.bean.CommonBeanBoolean;
 import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
@@ -37,7 +38,8 @@ public class MyOrderServer extends BaseServer {
 	 * 返回订单详情监听
 	 */
 	public interface OnHttpResultOrderDetailsListener {
-		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean,CommonBean commonBean);
+		void onHttpResultOrderDetails(MyOrderDetailBean myOrderDetailBean,
+				CommonBean commonBean);
 	}
 
 	/*
@@ -83,7 +85,6 @@ public class MyOrderServer extends BaseServer {
 			}
 		});
 	}
-
 
 	/**
 	 * 获取下一页
@@ -147,48 +148,55 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toGetOrderDetails(String ordernumber,
 			final OnHttpResultOrderDetailsListener l) {
-		toGet_token_original(NET_ORDERDETAILS + ordernumber, new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				// MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultOrderDetails(null,null);
-					} else {
-						try {
-							JSONObject json = new JSONObject(res);
-							int result_code = json.getInt("result_code");
-							if (result_code == 200) {
-								l.onHttpResultOrderDetails(getMyOrderOrderDetails(json.getString("result")),null);
+		toGet_token_original(NET_ORDERDETAILS + ordernumber,
+				new OnHttpListener() {
+					@Override
+					public void onHttp(String res) {
+						// MyLogger.i(res);
+						if (l != null) {
+							if (TextUtils.isEmpty(res)) {
+								l.onHttpResultOrderDetails(null, null);
 							} else {
-								CommonBean	commonBean=gson.fromJson(res, CommonBean.class);
-								if(commonBean!=null){
-								l.onHttpResultOrderDetails(null,commonBean);
+								try {
+									JSONObject json = new JSONObject(res);
+									int result_code = json
+											.getInt("result_code");
+									if (result_code == 200) {
+										l.onHttpResultOrderDetails(
+												getMyOrderOrderDetails(json
+														.getString("result")),
+												null);
+									} else {
+										CommonBean commonBean = gson.fromJson(
+												res, CommonBean.class);
+										if (commonBean != null) {
+											l.onHttpResultOrderDetails(null,
+													commonBean);
+										}
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (Exception e) {
+									e.printStackTrace();
 								}
 							}
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}catch (Exception e) {
-							e.printStackTrace();
 						}
 					}
-				}
-			}
 
-			private MyOrderDetailBean getMyOrderOrderDetails(String res) {
-				MyOrderDetailBean myOrderDetailBean = null;
-				try {
-					Gson gson = new Gson();
-					myOrderDetailBean = gson.fromJson(res,
-							MyOrderDetailBean.class);
-					MyLogger.i(myOrderDetailBean.toString());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return myOrderDetailBean;
-			}
-		});
+					private MyOrderDetailBean getMyOrderOrderDetails(String res) {
+						MyOrderDetailBean myOrderDetailBean = null;
+						try {
+							Gson gson = new Gson();
+							myOrderDetailBean = gson.fromJson(res,
+									MyOrderDetailBean.class);
+							MyLogger.i(myOrderDetailBean.toString());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return myOrderDetailBean;
+					}
+				});
 	}
 
 	/**
@@ -226,7 +234,7 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toDelOrder(final MyOrderItem myOrderItem,
 			final OnHttpResultDelOrderListener l) {
-		toPostWithToken(NET_DELORDER + myOrderItem.getOrderNumber(), null,
+		toPostWithToken2(NET_DELORDER + myOrderItem.getOrderNumber(), null,
 				new OnHttpListener() {
 					@Override
 					public void onHttp(String res) {
@@ -235,15 +243,13 @@ public class MyOrderServer extends BaseServer {
 							if (TextUtils.isEmpty(res)) {
 								l.onHttpResultDelOrder(null);
 							} else {
-								l.onHttpResultDelOrder(getMyOrderItem(
+								l.onHttpResultDelOrder(getMyOrderItem_delete(
 										myOrderItem, res));
 							}
 						}
 					}
 				});
 	}
-	
-	
 
 	private static MyOrderItem getMyOrderItem(MyOrderItem myOrderItem,
 			String content) {
@@ -254,6 +260,23 @@ public class MyOrderServer extends BaseServer {
 			myOrderItem.setStatus(myOrderItem2.getStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return myOrderItem2;
+	}
+
+	private static MyOrderItem getMyOrderItem_delete(MyOrderItem myOrderItem,
+			String content) {
+		MyOrderItem myOrderItem2 = null;
+		CommonBeanBoolean commonBean = null;
+		try {
+			commonBean = gson.fromJson(content, CommonBeanBoolean.class);
+			MyLogger.i(commonBean.toString());
+			// myOrderItem.setStatus(myOrderItem2.getStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (commonBean != null && commonBean.getResult_code().equals("200")) {
+			myOrderItem2 = myOrderItem;
 		}
 		return myOrderItem2;
 	}

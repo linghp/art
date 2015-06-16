@@ -309,9 +309,9 @@ public class MyOrderListAdapter extends BaseAdapter implements
 	@Override
 	public void onHttpResultDelOrder(MyOrderItem myOrderItem) {
 		if (myOrderItem != null) {
+			CommonUtil.toast("删除成功", context);
 			myOrderItems.remove(myOrderItem);
 			this.notifyDataSetChanged();
-			CommonUtil.toast("删除成功", context);
 		} else {
 			CommonUtil.toast("删除失败", context);
 		}

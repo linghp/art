@@ -586,11 +586,12 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			// title右按钮（购物车） 跳转到购物车
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putBoolean("isother", true);
-				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-						ShoppingcartActivity.class, bundle, false);
+//				// TODO Auto-generated method stub
+//				Bundle bundle = new Bundle();
+//				bundle.putBoolean("isother", true);
+//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+//						ShoppingcartActivity.class, bundle, false);
+				ShoppingcartActivity.startThisActivity(true, CommodityContentActivity.this);
 			}
 		});
 
