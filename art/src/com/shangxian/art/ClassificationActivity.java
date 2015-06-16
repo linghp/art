@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -42,8 +43,9 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
 	private View ll_nonetwork,loading_big;
-	
+
 	private AbHttpUtil httpUtil = null;
+	private LinearLayout ll_noData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +54,15 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		initData();
 		listener();
 	}
+
+	//初始化控件
+		private void initView() {
+			// TODO Auto-generated method stub
+			listView = (ListView) findViewById(R.id.classify);
+			ll_nonetwork=findViewById(R.id.ll_nonetwork);
+			loading_big=findViewById(R.id.loading_big);
+			ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
+		}
 
 	@Override
 	protected void onResume() {
@@ -68,35 +79,33 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		topView.setRightBtnListener(activity);
 		topView.setRightBtnDrawable(R.drawable.map);
 		topView.setCenterListener(activity);
+		
 	}
-	
+
 	//添加数据
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		model = new ArrayList<ClassificationModel>();
 		requestTask();
-//		for (int i = 0; i < 10; i++) {
-//			ClassificationModel m = new ClassificationModel();
-//			m.setTitle("特价美食" + 1+i);
-//			m.setSummary("特价美食，干果/仙贝" + 1+i);
-//			model.add(m);
-//		}
-		
-		adapter = new ClassificationAdp(this, R.layout.item_classifiymain, model);
-		listView.setAdapter(adapter);
+		//		for (int i = 0; i < 10; i++) {
+		//			ClassificationModel m = new ClassificationModel();
+		//			m.setTitle("特价美食" + 1+i);
+		//			m.setSummary("特价美食，干果/仙贝" + 1+i);
+		//			model.add(m);
+		//		}
 
 	}
-	
+
 	private void requestTask() {
-//		AbDialogUtil.showLoadDialog(this,
-//				R.drawable.progress_circular, "数据加载中...");
+		//		AbDialogUtil.showLoadDialog(this,
+		//				R.drawable.progress_circular, "数据加载中...");
 		listView.setVisibility(View.GONE);
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
 		AbRequestParams params = new AbRequestParams();
 		params.put("level", "all");
-//		params.put("code", "88881110344801123456");
-//		params.put("phone", "15889936624");
+		//		params.put("code", "88881110344801123456");
+		//		params.put("phone", "15889936624");
 		httpUtil.post(url,params,new AbStringHttpResponseListener() {
 
 			@Override
@@ -115,33 +124,33 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 					Throwable error) {
 				loading_big.setVisibility(View.GONE);
 				listView.setVisibility(View.GONE);
-				 AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
-//				imgList.clear();
-//				ArrayList<String> imgs = new ArrayList<String>();
-//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-//				mDatas.setImgList(imgs);
-//				if (mDatas != null) {
-//					if (mDatas.getImgList() != null
-//							&& mDatas.getImgList().size() > 0) {
-//						imgList.addAll(mDatas.getImgList());
-//						// viewPager.setVisibility(View.VISIBLE);
-//						viewPager.setOnGetView(new OnGetView() {
-//
-//							@Override
-//							public View getView(ViewGroup container,
-//									int position) {
-//								ImageView iv = new ImageView(HomeActivity.this);
-//								Imageloader_homePager.displayImage(
-//										imgList.get(position), iv,
-//										new Handler(), null);
-//								container.addView(iv);
-//								return iv;
-//							}
-//						});
-//						viewPager.setAdapter(imgList.size());
-//					}
-//
-//				}
+				AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
+				//				imgList.clear();
+				//				ArrayList<String> imgs = new ArrayList<String>();
+				//				imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
+				//				mDatas.setImgList(imgs);
+				//				if (mDatas != null) {
+				//					if (mDatas.getImgList() != null
+				//							&& mDatas.getImgList().size() > 0) {
+				//						imgList.addAll(mDatas.getImgList());
+				//						// viewPager.setVisibility(View.VISIBLE);
+				//						viewPager.setOnGetView(new OnGetView() {
+				//
+				//							@Override
+				//							public View getView(ViewGroup container,
+				//									int position) {
+				//								ImageView iv = new ImageView(HomeActivity.this);
+				//								Imageloader_homePager.displayImage(
+				//										imgList.get(position), iv,
+				//										new Handler(), null);
+				//								container.addView(iv);
+				//								return iv;
+				//							}
+				//						});
+				//						viewPager.setAdapter(imgList.size());
+				//					}
+				//
+				//				}
 
 			}
 
@@ -173,24 +182,27 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 								model.add(classificationModel);
 							}
 							MyLogger.i(model.toString());
-							adapter.notifyDataSetChanged();
+
+							if (model.size() != 0) {
+								ll_noData.setVisibility(View.GONE);
+								adapter = new ClassificationAdp(ClassificationActivity.this, R.layout.item_classifiymain, model);
+								listView.setAdapter(adapter);
+							}else {
+								ll_noData.setVisibility(View.VISIBLE);
+							}
+//							adapter.notifyDataSetChanged();
+						}else {
+							ll_noData.setVisibility(View.VISIBLE);
 						}
+						
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-	
+
 			}
 		});
-	}
-
-	//初始化控件
-	private void initView() {
-		// TODO Auto-generated method stub
-		listView = (ListView) findViewById(R.id.classify);
-		ll_nonetwork=findViewById(R.id.ll_nonetwork);
-		loading_big=findViewById(R.id.loading_big);
 	}
 
 	//事件监听
@@ -203,7 +215,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
 			}
 		});
-		
+
 	}
 
 
