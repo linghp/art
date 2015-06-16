@@ -1,9 +1,6 @@
 package com.shangxian.art;
 
-import java.io.Serializable;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
@@ -11,7 +8,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -39,7 +35,6 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.ListCarStoreBean;
-import com.shangxian.art.bean.MyLatLng;
 import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
@@ -69,13 +64,13 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 	/** 轮播图地址 */
 	private List<String> imgList = new ArrayList<String>();
 
-	private ImageView call, next, shopsimg;
+	private ImageView call, next, shopsimg,img_dingwei;
 	private ImageView commoditycontent_shoucang;
-	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu;
+	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu,tt_dianhua;
 	private View rl_footer;
 	//	private TextView tv_first, tv_second;
 	//	private ImageView img_first, img_second;
-	private LinearLayout dingwei, shangpu, ll_guige;
+	private LinearLayout dingwei, shangpu, ll_guige, ll_dianhua;
 	private WebView webView;
 	// 判断是否收藏
 	//boolean iscollection = false;
@@ -328,6 +323,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		//		 guige.setText(model.getSpecs().get("房间"));//规格
 		dianpu.setText(model.getShopName());
 		address.setText(model.getShopAddress());// 地址
+		tt_dianhua.setText(model.getShopPhoneNumber());//电话
 		// 图片的下载
 		mAbImageLoader
 		.display(shopsimg, Constant.BASEURL + model.getShopLogo());
@@ -362,7 +358,10 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		dianpu = (TextView) findViewById(R.id.commoditycontent_shopstxt);
 		shopsimg = (ImageView) findViewById(R.id.commoditycontent_dianpuimg);
 		dingwei = (LinearLayout) findViewById(R.id.commoditycontent_dingwei);
+		img_dingwei = (ImageView) findViewById(R.id.commoditycontent_img1);
+		tt_dianhua = (TextView) findViewById(R.id.commoditycontent_txt1);
 		ll_guige = (LinearLayout) findViewById(R.id.commoditycontent_guigelinear);
+		ll_dianhua =(LinearLayout) findViewById(R.id.commoditycontent_linear1);
 		call = (ImageView) findViewById(R.id.commoditycontent_call);
 		next = (ImageView) findViewById(R.id.commoditycontent_next4);
 		address = (TextView) findViewById(R.id.commoditycontent_address);
@@ -429,13 +428,12 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		case R.id.ll_comment:
 			CommentActivity.startThisActivity("", this);
 			break;
-		case R.id.commoditycontent_address:
+		case R.id.commoditycontent_dingwei:
 			Bundle bundle = new Bundle();
 			bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
 			ShopLocInfo info = new ShopLocInfo();
 			info.setId(model.getShopId());
 			info.setTitle(model.getName());
-
 			info.setPhoto(model.getPhotos() != null ? model.getPhotos().get(0) : null);
 			info.setAddress(model.getShopAddress());
 			info.setLng(model.getLat());
@@ -450,7 +448,6 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 	private void listener() {
 		//		tv_first.setOnClickListener(this);
 		//		tv_second.setOnClickListener(this);
-		address.setOnClickListener(this);
 		next.setOnClickListener(new OnClickListener() {
 			// 跳转到商铺
 			@Override
@@ -479,28 +476,50 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 						CommodityContentActivity.this);
 			}
 		});
-		dingwei.setOnClickListener(new OnClickListener() {
-			// 跳转到定位
-			@Override
-			public void onClick(View v) {
-				if (/*model == null*/true) {
-					return;
-				}
-				Bundle bundle = new Bundle();
-				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-				ShopLocInfo info = new ShopLocInfo();
-				info.setId(model.getShopId());
-				info.setTitle(model.getShopName());
-				info.setPhoto(model.getShopLogo());
-				info.setAddress(model.getShopAddress());
-				//info.setLng(model.get);
-				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
-				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-						LocationActivity.class, bundle, false);
-
-			}
-		});
-		call.setOnClickListener(new OnClickListener() {
+//		img_dingwei.setOnClickListener(new OnClickListener() {
+//			// 跳转到定位
+//			@Override
+//			public void onClick(View v) {
+//				if (/*model == null*/true) {
+//					return;
+//				}
+//				Bundle bundle = new Bundle();
+//				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+//				ShopLocInfo info = new ShopLocInfo();
+//				info.setId(model.getShopId()); 
+//				info.setTitle(model.getShopName());
+//				info.setPhoto(model.getShopLogo());
+//				info.setAddress(model.getShopAddress());
+//				//info.setLng(model.get);
+//				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
+//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+//						LocationActivity.class, bundle, false);
+//
+//			}
+//		});
+//		img_dingwei.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				if (/*model == null*/true) {
+//					return;
+//				}
+//				
+//				Bundle bundle1 = new Bundle(); 
+//				bundle1.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+//				ShopLocInfo info1 = new ShopLocInfo();
+//				info1.setId(model.getShopId());
+//				info1.setTitle(model.getShopName());
+//				info1.setPhoto(model.getShopLogo());
+//				info1.setAddress(model.getShopAddress());
+//				//info.setLng(model.get);
+//				bundle1.putSerializable(Constant.INT_SHOPS_2_LOC, info1);
+//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+//						LocationActivity.class, bundle1, false);
+//				
+//			}
+//		});
+		ll_dianhua.setOnClickListener(new OnClickListener() {
 			// 跳转到打电话
 			@Override
 			public void onClick(View v) {
