@@ -1,17 +1,15 @@
 package com.shangxian.art.net;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.message.BasicNameValuePair;
-
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.shangxian.art.bean.MyOrderItem;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.shangxian.art.bean.MyOrderItem_all;
-import com.shangxian.art.net.BaseServer.OnHttpListener;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultConfirmGoodsListener;
 import com.shangxian.art.utils.MyLogger;
 
 public class CommentServer extends BaseServer {
@@ -32,7 +30,7 @@ public class CommentServer extends BaseServer {
 	 * 返回添加评论监听
 	 */
 	public interface OnHttpResultAddCommentListener {
-		void onHttpResultAddComment(MyOrderItem_all myOrderItemAll);
+		void onHttpResultAddComment(Boolean issuccess);
 	}
 
 	
@@ -97,23 +95,36 @@ public class CommentServer extends BaseServer {
 	 * @param json
 	 * @param l
 	 */
-	public static void toAddComment(final MyOrderItem myOrderItem,
+	public static void toAddComment(final RequestParams params,
 			final OnHttpResultAddCommentListener l) {
-		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem
-				.getOrderNumber()));
-		toPostWithToken(NET_COMMENTADD, pairs, new OnHttpListener() {
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, NET_COMMENTADD, params, new RequestCallBack<String>() {
+
 			@Override
-			public void onHttp(String res) {
-				// MyLogger.i(res);
-				if (l != null) {
-					if (TextUtils.isEmpty(res)) {
-						l.onHttpResultAddComment(null);
-					} else {
-						l.onHttpResultAddComment(null);
-					}
-				}
+			public void onFailure(HttpException arg0, String arg1) {
+				arg0.printStackTrace();
+				MyLogger.i(arg1);
+				l.onHttpResultAddComment(false);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				MyLogger.i(arg0.result);
+				l.onHttpResultAddComment(true);
 			}
 		});
+//		toPostWithToken(NET_COMMENTADD, pairs, new OnHttpListener() {
+//			@Override
+//			public void onHttp(String res) {
+//				// MyLogger.i(res);
+//				if (l != null) {
+//					if (TextUtils.isEmpty(res)) {
+//						l.onHttpResultAddComment(null);
+//					} else {
+//						l.onHttpResultAddComment(null);
+//					}
+//				}
+//			}
+//		});
 	}
 }

@@ -35,6 +35,8 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
+import com.shangxian.art.net.CommentServer;
+import com.shangxian.art.net.CommentServer.OnHttpResultAddCommentListener;
 import com.shangxian.art.photochooser.ImagePagerActivity;
 import com.shangxian.art.photochooser.PhotoOperate;
 import com.shangxian.art.photochooser.PhotoPickActivity;
@@ -44,7 +46,7 @@ import com.shangxian.art.view.TopView;
  * @author zyz
  *
  */
-public class ReviewsProductActivity extends BaseActivity {
+public class ReviewsProductActivity extends BaseActivity implements OnHttpResultAddCommentListener{
 	private TextView tv_quxiao,tv_tijiao,tv_gongkai,tv_niming;
 	private EditText et_comment;
 	private RatingBar ratingbar;
@@ -232,6 +234,7 @@ public class ReviewsProductActivity extends BaseActivity {
         params.addQueryStringParameter("productId", productId);
         params.addQueryStringParameter("userId", userid);
         params.addQueryStringParameter("level", ratingValue+"");
+        CommentServer.toAddComment(params, this);
     }
 
 
@@ -409,6 +412,17 @@ public class ReviewsProductActivity extends BaseActivity {
 //							finishWithoutSave();
 //						}
 //					});
+		}
+	}
+
+	@Override
+	public void onHttpResultAddComment(Boolean issuccess) {
+		showProgressDialog(false);
+		if(issuccess){
+			myToast("评论成功");
+			finish();
+		}else{
+			myToast("评论失败");
 		}
 	}
 }

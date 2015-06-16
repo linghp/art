@@ -61,7 +61,6 @@ public class AliPayBase {
 				public void handleMessage(Message msg) {
 					if (msg != null) {
 						PayResult payResult = new PayResult((String) msg.obj);
-						MyLogger.i((String) msg.obj);
 						// 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
 						String resultInfo = payResult.getResult();
 						String resultStatus = payResult.getResultStatus();
@@ -107,8 +106,9 @@ public class AliPayBase {
 						Message msg = new Message();
 						msg.what = SDK_PAY_FLAG;
 						msg.obj = result;
-						Log.i("***************** Pay *******************",
-								result);
+//						Log.i("***************** Pay *******************",
+//								result);
+						MyLogger.i(result);
 						payhandler.sendMessage(msg);
 					} catch (Exception e) {
 						payhandler.sendMessage(null);
