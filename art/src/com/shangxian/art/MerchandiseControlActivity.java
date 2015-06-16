@@ -50,7 +50,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 		Intent intent = getIntent();
 		isjiesuan = intent.getBooleanExtra("isjiesuan", false);
 		if (isjiesuan == true) {
-			topView.setTitle("商户结算");
+			topView.setTitle("结算中心");
 			linear1.setVisibility(View.GONE);
 			linear2.setVisibility(View.VISIBLE);
 			linear3.setVisibility(View.GONE);

@@ -91,7 +91,6 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		ll_loginbefore = findViewById(R.id.ll_loginbefore);
 		ll_loginafter = findViewById(R.id.ll_loginafter);
 		user_head = (ImageView) findViewById(R.id.user_head);
-
 	}
 
 	private void changeview() {
