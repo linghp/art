@@ -376,9 +376,12 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				//拨打电话前可编辑
 				phonenum = phone.getText().toString().trim();
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+						+ phonenum));*/
+				//不编辑直接拨打电话
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
 						+ phonenum));
 				startActivity(intent);
 			}

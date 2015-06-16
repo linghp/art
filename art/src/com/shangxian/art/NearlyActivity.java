@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.jpush.android.data.s;
@@ -50,6 +51,11 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 附近
+ * @author Administrator
+ *
+ */
 public class NearlyActivity extends BaseActivity implements
 		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener {
 	private MyApplication application;
@@ -208,7 +214,6 @@ public class NearlyActivity extends BaseActivity implements
 	// }
 
 	private int curPage = 0;
-
 	private void refreshTask() {
 		// String url = Constant.BASEURL + Constant.CONTENT +
 		// Constant.CATEGORYS;

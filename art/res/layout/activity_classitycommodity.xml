@@ -16,8 +16,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/txt_white2"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-         >
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/classitycommodity_saixuan"
@@ -78,18 +77,47 @@
             android:textColor="@color/col_b1toma500"
             android:textSize="@dimen/list_min_size" />
     </LinearLayout>
+
     <com.ab.view.pullview.AbPullToRefreshView
         android:id="@+id/mPullRefreshView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/top_title"
         android:layout_above="@id/classitycommodity_linear"
+        android:layout_below="@id/top_title"
         android:background="@color/grey300" >
-    <ListView
-        android:id="@+id/classitycommodity"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="none" >
-    </ListView>
+
+        <ListView
+            android:id="@+id/classitycommodity"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none" >
+        </ListView>
     </com.ab.view.pullview.AbPullToRefreshView>
+
+    <LinearLayout
+        android:id="@+id/ll_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/classitycommodity_linear"
+        android:layout_below="@id/top_title"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <com.shangxian.art.view.CircleImageView1
+            android:id="@+id/notData"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/noshop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:text="对不起，没有找到相关数据"
+            android:textColor="@color/grey500"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 </RelativeLayout>

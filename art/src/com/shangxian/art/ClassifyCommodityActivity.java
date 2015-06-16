@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
+import com.shangxian.art.SearchsActivity.SearchModel;
 import com.shangxian.art.adapter.ClassityCommodiyAdp1;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassityCommdityModel;
@@ -36,6 +39,7 @@ import com.shangxian.art.net.FilterServer.OnHttpResultFilterListener;
 import com.shangxian.art.net.FilterServer.OnHttpResultMoreListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.CircleImageView1;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -63,6 +67,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	 * private TextView shopslist,classifylist;//商铺列表、分类列表
 	 */
 	// DialogScreen dialog;
+	private LinearLayout ll_noData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -106,7 +111,8 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		xiaoliang = (TextView) findViewById(R.id.classitycommodity_xiaoliang);// 销量
 		jiage = (TextView) findViewById(R.id.classitycommodity_jiage);// 价格
 		xinpin = (TextView) findViewById(R.id.classitycommodity_xinpin);// 新品
-
+		
+		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
 	}
 
 	private void initData() {
@@ -195,12 +201,17 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 											ClassityCommdityResultModel.class);
 							model = classityCommdityResultModel.getData();
 							//categoryId=model.get(0).getCategoryId()+"";
-							if (model != null) {
+							MyLogger.i(">>>>>>>>>>商品列表"+model);
+							if (model.size() != 0) {
+								ll_noData.setVisibility(View.GONE);
 								adapter = new ClassityCommodiyAdp1(
 										ClassifyCommodityActivity.this,
 										R.layout.item_classitycommodity, model);
 								list.setAdapter(adapter);
 								adapter.notifyDataSetChanged();
+								
+							}else {
+								ll_noData.setVisibility(View.VISIBLE);
 							}
 
 						}

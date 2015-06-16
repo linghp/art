@@ -82,7 +82,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 
 	private AbHttpUtil httpUtil;
 	private CommodityContentModel model;
-	private String shopid;
+	private String shopid,phonenum;
 
 	private AbImageLoader mAbImageLoader;
 
@@ -255,6 +255,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 							// MyLogger.i(model.toString());
 							if (model != null) {
 								shopid = model.getShopId() + "";
+								phonenum = model.getShopPhoneNumber();
 								updateView();
 							}
 
@@ -503,8 +504,12 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			// 跳转到打电话
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
-						+ "18696636812"));
+				//拨打电话前可编辑
+				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+						+ "18696636812"));*/
+				//不编辑直接拨打电话
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+						+ phonenum));
 				startActivity(intent);
 			}
 		});

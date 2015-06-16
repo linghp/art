@@ -1,22 +1,8 @@
 package com.shangxian.art;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 import m.framework.utils.Utils;
-
-import com.google.gson.reflect.TypeToken;
-import com.shangxian.art.adapter.SearchsAdapter;
-import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.base.DataTools;
-import com.shangxian.art.bean.ListCarGoodsBean;
-import com.shangxian.art.bean.SearchProductInfo;
-import com.shangxian.art.constant.Constant;
-import com.shangxian.art.constant.Global;
-import com.shangxian.art.net.CallBack;
-import com.shangxian.art.net.SearchServer;
-import com.shangxian.art.view.CircleImageView1;
-
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +15,15 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.google.gson.reflect.TypeToken;
+import com.shangxian.art.adapter.SearchsAdapter;
+import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.SearchProductInfo;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.CallBack;
+import com.shangxian.art.net.SearchServer;
+import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsActivity extends BaseActivity {
 	private SearchModel curModel = SearchModel.shop;

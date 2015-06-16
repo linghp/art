@@ -5,30 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.fragment.MyOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerRefundOrder_All_Fragment;
 import com.shangxian.art.view.TopView;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 /**
- * 发货订单的退货订单
+ * 发货订单和退货订单
  * @author Administrator
  *
  */
