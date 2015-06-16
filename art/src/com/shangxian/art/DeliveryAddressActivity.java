@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,15 +21,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-import com.ab.db.MyDBHelper;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
-import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.AccountSecurityServer;
-import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.net.AccountSecurityServer.OnHttpAddressListener;
 import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
+import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -52,7 +51,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 	Boolean isfromConfirmOrder = false;
 
 	private View loading_big,ll_refresh_empty;
-	
+
 	private int delete = 0;
 	DeliveryAddressModel model;
 	@Override
@@ -63,6 +62,20 @@ public class DeliveryAddressActivity extends BaseActivity{
 		initView();
 		initData();
 		initListener();
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		list = new ArrayList<DeliveryAddressModel>();
+		/*for (int i = 0; i < 5; i++) {
+			DeliveryAddressModel model = new DeliveryAddressModel();
+			model.setName("小明"+i);
+			model.setNum("1869663681"+i);
+			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
+			list.add(model);
+		}*/	
+		refreshTask();
+
 	}
 	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);
@@ -94,65 +107,28 @@ public class DeliveryAddressActivity extends BaseActivity{
 		intent.putExtra("url", url);
 		context.startActivity(intent);
 	}
-	private void refreshTask(String url) {
-		HttpClients.getDo(url, new HttpCilentListener() {
-
+	private void refreshTask() {
+		AccountSecurityServer.toDeliveiveAddress(new OnHttpAddressListener() {
 
 			@Override
-			public void onResponse(String res) {
-				MyLogger.i(">>>>>>>>>>收货地址返回数据："+res);
-				list.clear();
-				if (!TextUtils.isEmpty(res)) {
-					Gson gson = new Gson();
-					try {
-						JSONObject jsonObject = new JSONObject(res);
-						String result_code = jsonObject
-								.getString("result_code");
-						if (result_code.equals("200")) {
-
-							JSONArray str=jsonObject.getJSONArray("result");
-							for (int i = 0; i < str.length(); i++) {
-								list.add(gson.fromJson(str.getString(i), DeliveryAddressModel.class));		
-							}
-							adapter = new DeliveryAddressAdapter(DeliveryAddressActivity.this, R.layout.item_deliveryaddress, list);
-							listview.setAdapter(adapter);
-							adapter.notifyDataSetChanged();
-							loading_big.setVisibility(View.GONE);
-						}
-						
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			public void onHttpAddress(List<DeliveryAddressModel> mlist) {
+				if (mlist != null) {
+					list = mlist;
+					adapter = new DeliveryAddressAdapter(DeliveryAddressActivity.this, R.layout.item_deliveryaddress, mlist);
+					listview.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
+					loading_big.setVisibility(View.GONE);
 				}else {
 					loading_big.setVisibility(View.GONE);
 					ll_refresh_empty.setVisibility(View.GONE);
-
 				}
-
 			}
 		});
 
+
 	}
 
-	@Override
-	protected void onResume() {
-		list = new ArrayList<DeliveryAddressModel>();
-		/*for (int i = 0; i < 5; i++) {
-			DeliveryAddressModel model = new DeliveryAddressModel();
-			model.setName("小明"+i);
-			model.setNum("1869663681"+i);
-			model.setAddress("重庆市沙坪坝区沙中路23号通江大道1栋3单元8—"+(i+1));
-			list.add(model);
-		}*/
 
-		String url = "";
-//		url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-		url = BaseServer.HOST + "receiving";
-		MyLogger.i(">>>>>>>>>>>>>>>>收货地址url："+url);
-		refreshTask(url);
-		super.onResume();
-	}
 	private void initListener() {
 		topView.setRightBtnListener(new OnClickListener() {
 			//title添加收货地址
@@ -205,7 +181,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 					}
 				});
 				multiDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (delete == 0) {
@@ -217,12 +193,12 @@ public class DeliveryAddressActivity extends BaseActivity{
 									onResume();
 								}
 							});
-							
+
 						}else {
 							MyLogger.i(">>>>>>>>>>确定+选择的是设为默认地址"+position);
 							//设为默认地址
 							AccountSecurityServer.toGetDefaultAddress(list.get(position).getId(), new OnHttpDeleteListener() {
-								
+
 								@Override
 								public void onHttpDelete(String res) {
 									MyLogger.i("设为默认地址》》》》》》》》》》》》："+res);
