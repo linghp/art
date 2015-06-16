@@ -35,6 +35,8 @@ import com.shangxian.art.bean.NowBuySettlementBean;
 import com.shangxian.art.bean.NowBuySettlementBean.Product;
 import com.shangxian.art.bean.OrderItem;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.AccountSecurityServer;
+import com.shangxian.art.net.AccountSecurityServer.OnHttpAddressListener;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
@@ -121,6 +123,34 @@ public class ConfirmOrderActivity extends BaseActivity implements
 			listadapter = new ListConfirmOrderAdapter(this, listStoreBean);
 		}
 		listview.setAdapter(listadapter);
+		
+		AccountSecurityServer.toDeliveiveAddress(new OnHttpAddressListener() {
+			
+			@Override
+			public void onHttpAddress(List<DeliveryAddressModel> list) {
+				if (list != null) {
+					for (int i = 0; i < list.size(); i++) {
+						if (list.get(i).get_default() == true) {
+							tv_noaddress.setVisibility(View.GONE);
+							deliveryAddressId = list.get(i).getId();
+							((TextView) findViewById(R.id.tv_receiver)).setText(String
+									.format(getString(R.string.text_receiver),
+											list.get(i).getReceiverName()));
+							((TextView) findViewById(R.id.tv_address)).setText(String
+									.format(getString(R.string.text_receiver_address),
+											list.get(i).getDeliveryAddress()));
+							((TextView) findViewById(R.id.tv_phone))
+									.setText(list.get(i).getReceiverTel());
+
+						}
+					}
+				}else {
+					tv_noaddress.setVisibility(View.VISIBLE);
+				}
+				
+				
+			}
+		});
 	}
 
 	private void initViews() {
