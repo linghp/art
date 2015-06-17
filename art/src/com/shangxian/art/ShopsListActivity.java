@@ -3,7 +3,6 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,37 +27,39 @@ import com.google.gson.Gson;
 import com.shangxian.art.adapter.ShopsListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
-import com.shangxian.art.bean.ClassityCommdityResultModel;
 import com.shangxian.art.bean.ShopsListModel;
 import com.shangxian.art.bean.ShopsListResultModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
  * 商铺列表
+ * 
  * @author Administrator
  *
  */
 public class ShopsListActivity extends BaseActivity implements
-OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
+		OnHeaderRefreshListener, OnFooterLoadListener, OnClickListener {
 	private MyApplication application;
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbPullToRefreshView mAbPullToRefreshView = null;
 	private ListView mListView = null;
 	private View ll_nonetwork, loading_big;
-	//	private List<Map<String, Object>> list = null;
+	// private List<Map<String, Object>> list = null;
 	private ShopsListAdapter myListViewAdapter = null;
 	private AbLoadDialogFragment mDialogFragment = null;
-	//	private int currentPage = 1;
-	//	private int pageSize = 15;
-	//	private int total = 50;
+	// private int currentPage = 1;
+	// private int pageSize = 15;
+	// private int total = 50;
 
-	//数据请求
+	// 数据请求
 	private AbHttpUtil httpUtil = null;
 	private String url = "";
 	private List<ShopsListModel> model;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,14 +70,12 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 		initListener();
 	}
 
-
-
 	private void initView() {
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setVisibility(View.VISIBLE);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
-		topView.setBack(R.drawable.back);//返回
+		topView.setBack(R.drawable.back);// 返回
 		topView.showCenterSearch();
 
 		application = (MyApplication) abApplication;
@@ -87,7 +86,7 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 		mListView = (ListView) this.findViewById(R.id.mListView);
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
-		//mAbPullToRefreshView.setOnFooterLoadListener(this);
+		// mAbPullToRefreshView.setOnFooterLoadListener(this);
 		mAbPullToRefreshView.setLoadMoreEnable(false);
 
 		// 设置进度条的样式
@@ -98,7 +97,9 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
+		setNoData(NoDataModel.noShop, "抱歉,没有相关店铺");
 	}
+
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
@@ -107,58 +108,60 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 		url = Constant.BASEURL + Constant.CONTENT + geturl;
 
 		model = new ArrayList<ShopsListModel>();
-		System.out.println(">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<url"+url);
+		System.out.println(">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<url" + url);
 		refreshTask(url);
-		//		// ListView数据
-		//		list = new ArrayList<Map<String, Object>>();
+		// // ListView数据
+		// list = new ArrayList<Map<String, Object>>();
 
 		// 使用自定义的Adapter(得到item中的控件)
 
 		// 显示进度框
-		//		mDialogFragment = AbDialogUtil.showLoadDialog(this,
-		//				R.drawable.progress_loading2, "查询中,请等一小会");
+		// mDialogFragment = AbDialogUtil.showLoadDialog(this,
+		// R.drawable.progress_loading2, "查询中,请等一小会");
 	}
 
 	private void initListener() {
-		//		mDialogFragment.setAbDialogOnLoadListener(new AbDialogOnLoadListener() {
+		// mDialogFragment.setAbDialogOnLoadListener(new
+		// AbDialogOnLoadListener() {
 		//
-		//			@Override
-		//			public void onLoad() {
-		//				// 下载网络数据
-		//				refreshTask(url);
-		//			}
+		// @Override
+		// public void onLoad() {
+		// // 下载网络数据
+		// refreshTask(url);
+		// }
 		//
-		//		});
-
+		// });
 
 		// item被点击事件
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				CommonUtil.gotoActivity(ShopsListActivity.this, ShopsActivity.class, false);
+				CommonUtil.gotoActivity(ShopsListActivity.this,
+						ShopsActivity.class, false);
 
 			}
 		});
 
 	}
 
-	//	public static void startThisActivity(String id,
-	//			Context context) {
-	//		Intent intent = new Intent(context, ShopsListActivity.class);
-	//		intent.putExtra("id", id);
-	//		context.startActivity(intent);
-	//	}
+	// public static void startThisActivity(String id,
+	// Context context) {
+	// Intent intent = new Intent(context, ShopsListActivity.class);
+	// intent.putExtra("id", id);
+	// context.startActivity(intent);
+	// }
 
 	public static void startThisActivity_url(String url, Context context) {
 		Intent intent = new Intent(context, ShopsListActivity.class);
 		intent.putExtra("url", url);
 		context.startActivity(intent);
 	}
+
 	@Override
 	public void onFooterLoad(AbPullToRefreshView arg0) {
 		// TODO Auto-generated method stub
-		//		loadMoreTask();
+		// loadMoreTask();
 	}
 
 	@Override
@@ -169,6 +172,12 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 
 	//
 	public void refreshTask(String url) {
+		if (!HttpUtils.checkNetWork(mAc)) {
+			mAbPullToRefreshView.setVisibility(View.GONE);
+			ll_loading_big.setVisibility(View.GONE);
+			ll_nonetwork.setVisibility(View.VISIBLE);
+			return;
+		}
 		httpUtil.post(url, new AbStringHttpResponseListener() {
 
 			@Override
@@ -194,44 +203,51 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			public void onSuccess(int arg0, String arg1) {
 				// TODO Auto-generated method stub
 				AbLogUtil.i(ShopsListActivity.this, arg1);
-				mAbPullToRefreshView.setVisibility(View.VISIBLE);
 				loading_big.setVisibility(View.GONE);
-				//解析
+				ll_nonetwork.setVisibility(View.GONE);
+				mAbPullToRefreshView.setVisibility(View.GONE);
+				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
 					JSONObject jsonObject;
 					try {
 						jsonObject = new JSONObject(arg1);
-						String result_code = jsonObject.getString("result_code");
+						String result_code = jsonObject
+								.getString("result_code");
 						String reason = jsonObject.getString("reason");
-						if (result_code.equals("200")&&reason.equals("success")) {
-							String str=jsonObject.getString("result");
-							ShopsListResultModel shopsListResultModel=gson.fromJson(str, ShopsListResultModel.class);
-							if(shopsListResultModel!=null){
-							model = shopsListResultModel.getData();
-							if (model != null) {
-								myListViewAdapter = new ShopsListAdapter(ShopsListActivity.this, model, R.layout.item_list);
-								mListView.setAdapter(myListViewAdapter);
-								loading_big.setVisibility(View.GONE);
-							}else {
-								loading_big.setVisibility(View.VISIBLE);
+						if (result_code.equals("200")
+								&& reason.equals("success")) {
+							String str = jsonObject.getString("result");
+							ShopsListResultModel shopsListResultModel = gson
+									.fromJson(str, ShopsListResultModel.class);
+							if (shopsListResultModel != null) {
+								model = shopsListResultModel.getData();
+								if (model != null && model.size() > 0) {
+									mAbPullToRefreshView
+											.setVisibility(View.VISIBLE);
+									myListViewAdapter = new ShopsListAdapter(
+											ShopsListActivity.this, model,
+											R.layout.item_list);
+									mListView.setAdapter(myListViewAdapter);
+								} else {
+									showNoData();
+								}
+								/*
+								 * int length = resultObjectArray.length();
+								 * model.clear(); for (int i = 0; i < length;
+								 * i++) { JSONObject jo =
+								 * resultObjectArray.getJSONObject(i);
+								 * model.add(
+								 * gson.fromJson(jo.toString(),ShopsListModel
+								 * .class)); }
+								 */
+								MyLogger.i(model.toString());
+								myListViewAdapter.notifyDataSetChanged();
+							} else {
+								showNoData();
 							}
-							/*int length = resultObjectArray.length();
-							model.clear();
-							for (int i = 0; i < length; i++) {
-								JSONObject jo = resultObjectArray.getJSONObject(i);
-								model.add(gson.fromJson(jo.toString(),ShopsListModel.class));
-							}*/
-							if(model!=null&&model.size()>0){
-								showNoData(NoDataModel.noShop);
-							}else{
-								hideNoData();
-							}
-							MyLogger.i(model.toString());
-							myListViewAdapter.notifyDataSetChanged();
-							}
-						}else{
-							
+						} else {
+							ll_nonetwork.setVisibility(View.VISIBLE);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -256,101 +272,103 @@ OnHeaderRefreshListener, OnFooterLoadListener,OnClickListener{
 			break;
 		}
 	}
-	//		AbLogUtil.prepareLog(this);
-	//		AbTask mAbTask = new AbTask();
-	//		final AbTaskItem item = new AbTaskItem();
-	//		item.setListener(new AbTaskListListener() {
-	//			@Override
-	//			public List<?> getList() {
-	//				List<Map<String, Object>> newList = null;
-	//				try {
-	//					Thread.sleep(1000);
-	//					currentPage = 1;
-	//					newList = new ArrayList<Map<String, Object>>();
-	//					Map<String, Object> map = null;
+	// AbLogUtil.prepareLog(this);
+	// AbTask mAbTask = new AbTask();
+	// final AbTaskItem item = new AbTaskItem();
+	// item.setListener(new AbTaskListListener() {
+	// @Override
+	// public List<?> getList() {
+	// List<Map<String, Object>> newList = null;
+	// try {
+	// Thread.sleep(1000);
+	// currentPage = 1;
+	// newList = new ArrayList<Map<String, Object>>();
+	// Map<String, Object> map = null;
 	//
-	//					for (int i = 0; i < pageSize; i++) {
-	//						map = new HashMap<String, Object>();
-	//						map.put("itemsIcon", mPhotoList.get(i));
-	//						map.put("itemsTitle", "item" + (i + 1));
-	//						map.put("itemsText", "item..." + (i + 1));
-	//						newList.add(map);
+	// for (int i = 0; i < pageSize; i++) {
+	// map = new HashMap<String, Object>();
+	// map.put("itemsIcon", mPhotoList.get(i));
+	// map.put("itemsTitle", "item" + (i + 1));
+	// map.put("itemsText", "item..." + (i + 1));
+	// newList.add(map);
 	//
-	//					}
-	//				} catch (Exception e) {
-	//				}
-	//				return newList;
-	//			}
+	// }
+	// } catch (Exception e) {
+	// }
+	// return newList;
+	// }
 	//
-	//			@Override
-	//			public void update(List<?> paramList) {
+	// @Override
+	// public void update(List<?> paramList) {
 	//
-	//				// 通知Dialog
-	//				mDialogFragment.loadFinish();
-	//				AbLogUtil.d(ShopsListActivity.this, "返回", true);
-	//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-	//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
-	//				model.clear();
-	//				if (newList != null && newList.size() > 0) {
-	//					model.addAll(newList);
-	//					myListViewAdapter.notifyDataSetChanged();
-	//					newList.clear();
-	//				}
-	//				mAbPullToRefreshView.onHeaderRefreshFinish();
-	//			}
+	// // 通知Dialog
+	// mDialogFragment.loadFinish();
+	// AbLogUtil.d(ShopsListActivity.this, "返回", true);
+	// // List<Map<String, Object>> newList = (List<Map<String, Object>>)
+	// paramList;
+	// List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+	// model.clear();
+	// if (newList != null && newList.size() > 0) {
+	// model.addAll(newList);
+	// myListViewAdapter.notifyDataSetChanged();
+	// newList.clear();
+	// }
+	// mAbPullToRefreshView.onHeaderRefreshFinish();
+	// }
 	//
-	//		});
+	// });
 	//
-	//		mAbTask.execute(item);
-	//	}
-	//	public void loadMoreTask() {
-	//		AbTask mAbTask = new AbTask();
-	//		final AbTaskItem item = new AbTaskItem();
-	//		item.setListener(new AbTaskListListener() {
+	// mAbTask.execute(item);
+	// }
+	// public void loadMoreTask() {
+	// AbTask mAbTask = new AbTask();
+	// final AbTaskItem item = new AbTaskItem();
+	// item.setListener(new AbTaskListListener() {
 	//
-	//			@Override
-	//			public void update(List<?> paramList) {
-	//				//				List<Map<String, Object>> newList = (List<Map<String, Object>>) paramList;
-	//				List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
-	//				if (newList != null && newList.size() > 0) {
-	//					model.addAll(newList);
-	//					myListViewAdapter.notifyDataSetChanged();
-	//					newList.clear();
-	//				}
-	//				mAbPullToRefreshView.onFooterLoadFinish();
-	//			}
+	// @Override
+	// public void update(List<?> paramList) {
+	// // List<Map<String, Object>> newList = (List<Map<String, Object>>)
+	// paramList;
+	// List<ShopsListModel> newList = (List<ShopsListModel>) paramList;
+	// if (newList != null && newList.size() > 0) {
+	// model.addAll(newList);
+	// myListViewAdapter.notifyDataSetChanged();
+	// newList.clear();
+	// }
+	// mAbPullToRefreshView.onFooterLoadFinish();
+	// }
 	//
-	//			@Override
-	//			public List<?> getList() {
-	//				List<Map<String, Object>> newList = null;
-	//				try {
-	//					currentPage++;
-	//					Thread.sleep(1000);
-	//					newList = new ArrayList<Map<String, Object>>();
-	//					Map<String, Object> map = null;
+	// @Override
+	// public List<?> getList() {
+	// List<Map<String, Object>> newList = null;
+	// try {
+	// currentPage++;
+	// Thread.sleep(1000);
+	// newList = new ArrayList<Map<String, Object>>();
+	// Map<String, Object> map = null;
 	//
-	//					for (int i = 0; i < pageSize; i++) {
-	//						map = new HashMap<String, Object>();
-	//						map.put("itemsIcon", mPhotoList.get(i));
-	//						map.put("itemsTitle", "item上拉"
-	//								+ ((currentPage - 1) * pageSize + (i + 1)));
-	//						map.put("itemsText", "item上拉..."
-	//								+ ((currentPage - 1) * pageSize + (i + 1)));
-	//						if ((model.size() + newList.size()) < total) {
-	//							newList.add(map);
-	//						}
-	//					}
+	// for (int i = 0; i < pageSize; i++) {
+	// map = new HashMap<String, Object>();
+	// map.put("itemsIcon", mPhotoList.get(i));
+	// map.put("itemsTitle", "item上拉"
+	// + ((currentPage - 1) * pageSize + (i + 1)));
+	// map.put("itemsText", "item上拉..."
+	// + ((currentPage - 1) * pageSize + (i + 1)));
+	// if ((model.size() + newList.size()) < total) {
+	// newList.add(map);
+	// }
+	// }
 	//
-	//				} catch (Exception e) {
-	//					currentPage--;
-	//					newList.clear();
-	//					AbToastUtil.showToastInThread(ShopsListActivity.this,
-	//							e.getMessage());
-	//				}
-	//				return newList;
-	//			};
-	//		});
+	// } catch (Exception e) {
+	// currentPage--;
+	// newList.clear();
+	// AbToastUtil.showToastInThread(ShopsListActivity.this,
+	// e.getMessage());
+	// }
+	// return newList;
+	// };
+	// });
 	//
-	//		mAbTask.execute(item);
-	//	}
+	// mAbTask.execute(item);
+	// }
 }
