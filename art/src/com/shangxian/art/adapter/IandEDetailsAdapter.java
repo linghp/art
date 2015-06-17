@@ -42,7 +42,7 @@ public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 		holder.title.setText(dates.get(position).getTradeTitle());//购买商品
 		holder.time.setText(dates.get(position).getTransDate());//时间
 		holder.parice.setText("¥"+CommonUtil.priceConversion(dates.get(position).getTotalPrice()));//金额
-//		holder.type.setText(dates.get(position).getTradeType());//支出还是收入
+		holder.type.setText(dates.get(position).getDirection());//支出还是收入
 		//月份
 		if(dates.get(position).isIstitle()){
 			holder.month.setVisibility(View.VISIBLE);

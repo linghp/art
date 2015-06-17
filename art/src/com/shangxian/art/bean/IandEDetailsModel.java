@@ -19,6 +19,7 @@ public class IandEDetailsModel implements Serializable{
 	private String payType;
 	@Expose
 	private String transDate;
+	private String direction;
 	private String month;
 	private boolean istitle;
 	
@@ -77,12 +78,19 @@ public class IandEDetailsModel implements Serializable{
 	public void setTransDate(String transDate) {
 		this.transDate = transDate;
 	}
+	
+	public String getDirection() {
+		return direction;
+	}
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
 	@Override
 	public String toString() {
 		return "IandEDetailsModel [tradeId=" + tradeId + ", tradeNumber="
 				+ tradeNumber + ", tradeTitle=" + tradeTitle + ", totalPrice="
 				+ totalPrice + ", tradeType=" + tradeType + ", payType="
-				+ payType + ", transDate=" + transDate + ", month=" + month
-				+ ", istitle=" + istitle + "]";
+				+ payType + ", transDate=" + transDate + ", direction="
+				+ direction + ", month=" + month + ", istitle=" + istitle + "]";
 	}
 }

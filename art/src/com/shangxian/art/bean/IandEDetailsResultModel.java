@@ -20,6 +20,8 @@ public class IandEDetailsResultModel implements Serializable{
 	private Integer pageCount;
 	@Expose
 	private Integer pageIndex;
+	
+	
 	public Integer getPageSize() {
 		return pageSize;
 	}

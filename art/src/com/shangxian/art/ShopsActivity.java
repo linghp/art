@@ -84,7 +84,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	private AbImageLoader mAbImageLoader = null;
 
 	private String shopid;
-
+	private LinearLayout ll_noData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -169,6 +169,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
+		
+		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
 	}
 
 	private void initData() {
@@ -245,7 +247,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								collectionimg.setSelected(model.getAttened());
 								//热销商品
 								list = model.getProductDtos();
-								if (list != null) {
+								if (list.size() != 0) {
 									if (adapter == null) {
 										
 									} else {
@@ -253,12 +255,11 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 										adapter.updateData(list);
 									}
 								}else {
-									
-									System.out.println(">>>>>>>>>>>>>>>>>>热销商品为空");
+									MyLogger.i(">>>>>>>>>>>>>>>>>>热销商品为空");
 								}
 
 							}else {
-								
+								MyLogger.i(">>>>>>>>>>>>>>>>>>shuju为空");
 							}
 
 						}
