@@ -183,7 +183,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 									.setMyOrderItem(myOrderItem);
 							PayActivity.startThisActivity_Fragment(ordernumber,
 									CommonUtil.priceConversion(myOrderItem
-											.getTotalPrice()),
+											.getTotalPrice()),myOrderItem.getProductItemDtos().get(0).getName(),
 									(Activity) context, fragment);
 						}
 					});

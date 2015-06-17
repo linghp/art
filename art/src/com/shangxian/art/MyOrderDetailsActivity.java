@@ -197,7 +197,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					//CommonUtil.toast("click", context);
 					List<String> ordernumber=new ArrayList<String>();
 					ordernumber.add(myOrderItem.getOrderNumber());
-					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()), MyOrderDetailsActivity.this);
+					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()),myOrderItem.getProductItemDtos().get(0).getName(), MyOrderDetailsActivity.this);
 				}
 			});
 		}else if(myOrderItem.getStatus().equals(orderState[7])){//已取消交易

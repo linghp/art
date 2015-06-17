@@ -694,6 +694,6 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		listCarStoreBean.setItemDtos(listCarGoodsBeans);
 		listCarStoreBeans.add(listCarStoreBean);
 
-		ConfirmOrderActivity.startThisActivity(this, listCarStoreBeans, listCarGoodsBean.getPromotionPrice(), true);
+		ConfirmOrderActivity.startThisActivity(this, listCarStoreBeans, listCarGoodsBean.getPromotionPrice()*listCarGoodsBean.getQuantity(), true);
 	}
 }

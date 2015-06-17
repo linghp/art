@@ -291,7 +291,7 @@ public class ConfirmOrderActivity extends BaseActivity implements
 							+ "}", Mapbean.class);
 					List<String> ordernumbers = new ArrayList<String>(
 							mapbeans.result.keySet());
-					PayActivity.startThisActivity(ordernumbers, totalprice,
+					PayActivity.startThisActivity(ordernumbers, totalprice,listStoreBean.get(0).getItemDtos().get(0).getName(),
 							this);
 				}
 				// myToast(jsonObject.getString("result"));
