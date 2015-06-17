@@ -164,7 +164,6 @@ public class ShopsSummaryActivity extends BaseActivity{
 
 			@Override
 			public void onClick(View v) {
-				phonenum = phone.getText().toString().trim();
 				//拨打电话前可编辑
 				phonenum = phone.getText().toString().trim();
 				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
