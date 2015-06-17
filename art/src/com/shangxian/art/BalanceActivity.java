@@ -53,8 +53,8 @@ public class BalanceActivity extends BaseActivity {
 					System.out
 					.println("account ======================+++++++++++++++++"
 							+ info == null ? "null" : info.toString());
-					ainongbi.setText(String.format("%.2f", info.getAlb()/100));
-					ainongyuan.setText(String.format("%.2f", info.getAly()/100));
+					ainongbi.setText(String.format("%.2f", info.getAlb()));
+					ainongyuan.setText(String.format("%.2f", info.getAly()));
 				}
 			}
 		});

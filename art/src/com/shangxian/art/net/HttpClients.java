@@ -46,7 +46,7 @@ public class HttpClients {
 	private static final ExecutorService executorService = Executors
 			.newFixedThreadPool(20);
 
-	// post请求
+	// post请求 json
 	public static void postDo(final String baseUrl, final String json,
 			final HttpCilentListener l) {
 		final Handler postHandler = new Handler() {

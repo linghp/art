@@ -23,8 +23,8 @@
             android:layout_below="@id/top_title"
             android:background="@drawable/shape_bottom"
             android:gravity="center_vertical"
-            android:orientation="horizontal" 
-            android:visibility="invisible">
+            android:orientation="horizontal"
+            android:visibility="invisible" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,35 +59,65 @@
                 android:text="应付金额"
                 android:textSize="@dimen/list_title_size" />
 
-            <View 
+            <View
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/grey400"/>
-            
-            <EditText 
+                android:background="@color/grey400" />
+
+            <EditText
                 android:id="@+id/paye_et_scan"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="24dp"
-                android:background="@color/transparent"
-                android:singleLine="true"
-                android:textColorHint="@color/grey2"
-                android:textColor="@color/red500"
-                android:text=""
-                android:inputType="number"
-                android:digits="0123456789."
-                android:textSize="20sp"
                 android:layout_marginRight="8dp"
-                android:hint="请输入支付金额"/>
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:digits="0123456789."
+                android:hint="请输入支付金额"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/red500"
+                android:textColorHint="@color/grey2"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/payl_ll_scan"
+            android:layout_marginBottom="-10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"  android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="余额不足"
+                android:textColor="@color/red300"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/tv_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/greentodarkgreen"
+                android:text="充值"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/payl_ll_scan"
+            android:layout_below="@+id/linearLayout1"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_bottom"
             android:orientation="vertical"
@@ -168,13 +198,13 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/gray" />
+                android:background="@color/gray" android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical|right"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"  android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -199,11 +229,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearLayout2"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="在线支付(暂未开放在线支付功能)"
-            android:textSize="@dimen/list_summary_size" />
+            android:textSize="@dimen/list_summary_size"  android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -219,17 +249,16 @@
                 android:id="@+id/payl_ll_zhi"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:onClick="doClick"
                 android:gravity="center_vertical"
+                android:onClick="doClick"
                 android:orientation="horizontal" >
 
                 <CheckBox
                     android:id="@+id/payc_cb_zhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/check_sel" 
-                    android:checked="true"
-                     />
+                    android:button="@drawable/check_sel"
+                    android:checked="true" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -259,11 +288,10 @@
                 android:orientation="horizontal" >
 
                 <CheckBox
-                    android:id="@+id/payc_cb_yin" 
+                    android:id="@+id/payc_cb_yin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/check_sel"
-                     />
+                    android:button="@drawable/check_sel" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -319,4 +347,5 @@
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
     </RelativeLayout>
+
 </ScrollView>

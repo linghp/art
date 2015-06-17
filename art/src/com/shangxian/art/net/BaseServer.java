@@ -58,6 +58,7 @@ public class BaseServer {
 	protected static final String NET_ACCOUNT = HOST + "account";// 首页广告列表
 	protected static final String NET_PAYMENT = HOST + "payment";// 直接支付
 	protected static final String NET_PAY_ORDER = HOST + "pay";// 订单支付
+	protected static final String NET_PAY_NOTICE= HOST + "pay/alipayNoice/";// 支付宝支付订单之前通知服务器订单号
 	protected static final String NET_CAPTCHA = HOST + "captcha";// 根据电话号码获取验证码
 	protected static final String NET_VALIDCAPTCHA = HOST + "valid/captcha";// 验证结果是否正确
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
@@ -401,6 +402,31 @@ public class BaseServer {
 			}
 		});
 	}
+	
+	/**
+	 * 原生的数据，不要解析
+	 */
+	protected static void toPostJson2(String url, String json,
+			final OnHttpListener l) {
+		if (json == null) {
+			json = "";
+		} else {
+			System.out
+			.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+					+ json);
+		}
+		HttpClients.postDo(url, json, new HttpCilentListener() {
+			@Override
+			public void onResponse(String res) {
+				System.out
+				.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+						+ res);
+				if (l != null) {
+					 l.onHttp(res);
+				}
+			}
+		});
+	}
 
 	protected static void toPostWithToken(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
@@ -473,7 +499,9 @@ public class BaseServer {
 			}
 		});
 	}
-	
+	/**
+	 * 原生的数据，不要解析
+	 */
 	protected static void toPostWithToken2(String url,
 			List<BasicNameValuePair> pairs, final OnHttpListener l) {
 		if (pairs == null) {

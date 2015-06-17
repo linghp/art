@@ -59,6 +59,10 @@ public class AccountSumInfo implements Serializable{
 		this.aly = aly;
 	}
 
+	public double getAly_Alb() {
+		return aly+alb;
+	}
+	
 	@Override
 	public String toString() {
 		return "AccountSumInfo [_id=" + _id + ", alb=" + alb + ", aly=" + aly

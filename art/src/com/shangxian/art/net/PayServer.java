@@ -4,18 +4,17 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.message.BasicNameValuePair;
+import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
-import com.baidu.mapapi.map.Text;
+import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.AccountSumInfo;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.utils.MyLogger;
-
-import android.text.TextUtils;
 
 /**
  * 支付接口管理类
@@ -23,7 +22,12 @@ import android.text.TextUtils;
  *	
  */
 public class PayServer extends BaseServer {
-	
+	/*
+	 * 获取支付宝支付订单之前通知服务器订单号返回监听
+	 */
+	public interface OnPayNoticeListener {
+		void onPayNotice(CommonBean commonBean);
+	}
 	/**
 	 * 获取用户余额
 	 * @param l
@@ -39,8 +43,8 @@ public class PayServer extends BaseServer {
 					} else {
 						Type type = new TypeToken<AccountSumInfo>(){}.getType();
 						AccountSumInfo info = gson.fromJson(res, type);
-						info.setAlb(info.getAlb()/100);
-						info.setAly(info.getAly()/100);
+						info.setAlb(info.getAlb()/10000);
+						info.setAly(info.getAly()/10000);
 						l.onAccountSum(info);
 					}
 				}
@@ -91,7 +95,7 @@ public class PayServer extends BaseServer {
 	 * @param type
 	 * @param call
 	 */
-	public void toPayment(String pass, int toid, int amount, String type,CallBack call){
+	public void toPayment(String pass, int toid, double amount, String type,CallBack call){
 		RequestParams params = getParams();
 		params.addBodyParameter("from", curUser.getId() + "");
 		params.addBodyParameter("to", toid + "");
@@ -99,5 +103,47 @@ public class PayServer extends BaseServer {
 		params.addBodyParameter("payPassword", pass);
 		params.addBodyParameter("payType", type);
 		toXUtils(HttpMethod.POST, NET_PAYMENT, params, null, call);
+	}
+	
+	/**
+	 * 支付宝支付订单之前通知服务器
+	 * @param alipayTradeNumber
+	 * @param payType
+	 * @param orderNumbers
+	 * @param l
+	 */
+	public static void toPaymentNotice(String alipayTradeNumber,String payType, List<String> orderNumbers,final OnPayNoticeListener l){
+		PaymentNoticeRequest paymentNoticeRequest=new PaymentNoticeRequest(payType, orderNumbers);
+		String json=gson.toJson(paymentNoticeRequest);
+		if(!TextUtils.isEmpty(json)){
+		toPostJson2(NET_PAY_NOTICE+alipayTradeNumber, json,  new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				if (l != null) {
+					if (TextUtils.isEmpty(res)) {
+						l.onPayNotice(null);
+					} else {
+						CommonBean commonBean=gson.fromJson(res, CommonBean.class);
+						l.onPayNotice(commonBean);
+					}
+				}
+			}
+		});
+		}
+	}
+	
+	public static class PaymentNoticeRequest {
+
+		@Expose
+		public String payType;
+		@Expose
+		public List<String> orderNumber = new ArrayList<String>();
+		public PaymentNoticeRequest(String payType, List<String> orderNumber) {
+			super();
+			this.payType = payType;
+			this.orderNumber = orderNumber;
+		}
+		
 	}
 }
