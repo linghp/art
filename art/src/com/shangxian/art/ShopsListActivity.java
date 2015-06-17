@@ -108,7 +108,7 @@ public class ShopsListActivity extends BaseActivity implements
 		url = Constant.BASEURL + Constant.CONTENT + geturl;
 
 		model = new ArrayList<ShopsListModel>();
-		System.out.println(">>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<url" + url);
+		MyLogger.i("商铺列表url" + url);
 		refreshTask(url);
 		// // ListView数据
 		// list = new ArrayList<Map<String, Object>>();
