@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-             android:layout_centerVertical="true"
+            android:layout_centerVertical="true"
             android:orientation="horizontal" >
 
             <TextView
@@ -48,9 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/addshoppingcart_btn"
-                android:text="加入购物车"
-                android:onClick="onClick"
                 android:clickable="true"
+                android:onClick="onClick"
+                android:text="加入购物车"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/list_summary_size" />
 
@@ -58,11 +58,11 @@
                 android:id="@+id/tv_nowbuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_circular"
-                android:text="立即购买"
                 android:layout_marginRight="10dp"
-                android:onClick="onClick"
+                android:background="@drawable/shape_circular"
                 android:clickable="true"
+                android:onClick="onClick"
+                android:text="立即购买"
                 android:textColor="@color/white"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -242,42 +242,55 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal" >
+                            android:orientation="vertical" >
 
                             <LinearLayout
                                 android:id="@+id/commoditycontent_dingwei"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
+                                android:onClick="onClick"
                                 android:orientation="horizontal" >
 
                                 <ImageView
+                                    android:id="@+id/commoditycontent_img1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/fourth_tab" />
 
                                 <TextView
                                     android:id="@+id/commoditycontent_address"
-                                    android:layout_width="150dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
+                                    android:layout_marginLeft="5dp"
                                     android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门" />
                             </LinearLayout>
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@color/txt_black3" />
-
-                            <ImageView
-                                android:id="@+id/commoditycontent_call"
+                            <LinearLayout
+                                android:id="@+id/commoditycontent_linear1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/call_btn" />
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp" >
+
+                                <ImageView
+                                    android:id="@+id/commoditycontent_call"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/call_btn" />
+
+                                <TextView
+                                    android:id="@+id/commoditycontent_txt1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="023-45879542" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 
