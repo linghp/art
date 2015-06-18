@@ -57,6 +57,15 @@ public class CommodityContentModel implements Serializable {
 
 	@Expose
 	private List<Double> lag = new ArrayList<Double>();
+	
+	//选择规格时要保存的数据
+	public Map<String, String> selectedSpec=new LinkedHashMap<String, String>();
+	public int buyProductCount;
+	/**已选择的规格属性*/
+	public String selectedSpecStr;
+	/**未选择的规格属性的title*/
+	public String unselectSpeckey;
+	
 	public List<Double> getLag() {
 		return lag;
 	}

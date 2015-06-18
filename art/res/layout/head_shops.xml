@@ -31,10 +31,11 @@
 
             <ImageView
                 android:id="@+id/shops_shopsimg"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/alipaypayment" />
+                android:layout_width="81dp"
+                android:layout_height="36dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_empty" 
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,6 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="新鲜果水果专卖店"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_title_size" />
 
@@ -56,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:singleLine="true"
                     android:text="2.0万关注"
                     android:textColor="@color/txt_black2"
                     android:textSize="@dimen/list_summary_size" />

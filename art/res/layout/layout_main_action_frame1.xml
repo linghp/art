@@ -8,7 +8,7 @@
         android:id="@+id/mPullRefreshView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/grey300" >
+        android:background="@color/grey300"  android:visibility="gone">
 
         <ListView
             android:id="@+id/lv_action"
@@ -22,13 +22,16 @@
     </com.ab.view.pullview.AbPullToRefreshView>
 
  	<TextView
+ 	    android:drawableTop="@drawable/noorderimage"
+ 	    android:drawablePadding="16dp"
         android:id="@+id/tv_empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:gravity="center"
         android:text="抱歉，没有找到相关订单"
-        android:textSize="@dimen/list_title_size"
-        android:visibility="gone" />
+        android:textSize="@dimen/list_summary_size"
+         />
 
     <ProgressBar
         android:id="@+id/progress_order"

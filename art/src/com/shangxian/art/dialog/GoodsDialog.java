@@ -1,6 +1,5 @@
 package com.shangxian.art.dialog;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import android.widget.Toast;
 
 import com.ab.image.AbImageLoader;
 import com.google.gson.Gson;
+import com.shangxian.art.CommodityContentActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.CommodityContentModel;
 import com.shangxian.art.bean.ListCarGoodsBean;
@@ -147,6 +147,9 @@ public class GoodsDialog extends Dialog implements
 
 	@Override
 	public void dismiss() {
+		if(commodityContentModel!=null){
+			((CommodityContentActivity)context).updataGuige();
+		}
 		ll_info.startAnimation(anim_out);
 		anim_out.setAnimationListener(new AnimationListener() {
 			@Override
@@ -265,7 +268,10 @@ public class GoodsDialog extends Dialog implements
 			// listtest.add("四菜一汤");
 			// listtest.add("五菜一汤");
 			// specMap.put("套餐2", listtest);
-
+			if(commodityContentModel.buyProductCount>0){
+			edt.setText(commodityContentModel.buyProductCount + "");
+			num=commodityContentModel.buyProductCount;
+			}
 			tv_price.setText("¥  "
 					+ CommonUtil.priceConversion(commodityContentModel
 							.getPromotionPrice()));
@@ -277,13 +283,15 @@ public class GoodsDialog extends Dialog implements
 						+ commodityContentModel.getPhotos().get(0);
 				mAbImageLoader.display(iv_icon, url);
 			}
-			List<String> specStrs = new ArrayList<String>();// 属性的title集合
-			specSelectedStrs = new LinkedHashMap<String, String>();// 已选的属性
+			//List<String> specStrsTitle = new ArrayList<String>();// 属性的title集合
+			specSelectedStrs = commodityContentModel.selectedSpec;// 已选的属性和没选的（空字符串）
 			for (Entry<String, List<String>> listCarGoodsBean2 : specMap
 					.entrySet()) {
 				String key = listCarGoodsBean2.getKey();
 				// 初始化已选的属性
-				specSelectedStrs.put(key, "");
+				if(!specSelectedStrs.containsKey(key)){
+				   specSelectedStrs.put(key, "");
+				}
 				View view = LayoutInflater.from(context).inflate(
 						R.layout.commoditycontent_sepcs_item, null);
 				((TextView) view.findViewById(R.id.textView1))
@@ -298,10 +306,13 @@ public class GoodsDialog extends Dialog implements
 					textView.setSelected(true);
 					vg_ad.addView(textView);
 				} else {
-					specStrs.add(listCarGoodsBean2.getKey());
+					//specStrsTitle.add(listCarGoodsBean2.getKey());
 					for (String str : specs) {
 						TextView textView = generateTextView(str);
 						textView.setTag(key);
+						if(specSelectedStrs.containsKey(key)&&specSelectedStrs.get(key).equals(str)){
+							textView.setSelected(true);
+						}
 						textView.setOnClickListener(new View.OnClickListener() {
 
 							@Override
@@ -341,16 +352,23 @@ public class GoodsDialog extends Dialog implements
 		String specStr = "";
 		for (Entry<String, String> listCarGoodsBean2 : specSelectedStrs
 				.entrySet()) {
-			if (listCarGoodsBean2.getValue().equals("")) {
+			if (TextUtils.isEmpty(listCarGoodsBean2.getValue())) {//如果为空说明此属性集一个都没有选
 				speckey = speckey + listCarGoodsBean2.getKey() + "  ";
 			}
 			specStr = specStr + listCarGoodsBean2.getValue() + "  ";
 		}
-		if (speckey.equals("")) {
+		if (speckey.equals("")) {//如果属性title为空，说明都已经选择了
 			tv_option.setText(specStr);
 			isallselected = true;
+			if(commodityContentModel!=null){
+				commodityContentModel.selectedSpecStr=specStr;
+				commodityContentModel.unselectSpeckey="";
+			}
 		} else {
 			tv_option.setText("请选择  " + speckey);
+			if(commodityContentModel!=null){
+				commodityContentModel.unselectSpeckey=speckey;
+			}
 		}
 	}
 
@@ -411,6 +429,7 @@ public class GoodsDialog extends Dialog implements
 					// 设置EditText光标位置 为文本末端
 					edt.setSelection(edt.getText().toString().length());
 					num = numInt;
+					commodityContentModel.buyProductCount=num;
 				}
 			}
 		}

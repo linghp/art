@@ -121,8 +121,8 @@
                         android:layout_below="@id/commoditycontent_jieshao"
                         android:layout_marginTop="5dp"
                         android:text="￥320"
-                        android:textColor="@color/red500"
-                        android:textSize="@dimen/list_summary_size" />
+                        android:textColor="@color/red300"
+                        android:textSize="@dimen/list_price_size" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -139,6 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="规格:"
+                        android:visibility="gone"
                         android:textColor="@color/txt_black"
                         android:textSize="@dimen/list_summary_size" />
 
@@ -147,9 +148,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="组合装500g   1件"
+                        android:text="请选择  "
                         android:textColor="@color/txt_black1"
-                        android:textSize="@dimen/list_summary_size" />
+                        android:textSize="@dimen/list_min_size" />
 
                     <ImageView
                         android:id="@+id/commoditycontent_next2"

@@ -2,6 +2,8 @@ package com.shangxian.art;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,6 +112,31 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 
 	String geturl;
 
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		MyLogger.i("onStart");
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MyLogger.i("onResume");
+	}
+	
+	public void updataGuige() {
+		if(model!=null){
+			MyLogger.i(model.selectedSpecStr+"--"+model.unselectSpeckey);
+			if(TextUtils.isEmpty(model.unselectSpeckey)){
+				guige.setText(model.selectedSpecStr);
+			}else{
+				guige.setText("请选择  " + model.unselectSpeckey);
+			}
+		}
+	}
+	
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
@@ -334,6 +361,18 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		commoditycontent_shoucang.setSelected(model.getAttened());
 		// 设置评星星级
 		ratingbar.setRating(rating);
+		//显示规格
+		initGuige();
+	}
+
+	private void initGuige() {
+		Map<String, List<String>> specMap = model.getSpecs();
+		String speckey = "";
+		for (Entry<String, List<String>> listCarGoodsBean2 : specMap
+				.entrySet()) {
+			speckey = speckey + listCarGoodsBean2.getKey() + "  ";
+		}
+		guige.setText("请选择  " + speckey);
 	}
 
 	private void initView() {

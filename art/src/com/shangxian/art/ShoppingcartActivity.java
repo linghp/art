@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ import com.shangxian.art.view.TopView;
 public class ShoppingcartActivity extends BaseActivity implements
 		OnHeaderRefreshListener, OnClickListener, HttpCilentListener, Delete_I,GoodsDialogEditListener,OnItemClickListener {
 	private ListView listcar;
+	private ImageView img_no_content_icon;
 	public CheckBox selecteall;
 	// private static ListCarAdapter adapter;
 	// private CustomProgressDialog dialog;
@@ -197,6 +199,10 @@ public class ShoppingcartActivity extends BaseActivity implements
 			topView.setRightBtnListener(this);
 		}
 
+		img_no_content_icon=(ImageView) findViewById(R.id.img_no_content_icon);
+		img_no_content_icon.setVisibility(View.VISIBLE);
+		img_no_content_icon.setImageResource(R.drawable.noshoppingcartimage);
+		((TextView)findViewById(R.id.txt_empty_message)).setText("购物篮空了，赶紧去购物");
 		mAbPullToRefreshView = (AbPullToRefreshView) findViewById(R.id.mPullRefreshView);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		listcar = (ListView) findViewById(R.id.listcar);

@@ -34,6 +34,7 @@ import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.zxing.camera.CameraManager;
 import com.shangxian.art.zxing.decoding.CaptureActivityHandler;
 import com.shangxian.art.zxing.decoding.InactivityTimer;
@@ -211,6 +212,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
 	private void showResult(final Result rawResult, Bitmap barcode) {
 		String res = rawResult.getText();
+		MyLogger.i(res);
 		if (!TextUtils.isEmpty(res) && res.equals("这个测试用的二维码")) {
 			//myToast("付款");
 			if (isLoginAndToLogin()) {
