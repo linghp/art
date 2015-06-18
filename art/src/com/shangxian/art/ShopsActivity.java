@@ -247,9 +247,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								collectionimg.setSelected(model.getAttened());
 								//热销商品
 								list = model.getProductDtos();
-								if (list != null) {
+								if (list!=null&&list.size() != 0) {
 									if (adapter == null) {
-										
 									} else {
 										// adapter.upDateList(list);
 										adapter.updateData(list);

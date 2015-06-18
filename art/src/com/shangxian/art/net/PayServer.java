@@ -43,8 +43,8 @@ public class PayServer extends BaseServer {
 					} else {
 						Type type = new TypeToken<AccountSumInfo>(){}.getType();
 						AccountSumInfo info = gson.fromJson(res, type);
-						info.setAlb(info.getAlb()/10000);
-						info.setAly(info.getAly()/10000);
+						info.setAlb(info.getAlb()/100);
+						info.setAly(info.getAly()/100);
 						l.onAccountSum(info);
 					}
 				}
