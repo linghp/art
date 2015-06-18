@@ -169,9 +169,12 @@ public class ShopsSummaryActivity extends BaseActivity{
 				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
 						+ phonenum));*/
 				//不编辑直接拨打电话
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-						+ phonenum));
-				startActivity(intent);
+				if (phonenum != "") {
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+							+ phonenum));
+					startActivity(intent);
+				}
+				
 			}
 		});
 		//跳转到定位

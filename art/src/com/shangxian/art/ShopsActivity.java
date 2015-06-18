@@ -382,9 +382,11 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
 						+ phonenum));*/
 				//不编辑直接拨打电话
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-						+ phonenum));
-				startActivity(intent);
+				if (phonenum != "") {
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+							+ phonenum));
+					startActivity(intent);
+				}
 			}
 		});
 		// 定位
