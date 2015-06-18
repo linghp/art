@@ -528,9 +528,11 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 				/*Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
 						+ "18696636812"));*/
 				//不编辑直接拨打电话
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-						+ phonenum));
-				startActivity(intent);
+				if (phonenum != "") {
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+							+ phonenum));
+					startActivity(intent);
+				}
 			}
 		});
 		commoditycontent_shoucang.setOnClickListener(new OnClickListener() {
