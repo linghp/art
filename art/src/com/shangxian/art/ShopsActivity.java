@@ -249,7 +249,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								list = model.getProductDtos();
 								if (list!=null&&list.size() != 0) {
 									if (adapter == null) {
-										
 									} else {
 										// adapter.upDateList(list);
 										adapter.updateData(list);

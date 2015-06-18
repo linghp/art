@@ -588,7 +588,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 								.isSelected());
 						if (!commoditycontent_shoucang.isSelected()) {
 							new FollowServer().toDelFollowGoods(
-									model.getCategoryId(), false,
+									model.getId(), false,
 									new CallBack() {
 										@Override
 										public void onSimpleSuccess(Object res) {
@@ -598,6 +598,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 										@Override
 										public void onSimpleFailure(int code) {
 											myToast("取消关注失败");
+											
 											commoditycontent_shoucang
 											.setSelected(!commoditycontent_shoucang
 													.isSelected());
@@ -605,7 +606,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 									});
 						} else {
 							new FollowServer().toFollowGoods(
-									model.getCategoryId(),
+									model.getId(),
 									new OnFollowListener() {
 										@Override
 										public void onFollow(boolean isFollow) {
