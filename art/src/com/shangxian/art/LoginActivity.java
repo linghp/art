@@ -23,6 +23,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.BaseServer.OnLoginListener;
+import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.UserServer;
 import com.shangxian.art.utils.CommonUtil;
@@ -217,6 +218,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						System.out.println("登录========================="
 								+ info.toString());
 						share.putUser(info);
+						BaseServer.toRegistContext(LoginActivity.this);
 						showView(LOGIN_SUCCESS);
 					} else {
 						// myToast("登录失败");

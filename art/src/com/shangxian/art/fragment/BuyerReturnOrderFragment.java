@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.ab.view.pullview.AbPullToRefreshView;
@@ -90,6 +92,16 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
 		mAbPullToRefreshView.setOnFooterLoadListener(this);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				MyLogger.i("退款订单》》》》》》》》"+buyerReturnOrderStat.getData().get(position).getBuyerId());
+			}
+		});
 	}
 
 	
@@ -180,4 +192,5 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 			}
 		}
 	}
+
 }

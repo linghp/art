@@ -1,7 +1,10 @@
 package com.shangxian.art.net;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
@@ -32,6 +35,17 @@ public class BuyerOrderServer extends BaseServer {
 		MyLogger.i("退货订单请求地址："+NET_BUYER_RETURN_LIST + status);
 		toXUtils(HttpMethod.POST, NET_BUYER_RETURN_LIST + status, params, type,
 				back);
+		/*List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		pairs.add(new BasicNameValuePair("skip", skip));
+		pairs.add(new BasicNameValuePair("pageSize", "10"));
+		toPostWithToken2(NET_BUYER_RETURN_LIST + status, pairs, new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i("退货订单请求数据："+res);
+				
+			}
+		});*/
 	}
 
 	/**

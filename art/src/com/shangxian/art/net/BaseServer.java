@@ -143,7 +143,8 @@ public class BaseServer {
 
 	protected static RequestParams getParams() {
 		RequestParams params = new RequestParams();
-		params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
+		MyLogger.i(curUser.toString());
+		//params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
 			params.addHeader("User-Token", curUser.getId() + "");
 			return params;
