@@ -74,6 +74,7 @@
     <string name="title_activity_seller_order">卖家订单</string>
     <string name="title_activity_seller_order_manage">SellerOrderManageActivity</string>
     <string name="title_activity_buyer_order">BuyerOrderActivity</string>
+    <string name="title_returnorderdetails">退款订单详情</string>
     
     <string name="mine_goodscomment">商品评价</string>
 

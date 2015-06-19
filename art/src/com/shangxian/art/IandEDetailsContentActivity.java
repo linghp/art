@@ -28,9 +28,15 @@ public class IandEDetailsContentActivity extends BaseActivity{
 		initData();
 		initListener();
 	}
-	public static void startThisActivity(String id, Context context) {
+	public static void startThisActivity(String title, String price,String liushuihao,String fangxiang,String fangshi,String time,String beizhu,Context context) {
 		Intent intent = new Intent(context, IandEDetailsContentActivity.class);
-		intent.putExtra("id", id);
+		intent.putExtra("title", title);
+		intent.putExtra("price", price);
+		intent.putExtra("liushuihao", liushuihao);
+		intent.putExtra("fangxiang", fangxiang);
+		intent.putExtra("fangshi", fangshi);
+		intent.putExtra("time", time);
+		intent.putExtra("beizhu", beizhu);
 		context.startActivity(intent);
 	}
 	public static void startThisActivity_url(String url, Context context) {
@@ -58,22 +64,36 @@ public class IandEDetailsContentActivity extends BaseActivity{
 
 	private void initData() {
 		
-		String id = getIntent().getStringExtra("id");
-		String geturl = getIntent().getStringExtra("url");
-		String url = "";
+		String title = getIntent().getStringExtra("title");
+		String price = getIntent().getStringExtra("price");
+		String liushuihao = getIntent().getStringExtra("liushuihao");
+		String fangxiang = getIntent().getStringExtra("fangxiang");
+		String fangshi = getIntent().getStringExtra("fangshi");
+		String time = getIntent().getStringExtra("time");
+		String beizhu = getIntent().getStringExtra("beizhu");
+		tv_title.setText(title);
+		tv_price.setText(price);
+		tv_liushuihao.setText(liushuihao);
+		tv_fangxiang.setText(fangxiang);
+		tv_fangshi.setText(fangshi);
+		tv_time.setText(time);
+//		tv_beizhu.setText(beizhu);
+		tv_beizhu.setText("无");
+		
+		/*String url = "";
 		if (TextUtils.isEmpty(geturl)) {
 			url = id;
 		} else {
 			url = geturl;
 		}
 		
-		refreshTask(url);
+		refreshTask(url);*/
 	}
 
-	private void refreshTask(String url) {
+	/*private void refreshTask(String url) {
 		
 		
-	}
+	}*/
 	private void initListener() {
 		
 		

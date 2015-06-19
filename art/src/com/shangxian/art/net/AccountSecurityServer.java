@@ -81,9 +81,10 @@ public class AccountSecurityServer extends BaseServer{
 			}
 		});
 	}
+	DeliveryAddressModel deliveryAddressModel;
 	//添加数据
-	public void toAddDeliveiveAdress(String id, String receiverName, String receiverTel, String deliveryAddress, String isDefault, CallBack call) {
-		RequestParams params = getParams();
+	public void toAddDeliveiveAdress(String id, String receiverName, String receiverTel, String deliveryAddress, String isDefault, final OnHttpDeleteListener l) {
+		/*RequestParams params = getParams();
 		params.addBodyParameter("receiverName", receiverName);
 		params.addBodyParameter("receiverTel", receiverTel);
 		params.addBodyParameter("deliveryAddress", deliveryAddress);
@@ -91,7 +92,31 @@ public class AccountSecurityServer extends BaseServer{
 		params.addBodyParameter("id", id);
 		//params.addBodyParameter(pairs);
 		Type type = new TypeToken<DeliveryAddressModel>(){}.getType();
-		toXUtils(HttpMethod.POST, BaseServer.HOST + "receivingAddOrUpdate", params, type, call);
+		toXUtils(HttpMethod.POST, BaseServer.HOST + "receivingAddOrUpdate", params, type, call);*/
+		deliveryAddressModel = new DeliveryAddressModel();
+		deliveryAddressModel.setId(id);
+		deliveryAddressModel.setReceiverName(receiverName);
+		deliveryAddressModel.setReceiverTel(receiverTel);
+		deliveryAddressModel.setDeliveryAddress(deliveryAddress);
+		deliveryAddressModel.set_default(false);
+		Gson gson = new Gson();
+		String json = gson.toJson(deliveryAddressModel);
+		toPostJson(BaseServer.HOST + "receivingAddOrUpdate", json, new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i(">>>>>>>>>>>添加收货地址:"+res);
+
+				if (res != null) {
+					MyLogger.i(">>>>>>>>>>>>>添加成功");
+					l.onHttpDelete("保存成功");
+				}else {
+					MyLogger.i(">>>>>>>>>>>>>添加失敗");
+					l.onHttpDelete("保存失败");
+				}
+				
+			}
+		});
 	}
 
 	private static List<DeliveryAddressModel> list;
