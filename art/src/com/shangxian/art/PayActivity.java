@@ -428,6 +428,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 								type, new CallBack() {
 									@Override
 									public void onSimpleSuccess(Object res) {
+										MyLogger.i("支付后返回来的数据"+res);
 										myToast("支付成功");
 										finish();
 									}
@@ -437,6 +438,14 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 										myToast("支付失败");
 									}
 								});
+						/*new PayServer().toPayment(pass, storeId, price, type, new OnPaymentListener() {
+							
+							@Override
+							public void onPayment(String res) {
+								MyLogger.i("支付后返回来的数据"+res);
+								
+							}
+						});*/
 					}
 				}
 			});
