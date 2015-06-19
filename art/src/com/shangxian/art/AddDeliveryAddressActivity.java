@@ -28,6 +28,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.net.AccountSecurityServer;
+import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
 import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.HttpClients;
@@ -127,14 +128,6 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 	}
 
 	private void initListener() {
-		/*
-		 * diqu_img.setOnClickListener(new OnClickListener() { //选择地区
-		 * 
-		 * @Override public void onClick(View v) {
-		 * 
-		 * 
-		 * } });
-		 */
 		baocun.setOnClickListener(new OnClickListener() {
 			// 保存
 			@Override
@@ -146,27 +139,7 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 
 				if (!receiverName.equals("") && !receiverTel.equals("")
 						&& !deliveryAddress.equals("")) {
-					// model.setReceiverName(receiverName);
-					// model.setReceiverTel(receiverTel);
-					// model.setDeliveryAddress(deliveryAddress);
-					// System.out.println(">>>>>><<<<<<<<id+"+id);
-					// model.setId(id);
-
-					// 添加地址
-//					String url = "";
-//					// url = Constant.BASEURL + Constant.CONTENT + "/receiving";
-//					url = BaseServer.HOST + "receivingAddOrUpdate";
-//
-//					params.add(new BasicNameValuePair("receiverName",
-//							receiverName));
-//					params.add(new BasicNameValuePair("receiverTel",
-//							receiverTel));
-//					params.add(new BasicNameValuePair("deliveryAddress",
-//							deliveryAddress));
-//					params.add(new BasicNameValuePair("isDefault", "false"));
-//					params.add(new BasicNameValuePair("id", id));
-//					MyLogger.i(">>>>>>>>>>保存收货地址的数据：" + params.toString());
-					new AccountSecurityServer().toAddDeliveiveAdress(id,
+					/*new AccountSecurityServer().toAddDeliveiveAdress(id,
 							receiverName, receiverTel, deliveryAddress,
 							false + "", new CallBack() {
 
@@ -180,8 +153,17 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 								public void onSimpleFailure(int code) {
 									myToast("保存地址失败");
 								}
-							});
-					// refreshTask(url);
+							});*/
+					new AccountSecurityServer().toAddDeliveiveAdress(id,
+							receiverName, receiverTel, deliveryAddress,
+							false + "", new OnHttpDeleteListener() {
+
+						@Override
+						public void onHttpDelete(String res) {
+							myToast(res);
+							finish();
+						}
+					});
 
 				} else {
 					myToast("请认真输入");
