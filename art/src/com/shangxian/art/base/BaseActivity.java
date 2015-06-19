@@ -43,7 +43,6 @@ public class BaseActivity extends AbActivity{
 	protected LayoutInflater inflater;
 	protected View ll_nodata,ll_loading_big;
 	protected ImageView iv_nodata;
-	protected TextView tv_nodata;
 	protected AbPullToRefreshView mAbPullToRefreshView;
 	protected AbImageLoader mAbImageLoader;
 	protected  Dialog refreshDialog;
@@ -75,7 +74,6 @@ public class BaseActivity extends AbActivity{
 		if (findViewById(R.id.nodata_ll) != null) {
 			ll_nodata = findViewById(R.id.nodata_ll);
 			iv_nodata = (ImageView) findViewById(R.id.nodata_icon);
-			tv_nodata = (TextView) findViewById(R.id.nodata_title);
 		}
 		ll_loading_big=findViewById(R.id.loading_big);
 		if(ll_loading_big==null){
@@ -104,35 +102,38 @@ public class BaseActivity extends AbActivity{
 		noPingjia
 	}
 	
-	protected void showNoData(NoDataModel model){
-		if (ll_nodata != null) {
-			ll_nodata.setVisibility(View.VISIBLE);
-			switch (model) {
-			case noShop:
-				iv_nodata.setImageResource(R.drawable.noshop);
-				break;
-			case noProduct:
-				iv_nodata.setImageResource(R.drawable.noproduct);
-				break;
-			case noCategory:
-				iv_nodata.setImageResource(R.drawable.nocategory);
-				break;
-			case noMingxi:
-				iv_nodata.setImageResource(R.drawable.nomingxi);
-				break;
-			case noMsg:
-				iv_nodata.setImageResource(R.drawable.nomsg);
-				break;
-			case noPingjia:
-				iv_nodata.setImageResource(R.drawable.nopingjia);
-				break;
-				
-			}
-		}
-	}
+//	protected void showNoData(NoDataModel model,String res){
+//		if (ll_nodata != null) {
+//			ll_nodata.setVisibility(View.VISIBLE);
+//			switch (model) {
+//			case noShop:
+//				iv_nodata.setImageResource(R.drawable.noshop);
+//				break;
+//			case noProduct:
+//				iv_nodata.setImageResource(R.drawable.noproduct);
+//				break;
+//			case noCategory:
+//				iv_nodata.setImageResource(R.drawable.nocategory);
+//				break;
+//			case noMingxi:
+//				iv_nodata.setImageResource(R.drawable.nomingxi);
+//				break;
+//			case noMsg:
+//				iv_nodata.setImageResource(R.drawable.nomsg);
+//				break;
+//			case noPingjia:
+//				iv_nodata.setImageResource(R.drawable.nopingjia);
+//				break;
+//				
+//			}
+//		}
+//	}
 	protected void setNoData(NoDataModel model,String str){
 		if (ll_nodata != null) {
 			ll_nodata.setVisibility(View.VISIBLE);
+			if(!TextUtils.isEmpty(str)){
+				((TextView)findViewById(R.id.nodata_title)).setText(str);
+			}
 			switch (model) {
 			case noShop:
 				iv_nodata.setImageResource(R.drawable.noshop);
@@ -153,9 +154,6 @@ public class BaseActivity extends AbActivity{
 				iv_nodata.setImageResource(R.drawable.nopingjia);
 				break;
 				
-			}
-			if(!TextUtils.isEmpty(str)){
-				tv_nodata.setText(str);
 			}
 		}
 	}
@@ -166,6 +164,16 @@ public class BaseActivity extends AbActivity{
 		}
 	}
 	protected void showNoData() {
+		if (ll_loading_big != null) {
+			ll_loading_big.setVisibility(View.VISIBLE);
+		}
+	}
+	protected void hideloading() {
+		if (ll_loading_big != null) {
+			ll_loading_big.setVisibility(View.GONE);
+		}
+	}
+	protected void showloading() {
 		if (ll_nodata != null) {
 			ll_nodata.setVisibility(View.VISIBLE);
 		}

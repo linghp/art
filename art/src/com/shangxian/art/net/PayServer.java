@@ -95,10 +95,10 @@ public class PayServer extends BaseServer {
 	 * @param type
 	 * @param call
 	 */
-	public void toPayment(String pass, int toid, double amount, String type,CallBack call){
+	public void toPayment(String pass, String toid, double amount, String type,CallBack call){
 		RequestParams params = getParams();
 		params.addBodyParameter("from", curUser.getId() + "");
-		params.addBodyParameter("to", toid + "");
+		params.addBodyParameter("to", toid);
 		params.addBodyParameter("amount", amount + "");
 		params.addBodyParameter("payPassword", pass);
 		params.addBodyParameter("payType", type);

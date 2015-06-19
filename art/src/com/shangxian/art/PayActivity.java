@@ -70,6 +70,8 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	private double price;
 	/**自己生成个的支付宝交易号*/
 	private String trideno="S"+CommonUtil.getUUID();
+	/**扫描支付传的商铺id*/
+	private String storeId;
 
 	//private double onlineMon = 0.00;
 
@@ -80,7 +82,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 				//money = price + "";
 			} else {
 				String price_temp=et_scan.getText().toString().trim();
-				if(TextUtils.isEmpty(price_temp)){
+				if(!TextUtils.isEmpty(price_temp)){
 					price=Double.parseDouble(price_temp);
 				}
 			}
@@ -164,6 +166,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		} else {
 			isOrder = false;
 		}
+		storeId=getIntent().getStringExtra("storeId");
 	}
 
 	private void initViews() {
@@ -320,6 +323,16 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		intent.putExtra("productName", productName);
 		mAc.startActivityForResult(intent, 1000);
 	}
+	/**
+	 * 扫描支付
+	 * @param id
+	 * @param mAc
+	 */
+	public static void startThisActivity(String storeId,Activity mAc) {
+		Intent intent = new Intent(mAc, PayActivity.class);
+		intent.putExtra("storeId", storeId);
+		mAc.startActivity(intent);
+	}
 
 	public static void startThisActivity_Fragment(List<String> orderids,
 			float totalprice, String productName,Activity mAc, Fragment fragment) {
@@ -398,7 +411,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 								}
 							}
 						});
-					} else {
+					} else if(!TextUtils.isEmpty(storeId)){
 						// PayServer.toPayment(pass, 3, (int) (lastMon), type,
 						// new OnPaymentListener() {
 						// @Override
@@ -411,7 +424,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 						// }
 						// }
 						// });
-						new PayServer().toPayment(pass, 17, price,
+						new PayServer().toPayment(pass, storeId, price,
 								type, new CallBack() {
 									@Override
 									public void onSimpleSuccess(Object res) {

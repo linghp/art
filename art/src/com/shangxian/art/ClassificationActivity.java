@@ -9,28 +9,25 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
-import com.ab.util.AbDialogUtil;
 import com.ab.util.AbLogUtil;
 import com.ab.util.AbToastUtil;
+import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import com.google.gson.Gson;
 import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.constant.Constant;
-import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 /**
@@ -38,7 +35,7 @@ import com.shangxian.art.utils.MyLogger;
  * @author Administrator
  *
  */
-public class ClassificationActivity extends BaseActivity implements OnClickListener{
+public class ClassificationActivity extends BaseActivity implements OnClickListener,OnHeaderRefreshListener{
 	private ListView listView;
 	private List<ClassificationModel>model;
 	private ClassificationAdp adapter;
@@ -87,6 +84,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		model = new ArrayList<ClassificationModel>();
+		loading_big.setVisibility(View.VISIBLE);
 		requestTask();
 		//		for (int i = 0; i < 10; i++) {
 		//			ClassificationModel m = new ClassificationModel();
@@ -100,7 +98,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	private void requestTask() {
 		//		AbDialogUtil.showLoadDialog(this,
 		//				R.drawable.progress_circular, "数据加载中...");
-		listView.setVisibility(View.GONE);
+		//mAbPullToRefreshView.setVisibility(View.GONE);
 		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
 		AbRequestParams params = new AbRequestParams();
 		params.put("level", "all");
@@ -110,20 +108,20 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 
 			@Override
 			public void onStart() {
-				loading_big.setVisibility(View.VISIBLE);
+				//loading_big.setVisibility(View.VISIBLE);
 			}
 
 			@Override
 			public void onFinish() {
 				// AbDialogUtil.removeDialog(ClassificationActivity.this);
-				// mAbPullToRefreshView.onHeaderRefreshFinish();
+				 mAbPullToRefreshView.onHeaderRefreshFinish();
+				 loading_big.setVisibility(View.GONE);
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-				loading_big.setVisibility(View.GONE);
-				listView.setVisibility(View.GONE);
+				mAbPullToRefreshView.setVisibility(View.GONE);
 				AbToastUtil.showToast(ClassificationActivity.this, error.getMessage());
 				//				imgList.clear();
 				//				ArrayList<String> imgs = new ArrayList<String>();
@@ -166,7 +164,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 						String result_code = jsonObject
 								.getString("result_code");
 						if (result_code.equals("200")) {
-							listView.setVisibility(View.VISIBLE);
+							mAbPullToRefreshView.setVisibility(View.VISIBLE);
 							JSONArray resultObjectArray = jsonObject
 									.getJSONArray("result");
 							int length = resultObjectArray.length();
@@ -207,6 +205,10 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 
 	//事件监听
 	private void listener(){
+		// 设置监听器
+		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
+		mAbPullToRefreshView.setLoadMoreEnable(false);
+		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -228,5 +230,10 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onHeaderRefresh(AbPullToRefreshView view) {
+		requestTask();
 	}
 }

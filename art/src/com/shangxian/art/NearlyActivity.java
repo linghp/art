@@ -322,6 +322,7 @@ public class NearlyActivity extends BaseActivity implements
 				new OnNearlyShopListener() {
 					@Override
 					public void onNearly(NearlyShopStat stat) {
+						mAbPullToRefreshView.onHeaderRefreshFinish();
 						curPage = 0;
 						MyLogger.i(stat != null ? stat.toString() : "null");
 						if (stat != null && !stat.isNull()) {
@@ -334,7 +335,6 @@ public class NearlyActivity extends BaseActivity implements
 								myListViewAdapter
 										.upDateList(NearlyActivity.this.stat
 												.getContents());
-								mAbPullToRefreshView.onHeaderRefreshFinish();
 							} else {
 								showNoData();
 							}
@@ -407,6 +407,7 @@ public class NearlyActivity extends BaseActivity implements
 				new OnNearlyShopListener() {
 					@Override
 					public void onNearly(NearlyShopStat stat) {
+						mAbPullToRefreshView.onFooterLoadFinish();
 						MyLogger.i(stat != null ? stat.toString() : "null");
 						if (stat != null && !stat.isNull()) {
 							NearlyActivity.this.stat = stat;
@@ -414,7 +415,6 @@ public class NearlyActivity extends BaseActivity implements
 								myListViewAdapter
 										.addFootDataList(NearlyActivity.this.stat
 												.getContents());
-								mAbPullToRefreshView.onFooterLoadFinish();
 							}
 						}
 					}

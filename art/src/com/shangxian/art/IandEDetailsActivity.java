@@ -61,6 +61,7 @@ public class IandEDetailsActivity extends BaseActivity{
 		topView.setTitle(getString(R.string.title_activity_iandedetails));
 
 		listview = (ListView) findViewById(R.id.iandedetails_list);
+		setNoData(NoDataModel.noMingxi, "没有明细数据");
 	}
 
 	private void initData() {
@@ -75,7 +76,7 @@ public class IandEDetailsActivity extends BaseActivity{
 			
 			@Override
 			public void onResponse(String res) {
-				
+				hideloading();
 				list.clear();
 				if (!TextUtils.isEmpty(res)) {
 					Gson gson = new Gson();
@@ -85,11 +86,13 @@ public class IandEDetailsActivity extends BaseActivity{
 						String result_code = jsonObject
 								.getString("result_code");
 						System.out.println(":::::::::::::::::result_code"+result_code);
+						String str="";
 						if (result_code.equals("200")) {
-							String str=jsonObject.getString("result");
+							str=jsonObject.getString("result");
 							System.out.println(":::::::::::::::::str"+str);
 							
 							IandEDetailsResultModel resultModel = gson.fromJson(str, IandEDetailsResultModel.class);
+							if(resultModel!=null){
 							
 							list = resultModel.getData();
 							String month = "";
@@ -104,11 +107,17 @@ public class IandEDetailsActivity extends BaseActivity{
 							}
 							System.out.println(":::::::::::::::::list"+list);
 							if (list != null) {
+								hideNoData();
 								adapter = new IandEDetailsAdapter(IandEDetailsActivity.this, R.layout.item_iandedetails, list);
 								listview.setAdapter(adapter);
 								adapter.notifyDataSetChanged();
+							}else{
+								showNoData();
 							}
 							
+						  }
+						}else{
+							myToast(str);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block

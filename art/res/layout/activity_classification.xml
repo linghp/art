@@ -2,21 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-     >
+    android:background="@color/bg_gray" >
 
     <include layout="@layout/no_network" />
-    <include layout="@layout/loadind_big" />
 
-    <ListView
-        android:id="@+id/classify"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_gray"
-        android:isScrollContainer="false"
-        android:scrollbars="none">
-    </ListView>
-     <LinearLayout
+    <com.ab.view.pullview.AbPullToRefreshView
+        android:id="@+id/mPullRefreshView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         >
+
+        <ListView
+            android:id="@+id/classify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray"
+            android:isScrollContainer="false"
+            android:scrollbars="none" >
+        </ListView>
+    </com.ab.view.pullview.AbPullToRefreshView>
+
+    <LinearLayout
         android:id="@+id/ll_nodata"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,16 +34,16 @@
             android:id="@+id/notData"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/noshop" />
-        
-        <TextView 
+            android:src="@drawable/nocategory" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="对不起，没有找到相关数据"
-            android:textSize="14sp"
-            android:textColor="@color/grey500"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="10dp"/>
+            android:text="对不起，没有找到相关数据"
+            android:textColor="@color/grey500"
+            android:textSize="14sp" />
     </LinearLayout>
-
+    <include layout="@layout/loadind_big" />
 </RelativeLayout>

@@ -212,6 +212,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				}
 			});
 		}else if(status.equals(orderState[2])){//待发货
+			List<OrderItem> orderItems2=myOrderDetailBean.getOrderItems();
+			if(orderItems2!=null&&orderItems2.size()>0){
 			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
 			MyLogger.i(status_temp);
 			if(TextUtils.isEmpty(status_temp)){
@@ -235,7 +237,11 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					  }
 					}
 				}
-			});
+			  });
+			}else{
+				tv_01.setVisibility(View.GONE);
+				tv_02.setVisibility(View.GONE);
+			}
 		}else if(myOrderItem.getStatus().equals(orderState[3])){//已取消交易
 			tv_01.setVisibility(View.GONE);
 			tv_02.setText("确认收货");

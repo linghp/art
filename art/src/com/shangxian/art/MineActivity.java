@@ -210,6 +210,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ll_my_item6:
 			// 商品评价
+			if (isLoginAndToLogin())
 			startActivity(new Intent(this, CommentToActivity.class));
 			break;
 		case R.id.ll_my_item7:

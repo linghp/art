@@ -30,8 +30,10 @@ import android.view.WindowManager;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.shangxian.art.CommodityContentActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.ShopsActivity;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
@@ -217,9 +219,16 @@ public class CaptureActivity extends BaseActivity implements Callback {
 			//myToast("付款");
 			if (isLoginAndToLogin()) {
 				//myToast("付款");
-				CommonUtil.gotoActivity(mAc, PayActivity.class, true);
+			   //CommonUtil.gotoActivity(mAc, PayActivity.class, true);
+				PayActivity.startThisActivity("2", mAc);
 			}
-		} else {
+		}else if(res.contains("shop_id")){
+			//ShopsActivity.startThisActivity_url("http://"+res, mAc);
+			String[] res_array=res.split("/");
+			PayActivity.startThisActivity(res_array[res_array.length-1], mAc);
+		}else if(res.contains("product")){
+			CommodityContentActivity.startThisActivity_url("http://"+res, mAc);
+		}else{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			Drawable drawable = new BitmapDrawable(barcode);
 			//builder.setIcon(drawable);
