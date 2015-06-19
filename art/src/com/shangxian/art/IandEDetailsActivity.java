@@ -25,6 +25,8 @@ import com.shangxian.art.bean.IandEDetailsResultModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
+import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -102,7 +104,7 @@ public class IandEDetailsActivity extends BaseActivity{
 								}
 								month = spStr[1];
 							}
-							System.out.println(":::::::::::::::::list"+list);
+							MyLogger.i("收支明细列表数据："+list);
 							if (list != null) {
 								adapter = new IandEDetailsAdapter(IandEDetailsActivity.this, R.layout.item_iandedetails, list);
 								listview.setAdapter(adapter);
@@ -129,8 +131,15 @@ public class IandEDetailsActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				System.out.println(">>>>>>>>>>>>>>>"+list.get(position).getTradeId());
-				IandEDetailsContentActivity.startThisActivity(list.get(position).getTradeId()+"", IandEDetailsActivity.this);
+				
+				IandEDetailsContentActivity.startThisActivity(list.get(position).getTradeTitle(),
+						CommonUtil.priceConversion(list.get(position).getTotalPrice())+"",
+						list.get(position).getTradeNumber(),
+						list.get(position).getDirection(),
+						list.get(position).getPayType(),
+						list.get(position).getTransDate(),
+						list.get(position).getMonth(),
+						IandEDetailsActivity.this);
 			}
 		});
 		

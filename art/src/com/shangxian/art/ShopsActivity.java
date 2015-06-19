@@ -258,7 +258,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								}
 
 							}else {
-								MyLogger.i(">>>>>>>>>>>>>>>>>>shuju为空");
+								MyLogger.i(">>>>>>>>>>>>>>>>>>数据为空");
 							}
 
 						}

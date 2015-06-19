@@ -556,6 +556,10 @@
             android:name=".BuyerReturnOrderActivity"
             android:label="@string/title_activity_buyer_order" >
         </activity>
+        <activity
+            android:name=".ReturnOrderDetailsActivity"
+            android:label="@string/title_activity_buyer_order" >
+        </activity>
          <activity
             android:name=".PhotoViewPagerActivity">
         </activity>
