@@ -4,15 +4,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.bean.ModelText;
 import com.shangxian.art.bean.PayOrderInfo;
 import com.shangxian.art.utils.MyLogger;
 
@@ -95,15 +98,54 @@ public class PayServer extends BaseServer {
 	 * @param type
 	 * @param call
 	 */
+	
 	public void toPayment(String pass, String toid, double amount, String type,CallBack call){
 		RequestParams params = getParams();
 		params.addBodyParameter("from", curUser.getId() + "");
 		params.addBodyParameter("to", toid);
-		params.addBodyParameter("amount", amount + "");
+		params.addBodyParameter("amount", (int)amount*100+"");
 		params.addBodyParameter("payPassword", pass);
 		params.addBodyParameter("payType", type);
+		MyLogger.i("请求地址"+NET_PAYMENT);
+		MyLogger.i("卖家id"+toid+"密码："+pass+"金额"+amount+"类型"+type+"买家id："+curUser.getId());
+		MyLogger.i(""+params);
 		toXUtils(HttpMethod.POST, NET_PAYMENT, params, null, call);
+		
+		/*AbRequestParams params = new AbRequestParams();
+		params.put("from", curUser.getId() + "");
+		params.put("to", toid);
+		params.put("amount", amount*100 + "");
+		params.put("payPassword", pass);
+		params.put("payType", type);
+		toPost(NET_PAYMENT, params, new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				
+				MyLogger.i("支付后的数据："+res);
+			}
+		});*/
+
 	}
+	/*ModelText modelText;
+	public void toPayment(String pass, String toid, double amount, String type,OnPaymentListener l){
+		modelText = new ModelText();
+		modelText.setFrom(curUser.getId() + "");
+		modelText.setTo(toid);
+		modelText.setAmount(amount+"");
+		modelText.setPayPassword(pass);
+		modelText.setPayType(type);
+		Gson gson = new Gson();
+		String json = gson.toJson(modelText);
+		toPostJson2(NET_PAYMENT, json, new OnHttpListener() {
+			
+			@Override
+			public void onHttp(String res) {
+				MyLogger.i("支付后的数据："+res);
+				
+			}
+		});
+	}*/
 	
 	/**
 	 * 支付宝支付订单之前通知服务器

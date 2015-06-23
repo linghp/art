@@ -104,7 +104,6 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 	}

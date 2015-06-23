@@ -147,6 +147,7 @@ public class BaseServer {
 		//params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
 			params.addHeader("User-Token", curUser.getId() + "");
+			MyLogger.i(curUser.getId() + "");
 			return params;
 		} else {
 			return params;
