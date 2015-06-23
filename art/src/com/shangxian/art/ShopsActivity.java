@@ -56,7 +56,7 @@ import com.shangxian.art.view.TopView;
 public class ShopsActivity extends BaseActivity implements OnClickListener {
 	ImageView img, shopsimg, collectionimg, img1, img2;
 	TextView shopsname, guanzu, all, up, youhui, summary1, price1, summary2,
-			price2;
+	price2;
 	LinearLayout call, dingwei;
 
 	// 判断是否收藏
@@ -90,7 +90,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shops);
-		
+
 		initView();
 		initData();
 		initListener();
@@ -169,7 +169,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
-		
+
 		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
 	}
 
@@ -189,7 +189,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			geturl=geturls[geturls.length-1];
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
-		
+
 		refreshTask(url);
 
 	}
@@ -233,10 +233,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								shopid = model.getId() + "";
 								mAbImageLoader.display(img, Constant.BASEURL
 										+ model.getLogo());// 图片
-								
+
 								mAbImageLoader
-										.display(shopsimg, Constant.BASEURL
-												+ model.getIndexLogo());// 商铺图标
+								.display(shopsimg, Constant.BASEURL
+										+ model.getIndexLogo());// 商铺图标
 								shopsname.setText("" + model.getName());// 商铺名
 								guanzu.setText(model.getNoticeCount() + "人关注");// 关注
 								all.setText("" + model.getProductCount());// 全部商品
@@ -337,34 +337,34 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 						if (!collectionimg.isSelected()) {
 							new FollowServer().toDelFollowGoods(model.getId(),
 									true, new CallBack() {
-										@Override
-										public void onSimpleSuccess(Object res) {
-											myToast("取消关注成功");
-										}
+								@Override
+								public void onSimpleSuccess(Object res) {
+									myToast("取消关注成功");
+								}
 
-										@Override
-										public void onSimpleFailure(int code) {
-											myToast("取消关注失败");
-											collectionimg
-													.setSelected(!collectionimg
-															.isSelected());
-										}
-									});
+								@Override
+								public void onSimpleFailure(int code) {
+									myToast("取消关注失败");
+									collectionimg
+									.setSelected(!collectionimg
+											.isSelected());
+								}
+							});
 						} else {
 							new FollowServer().toFollowShop(model.getId(),
 									new OnFollowListener() {
-										@Override
-										public void onFollow(boolean isFollow) {
-											if (!isFollow) {
-												myToast("关注失败");
-												collectionimg
-														.setSelected(!collectionimg
-																.isSelected());
-											} else {
-												myToast("关注成功");
-											}
-										}
-									});
+								@Override
+								public void onFollow(boolean isFollow) {
+									if (!isFollow) {
+										myToast("关注失败");
+										collectionimg
+										.setSelected(!collectionimg
+												.isSelected());
+									} else {
+										myToast("关注成功");
+									}
+								}
+							});
 						}
 					}
 				}
@@ -442,8 +442,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				// CommonUtil.gotoActivity(ShopsActivity.this,
-				// ClassificationActivity.class, true);
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("isother", true);
+				CommonUtil.gotoActivityWithData(ShopsActivity.this, ClassificationActivity.class, bundle, false);
+
 			}
 		});
 		jianjie.setOnClickListener(new OnClickListener() {

@@ -53,6 +53,18 @@ public class BuyerReturnOrderAdapter extends
 			holder.tv_01.setVisibility(View.GONE);
 			holder.tv_02 = (TextView) convertView.findViewById(R.id.tv_02);
 			holder.tv_03 = (TextView) convertView.findViewById(R.id.tv_03);
+			holder.tv_1 = (TextView) convertView.findViewById(R.id.tv1);
+			holder.tv_2 = (TextView) convertView.findViewById(R.id.tv2);
+			
+			//显示的布局
+			convertView.findViewById(R.id.linear1).setVisibility(View.VISIBLE);
+			convertView.findViewById(R.id.view1).setVisibility(View.VISIBLE);
+			convertView.findViewById(R.id.iv_logo).setVisibility(View.GONE);
+			convertView.findViewById(R.id.tv_state).setVisibility(View.GONE);
+			convertView.findViewById(R.id.rl_delivery).setVisibility(View.GONE);
+			convertView.findViewById(R.id.linear2).setVisibility(View.VISIBLE);
+			convertView.findViewById(R.id.view2).setVisibility(View.VISIBLE);
+			
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
@@ -73,6 +85,7 @@ public class BuyerReturnOrderAdapter extends
 			View child = LayoutInflater.from(mAc).inflate(
 					R.layout.list_car_goods_item, null);
 			holder.ll_goodsitem_add.addView(child);
+			
 			((TextView) child.findViewById(R.id.car_goodsname))
 					.setText(buyerReturnOrderProductInfo.getName());
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
@@ -82,6 +95,10 @@ public class BuyerReturnOrderAdapter extends
 					.findViewById(R.id.car_goodsstatus);
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
+			holder.storeName.setText("退货编号:"+buyerReturnOrderInfo.getReturnOrderNum());          //退货编号
+			holder.tv_1.setText("订单号:"+buyerReturnOrderInfo.getOrderNumber());//订单号
+			holder.tv_2.setText("¥"+(float)buyerReturnOrderInfo.getTotalPrice());//退款金额
+			
 			goodsNum.setText("x" + buyerReturnOrderProductInfo.getQuantity());
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(buyerReturnOrderProductInfo
@@ -236,5 +253,7 @@ public class BuyerReturnOrderAdapter extends
 		public TextView tv_03;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
+		
+		public TextView tv_1,tv_2;
 	}
 }

@@ -35,27 +35,31 @@ public class MyConcern_Shops_Fragment extends BaseFragment{
 	private FollowShopAdapter adapter;
 	protected SearchProductInfo info;
 	private AbPullToRefreshView mListRefreshView;
-	
-	
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		initMainView();
-		initData();
 		return view;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		changeUi(UiModel.loading);
 	}
-	
+	@Override
+	public void onResume() {
+		super.onResume();
+		initData();
+	}
+
 	private void initData() {
 		new FollowServer().toFollowList(true, new OnFollowInfoListener(){
 			@Override
@@ -74,7 +78,7 @@ public class MyConcern_Shops_Fragment extends BaseFragment{
 			}
 		});
 	}
-	
+
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
@@ -84,7 +88,7 @@ public class MyConcern_Shops_Fragment extends BaseFragment{
 		mListRefreshView = (AbPullToRefreshView) view.findViewById(R.id.mPullRefreshView);
 		adapter = new FollowShopAdapter(getActivity(), R.layout.follow_shop_item, null);
 		listView.setAdapter(adapter);
-		
+
 		mListRefreshView.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
 			@Override
 			public void onHeaderRefresh(AbPullToRefreshView v) {

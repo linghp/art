@@ -34,25 +34,32 @@ public class MyConcern_Commodity_Fragment extends BaseFragment{
 	private ClassityCommodiyAdp adapter;
 	private SearchProductInfo info;
 	private AbPullToRefreshView mListRefreshView;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		initMainView();	
+		initlistener();
 		return view;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+
 		changeUi(UiModel.loading);
 	}
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		toLoad();
+	}
 	private void initMainView() {
 		view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_main_action_frame,
@@ -60,11 +67,13 @@ public class MyConcern_Commodity_Fragment extends BaseFragment{
 		//tv_empty = (TextView) view.findViewById(R.id.tv_empty);
 		listView = (ListView) view.findViewById(R.id.lv_action);
 		mListRefreshView = (AbPullToRefreshView) view.findViewById(R.id.mPullRefreshView);
-		
+
 		adapter = new ClassityCommodiyAdp(getActivity(), R.layout.item_classitycommodity, null);
 		listView.setAdapter(adapter);
-		toLoad();
 		
+	}
+
+	private void initlistener() {
 		mListRefreshView.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
 			@Override
 			public void onHeaderRefresh(AbPullToRefreshView v) {
@@ -79,7 +88,6 @@ public class MyConcern_Commodity_Fragment extends BaseFragment{
 			}
 		});
 	}
-	
 	private void toLoad(){
 		new FollowServer().toFollowList(false, new OnFollowInfoListener (){
 			@Override
@@ -98,8 +106,8 @@ public class MyConcern_Commodity_Fragment extends BaseFragment{
 			}
 		});
 	}
-	
+
 	private void loadMore(){
-		
+
 	}
 }
