@@ -223,8 +223,10 @@ public class CaptureActivity extends BaseActivity implements Callback {
 			}
 		}else if(res.contains("shop_id")){
 			//ShopsActivity.startThisActivity_url("http://"+res, mAc);
+			if (isLoginAndToLogin()) {
 			String[] res_array=res.split("/");
 			PayActivity.startThisActivity(res_array[res_array.length-1], mAc);
+			}
 		}else if(res.contains("product")){
 			CommodityContentActivity.startThisActivity_url("http://"+res, mAc);
 		}else{

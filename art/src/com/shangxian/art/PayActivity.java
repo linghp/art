@@ -210,10 +210,8 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		PayServer.loadAccountSum(new OnAccountSumListener() {
 			@Override
 			public void onAccountSum(AccountSumInfo info) {
-				System.out
-						.println("account ======================+++++++++++++++++"
-								+ info == null ? "null" : info.toString());
 				if (info != null && !info.isNull()) {
+					MyLogger.i(info.toString());
 					mAccount = info;
 					tv_bi.setText("余额"
 							+ String.format("%.2f", mAccount.getAlb()) + "元");
@@ -517,7 +515,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		if (isZhi) {
 			int userid=getUserId();
 			if(userid>0){
-			AliPayServer.toPay(trideno, productName, userid+"", 0.01 + "",
+			AliPayServer.toPay(trideno, productName, userid+"", price + "",
 					new com.shangxian.art.alipays.AliPayBase.OnPayListener() {
 						@Override
 						public void onSuccess(String res) {
