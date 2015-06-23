@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,7 +29,9 @@ import com.shangxian.art.adapter.ClassificationAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ClassificationModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
+import com.shangxian.art.view.TopView;
 
 /**
  * 分类
@@ -43,6 +46,8 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 
 	private AbHttpUtil httpUtil = null;
 	private LinearLayout ll_noData;
+
+	boolean isother = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,30 +58,42 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	}
 
 	//初始化控件
-		private void initView() {
-			// TODO Auto-generated method stub
-			listView = (ListView) findViewById(R.id.classify);
-			ll_nonetwork=findViewById(R.id.ll_nonetwork);
-			loading_big=findViewById(R.id.loading_big);
-			ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
+	private void initView() {
+		Intent intent = getIntent();
+		isother = intent.getBooleanExtra("isother", false);
+		if (isother == true) {
+			topView = (TopView) findViewById(R.id.top_title);
+			topView.setActivity(this);
+			topView.setVisibility(View.VISIBLE);
+			topView.hideLeftBtnz();
+			topView.hideTitle();
+			topView.showRightBtn();
+			topView.setCenterListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
+				}
+			});
+			topView.setRightText("取消",new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
 		}
+
+		listView = (ListView) findViewById(R.id.classify);
+		ll_nonetwork=findViewById(R.id.ll_nonetwork);
+		loading_big=findViewById(R.id.loading_big);
+		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
+
+
+	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		topView = MainActivity.getTopView();
-		topView.setActivity(this);
-		topView.showLeftBtn();
-		topView.showRightBtn();
-		topView.showCenterSearch();
-		topView.hideTitle();
-		MainActivity activity = (MainActivity) getParent();
-		topView.setLeftBtnListener(activity);
-		topView.setRightBtnListener(activity);
-		topView.setRightBtnDrawable(R.drawable.map);
-		topView.setCenterListener(activity);
-		
 	}
 
 	//添加数据
@@ -114,8 +131,8 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 			@Override
 			public void onFinish() {
 				// AbDialogUtil.removeDialog(ClassificationActivity.this);
-				 mAbPullToRefreshView.onHeaderRefreshFinish();
-				 loading_big.setVisibility(View.GONE);
+				mAbPullToRefreshView.onHeaderRefreshFinish();
+				loading_big.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -188,11 +205,11 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 							}else {
 								ll_noData.setVisibility(View.VISIBLE);
 							}
-//							adapter.notifyDataSetChanged();
+							//							adapter.notifyDataSetChanged();
 						}else {
 							ll_noData.setVisibility(View.VISIBLE);
 						}
-						
+
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -208,7 +225,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		// 设置监听器
 		mAbPullToRefreshView.setOnHeaderRefreshListener(this);
 		mAbPullToRefreshView.setLoadMoreEnable(false);
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

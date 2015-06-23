@@ -6,11 +6,17 @@
 
     <include layout="@layout/no_network" />
 
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <com.ab.view.pullview.AbPullToRefreshView
         android:id="@+id/mPullRefreshView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-         >
+        android:layout_below="@id/top_title" >
 
         <ListView
             android:id="@+id/classify"
@@ -44,5 +50,7 @@
             android:text="抱歉，没有找到分类数据"
             style="@style/nodata_text_attr"/>
     </LinearLayout>
+
     <include layout="@layout/loadind_big" />
+
 </RelativeLayout>
