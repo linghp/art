@@ -165,7 +165,7 @@ public class BaseActivity extends AbActivity{
 	}
 	protected void showNoData() {
 		if (ll_loading_big != null) {
-			ll_loading_big.setVisibility(View.VISIBLE);
+			ll_nodata.setVisibility(View.VISIBLE);
 		}
 	}
 	protected void hideloading() {
@@ -175,7 +175,7 @@ public class BaseActivity extends AbActivity{
 	}
 	protected void showloading() {
 		if (ll_nodata != null) {
-			ll_nodata.setVisibility(View.VISIBLE);
+			ll_loading_big.setVisibility(View.VISIBLE);
 		}
 	}
 

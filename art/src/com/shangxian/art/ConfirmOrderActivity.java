@@ -64,7 +64,7 @@ public class ConfirmOrderActivity extends BaseActivity implements
 	private List<ListCarStoreBean> listStoreBean;
 	// private HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans;
 	// private Map
-	private float totalprice;
+	private String totalprice;
 	private boolean isNowBuy;
 
 	@Override
@@ -110,7 +110,7 @@ public class ConfirmOrderActivity extends BaseActivity implements
 
 	private void initdata() {
 		isNowBuy = getIntent().getBooleanExtra("isNowBuy", false);
-		totalprice = getIntent().getFloatExtra("totalprice", 0f);
+		totalprice = getIntent().getStringExtra("totalprice");
 		tv_car_allprice_value.setText("￥" + totalprice + "元");
 		listStoreBean = (List<ListCarStoreBean>) getIntent()
 				.getSerializableExtra("listCarItem_stores");

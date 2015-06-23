@@ -43,7 +43,7 @@ import com.shangxian.art.view.CircleImageView1;
 import com.shangxian.art.view.TopView;
 
 /**
- * 分类/首页---> 商品展示list
+ * 分类/首页---> 商铺展示list
  * 
  * @author Administrator
  *

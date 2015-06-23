@@ -41,9 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
-            android:text="对不起，没有找到相关数据"
-            android:textColor="@color/grey500"
-            android:textSize="14sp" />
+            android:text="抱歉，没有找到分类数据"
+            style="@style/nodata_text_attr"/>
     </LinearLayout>
     <include layout="@layout/loadind_big" />
 </RelativeLayout>

@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +43,7 @@ import com.shangxian.art.net.CommentServer.OnHttpResultAddCommentListener;
 import com.shangxian.art.photochooser.ImagePagerActivity;
 import com.shangxian.art.photochooser.PhotoOperate;
 import com.shangxian.art.photochooser.PhotoPickActivity;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
  * 评价商品           现只能对单个商品评论
@@ -51,13 +55,12 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 	private EditText et_comment;
 	private RatingBar ratingbar;
 	private LinearLayout ll_view;
-	private float ratings = 0;
 	
 	private String ordernumber, userid,comment,productId;
 	private List<ProductItemDto> productItemDtos;
 
-	private int ratingValue=-1;
-	private boolean isAnonymous=true;
+	private int ratingValue=Integer.MIN_VALUE;
+	private boolean isAnonymous=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,15 +91,16 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 		tv_tijiao = (TextView) findViewById(R.id.reviewsproduct_baocun);//提交
 		tv_gongkai = (TextView) findViewById(R.id.reviewsproduct_gongkai);//公开
 		tv_niming = (TextView) findViewById(R.id.reviewsproduct_niming);//匿名
-		ratingbar = (RatingBar) findViewById(R.id.reviewsproduct_starRating);//评分
+		//ratingbar = (RatingBar) findViewById(R.id.reviewsproduct_starRating);//评分
 		// 设置评星星级
-		ratingbar.setRating(ratings);
+		//ratingbar.setRating(ratings);
 		
 		ll_view = (LinearLayout) findViewById(R.id.reviewsproduct_linear2);
 		//添加布局
 		View child = inflater.inflate(
 				R.layout.item_reviewsproduct, null);
 		ll_view.addView(child);
+		ratingbar = (RatingBar) findViewById(R.id.item_reviewsproduct_starRating);
 		et_comment=(EditText) findViewById(R.id.item_reviewsproduct_edit);
 		gridView=(GridView) findViewById(R.id.gridView);
 		
@@ -159,7 +163,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 			public void onRatingChanged(RatingBar ratingBar, float rating,
 					boolean fromUser) {
 				myToast(""+rating);
-				ratingValue=(int) rating;
+				ratingValue=(int) rating-3;
 			}
 		});
 		tv_quxiao.setOnClickListener(new OnClickListener() {
@@ -214,7 +218,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 		if(TextUtils.isEmpty(comment)){
 			myToast("评论内容不能为空");
 			return false;
-		}else if(ratingValue==-1){
+		}else if(ratingValue==Integer.MIN_VALUE){
 			myToast("请给个评分呗");
 			return false;
 		}
@@ -225,7 +229,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
     	RequestParams params = new RequestParams();
         for (PhotoData item : mData) {
         	  File file = new File(Global.getPath(this, item.uri));
-              params.addBodyParameter("photo", file);
+              params.addBodyParameter("files", file);
         }
         
         params.addQueryStringParameter("comment", comment);
@@ -234,6 +238,8 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
         params.addQueryStringParameter("productId", productId);
         params.addQueryStringParameter("userId", userid);
         params.addQueryStringParameter("level", ratingValue+"");
+        //params.addQueryStringParameter("isPublic", isAnonymous+"");
+        MyLogger.i(params.getQueryStringParams().toString());
         CommentServer.toAddComment(params, this);
     }
 

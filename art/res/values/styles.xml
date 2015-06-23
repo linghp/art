@@ -94,5 +94,11 @@
         <item name="android:layout_height">100dp</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:src">@drawable/image_loading</item>
+     </style>
+    
+       <!-- 无数据时显示的字体样式 -->
+    <style name="nodata_text_attr">
+        <item name="android:textColor">@color/grey500</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

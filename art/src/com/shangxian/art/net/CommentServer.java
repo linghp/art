@@ -3,12 +3,15 @@ package com.shangxian.art.net;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.shangxian.art.bean.CommonBean;
+import com.shangxian.art.bean.CommonBeanObject;
 import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.utils.MyLogger;
 
@@ -110,7 +113,18 @@ public class CommentServer extends BaseServer {
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
 				MyLogger.i(arg0.result);
-				l.onHttpResultAddComment(true);
+				CommonBeanObject commonBean=null;
+				try {
+					commonBean=gson.fromJson(arg0.result, CommonBeanObject.class);
+				} catch (JsonSyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(commonBean!=null&&commonBean.getResult_code().equals("200")){
+					l.onHttpResultAddComment(true);
+				}else{
+					l.onHttpResultAddComment(false);
+				}
 			}
 		});
 //		toPostWithToken(NET_COMMENTADD, pairs, new OnHttpListener() {
