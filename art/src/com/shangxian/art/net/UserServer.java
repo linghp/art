@@ -17,6 +17,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.utils.MyLogger;
 
 public class UserServer extends BaseServer {
 	/**
@@ -36,7 +37,7 @@ public class UserServer extends BaseServer {
 		toPost(NET_LOGIN, params, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
-				System.out.println("user  ===============================  "
+				MyLogger.i("user ===============================  "
 						+ res);
 				if (l != null) {
 					if (TextUtils.isEmpty(res)) {
@@ -53,6 +54,7 @@ public class UserServer extends BaseServer {
 		Type type = new TypeToken<UserInfo>() {
 		}.getType();
 		UserInfo info = gson.fromJson(res, type);
+		
 		return info;
 
 	}

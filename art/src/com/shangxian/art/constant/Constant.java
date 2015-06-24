@@ -1,5 +1,8 @@
 package com.shangxian.art.constant;
 
+import com.shangxian.art.bean.ShopLocInfo;
+import com.shangxian.art.bean.UserInfo;
+
 
 
 public class Constant {
@@ -57,6 +60,7 @@ public class Constant {
  	public static final String PRE_USER_NICKNAME = "user_nickName";
  	public static final String PRE_USER_PHONENUMBER = "user_phoneNumber";
  	public static final String PRE_USER_SCALEPHOTO = "user_scalePhoto";
+ 	public static final String INT_SHOPID = "shopId";
  	
  	public static final String PRE_LOGIN_STATE = "pre_isLogin";
  	public static final String PRE_LOGIN_USERNAME = "pre_username";//上一次登录用户名
@@ -65,6 +69,8 @@ public class Constant {
  	
  	public static final String INT_SHOPS_2_LOC = "int_shops_2_loc";
  	public static final String INT_LOC_TOTYPE = "int_loc_totype";
+ 	
+
 // 	public static final String INT_LOC_NEARLY_SHOPINFO = "int_loc_shopinfo";
  	
  	/***

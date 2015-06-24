@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.UserInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.utils.CommonUtil;
@@ -162,8 +163,17 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 
 		case R.id.ll_tab1:
 			// 商品管理
-			CommonUtil.gotoActivity(MineActivity.this,
-					MerchandiseControlActivity.class, false);
+//			CommonUtil.gotoActivity(MineActivity.this,
+//					MerchandiseControlActivity.class, false);
+			//我的商铺
+			
+			String shopid = LocalUserInfo.getInstance(this).getString(Constant.INT_SHOPID);
+			MyLogger.i("shopid："+shopid);
+			if (shopid != "0") {
+				ShopsActivity.startThisActivity(shopid, MineActivity.this);
+			}
+			
+			
 			break;
 		case R.id.ll_tab2:
 			// 订单管理

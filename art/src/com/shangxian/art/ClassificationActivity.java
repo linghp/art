@@ -35,7 +35,7 @@ import com.shangxian.art.view.TopView;
 
 /**
  * 分类
- * @author Administrator
+ * @author zyz
  *
  */
 public class ClassificationActivity extends BaseActivity implements OnClickListener,OnHeaderRefreshListener{
