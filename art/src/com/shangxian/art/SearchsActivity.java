@@ -2,7 +2,6 @@ package com.shangxian.art;
 
 import java.lang.reflect.Type;
 
-import m.framework.utils.Utils;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +22,7 @@ import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.SearchServer;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsActivity extends BaseActivity {
@@ -273,7 +273,7 @@ public class SearchsActivity extends BaseActivity {
 		ll_group.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				popu.showAsDropDown(ll_scan, -Utils.dipToPx(mAc, 8), 0);
+				popu.showAsDropDown(ll_scan, -CommonUtil.dip2px(mAc, 8), 0);
 			}
 		});
 	}

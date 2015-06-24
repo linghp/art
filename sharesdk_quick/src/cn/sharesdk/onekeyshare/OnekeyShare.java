@@ -8,8 +8,8 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static cn.sharesdk.framework.utils.BitmapHelper.captureView;
-import static cn.sharesdk.framework.utils.R.getStringRes;
+import static com.mob.tools.utils.BitmapHelper.captureView;
+import static com.mob.tools.utils.R.getStringRes;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.utils.UIHandler;
+import com.mob.tools.utils.UIHandler;
 
 /**
  * 快捷分享的入口
@@ -452,12 +452,12 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 
 			if (!started) {
 				started = true;
-				if (this == callback) {
+//				if (this == callback) {
 					int resId = getStringRes(context, "sharing");
 					if (resId > 0) {
 						showNotification(context.getString(resId));
 					}
-				}
+//				}
 			}
 			plat.setPlatformActionListener(callback);
 			ShareCore shareCore = new ShareCore();
@@ -589,7 +589,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 
 	// 在状态栏提示分享操作
 	private void showNotification(String text) {
-		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();		
+		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
 	/** 是否支持QQ,QZone授权登录后发微博 */

@@ -468,8 +468,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_share:
-			CommonUtil.showShare(this, "test", "http://www.peoit.com/",
-					"http://www.peoit.com/");
+			if(model!=null){
+			CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",
+					Constant.BASEURL+model.getLogo(),null);
+			}
 			break;
 
 		default:

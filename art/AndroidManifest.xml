@@ -74,7 +74,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
--
+
     <application
         android:name=".base.MyApplication"
         android:allowBackup="false"
@@ -98,11 +98,10 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
--
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -289,11 +288,9 @@
             android:name=".JieSuanLiShiActivity"
             android:label="@string/title_activity_mine" >
         </activity>
--
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_classification" >
--
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -335,48 +332,22 @@
         </activity>
 
         <!-- sharesdk -->
-        
-        <activity
-            android:name="com.shangxian.art.LogisticsInformationActivity"></activity>
 
--
+        <activity android:name="com.shangxian.art.LogisticsInformationActivity" >
+        </activity>
         <activity
-            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" >
-
-            <!-- AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter 的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。 -->
-
-            <meta-data
-                android:name="AuthorizeAdapter"
-                android:value="cn.sharesdk.demo.MyAdapter" />
-
-            <!-- QZoneWebShareAdapter表示一个继承自cn.sharesdk.tencent.qzone.QZoneWebShareAdapter 的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。 开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。 <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" /> -->
-
-
-            <!-- Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是 “db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权 -->
-
--
-            <intent-filter>
-                <data android:scheme="db-7janx53ilz11gbs" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <!-- 如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW 事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置， 则分享结束以后不能得到正确的回调 -->
-
--
             <intent-filter>
                 <data android:scheme="tencent100371282" />
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -394,12 +365,10 @@
 
         <!-- Required SDK核心功能 -->
 
--
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
--
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
@@ -418,12 +387,10 @@
 
         <!-- Required SDK 核心功能 -->
 
--
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
             android:exported="false" >
--
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -434,11 +401,9 @@
 
         <!-- Required SDK核心功能 -->
 
--
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true" >
--
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
@@ -446,7 +411,6 @@
 
                 <category android:name="com.shangxian.art" />
             </intent-filter>
--
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -454,7 +418,6 @@
 
             <!-- Optional -->
 
--
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -469,11 +432,9 @@
 
         <!-- User defined. 用户自定义的广播接收器 -->
 
--
         <receiver
             android:name=".receiver.MyPushReceiver"
             android:enabled="true" >
--
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
 
@@ -560,23 +521,21 @@
             android:name=".ReturnOrderDetailsActivity"
             android:label="@string/title_activity_buyer_order" >
         </activity>
-         <activity
-            android:name=".PhotoViewPagerActivity">
+        <activity android:name=".PhotoViewPagerActivity" >
         </activity>
         <activity
             android:name=".CommentToActivity"
             android:label="@string/mine_goodscomment" >
         </activity>
         <!-- 以下三个为图片选择器的 -->
-         <activity
+        <activity
             android:name="com.shangxian.art.photochooser.PhotoPickActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.shangxian.art.photochooser.PhotoPickDetailActivity"
             android:label="@string/app_name" />
-         <activity
+        <activity
             android:name="com.shangxian.art.photochooser.ImagePagerActivity"
             android:label="@string/app_name" />
     </application>

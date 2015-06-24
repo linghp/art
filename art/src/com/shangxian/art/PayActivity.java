@@ -93,7 +93,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 					et_scan.setText(String.format("%.2f", price));
 				} else {
 					// et_scan.setText(text);
-					if (price>0&&mAccount!=null&&!mAccount.isNull()) {
+					if (price>0.01&&mAccount!=null&&!mAccount.isNull()) {
 						if (isBi && !isYuan) {
 							type = "ALB";
 //							if (mon > mAccount.getAlb()) {
@@ -342,7 +342,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	}
 
 	public static void startThisActivity_Fragment(List<String> orderids,
-			float totalprice, String productName,Activity mAc, Fragment fragment) {
+			String totalprice, String productName,Activity mAc, Fragment fragment) {
 		Intent intent = new Intent(mAc, PayActivity.class);
 		intent.putExtra("orderids", (Serializable) orderids);
 		intent.putExtra("totalprice", totalprice);
@@ -418,7 +418,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 								}
 							}
 						});
-					} else if(!TextUtils.isEmpty(storeId)){
+					} else if(!TextUtils.isEmpty(storeId)){//扫码支付
 						// PayServer.toPayment(pass, 3, (int) (lastMon), type,
 						// new OnPaymentListener() {
 						// @Override
@@ -469,7 +469,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		MyLogger.i(myOrderItem.toString());
 		data.putExtra("pay_order_res", true);
 		data.putExtra("MyOrderItem", myOrderItem);
-		if (orderids.size() == 1) {
+		if (orderids.size() == 1) {//如果只有一个订单就跳到订单详情
 			MyOrderDetailsActivity
 					.startThisActivity(
 							orderids.get(0),
@@ -524,7 +524,12 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		if (isZhi) {
 			int userid=getUserId();
 			if(userid>0){
-			AliPayServer.toPay(trideno, productName, userid+"", price + "",
+				String form_to=userid+"";
+				if(!TextUtils.isEmpty(storeId)){
+					form_to=form_to+","+storeId;
+				}
+				
+			AliPayServer.toPay(trideno, productName, form_to, price + "",
 					new com.shangxian.art.alipays.AliPayBase.OnPayListener() {
 						@Override
 						public void onSuccess(String res) {

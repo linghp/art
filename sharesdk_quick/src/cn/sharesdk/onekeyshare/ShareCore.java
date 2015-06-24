@@ -22,7 +22,7 @@ import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.utils.R;
+import com.mob.tools.utils.R;
 
 /**
  * ShareCore是快捷分享的实际出口，此类使用了反射的方式，配合传递进来的HashMap，

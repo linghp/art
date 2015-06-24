@@ -71,23 +71,23 @@ public class PayServer extends BaseServer {
 		});
 	}
 	
-	public static void toPayment(String pass, int toid, int amount, String type, final OnPaymentListener l){
-		AbRequestParams params = new AbRequestParams();
-		params.put("from", curUser.getId() + "");
-		params.put("to", "3");
-		params.put("amount", amount + "");
-		params.put("payPassword", pass);
-		params.put("payType", type);
-		MyLogger.i(curUser.getId() + " ---- " + String.valueOf(amount) + " ---- " + pass + "----" + type);
-		toPost("http://test.peoit.com/api/payment", params, new OnHttpListener() {
-			@Override
-			public void onHttp(String res) {
-				if (l != null) {
-					l.onPayment(res);
-				}
-			}
-		});
-	}
+//	public static void toPayment(String pass, int toid, int amount, String type, final OnPaymentListener l){
+//		AbRequestParams params = new AbRequestParams();
+//		params.put("from", curUser.getId() + "");
+//		params.put("to", "3");
+//		params.put("amount", amount + "");
+//		params.put("payPassword", pass);
+//		params.put("payType", type);
+//		MyLogger.i(curUser.getId() + " ---- " + String.valueOf(amount) + " ---- " + pass + "----" + type);
+//		toPost("http://test.peoit.com/api/payment", params, new OnHttpListener() {
+//			@Override
+//			public void onHttp(String res) {
+//				if (l != null) {
+//					l.onPayment(res);
+//				}
+//			}
+//		});
+//	}
 	
 	/**
 	 * 扫码支付

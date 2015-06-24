@@ -461,11 +461,26 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			}
 			break;
 		case R.id.tv_share:
-			CommonUtil.showShare(this, "test", "http://www.peoit.com/",
-					"http://www.peoit.com/");
+			if(model!=null){
+				List<String> photos=model.getPhotos();
+				String[] photos_array=photos.toArray(new String[photos.size()]);
+//				for (String string : photos_array) {
+//					string=Constant.BASEURL+string;
+//				}
+				for (int i = 0; i < photos_array.length; i++) {
+					photos_array[i]=Constant.BASEURL+photos_array[i];
+				}
+				for (String string : photos_array) {
+					MyLogger.i(string);
+				}
+			CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",null,
+					photos_array);
+			}
 			break;
 		case R.id.ll_comment:
-			CommentActivity.startThisActivity("", this);
+			if(model!=null){
+			CommentActivity.startThisActivity(model.getId(), this);
+			}
 			break;
 		case R.id.commoditycontent_dingwei:
 			Bundle bundle = new Bundle();

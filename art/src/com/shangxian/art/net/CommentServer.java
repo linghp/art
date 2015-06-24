@@ -1,18 +1,25 @@
 package com.shangxian.art.net;
 
+import java.util.List;
+
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.shangxian.art.bean.CommonBean;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shangxian.art.SearchsActivity.UiModel;
+import com.shangxian.art.bean.CommentLevelAllBean;
 import com.shangxian.art.bean.CommonBeanObject;
+import com.shangxian.art.bean.GoodsCommentBean;
 import com.shangxian.art.bean.MyOrderItem_all;
+import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.utils.MyLogger;
 
 public class CommentServer extends BaseServer {
@@ -35,9 +42,24 @@ public class CommentServer extends BaseServer {
 	public interface OnHttpResultAddCommentListener {
 		void onHttpResultAddComment(Boolean issuccess);
 	}
+	/*
+	 * 返回获取商品评论监听
+	 */
+	public interface OnHttpResultGetCommentListener {
+		void onHttpResultGetComment(List<GoodsCommentBean> goodsCommentBeans);
+	}
+	/*
+	 * 返回获取商品评论监听
+	 */
+	public interface OnHttpResultGetCommentLevelAllListener {
+		void onHttpResultGetCommentLevelAll(CommentLevelAllBean commentLevelAllBean);
+	}
 
 	
-
+/**
+ * 获取待评论和已评论
+ * @param l
+ */
 	public static void toPostMyComment(final OnHttpResultListener l) {
 		toPostJson(NET_COMMENTTO, "{}", new OnHttpListener() {
 			@Override
@@ -140,5 +162,68 @@ public class CommentServer extends BaseServer {
 //				}
 //			}
 //		});
+	}
+	
+	/**
+	 * 获取商品评论
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toGetComment(String url_part,String productid,
+			final OnHttpResultGetCommentListener l) {
+		String url=HOST+url_part+"?productId="+productid;
+		MyLogger.i(url);
+		toXUtils(HttpMethod.GET, url, null, new TypeToken<List<GoodsCommentBean>>(){}.getType(), new CallBack() {	
+			@Override
+			public void onSimpleSuccess(Object res) {
+				if (res != null) {
+					List<GoodsCommentBean> goodsCommentBeans = (List<GoodsCommentBean>) res;
+					if (goodsCommentBeans!=null) {
+						MyLogger.i(goodsCommentBeans.toString());
+						l.onHttpResultGetComment(goodsCommentBeans);
+					}else {
+						l.onHttpResultGetComment(null);
+					}
+				}
+			}
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				l.onHttpResultGetComment(null);
+			}
+		});
+	}
+	/**
+	 * 获取评论的好评 中评 差评的数量
+	 * 
+	 * @param status
+	 * @param json
+	 * @param l
+	 */
+	public static void toGetCommentLevelAll(String productid,
+			final OnHttpResultGetCommentLevelAllListener l) {
+		String url=HOST+"getLevelAll"+"?productId="+productid;
+		MyLogger.i(url);
+		toXUtils(HttpMethod.GET, url, null, new TypeToken<CommentLevelAllBean>(){}.getType(), new CallBack() {	
+			@Override
+			public void onSimpleSuccess(Object res) {
+				if (res != null) {
+					CommentLevelAllBean commentLevelAllBean = (CommentLevelAllBean) res;
+					if (commentLevelAllBean!=null) {
+						MyLogger.i(commentLevelAllBean.toString());
+						l.onHttpResultGetCommentLevelAll(commentLevelAllBean);
+					}else {
+						l.onHttpResultGetCommentLevelAll(null);
+					}
+				}
+			}
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				l.onHttpResultGetCommentLevelAll(null);
+			}
+		});
 	}
 }

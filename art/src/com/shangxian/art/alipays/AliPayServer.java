@@ -42,11 +42,11 @@ public class AliPayServer extends AliPayBase{
 	 *            // 商品价格(不为空)
 	 * @param l           
 	 */
-	public static void toPay(String order_id, String good_name, String good_det,
-			String good_price){
-		String order = AliPayBuilder.createAliPayOrder(order_id, good_name, good_det, good_price).toSign();
-		pay(order, null);
-	}
+//	public static void toPay(String order_id, String good_name, String good_det,
+//			String good_price){
+//		String order = AliPayBuilder.createAliPayOrder(order_id, good_name, good_det, good_price).toSign();
+//		pay(order, null);
+//	}
 
 	
 	/**

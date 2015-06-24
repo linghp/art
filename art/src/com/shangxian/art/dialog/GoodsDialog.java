@@ -429,7 +429,9 @@ public class GoodsDialog extends Dialog implements
 					// 设置EditText光标位置 为文本末端
 					edt.setSelection(edt.getText().toString().length());
 					num = numInt;
+					if(commodityContentModel!=null){
 					commodityContentModel.buyProductCount=num;
+					}
 				}
 			}
 		}

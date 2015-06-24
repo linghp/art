@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose;
  * @author Administrator
  *
  */
-public class CommonBeanObject implements Serializable {
+public class CommonBeanObject<T> implements Serializable {
 	@Expose
 	private String result_code="";
 
@@ -18,7 +18,7 @@ public class CommonBeanObject implements Serializable {
 	private String reason="";
 
 	@Expose
-	private Object result;
+	private T object;
 
 	public String getResult_code() {
 		return result_code;
@@ -36,11 +36,20 @@ public class CommonBeanObject implements Serializable {
 		this.reason = reason;
 	}
 
+	public T getObject() {
+		return object;
+	}
+
+	public void setObject(T object) {
+		this.object = object;
+	}
 
 	@Override
 	public String toString() {
 		return "CommonBeanObject [result_code=" + result_code + ", reason="
-				+ reason + ", result=" + result + "]";
+				+ reason + ", object=" + object + "]";
 	}
+
+
 
 }

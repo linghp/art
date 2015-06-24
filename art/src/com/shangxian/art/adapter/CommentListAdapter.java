@@ -26,6 +26,7 @@ import com.ab.util.AbViewHolder;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.NearlyActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.bean.GoodsCommentBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
@@ -41,7 +42,7 @@ public class CommentListAdapter extends BaseAdapter{
     //单行的布局
     private int mResource;
     //列表展现的数据
-    private List mData;
+    private List<GoodsCommentBean> mData;
     //图片下载器
     private AbImageLoader mAbImageLoader = null;
     
@@ -53,7 +54,7 @@ public class CommentListAdapter extends BaseAdapter{
     * @param from Map中的key
     * @param to view的id
     */
-    public CommentListAdapter(Context context, List data,
+    public CommentListAdapter(Context context, List<GoodsCommentBean> data,
             int resource){
     	this.mContext = context;
     	this.mData = data;
@@ -62,6 +63,8 @@ public class CommentListAdapter extends BaseAdapter{
         this.mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //图片下载器
         mAbImageLoader = AbImageLoader.newInstance(mContext);
+        mAbImageLoader.setMaxHeight(100);
+        mAbImageLoader.setMaxWidth(100);
         mAbImageLoader.setLoadingImage(R.drawable.image_loading);
         mAbImageLoader.setErrorImage(R.drawable.image_error);
         mAbImageLoader.setEmptyImage(R.drawable.image_empty);
@@ -95,26 +98,30 @@ public class CommentListAdapter extends BaseAdapter{
           RatingBar ratingBar=AbViewHolder.get(convertView, R.id.ratingbar);
           LinearLayout ll_itemsImage=AbViewHolder.get(convertView, R.id.ll_itemsImage);
           TextView tv_date = AbViewHolder.get(convertView, R.id.tv_date);
-          ratingBar.setRating(4.2f);
+          
 		  //获取该行的数据
-          final Map<String, Object>  obj = (Map<String, Object>)mData.get(position);
-          String imageUrl = (String)obj.get("itemsIcon");
+          final GoodsCommentBean  goodsCommentBean = mData.get(position);
+          tv_reviewername.setText(goodsCommentBean.getPersionName());
+          ratingBar.setRating(goodsCommentBean.getLevel()+3);
+          tv_commentcontent.setText(goodsCommentBean.getComment());
+          String photoUrl = goodsCommentBean.getUserScaleimage();
 //          itemsTitle.setText((String)obj.get("itemsTitle"));
 //          itemsText.setText((String)obj.get("itemsText"));
           //设置加载中的View
 //          mAbImageLoader.setLoadingView(convertView.findViewById(R.id.progressBar));
           //图片的下载
-          mAbImageLoader.display(itemsIcon,imageUrl);
+          mAbImageLoader.display(itemsIcon,Constant.BASEURL+photoUrl);
           ll_itemsImage.setVisibility(View.VISIBLE);
           ll_itemsImage.removeAllViews();
-          for (int i = 0; i < 3; i++) {
-              LayoutParams layoutParams=new LayoutParams(CommonUtil.dip2px(mContext, 40), CommonUtil.dip2px(mContext, 40));
+          List<String> images=goodsCommentBean.getPhotos();
+          for (int i = 0; i < images.size(); i++) {
+            LayoutParams layoutParams=new LayoutParams(CommonUtil.dip2px(mContext, 40), CommonUtil.dip2px(mContext, 40));
 			ImageView imageView=new ImageView(mContext);
 			imageView.setLayoutParams(layoutParams);
-			CommonUtil.setMargins(imageView, 0, 0, 10, 0);
-			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-			mAbImageLoader.display(imageView,((Map<String, Object>)mData.get(i)).get("itemsIcon")+"");
+			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+			mAbImageLoader.display(imageView,Constant.BASEURL+images.get(i));
 			ll_itemsImage.addView(imageView);
+			CommonUtil.setMargins(imageView, 0, 0, CommonUtil.dip2px(mContext, 9), 0);
 		}
           return convertView;
     }

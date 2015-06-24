@@ -97,8 +97,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
-			convertView
-			.findViewById(R.id.tv_payment).setVisibility(View.GONE);
+//			convertView
+//			.findViewById(R.id.tv_payment).setVisibility(View.GONE);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -184,8 +184,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 							((MyOrder_All_Fragment) fragment)
 									.setMyOrderItem(myOrderItem);
 							PayActivity.startThisActivity_Fragment(ordernumber,
-									Float.parseFloat(CommonUtil.priceConversion(myOrderItem
-											.getTotalPrice())),myOrderItem.getProductItemDtos().get(0).getName(),
+									CommonUtil.priceConversion(myOrderItem
+											.getTotalPrice()),myOrderItem.getProductItemDtos().get(0).getName(),
 									(Activity) context, fragment);
 						}
 					});

@@ -69,7 +69,8 @@ public class IandEDetailsActivity extends BaseActivity{
 	private void initData() {
 		list = new ArrayList<IandEDetailsModel>();
 		String url = "";
-		url = Constant.BASEURL + Constant.CONTENT + "/trade/history";
+		//url = Constant.BASEURL + Constant.CONTENT + "/trade/history";//卖家
+		url = Constant.BASEURL + Constant.CONTENT + "/trade/buyerhistory";//买家
 		refreshTask(url);
 	}
 

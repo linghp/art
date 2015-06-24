@@ -39,20 +39,4 @@
         android:layout_height="50dp"
         android:layout_gravity="center" />
 
-    <!--
-    <include 
-        android:id="@+id/loading"
-        layout="@layout/loadind_big" />
-
-    <include
-        android:id="@+id/no_work" 
-        layout="@layout/no_network"
-        android:visibility="gone" />
-    -->
-
-    <include
-        android:id="@+id/no_data"
-        layout="@layout/no_data"
-        android:visibility="gone" />
-
 </FrameLayout>
