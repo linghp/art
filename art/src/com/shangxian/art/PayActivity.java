@@ -68,6 +68,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	//private double lastMon = Double.MIN_VALUE;
 	private String type = "ALB_ALY"; // 默认:爱农币+爱农元
 	private double price;
+	private String price_str;
 	/**自己生成个的支付宝交易号*/
 	private String trideno="S"+CommonUtil.getUUID();
 	/**扫描支付传的商铺id*/
@@ -133,6 +134,8 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 //							tv_realpaymoney.setText("¥ "
 //									+ String.format("%.2f", mon));
 						}
+					}else{
+						myToast("输入支付金额格式错误");
 					}
 				}
 			} catch (Exception e) {
@@ -154,7 +157,11 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	}
 
 	private void initdata() {
-		price = getIntent().getFloatExtra("totalprice", 0f);
+		String price_temp=getIntent().getStringExtra("totalprice");
+		if(!TextUtils.isEmpty(price_temp)){
+		price = Double.parseDouble(getIntent().getStringExtra("totalprice"));
+		price_str=price_temp;
+		}
 		productName=getIntent().getStringExtra("productName");
 		if (price != 0) {
 			isOrder = true;
@@ -225,7 +232,9 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		});
 
 		if (isOrder) {
-			tv_paymoney.setText("￥ " + price);
+			if(!TextUtils.isEmpty(price_str)){
+			tv_paymoney.setText("￥ " + price_str);
+			}
 			//tv_realpaymoney.setText("￥ " + totalprice);
 			handler.postDelayed(new Runnable() {
 				@Override
@@ -314,7 +323,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	}
 
 	public static void startThisActivity(List<String> orderids,
-			float totalprice, String productName,Activity mAc) {
+			String totalprice, String productName,Activity mAc) {
 		Intent intent = new Intent(mAc, PayActivity.class);
 		intent.putExtra("orderids", (Serializable) orderids);
 		intent.putExtra("totalprice", totalprice);

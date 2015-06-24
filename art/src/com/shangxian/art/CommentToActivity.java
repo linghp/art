@@ -83,8 +83,12 @@ public class CommentToActivity extends BaseActivity implements
 		mAbPullToRefreshView = (AbPullToRefreshView) this
 				.findViewById(R.id.mPullRefreshView);
 		mListView = (ListView) this.findViewById(R.id.mListView);
+		mListView.setDividerHeight(CommonUtil.dip2px(this, 8));
+		mListView.setFastScrollEnabled(true);
+		mListView.setVerticalScrollBarEnabled(false);
 		ll_nonetwork = findViewById(R.id.ll_nonetwork);
 		loading_big = findViewById(R.id.loading_big);
+		setNoData(NoDataModel.noPingjia, "抱歉，没有商品评价");
 		
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setVisibility(View.VISIBLE);
@@ -197,10 +201,12 @@ public class CommentToActivity extends BaseActivity implements
 			mAbPullToRefreshView.setVisibility(View.VISIBLE);
 			skip = 0;
 			mOrderItems.clear();
-			if (myOrderItemAll.getData() != null) {
+			if (myOrderItemAll.getData() != null&&myOrderItemAll.getData().size()>0) {
 				mOrderItems.addAll(myOrderItemAll.getData());
 				// MyLogger.i(myOrderItemAll.getData().toString());
 				myListViewAdapter.notifyDataSetChanged();
+			}else{
+				mAbPullToRefreshView.setVisibility(View.GONE);
 			}
 			//updateView_nocontent();
 		} else {

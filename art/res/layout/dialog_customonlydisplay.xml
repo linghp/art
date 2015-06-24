@@ -6,11 +6,11 @@
     tools:context="com.shangxian.art.SearchsActivity" >
 
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/iv_example"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/qrcodeimage"
+            android:src="@drawable/image_empty"
              />
 
         <TextView

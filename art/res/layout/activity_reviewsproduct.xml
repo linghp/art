@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:numStars="5"
-                    android:rating="5"
+                    android:rating="0"
                     android:stepSize="1" />
             </LinearLayout>
 

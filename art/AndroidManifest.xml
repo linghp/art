@@ -586,7 +586,7 @@
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".com.shangxian.art.photochooserPhotoPickDetailActivity"
+            android:name="com.shangxian.art.photochooser.PhotoPickDetailActivity"
             android:label="@string/app_name" />
          <activity
             android:name="com.shangxian.art.photochooser.ImagePagerActivity"

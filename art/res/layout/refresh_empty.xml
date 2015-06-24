@@ -27,7 +27,7 @@
         android:layout_marginTop="16dip"
         android:gravity="center"
         android:text="暂无数据"
-        android:textSize="16.0sp" />
+        style="@style/nodata_text_attr" />
 
     <TextView
         android:id="@+id/txt_empty_sub_message"

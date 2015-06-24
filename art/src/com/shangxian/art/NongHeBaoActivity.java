@@ -1,14 +1,17 @@
 package com.shangxian.art;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.CustomOnlyDisplayDialog;
+import com.shangxian.art.net.AiNongkaServer;
+import com.shangxian.art.net.AiNongkaServer.OnHttpResultQrListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
@@ -17,7 +20,7 @@ import com.shangxian.art.view.TopView;
  * @author zyz
  *
  */
-public class NongHeBaoActivity extends BaseActivity{
+public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrListener{
 	LinearLayout balance,recharge,cash,profit,bankcard,expenses,qrcode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +121,21 @@ public class NongHeBaoActivity extends BaseActivity{
 			//
 			@Override
 			public void onClick(View v) {
-				CustomOnlyDisplayDialog customOnlyDisplayDialog=new CustomOnlyDisplayDialog(NongHeBaoActivity.this, 0, R.layout.dialog_customonlydisplay);
-				customOnlyDisplayDialog.show();
+				AiNongkaServer.onGetQrCode(NongHeBaoActivity.this);
 			}
 		});
+	}
+
+	@Override
+	public void onHttpResultQr(String qrurl) {
+		if(TextUtils.isEmpty(qrurl)){
+			myToast("获取二维码失败");
+		}else{
+			CustomOnlyDisplayDialog customOnlyDisplayDialog=new CustomOnlyDisplayDialog(NongHeBaoActivity.this, 0, R.layout.dialog_customonlydisplay);
+			customOnlyDisplayDialog.show();
+			ImageView imageView=(ImageView) customOnlyDisplayDialog.findViewById(R.id.iv_example);
+			mAbImageLoader.display(imageView, Constant.BASEURL+"/"+qrurl);
+		}
 	}
 
 }

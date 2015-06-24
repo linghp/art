@@ -416,10 +416,10 @@ public class CommonUtil {
 	}
 	
 	//价格除以100
-	public static float priceConversion(float price) {
-		DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
-		String str=decimalFormat.format(price/100);
-		return Float.parseFloat(str);
+	public static String priceConversion(float price) {
+		DecimalFormat decimalFormat=new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+		String str=decimalFormat.format(price/100.0);
+		return str;
 	}
 	
     /** 

@@ -78,6 +78,7 @@ public class BaseServer {
 	protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
 	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
 	protected static final String NET_COMMENTCOUNT = HOST+"getLevelAll?productId=";//获取商品的评论数量个数的统计
+	protected static final String NET_SHOPQR = HOST+"shop/code/2";//获取商家二维码
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -637,6 +638,58 @@ public class BaseServer {
 						}
 					}
 				});
+	}
+	/**
+	 * 原生的数据不需要解析json
+	 * @param method
+	 * @param url
+	 * @param params
+	 * @param type
+	 * @param call
+	 */
+	public static void toXUtils2(final HttpMethod method, final String url,
+			RequestParams params, final CallBack call) {
+		if (call == null)
+			return;
+		new HttpUtils().send(method, url, params,
+				new RequestCallBack<String>() {
+			@Override
+			public void onFailure(HttpException e, String msg) {
+				e.printStackTrace();
+				MyLogger.i(msg);
+				call.onSimpleFailure(ERROR_CONN_EX);
+			}
+			
+			@Override
+			public void onStart() {
+				super.onStart();
+				call.onStart();
+			}
+			
+			@Override
+			public void onCancelled() {
+				super.onCancelled();
+				call.onCancelled();
+			}
+			
+			@Override
+			public void onLoading(long total, long current,
+					boolean isUploading) {
+				super.onLoading(total, current, isUploading);
+				call.onLoading(total, current, isUploading);
+			}
+			
+			@Override
+			public void onSuccess(ResponseInfo res) {
+				String result = String.valueOf(res.result);
+				MyLogger.i(result);
+				if(TextUtils.isEmpty(result)){
+					call.onSimpleFailure(ERROR_CONN_EX);
+				}else{
+					call.onSimpleSuccess(result);
+				}
+			}
+		});
 	}
 
 	protected String getRes(String res) {

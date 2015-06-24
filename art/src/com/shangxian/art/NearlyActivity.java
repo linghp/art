@@ -341,8 +341,8 @@ public class NearlyActivity extends BaseActivity implements
 						} else {
 							mAbPullToRefreshView.setVisibility(View.GONE);
 							ll_loading_big.setVisibility(View.GONE);
-							ll_nonetwork.setVisibility(View.GONE);
-							showNoData();
+							ll_nonetwork.setVisibility(View.VISIBLE);
+							//showNoData();
 						}
 					}
 				});
