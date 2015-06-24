@@ -3,17 +3,12 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -21,17 +16,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.shangxian.art.adapter.DeliveryAddressAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.DeliveryAddressModel;
 import com.shangxian.art.net.AccountSecurityServer;
 import com.shangxian.art.net.AccountSecurityServer.OnHttpAddressListener;
 import com.shangxian.art.net.AccountSecurityServer.OnHttpDeleteListener;
-import com.shangxian.art.net.BaseServer;
-import com.shangxian.art.net.HttpClients;
-import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;

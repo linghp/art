@@ -20,7 +20,16 @@ public class UserInfo implements Serializable {
 	private String nickName;
 	private String phoneNumber;
 	private String scalePhoto;// 头像路径
-    private boolean payed = false;
+	private String shopId;
+    public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+
+	private boolean payed = false;
 	public boolean isPayed() {
 		return payed;
 	}
@@ -101,14 +110,13 @@ public class UserInfo implements Serializable {
 	public void setScalePhoto(String scalePhoto) {
 		this.scalePhoto = scalePhoto;
 	}
-	
 	@Override
 	public String toString() {
 		return "UserInfo [_id=" + _id + ", id=" + id + ", loginType="
 				+ loginType + ", nickName=" + nickName + ", phoneNumber="
-				+ phoneNumber + ", scalePhoto=" + scalePhoto + "]";
+				+ phoneNumber + ", scalePhoto=" + scalePhoto + ", shopId="
+				+ shopId + ", payed=" + payed + "]";
 	}
-	
 	public boolean isNull(){
 		return id == Integer.MIN_VALUE || loginType == Integer.MIN_VALUE;
 	}

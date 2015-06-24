@@ -190,7 +190,7 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out.println("http ======================" + "失败"
+				MyLogger.i("http ======================" + "失败"
 						+ "=========================");
 				if (l != null) {
 					l.onHttp(null);
@@ -199,7 +199,7 @@ public class BaseServer {
 
 			@Override
 			public void onSuccess(int code, String res) {
-				System.out.println("http ======================" + res
+				MyLogger.i("http ======================" + res
 						+ "=========================");
 				if (l != null) {
 					if (code != 200) {
@@ -236,7 +236,7 @@ public class BaseServer {
 			
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out.println("http ======================" + "失败"
+				MyLogger.i("http ======================" + "失败"
 						+ "=========================");
 				if (l != null) {
 					l.onHttp(null);
@@ -245,7 +245,7 @@ public class BaseServer {
 			
 			@Override
 			public void onSuccess(int code, String res) {
-				System.out.println("http ======================" + res
+				MyLogger.i("http ======================" + res
 						+ "=========================");
 				if (l != null) {
 					if (code != 200) {
@@ -272,7 +272,7 @@ public class BaseServer {
 
 	protected static void toPost(String url, AbRequestParams params,
 			final OnHttpListener l) {
-		System.out.println(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+		MyLogger.i(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 				+ url);
 		mAbHttpUtil.post(url, params, new AbStringHttpResponseListener() {
 			@Override
@@ -285,7 +285,7 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+				MyLogger.i("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
 						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
@@ -294,8 +294,7 @@ public class BaseServer {
            
 			@Override
 			public void onSuccess(int code, String res) {
-				System.out
-						.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				MyLogger.i("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 								+ res);
 				if (l != null) {
 					if (code != 200) {
@@ -304,11 +303,11 @@ public class BaseServer {
 						try {
 							JSONObject json = new JSONObject(res);
 							int result_code = json.getInt("result_code");
-							System.out.println("result_code ================="
+							MyLogger.i("result_code ================="
 									+ result_code);
 							if (result_code == 200) {
 								String rest = json.getString("result");
-								System.out.println("toPsot -> rest >>>>>>> "
+								MyLogger.i("toPsot -> rest >>>>>>> "
 										+ rest);
 								l.onHttp(rest);
 							} else {
@@ -333,7 +332,7 @@ public class BaseServer {
 	 */
 	protected static void toPost2(String url, AbRequestParams params,
 			final OnHttpListener l) {
-		System.out.println(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+		MyLogger.i(" toPost responce >>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 				+ url);
 		mAbHttpUtil.post(url, params, new AbStringHttpResponseListener() {
 			@Override
@@ -347,7 +346,7 @@ public class BaseServer {
 
 			@Override
 			public void onFailure(int code, String res, Throwable t) {
-				System.out.println("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
+				MyLogger.i("toPsot -> Failure >>>>>>>>>>>>>>>>>>>  "
 						+ code + "  >>>>>>>>>>>>>>>>>>> " + res);
 				if (l != null) {
 					l.onHttp(null);
@@ -356,8 +355,7 @@ public class BaseServer {
 
 			@Override
 			public void onSuccess(int code, String res) {
-				System.out
-						.println("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				MyLogger.i("toPsot -> rest >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 								+ res);
 				if (l != null) {
 					if (code != 200) {
@@ -375,22 +373,20 @@ public class BaseServer {
 		if (json == null) {
 			json = "";
 		} else {
-			System.out
-					.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+			MyLogger.i("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 							+ json);
 		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
-				System.out
-						.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				MyLogger.i("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 								+ res);
 				if (l != null) {
 					// l.onHttp(res);
 					try {
 						JSONObject json = new JSONObject(res);
 						int result_code = json.getInt("result_code");
-						System.out.println("result_code ================="
+						MyLogger.i("result_code ================="
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
@@ -414,15 +410,13 @@ public class BaseServer {
 		if (json == null) {
 			json = "";
 		} else {
-			System.out
-			.println("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+			MyLogger.i("toPsotJson -> --json-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 					+ json);
 		}
 		HttpClients.postDo(url, json, new HttpCilentListener() {
 			@Override
 			public void onResponse(String res) {
-				System.out
-				.println("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+				MyLogger.i("toPsotJson -> res >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 						+ res);
 				if (l != null) {
 					 l.onHttp(res);
@@ -445,7 +439,7 @@ public class BaseServer {
 					try {
 						JSONObject json = new JSONObject(res);
 						int result_code = json.getInt("result_code");
-						System.out.println("result_code ================="
+						MyLogger.i("result_code ================="
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
@@ -470,7 +464,7 @@ public class BaseServer {
 					try {
 						JSONObject json = new JSONObject(res);
 						int result_code = json.getInt("result_code");
-						System.out.println("result_code ================="
+						MyLogger.i("result_code ================="
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
@@ -550,7 +544,7 @@ public class BaseServer {
 					try {
 						JSONObject json = new JSONObject(res);
 						int result_code = json.getInt("result_code");
-						System.out.println("result_code ================="
+						MyLogger.i("result_code ================="
 								+ result_code);
 						if (result_code == 200) {
 							l.onHttp(json.getString("result"));
@@ -614,7 +608,7 @@ public class BaseServer {
 							if (result_code == 200) {
 								String re = json.getString("result");
 								MyLogger.i(re);
-								System.out.println("xUtils -------> code == "
+								MyLogger.i("xUtils -------> code == "
 										+ result_code + " , result == "
 										+ result);
 								if (type != null && !TextUtils.isEmpty(re)) {

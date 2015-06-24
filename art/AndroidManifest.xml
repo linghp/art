@@ -173,6 +173,18 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".OperatorManagementActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".AddOperatorActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
+            android:name=".OperatorDetailsActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".NongHeBaoActivity"
             android:label="@string/title_activity_mine" >
         </activity>

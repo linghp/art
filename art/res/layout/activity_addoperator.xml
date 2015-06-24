@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/txt_white" >
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+                android:id="@+id/addsubclass_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_btn"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="50dp"
+                android:text="保存"
+                android:textColor="@color/txt_whitetoback"
+                android:textSize="@dimen/button_txt_size" 
+                android:layout_alignParentBottom="true" />
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_title"
+        android:orientation="vertical"
+        android:layout_above="@id/addsubclass_tv">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/txt_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用  户  名"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+
+            <EditText
+                android:id="@+id/addsubclass_et1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入用户名"
+                android:padding="10dp"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="真实姓名"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+
+            <EditText
+                android:id="@+id/addsubclass_et2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入用户真实姓名"
+                android:padding="10dp"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身份证号"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+
+            <EditText
+                android:id="@+id/addsubclass_et3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入用户身份证号码"
+                android:padding="10dp"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系方式"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+
+            <EditText
+                android:id="@+id/addsubclass_et4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_et_bg_sel"
+                android:hint="请输入用户手机号码"
+                android:padding="10dp"
+                android:numeric="integer"
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

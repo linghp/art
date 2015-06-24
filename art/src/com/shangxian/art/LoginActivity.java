@@ -28,6 +28,7 @@ import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.UserServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -215,7 +216,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				@Override
 				public void onLogin(UserInfo info) {
 					if (info != null && !info.isNull()) {
-						System.out.println("登录========================="
+						MyLogger.i("登录========================="
 								+ info.toString());
 						share.putUser(info);
 						BaseServer.toRegistContext(LoginActivity.this);

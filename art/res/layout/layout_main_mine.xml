@@ -136,7 +136,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="商品管理"
+                                android:text="我的商铺"
                                 android:textSize="@dimen/list_title_size" />
                         </LinearLayout>
 

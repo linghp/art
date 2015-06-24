@@ -3,7 +3,6 @@ package com.shangxian.art;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.shangxian.art.base.BaseActivity;
@@ -111,7 +110,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.caozuoyuan:
 			//操作员管理
-//			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, OperatorManagementActivity.class, false);
 			break;
 		default:
 			break;
