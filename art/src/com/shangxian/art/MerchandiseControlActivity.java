@@ -106,7 +106,7 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.shangpuxinxi:
 			//商铺信息
-//			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JinJiJieSuanActivity.class, false);
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, StoreInformationActivity.class, false);
 			break;
 		case R.id.caozuoyuan:
 			//操作员管理

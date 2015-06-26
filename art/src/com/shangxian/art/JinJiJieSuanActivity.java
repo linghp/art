@@ -11,7 +11,7 @@ import com.shangxian.art.view.TopView;
 
 /**
  * 紧急结算
- * @author Administrator
+ * @author zyz
  *
  */
 public class JinJiJieSuanActivity extends BaseActivity{
@@ -45,7 +45,7 @@ public class JinJiJieSuanActivity extends BaseActivity{
 
 	private void initListener() {
 		shenqing.setOnClickListener(new OnClickListener() {
-			
+			//申请
 			@Override
 			public void onClick(View v) {
 				CommonUtil.gotoActivity(JinJiJieSuanActivity.this, AskJieSuanActivity.class, false);

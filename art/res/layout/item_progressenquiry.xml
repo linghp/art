@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dot_red" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:background="@color/txt_black3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/item_progressenquiry_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-6-25 16:52"
+            android:textColor="@color/txt_black2"/>
+
+        <TextView
+            android:id="@+id/item_progressenquiry_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您的紧急申请已申请成功，待审批"
+            android:textColor="@color/txt_black2"
+            android:layout_marginTop="5dp" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/txt_black3"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+
+</LinearLayout>

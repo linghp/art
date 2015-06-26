@@ -62,7 +62,7 @@ public class YiJieSuanActivity extends BaseActivity{
 		});
 		
 		chaxun.setOnClickListener(new OnClickListener() {
-			//进度详情
+			//进度查询
 			@Override
 			public void onClick(View arg0) {
 				

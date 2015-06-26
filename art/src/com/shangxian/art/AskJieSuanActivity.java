@@ -12,7 +12,7 @@ import com.shangxian.art.view.TopView;
 
 /**
  * 申请结算
- * @author Administrator
+ * @author zyz
  *
  */
 public class AskJieSuanActivity extends BaseActivity{

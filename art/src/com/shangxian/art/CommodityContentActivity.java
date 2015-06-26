@@ -43,6 +43,7 @@ import com.shangxian.art.constant.Global;
 import com.shangxian.art.dialog.GoodsDialog;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmListener;
 import com.shangxian.art.dialog.GoodsDialog.GoodsDialogConfirmNowBuyListener;
+import com.shangxian.art.net.BaseServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.FollowServer;
 import com.shangxian.art.net.FollowServer.OnFollowListener;
@@ -75,7 +76,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 	private LinearLayout dingwei, shangpu, ll_guige, ll_dianhua;
 	private WebView webView;
 	// 判断是否收藏
-	//boolean iscollection = false;
+	boolean iscollection = false;
 
 	private AbHttpUtil httpUtil;
 	private CommodityContentModel model;
@@ -212,56 +213,10 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
 		// params.put("phone", "15889936624");
-		httpUtil.get(url, new AbStringHttpResponseListener() {
-
+		HttpClients.delDo(url, new HttpCilentListener() {
+			
 			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onFinish() {
-				// AbDialogUtil.removeDialog(HomeActivity.this);
-				// mAbPullToRefreshView.onHeaderRefreshFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				myToast("加载失败，请重试");
-				// AbToastUtil.showToast(HomeActivity.this, error.getMessage());
-				// imgList.clear();
-				// ArrayList<String> imgs = new ArrayList<String>();
-				// imgs.add("http://img1.imgtn.bdimg.com/it/u=3784117098,1253514089&fm=21&gp=0.jpg");
-				// mDatas.setImgList(imgs);
-				// if (mDatas != null) {
-				// if (mDatas.getImgList() != null
-				// && mDatas.getImgList().size() > 0) {
-				// imgList.addAll(mDatas.getImgList());
-				// // viewPager.setVisibility(View.VISIBLE);
-				// viewPager.setOnGetView(new OnGetView() {
-				//
-				// @Override
-				// public View getView(ViewGroup container,
-				// int position) {
-				// ImageView iv = new ImageView(HomeActivity.this);
-				// Imageloader_homePager.displayImage(
-				// imgList.get(position), iv,
-				// new Handler(), null);
-				// container.addView(iv);
-				// return iv;
-				// }
-				// });
-				// viewPager.setAdapter(imgList.size());
-				// }
-				//
-				// }
-
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// AbToastUtil.showToast(HomeActivity.this, content);
-				// imgList.clear();
+			public void onResponse(String content) {
 				MyLogger.i("商品详情数据:"+content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
@@ -334,7 +289,6 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 						e.printStackTrace();
 					}
 				}
-
 			}
 		});
 	}
@@ -359,6 +313,10 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		// ((float)model.getEvaluateScore()/100*5));
 		rating = (float) ((float) model.getEvaluateScore() / 100 * 5);
 		commoditycontent_shoucang.setSelected(model.getAttened());
+		
+//		//关注
+//		iscollection = model.getAttened();
+//		MyLogger.i("是否关注："+model.getAttened());
 		// 设置评星星级
 		ratingbar.setRating(rating);
 		//显示规格

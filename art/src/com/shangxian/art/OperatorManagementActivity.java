@@ -15,6 +15,11 @@ import com.shangxian.art.bean.OperatorManagementModel;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 操作员管理
+ * @author Administrator
+ *
+ */
 public class OperatorManagementActivity extends BaseActivity{
 
 	private ListView listview;
@@ -62,7 +67,7 @@ public class OperatorManagementActivity extends BaseActivity{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 操作员详情
-//				CommonUtil.gotoActivity(OperatorManagementActivity.this, OperatorDetailsActivity.class, false);
+				CommonUtil.gotoActivity(OperatorManagementActivity.this, OperatorDetailsActivity.class, false);
 			}
 		});
 	}
