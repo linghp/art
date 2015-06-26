@@ -98,7 +98,7 @@ public class AccountSecurityServer extends BaseServer{
 		deliveryAddressModel.setReceiverName(receiverName);
 		deliveryAddressModel.setReceiverTel(receiverTel);
 		deliveryAddressModel.setDeliveryAddress(deliveryAddress);
-		deliveryAddressModel.set_default(false);
+//		deliveryAddressModel.set_default(false);
 		Gson gson = new Gson();
 		String json = gson.toJson(deliveryAddressModel);
 		toPostJson(BaseServer.HOST + "receivingAddOrUpdate", json, new OnHttpListener() {

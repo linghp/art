@@ -14,9 +14,16 @@ public class ShopsServer extends BaseServer{
 		void onHttpShopsSummary(List<ShopsSummaryModel> model);
 	}
 
+	public interface OnHttpJinJiJieSuanListener {
+		void onHttpShopsSummary(List<ShopsSummaryModel> model);
+	}
 
 	//商铺简介
 	public static void toGetShopsSummary(String url,final OnHttpShopsSummaryListener l){
+		
+	}
+	
+	public static void toJinJiJieSuan(String url, final OnHttpShopsSummaryListener l){
 		
 	}
 }

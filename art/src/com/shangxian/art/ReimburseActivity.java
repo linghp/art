@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -136,20 +137,20 @@ public class ReimburseActivity extends BaseActivity implements
 			}
 		});
 		tv_tijiao.setOnClickListener(new OnClickListener() {
-
+			//提交
 			@Override
 			public void onClick(View v) {
 				if (match()) {
 					if (isGoods) {
 						//退货
 						MyOrderServer.toRequestRefund("true", productid,
-								orderid, money, cause, explain,
+								orderid, Integer.valueOf(money), cause, explain,
 								ReimburseActivity.this);
 						
 					} else {
 						//退款
 						MyOrderServer.toRequestRefund("false", productid,
-								orderid, money, cause, explain,
+								orderid, Integer.valueOf(money) , cause, explain,
 								ReimburseActivity.this);
 					}
 				}

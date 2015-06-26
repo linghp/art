@@ -171,13 +171,10 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		mAbImageLoader.setLoadingImage(R.drawable.image_loading);
 		mAbImageLoader.setErrorImage(R.drawable.image_error);
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
-
 		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
-		
 		if (!isLogin())
 			collectionimg.setSelected(false);
 	}
-
 	private void initData() {
 		// TODO Auto-generated method stub
 		model = new ShopsModel();
@@ -194,23 +191,18 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			geturl=geturls[geturls.length-1];
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
-
 		refreshTask(url);
-
 	}
-
 	public static void startThisActivity(String id, Context context) {
 		Intent intent = new Intent(context, ShopsActivity.class);
 		intent.putExtra("id", id);
 		context.startActivity(intent);
 	}
-
 	public static void startThisActivity_url(String url, Context context) {
 		Intent intent = new Intent(context, ShopsActivity.class);
 		intent.putExtra("url", url);
 		context.startActivity(intent);
 	}
-
 	private void refreshTask(String url) {
 		HttpClients.delDo(url, new HttpCilentListener() {
 			
@@ -259,11 +251,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								}else {
 									MyLogger.i(">>>>>>>>>>>>>>>>>>热销商品为空");
 								}
-
 							}else {
 								MyLogger.i(">>>>>>>>>>>>>>>>>>数据为空");
 							}
-
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -275,7 +265,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 	}
-
 	private void initListener() {
 		// TODO Auto-generated method stub
 		/*
@@ -293,7 +282,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		 * System.out.println(">>>>>>>>>index"+index); } });
 		 */
 		topView.setRightBtnListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -302,7 +290,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		});
 		// 收藏
 		collectionimg.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
@@ -318,7 +305,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								public void onSimpleSuccess(Object res) {
 									myToast("取消关注成功");
 								}
-
 								@Override
 								public void onSimpleFailure(int code) {
 									myToast("取消关注失败");
@@ -348,9 +334,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 		// 打电话
-
 		call.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				//拨打电话前可编辑
@@ -383,7 +367,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 	}
-
 	private void initPopupWindow() {
 		// TODO Auto-generated method stub
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -393,7 +376,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		popupWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, false);
 		// popupWindow.setBackgroundDrawable(R.drawable.background);
-
 		// popupWindow.setHeight(500);
 		// 点击外边可消失
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -403,18 +385,15 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		popupWindow.setFocusable(true);
 		// popupwindow是否消失监听
 		popupWindow.setOnDismissListener(new OnDismissListener() {
-
 			@Override
 			public void onDismiss() {
 				// TODO Auto-generated method stub
-
 			}
 		});
 		// 得到popupwindow里面的控件
 		fenlei = (TextView) view.findViewById(R.id.shops_popup_fenlei);
 		jianjie = (TextView) view.findViewById(R.id.shops_popup_jianjie);
 		fenlei.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -422,7 +401,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 				Bundle bundle = new Bundle();
 				bundle.putBoolean("isother", true);
 				CommonUtil.gotoActivityWithData(ShopsActivity.this, ClassificationActivity.class, bundle, false);
-
 			}
 		});
 		jianjie.setOnClickListener(new OnClickListener() {
@@ -431,16 +409,13 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-
 				ShopsSummaryActivity.startThisActivity(shopid,
 						ShopsActivity.this);
 				// CommonUtil.gotoActivity(ShopsActivity.this,
 				// ShopsSummaryActivity.class, false);
 			}
 		});
-
 	}
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -450,7 +425,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 						Constant.BASEURL+model.getLogo(),null);
 			}
 			break;
-
 		default:
 			break;
 		}

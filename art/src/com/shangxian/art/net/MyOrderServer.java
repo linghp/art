@@ -289,18 +289,19 @@ public class MyOrderServer extends BaseServer {
 	 * @param l
 	 */
 	public static void toRequestRefund(String isGoods, String productid,
-			String orderNumber, String totalPrice, String returnReason,
+			String orderNumber, int totalPrice, String returnReason,
 			String buyerMessege, final OnHttpResultRefundListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("isGoods", isGoods));
-		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
+		pairs.add(new BasicNameValuePair("totalPrice", (int)totalPrice * 100+""));
 		pairs.add(new BasicNameValuePair("returnReason", returnReason));
 		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
+		MyLogger.i("退款/退货申请url"+NET_REFUND + productid + "/" + orderNumber);
 		toPostWithToken2(NET_REFUND + productid + "/" + orderNumber, pairs,
 				new OnHttpListener() {
 					@Override
 					public void onHttp(String res) {
-						// MyLogger.i(res);
+						 MyLogger.i("退款/退货申请数据"+res);
 						if (l != null) {
 							if (TextUtils.isEmpty(res)) {
 								l.onHttpResultRefund(null);

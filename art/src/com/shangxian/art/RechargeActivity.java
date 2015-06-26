@@ -15,7 +15,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
-//充值
+/**
+ * 充值
+ * @author Administrator
+ *
+ */
 public class RechargeActivity extends BaseActivity implements OnPayListener{
 
 	EditText et_money;

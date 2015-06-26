@@ -124,6 +124,7 @@ public class BaseServer {
 //	protected static final String NET_DELIVERYADDRESS = HOST + "receiving";//收货地址管理
 	protected static final String NET_DELETEADDRESS = HOST + "receiving/delte";//删除收货地址
 	protected static final String NET_DEFAULTADDRESS = HOST + "receiving/default";//设置默认收货地址
+	
 	/**
 	 * 
 	 * ----------------------------------------------------------------
