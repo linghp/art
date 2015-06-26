@@ -46,6 +46,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
     private MyOrderItem myOrderItem;
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private String productid;
+	private static boolean isFromPayActivity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
 		((Activity)context).startActivityForResult(intent, 1);
+		isFromPayActivity=true;
 	}
 	public static void startThisActivity_MyOrder(String ordernumber, Context context,Fragment fragment) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
@@ -231,9 +233,12 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				@Override
 				public void onClick(View v) {
 					if(match()){
-					if(MyOrderActivity.currentFragment!=null){
-					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
-					ReimburseActivity.startThisActivity_Fragment(false,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+						if(isFromPayActivity){
+							isFromPayActivity=false;
+							ReimburseActivity.startThisActivity(false,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this);
+						}else if(MyOrderActivity.currentFragment!=null){
+							MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
+							ReimburseActivity.startThisActivity_Fragment(false,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
 					  }
 					}
 				}
@@ -271,9 +276,12 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				@Override
 				public void onClick(View v) {
 					if(match()){
-					if(MyOrderActivity.currentFragment!=null){
-					MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
-					ReimburseActivity.startThisActivity_Fragment(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
+						if(isFromPayActivity){
+							isFromPayActivity=false;
+							ReimburseActivity.startThisActivity(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this);
+						}else if(MyOrderActivity.currentFragment!=null){
+							MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
+							ReimburseActivity.startThisActivity_Fragment(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
 					   }
 					}
 				}

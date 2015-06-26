@@ -83,6 +83,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 				//money = price + "";
 			} else {
 				String price_temp=et_scan.getText().toString().trim();
+				price_str=price_temp;
 				if(!TextUtils.isEmpty(price_temp)){
 					price=Double.parseDouble(price_temp);
 				}
@@ -93,7 +94,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 					et_scan.setText(String.format("%.2f", price));
 				} else {
 					// et_scan.setText(text);
-					if (price>0.01&&mAccount!=null&&!mAccount.isNull()) {
+					if (price>=0) {
 						if (isBi && !isYuan) {
 							type = "ALB";
 //							if (mon > mAccount.getAlb()) {
@@ -365,7 +366,13 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		case R.id.payt_tv_ok:
 			// myToast("确定");
 			if (isPayed(true)) {
-				okToPay();
+				if(price>=0.01){
+//					if(price_str.startsWith("0")){
+//					}
+				    okToPay();
+				}else{
+					myToast("支付金额错误");
+				}
 			}
 			break;
 		case R.id.payl_ll_zhi:
@@ -525,8 +532,9 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 			int userid=getUserId();
 			if(userid>0){
 				String form_to=userid+"";
-				if(!TextUtils.isEmpty(storeId)){
+				if(!TextUtils.isEmpty(storeId)){//扫码支付
 					form_to=form_to+","+storeId;
+					trideno="D"+CommonUtil.getUUID();
 				}
 				
 			AliPayServer.toPay(trideno, productName, form_to, price + "",

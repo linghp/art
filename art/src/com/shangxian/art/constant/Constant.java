@@ -7,7 +7,7 @@ import com.shangxian.art.bean.UserInfo;
 
 public class Constant {
 	//public static final String BASEURL = "http://192.168.1.125:8888/art/";
-	//public static final String BASEURL = "http://192.168.0.160:8888/art";
+	//public static final String BASEURL = "http://192.168.0.170:8888/art";
 	public static final String BASEURL = "http://www.ainonggu666.com";
 	public static final String CONTENT = "/api";
 	public static final String HOMEAD= "/ad/indexBanner";//首页轮播图片
@@ -22,8 +22,9 @@ public class Constant {
 	public static String GOODSDETAIL = "/product/%s/details";//商品详情
 	public static final String NET_FILTER = BASEURL+CONTENT+"/product/find";//分类筛选
 	//public static final String NET_FILTER = "http://192.168.0.142:8888/art/api/product/find";//分类筛选
+	public static final String NET_SHOPCARTEDIT = BASEURL+CONTENT+"/cart/product/";//修改购物车规格数量
 	
-	public static final String HOST = "http://192.168.0.133:8888/art/";
+	//public static final String HOST = "http://192.168.0.133:8888/art/";
 	public static final String NET_FINDWORD = BASEURL + CONTENT + "/findpassword";
 	//user/findpassword?newPassword=612714&captcha=903527&reNewPassword=612714&phoneNumber=15025496981
 	public static final String NET_FINDWORD_CODE = BASEURL + CONTENT + "/findpasswodCaptcha?phoneNumber=";

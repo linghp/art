@@ -4,9 +4,15 @@
     android:layout_height="match_parent"
     android:background="@color/txt_white2" >
 
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/top_title"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -31,11 +37,12 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/txt_black3" />
 
-            <TextView
+            <EditText
                 android:id="@+id/operatordetails_tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:text="用户名"
                 android:textColor="@color/txt_black1"
@@ -48,6 +55,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +78,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/txt_black3" />
 
-            <TextView
+            <EditText
                 android:id="@+id/operatordetails_tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,6 +95,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +118,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/txt_black3" />
 
-            <TextView
+            <EditText
                 android:id="@+id/operatordetails_tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,6 +135,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/txt_black3" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,7 +158,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/txt_black3" />
 
-            <TextView
+            <EditText
                 android:id="@+id/operatordetails_tv4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,7 +169,47 @@
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
 
-        <!-- <View
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/txt_black3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  密    码  "
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_summary_size" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/txt_black3" />
+
+            <EditText
+                android:id="@+id/operatordetails_tv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+        <!--
+        <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginLeft="10dp"
@@ -235,13 +285,49 @@
                 android:text="权限"
                 android:textColor="@color/red500"
                 android:textSize="@dimen/list_summary_size" />
-        </LinearLayout> -->
+        </LinearLayout>
+        -->
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/txt_black3" />
-        
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="16dp"
+             >
 
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/soge_next_bg_sel"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/soge_next_bg_sel"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
 </RelativeLayout>

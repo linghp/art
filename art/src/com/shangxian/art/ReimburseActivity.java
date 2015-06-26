@@ -1,5 +1,6 @@
 package com.shangxian.art;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,6 +58,17 @@ public class ReimburseActivity extends BaseActivity implements
 		intent.putExtra("productid", productid);
 		intent.putExtra("totalprice", totalprice);
 		fragment.startActivityForResult(intent, 111);
+	}
+	
+	public static void startThisActivity(boolean isGoods,
+			String orderid, String productid, float totalprice, Activity mAc
+			) {
+		Intent intent = new Intent(mAc, ReimburseActivity.class);
+		intent.putExtra("isGoods", isGoods);
+		intent.putExtra("orderid", orderid);
+		intent.putExtra("productid", productid);
+		intent.putExtra("totalprice", totalprice);
+		mAc.startActivityForResult(intent, 111);
 	}
 
 	private void initView() {

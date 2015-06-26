@@ -122,7 +122,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 
 	@Override
 	public void onResponse(String content) {
-		MyLogger.i(content);
+		//MyLogger.i(content);
 		mAbPullToRefreshView.onHeaderRefreshFinish();
 		if (content == null) {
 			ll_nonetwork.setVisibility(View.VISIBLE);
@@ -572,14 +572,45 @@ public class ShoppingcartActivity extends BaseActivity implements
 		}
 	}
 
+	private ListCarGoodsBean listCarGoodsBean;
 	@Override
-	public void goodsDialogEdit(ListCarGoodsBean listCarGoodsBean,ListCarGoodsBean newListCarGoodsBean) {
+	public void goodsDialogEdit(ListCarGoodsBean listCarGoodsBean,ListCarGoodsBean newListCarGoodsBean) {//修改购物车
 		refreshDialog=new RefreshDialog(this, 0); 
 		refreshDialog.show();
-		listCarGoodsBean.setSelectedSpec(newListCarGoodsBean.getSelectedSpec());
-		listCarGoodsBean.setQuantity(newListCarGoodsBean.getQuantity());
-		adapter.notifyDataSetChanged();
-		refreshDialog.dismiss();
+		this.listCarGoodsBean=listCarGoodsBean;
+		if(listCarGoodsBean!=null){
+		requestEditTask(newListCarGoodsBean);
+		}
+	}
+
+	private void requestEditTask(final ListCarGoodsBean newListCarGoodsBean) {
+		Gson gson=new Gson();
+		String json_spec=gson.toJson(newListCarGoodsBean.getSelectedSpec());
+		String json="{\"productId\":"+listCarGoodsBean.getProductId()+",\"specs\":"+json_spec+",\"buyCount\":"+newListCarGoodsBean.getQuantity()+"}";
+		MyLogger.i(json);
+		HttpClients.postDo(Constant.NET_SHOPCARTEDIT+listCarGoodsBean.getCartItemId(), json, new HttpCilentListener() {
+			
+			@Override
+			public void onResponse(String content) {
+				refreshDialog.dismiss();
+				try {
+					JSONObject jsonObject = new JSONObject(content);
+					String result_code = jsonObject.getString("result_code");
+					if (result_code.equals("200")) {
+						listCarGoodsBean.setSelectedSpec(newListCarGoodsBean.getSelectedSpec());
+						listCarGoodsBean.setQuantity(newListCarGoodsBean.getQuantity());
+						adapter.notifyDataSetChanged();
+					}else{
+						myToast("修改失败");
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override

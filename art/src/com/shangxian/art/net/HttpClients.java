@@ -112,8 +112,7 @@ public class HttpClients {
 						Message message = Message.obtain(postHandler, SUCCESS,
 								builder.toString());
 						postHandler.sendMessage(message);
-						MyLogger.d("response: =================="
-								+ builder.toString() + "==================");
+						MyLogger.i(builder.toString());
 					}
 				} catch (UnsupportedEncodingException e) {
 					postHandler.sendEmptyMessage(FAIL);
@@ -314,6 +313,7 @@ public class HttpClients {
 		// Constants.USER_TOKEN, null);
 		final int user_token = LocalUserInfo.getInstance(mContext).getInt(
 				Constant.PRE_USER_ID, Integer.MIN_VALUE);
+		MyLogger.i("user_token:"+user_token+"  url:"+baseUrl+"  pairs: "+pairs.toString());
 		final HttpClient httpClient = getHttpClient();
 		executorService.submit(new Runnable() {
 			@Override
@@ -322,7 +322,7 @@ public class HttpClients {
 					HttpPost postMethod = new HttpPost(baseUrl);
 					// postMethod.setHeader("Content-Type", "application/json");
 //					postMethod.setHeader("Content-Type",
-//							"application/json;charset=UTF-8");
+//							"multipart/form-data; boundary=--ling--");
 					if (user_token != Integer.MIN_VALUE) {
 						postMethod.addHeader("User-Token", user_token + "");
 					}
@@ -335,7 +335,7 @@ public class HttpClients {
 					// Entity中
 					// 执行POST方法
 					HttpResponse response = httpClient.execute(postMethod);
-					MyLogger.i("respone:" + response);
+					MyLogger.i("respone:" + response.toString());
 					if (TextUtils.isEmpty(response.toString())
 							|| response.getStatusLine().getStatusCode() != 200) {
 						int s = response.getStatusLine().getStatusCode();

@@ -291,12 +291,13 @@ public class MyOrderServer extends BaseServer {
 	public static void toRequestRefund(String isGoods, String productid,
 			String orderNumber, String totalPrice, String returnReason,
 			String buyerMessege, final OnHttpResultRefundListener l) {
-		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-		pairs.add(new BasicNameValuePair("isGoods", isGoods));
-		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
-		pairs.add(new BasicNameValuePair("returnReason", returnReason));
-		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
-		toPostWithToken2(NET_REFUND + productid + "/" + orderNumber, pairs,
+//		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+//		pairs.add(new BasicNameValuePair("isGoods", isGoods));
+//		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
+//		pairs.add(new BasicNameValuePair("returnReason", returnReason));
+//		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
+		String json="{\"isGoods\":"+isGoods+",\"totalPrice\":"+totalPrice+",\"returnReason\":\""+returnReason+"\",\"buyerMessege\":\""+buyerMessege+"\"}";
+		toPostJson2(NET_REFUND + productid + "/" + orderNumber, json,
 				new OnHttpListener() {
 					@Override
 					public void onHttp(String res) {
@@ -321,10 +322,10 @@ public class MyOrderServer extends BaseServer {
 	 */
 	public static void toConfirmGoods(final MyOrderItem myOrderItem,
 			final OnHttpResultConfirmGoodsListener l) {
-		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem
-				.getOrderNumber()));
-		toPostWithToken(NET_CONFIRMGOODS, pairs, new OnHttpListener() {
+//		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+//		pairs.add(new BasicNameValuePair("orderNumber", myOrderItem
+//				.getOrderNumber()));
+		toPostWithToken(NET_CONFIRMGOODS+myOrderItem.getOrderNumber(), null, new OnHttpListener() {
 			@Override
 			public void onHttp(String res) {
 				// MyLogger.i(res);

@@ -31,6 +31,7 @@
         android:layout_weight="1"
         android:gravity="right"
         android:text="超级管理员"
+        android:visibility="gone"
         android:textColor="@color/red500"
         android:textSize="@dimen/list_summary_size" />
 

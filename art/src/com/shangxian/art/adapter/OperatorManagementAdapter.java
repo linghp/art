@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shangxian.art.R;
-import com.shangxian.art.bean.OperatorManagementModel;
+import com.shangxian.art.bean.ShopOperatorBean;
 
-public class OperatorManagementAdapter extends EntityAdapter<OperatorManagementModel>{
+public class OperatorManagementAdapter extends EntityAdapter<ShopOperatorBean>{
 
 	public OperatorManagementAdapter(Activity mAc, int layoutId,
-			List<OperatorManagementModel> dates) {
+			List<ShopOperatorBean> dates) {
 		super(mAc, layoutId, dates);
 	}
 
@@ -33,9 +33,9 @@ public class OperatorManagementAdapter extends EntityAdapter<OperatorManagementM
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.name.setText(dates.get(position).getName());
-		holder.num.setText(dates.get(position).getNum());
-		holder.operator.setText(dates.get(position).getOperator());
+		holder.name.setText(dates.get(position).getUsername());
+		holder.num.setText(dates.get(position).getMobile());
+		//holder.operator.setText(dates.get(position).getOperator());
 		return convertView;
 	}
 	public static class ViewHolder{

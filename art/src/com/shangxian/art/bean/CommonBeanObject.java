@@ -18,7 +18,7 @@ public class CommonBeanObject<T> implements Serializable {
 	private String reason="";
 
 	@Expose
-	private T object;
+	private T result;
 
 	public String getResult_code() {
 		return result_code;
@@ -37,17 +37,17 @@ public class CommonBeanObject<T> implements Serializable {
 	}
 
 	public T getObject() {
-		return object;
+		return result;
 	}
 
 	public void setObject(T object) {
-		this.object = object;
+		this.result = object;
 	}
 
 	@Override
 	public String toString() {
 		return "CommonBeanObject [result_code=" + result_code + ", reason="
-				+ reason + ", object=" + object + "]";
+				+ reason + ", object=" + result + "]";
 	}
 
 

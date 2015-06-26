@@ -51,7 +51,7 @@ public class BaseServer {
 	// "http://192.168.0.116:8888/art/api/";
 //	 public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = "http://www.ainonggu666.com/api/";
-//    public static final String HOST = "http://192.168.0.160:8888/art/api/";
+   // public static final String HOST = "http://192.168.0.170:8888/art/api/";
 
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表
@@ -70,7 +70,7 @@ public class BaseServer {
 	protected static final String NET_SELLERORDER_RETURN = HOST + "orderSellerReturn/"; //卖家退货处理
 	protected static final String NET_DELORDER = HOST + "order/del/";// 删除订单
 	protected static final String NET_SELLER_DELORDER = HOST + "deleteSellerOrder/";// 卖家删除订单
-	protected static final String NET_CONFIRMGOODS = HOST + "order/completed";// 确认收货
+	protected static final String NET_CONFIRMGOODS = HOST + "order/completed/";// 确认收货
 	protected static final String NET_ORDERDETAILS = HOST + "order/details?orderNumber=";// 订单详情 
 	protected static final String NET_SELLER_ORDERDETAILS = HOST + "sellerorderdails/";// 订单详情 
 	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
@@ -79,6 +79,10 @@ public class BaseServer {
 	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
 	protected static final String NET_COMMENTCOUNT = HOST+"getLevelAll?productId=";//获取商品的评论数量个数的统计
 	protected static final String NET_SHOPQR = HOST+"shop/code/2";//获取商家二维码
+	protected static final String NET_ADDSHOPOPERATOR = HOST+"createShopOperator";//添加操作员
+	protected static final String NET_UPDATESHOPOPERATOR = HOST+"updateUser";//修改操作员
+	protected static final String NET_DELETESHOPOPERATOR = HOST+"deleteUser?userId=";//删除操作员
+	protected static final String NET_FINDSHOPOPERATOR = HOST+"findByShop";//获取操作员列表
 
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
@@ -142,8 +146,9 @@ public class BaseServer {
 		curUser = LocalUserInfo.getInstance(mContext).getUser();
 	}
 
-	protected static RequestParams getParams() {
+	public static RequestParams getParams() {
 		RequestParams params = new RequestParams();
+		curUser = LocalUserInfo.getInstance(mContext).getUser();
 		MyLogger.i(curUser.toString());
 		//params.setContentType("application/x-www-form-urlencoded;charset=UTF-8");
 		if (curUser != null && !curUser.isNull()) {	
