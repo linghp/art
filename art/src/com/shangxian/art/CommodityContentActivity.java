@@ -119,14 +119,14 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		super.onStart();
 		MyLogger.i("onStart");
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		MyLogger.i("onResume");
 	}
-	
+
 	public void updataGuige() {
 		if(model!=null){
 			MyLogger.i(model.selectedSpecStr+"--"+model.unselectSpeckey);
@@ -137,7 +137,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			}
 		}
 	}
-	
+
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
@@ -213,8 +213,9 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		// params.put("shopid", "1019");
 		// params.put("code", "88881110344801123456");
 		// params.put("phone", "15889936624");
+
 		HttpClients.delDo(url, new HttpCilentListener() {
-			
+
 			@Override
 			public void onResponse(String content) {
 				MyLogger.i("商品详情数据:"+content);
@@ -232,7 +233,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 							// MyLogger.i(model.toString());
 							if (model != null) {
 								shopid = model.getShopId() + "";
-//								phonenum = model.getShopPhoneNumber();
+								//								phonenum = model.getShopPhoneNumber();
 								updateView();
 							}
 
@@ -243,12 +244,12 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 
 								@Override
 								public View getView(ViewGroup container,
-									final	int position) {
+										final	int position) {
 									ImageView iv = new ImageView(
 											CommodityContentActivity.this);
 									//iv.setTag(position);
 									iv.setOnClickListener(new OnClickListener() {
-										
+
 										@Override
 										public void onClick(View v) {
 											if(imgList.size()>0)
@@ -313,10 +314,10 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		// ((float)model.getEvaluateScore()/100*5));
 		rating = (float) ((float) model.getEvaluateScore() / 100 * 5);
 		commoditycontent_shoucang.setSelected(model.getAttened());
-		
-//		//关注
-//		iscollection = model.getAttened();
-//		MyLogger.i("是否关注："+model.getAttened());
+
+		//		//关注
+		//		iscollection = model.getAttened();
+		//		MyLogger.i("是否关注："+model.getAttened());
 		// 设置评星星级
 		ratingbar.setRating(rating);
 		//显示规格
@@ -422,22 +423,22 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			if(model!=null){
 				List<String> photos=model.getPhotos();
 				String[] photos_array=photos.toArray(new String[photos.size()]);
-//				for (String string : photos_array) {
-//					string=Constant.BASEURL+string;
-//				}
+				//				for (String string : photos_array) {
+				//					string=Constant.BASEURL+string;
+				//				}
 				for (int i = 0; i < photos_array.length; i++) {
 					photos_array[i]=Constant.BASEURL+photos_array[i];
 				}
 				for (String string : photos_array) {
 					MyLogger.i(string);
 				}
-			CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",null,
-					photos_array);
+				CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",null,
+						photos_array);
 			}
 			break;
 		case R.id.ll_comment:
 			if(model!=null){
-			CommentActivity.startThisActivity(model.getId(), this);
+				CommentActivity.startThisActivity(model.getId(), this);
 			}
 			break;
 		case R.id.commoditycontent_dingwei:
@@ -488,49 +489,49 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 						CommodityContentActivity.this);
 			}
 		});
-//		img_dingwei.setOnClickListener(new OnClickListener() {
-//			// 跳转到定位
-//			@Override
-//			public void onClick(View v) {
-//				if (/*model == null*/true) {
-//					return;
-//				}
-//				Bundle bundle = new Bundle();
-//				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-//				ShopLocInfo info = new ShopLocInfo();
-//				info.setId(model.getShopId()); 
-//				info.setTitle(model.getShopName());
-//				info.setPhoto(model.getShopLogo());
-//				info.setAddress(model.getShopAddress());
-//				//info.setLng(model.get);
-//				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
-//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-//						LocationActivity.class, bundle, false);
-//
-//			}
-//		});
-//		img_dingwei.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				if (/*model == null*/true) {
-//					return;
-//				}
-//				
-//				Bundle bundle1 = new Bundle(); 
-//				bundle1.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
-//				ShopLocInfo info1 = new ShopLocInfo();
-//				info1.setId(model.getShopId());
-//				info1.setTitle(model.getShopName());
-//				info1.setPhoto(model.getShopLogo());
-//				info1.setAddress(model.getShopAddress());
-//				//info.setLng(model.get);
-//				bundle1.putSerializable(Constant.INT_SHOPS_2_LOC, info1);
-//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-//						LocationActivity.class, bundle1, false);
-//				
-//			}
-//		});
+		//		img_dingwei.setOnClickListener(new OnClickListener() {
+		//			// 跳转到定位
+		//			@Override
+		//			public void onClick(View v) {
+		//				if (/*model == null*/true) {
+		//					return;
+		//				}
+		//				Bundle bundle = new Bundle();
+		//				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+		//				ShopLocInfo info = new ShopLocInfo();
+		//				info.setId(model.getShopId()); 
+		//				info.setTitle(model.getShopName());
+		//				info.setPhoto(model.getShopLogo());
+		//				info.setAddress(model.getShopAddress());
+		//				//info.setLng(model.get);
+		//				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
+		//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+		//						LocationActivity.class, bundle, false);
+		//
+		//			}
+		//		});
+		//		img_dingwei.setOnClickListener(new OnClickListener() {
+		//			
+		//			@Override
+		//			public void onClick(View v) {
+		//				if (/*model == null*/true) {
+		//					return;
+		//				}
+		//				
+		//				Bundle bundle1 = new Bundle(); 
+		//				bundle1.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);
+		//				ShopLocInfo info1 = new ShopLocInfo();
+		//				info1.setId(model.getShopId());
+		//				info1.setTitle(model.getShopName());
+		//				info1.setPhoto(model.getShopLogo());
+		//				info1.setAddress(model.getShopAddress());
+		//				//info.setLng(model.get);
+		//				bundle1.putSerializable(Constant.INT_SHOPS_2_LOC, info1);
+		//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+		//						LocationActivity.class, bundle1, false);
+		//				
+		//			}
+		//		});
 		ll_dianhua.setOnClickListener(new OnClickListener() {
 			// 跳转到打电话
 			@Override
@@ -571,7 +572,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 										@Override
 										public void onSimpleFailure(int code) {
 											myToast("取消关注失败");
-											
+
 											commoditycontent_shoucang
 											.setSelected(!commoditycontent_shoucang
 													.isSelected());
@@ -602,11 +603,11 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			// title右按钮（购物车） 跳转到购物车
 			@Override
 			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				Bundle bundle = new Bundle();
-//				bundle.putBoolean("isother", true);
-//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
-//						ShoppingcartActivity.class, bundle, false);
+				//				// TODO Auto-generated method stub
+				//				Bundle bundle = new Bundle();
+				//				bundle.putBoolean("isother", true);
+				//				CommonUtil.gotoActivityWithData(CommodityContentActivity.this,
+				//						ShoppingcartActivity.class, bundle, false);
 				ShoppingcartActivity.startThisActivity(true, CommodityContentActivity.this);
 			}
 		});

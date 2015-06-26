@@ -134,7 +134,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/regist_et_bg_sel"
                     android:gravity="top"
-                    android:lines="2"
+                    android:lines="3"
                     android:padding="10dp"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_summary_size" />
@@ -234,7 +234,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/regist_et_bg_sel"
                     android:gravity="top"
-                    android:lines="2"
+                    android:lines="3"
                     android:padding="10dp"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_summary_size" />

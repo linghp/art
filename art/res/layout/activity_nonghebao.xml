@@ -170,12 +170,38 @@
             android:textSize="@dimen/list_title_size" />
     </LinearLayout>
 
-        <LinearLayout
-        android:id="@+id/nonghebao_linear7"
+    <LinearLayout
+        android:id="@+id/nonghebao_linear8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/nonghebao_linear6"
         android:layout_marginTop="20dp"
+        android:background="@color/txt_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/incomeandexpdituredetails" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/next_level"
+            android:text="交易明细"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/list_title_size" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/nonghebao_linear7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nonghebao_linear8"
+        android:layout_marginTop="1dp"
         android:background="@color/txt_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -196,5 +222,5 @@
             android:textColor="@color/txt_black"
             android:textSize="@dimen/list_title_size" />
     </LinearLayout>
-    
+
 </RelativeLayout>

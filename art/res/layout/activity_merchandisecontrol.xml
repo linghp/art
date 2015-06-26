@@ -15,8 +15,8 @@
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/top_title"
+        android:orientation="vertical"
         android:visibility="visible" >
 
         <LinearLayout
@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -56,9 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/merchandisecontrol_linear1"
             android:layout_marginTop="1dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -121,9 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/merchandisecontrol_linear2"
             android:layout_marginTop="1dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -152,8 +152,8 @@
         android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/top_title"
+        android:orientation="vertical"
         android:visibility="gone" >
 
         <LinearLayout
@@ -162,9 +162,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/top_title"
             android:layout_marginTop="10dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -194,11 +194,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/merchandisecontrol_linear1"
             android:layout_marginTop="1dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:padding="10dp"
+            android:visibility="gone" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -226,9 +227,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/merchandisecontrol_linear2"
             android:layout_marginTop="1dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -252,12 +253,13 @@
                 android:src="@drawable/next_level" />
         </LinearLayout>
     </LinearLayout>
-<LinearLayout
+
+    <LinearLayout
         android:id="@+id/linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/top_title"
+        android:orientation="vertical"
         android:visibility="gone" >
 
         <LinearLayout
@@ -266,11 +268,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/top_title"
             android:layout_marginTop="10dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:padding="10dp"
+            android:visibility="gone" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -298,9 +301,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/merchandisecontrol_linear1"
             android:layout_marginTop="1dp"
-            android:onClick="onclick"
             android:background="@color/txt_white"
             android:gravity="center_vertical"
+            android:onClick="onclick"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -324,4 +327,5 @@
                 android:src="@drawable/next_level" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

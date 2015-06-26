@@ -42,7 +42,9 @@ import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.FollowServer;
+import com.shangxian.art.net.HttpClients;
 import com.shangxian.art.net.FollowServer.OnFollowListener;
+import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
@@ -171,6 +173,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		mAbImageLoader.setEmptyImage(R.drawable.image_empty);
 
 		ll_noData = (LinearLayout) findViewById(R.id.ll_nodata);
+		
+		if (!isLogin())
+			collectionimg.setSelected(false);
 	}
 
 	private void initData() {
@@ -207,13 +212,11 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void refreshTask(String url) {
-		// TODO Auto-generated method stub
-		httpUtil.post(url, new AbStringHttpResponseListener() {
-
+		HttpClients.delDo(url, new HttpCilentListener() {
+			
 			@Override
-			public void onSuccess(int arg0, String arg1) {
-				MyLogger.i(arg1);
-
+			public void onResponse(String arg1) {
+				MyLogger.i("商铺详情"+arg1);
 				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -268,25 +271,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 					}
 
 				}
-
-			}
-
-			@Override
-			public void onFailure(int arg0, String arg1, Throwable arg2) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onFinish() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onStart() {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 	}
@@ -321,14 +306,6 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				if (isLoginAndToLogin()) {
-					// if (!iscollection) {
-					// collectionimg.setImageResource(R.drawable.collection_on);
-					// myToast("已收藏");
-					// }else {
-					// collectionimg.setImageResource(R.drawable.collection_off);
-					// myToast("取消收藏");
-					// }
-					// iscollection = !iscollection;
 					if (model == null) {
 						collectionimg.setSelected(false);
 						myToast("关注失败！");
@@ -469,8 +446,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.tv_share:
 			if(model!=null){
-			CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",
-					Constant.BASEURL+model.getLogo(),null);
+				CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",
+						Constant.BASEURL+model.getLogo(),null);
 			}
 			break;
 

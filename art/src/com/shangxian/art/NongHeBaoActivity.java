@@ -21,7 +21,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrListener{
-	LinearLayout balance,recharge,cash,profit,bankcard,expenses,qrcode;
+	LinearLayout balance,recharge,cash,profit,bankcard,expenses,qrcode,transaction;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -49,6 +49,7 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 		profit = (LinearLayout) findViewById(R.id.nonghebao_linear4);//收益
 		bankcard = (LinearLayout) findViewById(R.id.nonghebao_linear5);//银行卡
 		expenses = (LinearLayout) findViewById(R.id.nonghebao_linear6);//收支明细
+		transaction = (LinearLayout) findViewById(R.id.nonghebao_linear8);//交易明细
 		qrcode = (LinearLayout) findViewById(R.id.nonghebao_linear7);//二维码
 	}
 
@@ -60,10 +61,13 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 	private void changeview() {
 		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 1) {//买家
 			qrcode.setVisibility(View.GONE);
+			transaction.setVisibility(View.GONE);
 		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 2){//卖家
 			qrcode.setVisibility(View.VISIBLE);
+			transaction.setVisibility(View.VISIBLE);
 		}else {//未登录
 			qrcode.setVisibility(View.GONE);
+			transaction.setVisibility(View.GONE);
 		}
 	}
 	
@@ -117,8 +121,16 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 				CommonUtil.gotoActivity(NongHeBaoActivity.this, IandEDetailsActivity.class, false);
 			}
 		});
+		transaction.setOnClickListener(new OnClickListener() {
+			//交易明细
+			@Override
+			public void onClick(View v) {
+				
+				CommonUtil.gotoActivity(NongHeBaoActivity.this, IandEDetailsActivity.class, false);
+			}
+		});
 		qrcode.setOnClickListener(new OnClickListener() {
-			//
+			//二维码
 			@Override
 			public void onClick(View v) {
 				AiNongkaServer.onGetQrCode(NongHeBaoActivity.this);
