@@ -77,7 +77,10 @@
     <string name="title_returnorderdetails">退款订单详情</string>
     <string name="mine_goodscomment">商品评价</string>
     <!-- 商铺管理 -->
+    <string name="title_storeinformation">商铺信息维护</string>
     <string name="title_operatormanagement">操作员管理</string>
+    <string name="title_progressenquiry">处理进度</string>
     <string name="title_addoperator">添加操作员</string>
-<string name="title_operatordetails">操作员信息</string>
+    <string name="title_operatordetails">操作员信息</string>
+
 </resources>

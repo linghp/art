@@ -20,6 +20,11 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 操作员管理
+ * @author Administrator
+ *
+ */
 public class OperatorManagementActivity extends BaseActivity implements OnHttpResultGetOperatorListener{
 
 	private ListView listview;

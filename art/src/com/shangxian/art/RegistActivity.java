@@ -26,6 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 注册
+ * @author Administrator
+ *
+ */
 public class RegistActivity extends BaseActivity implements OnClickListener,
 		OnHttpResultListener {
 

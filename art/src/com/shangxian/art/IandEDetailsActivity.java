@@ -71,6 +71,7 @@ public class IandEDetailsActivity extends BaseActivity{
 		String url = "";
 		//url = Constant.BASEURL + Constant.CONTENT + "/trade/history";//卖家
 		url = Constant.BASEURL + Constant.CONTENT + "/trade/buyerhistory";//买家
+		MyLogger.i("收支明细"+url);
 		refreshTask(url);
 	}
 
@@ -79,6 +80,7 @@ public class IandEDetailsActivity extends BaseActivity{
 			
 			@Override
 			public void onResponse(String res) {
+				MyLogger.i("收支明细数据"+res);
 				hideloading();
 				list.clear();
 				if (!TextUtils.isEmpty(res)) {

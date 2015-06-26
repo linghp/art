@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.utils.LocalUserInfo;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -32,6 +36,7 @@ public class BenQiJieSuanActivity extends BaseActivity{
 		topView.showTitle();
 		topView.setTitle("本期结算");
 		topView.setBack(R.drawable.back);//返回
+		
 		tv_parice = (TextView) findViewById(R.id.benqijiesuan_parice);//总金额
 		tv_remainder = (TextView) findViewById(R.id.benqijiesuan_parice);//账户余额
 		tv_time = (TextView) findViewById(R.id.benqijiesuan_time);//结算时间
@@ -39,10 +44,15 @@ public class BenQiJieSuanActivity extends BaseActivity{
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
-		
+		String shopid = LocalUserInfo.getInstance(this).getString(Constant.INT_SHOPID);
+		String url = BaseServer.HOST + "lhb/timeSettlementEveryOne/" + shopid;
+		MyLogger.i("本期结算url：" + url);
+		refreshTask(url);
 	}
 
+	private void refreshTask(String url) {
+		
+	}
 	private void initListener() {
 		// TODO Auto-generated method stub
 		

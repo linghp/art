@@ -1,5 +1,7 @@
 package com.shangxian.art;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,8 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.bean.ShopsSummaryModel;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.net.ShopsServer;
+import com.shangxian.art.net.ShopsServer.OnHttpShopsSummaryListener;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
@@ -101,6 +105,16 @@ public class ShopsSummaryActivity extends BaseActivity{
 		MyLogger.i(url);
 	}
 	private void refreshTask(String url) {
+		/*ShopsServer.toGetShopsSummary(url, new OnHttpShopsSummaryListener() {
+			
+			@Override
+			public void onHttpShopsSummary(List<ShopsSummaryModel> model) {
+				
+				
+			}
+		});*/
+		
+		
 		httpUtil.get(url, new AbStringHttpResponseListener() {
 
 			@Override
