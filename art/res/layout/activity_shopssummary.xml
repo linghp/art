@@ -169,6 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:padding="5dp"
+                        android:visibility="gone"
                         android:src="@drawable/fourth_tab" />
                 </LinearLayout>
             </LinearLayout>

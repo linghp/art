@@ -194,6 +194,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			}
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
+		MyLogger.i("商铺详情url:"+url);
 		refreshTask(url);
 	}
 	public static void startThisActivity(String id, Context context) {
@@ -212,7 +213,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void onResponse(String arg1) {
-				MyLogger.i("商铺详情"+arg1);
+				MyLogger.i("商铺详情数据："+arg1);
 				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -265,6 +266,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 					}
 
 				}
+				
 				
 			}
 		});

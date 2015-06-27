@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -43,6 +44,9 @@ public class IandEDetailsActivity extends BaseActivity{
 	private IandEDetailsAdapter adapter;
 	
 	private IandEDetailsResultModel model;
+	
+	boolean isjiaoyi = false;//是否为交易明细
+	String url = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -60,7 +64,7 @@ public class IandEDetailsActivity extends BaseActivity{
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_iandedetails));
+		
 
 		listview = (ListView) findViewById(R.id.iandedetails_list);
 		setNoData(NoDataModel.noMingxi, "没有明细数据");
@@ -68,10 +72,19 @@ public class IandEDetailsActivity extends BaseActivity{
 
 	private void initData() {
 		list = new ArrayList<IandEDetailsModel>();
-		String url = "";
-		//url = Constant.BASEURL + Constant.CONTENT + "/trade/history";//卖家
-		url = Constant.BASEURL + Constant.CONTENT + "/trade/buyerhistory";//买家
-		MyLogger.i("收支明细"+url);
+		Intent intent = getIntent();
+		isjiaoyi = intent.getBooleanExtra("isjiaoyi", false);
+		if (isjiaoyi == true) {
+			topView.setTitle(getString(R.string.title_activity_jiaoyidetails));
+			url = Constant.BASEURL + Constant.CONTENT + "/trade/history";//收支明细
+			MyLogger.i("交易明细"+url);
+		}else {
+			topView.setTitle(getString(R.string.title_activity_iandedetails));
+			url = Constant.BASEURL + Constant.CONTENT + "/trade/buyerhistory";//交易明细
+			MyLogger.i("收支明细"+url);
+		}
+		
+		
 		refreshTask(url);
 	}
 
@@ -80,7 +93,7 @@ public class IandEDetailsActivity extends BaseActivity{
 			
 			@Override
 			public void onResponse(String res) {
-				MyLogger.i("收支明细数据"+res);
+				MyLogger.i("收支明细/交易明细数据"+res);
 				hideloading();
 				list.clear();
 				if (!TextUtils.isEmpty(res)) {
@@ -90,15 +103,11 @@ public class IandEDetailsActivity extends BaseActivity{
 						jsonObject = new JSONObject(res);
 						String result_code = jsonObject
 								.getString("result_code");
-						System.out.println(":::::::::::::::::result_code"+result_code);
 						String str="";
 						if (result_code.equals("200")) {
 							str=jsonObject.getString("result");
-							System.out.println(":::::::::::::::::str"+str);
-							
 							IandEDetailsResultModel resultModel = gson.fromJson(str, IandEDetailsResultModel.class);
 							if(resultModel!=null){
-							
 							list = resultModel.getData();
 							String month = "";
 							for (IandEDetailsModel iandEDetailsModel : list) {

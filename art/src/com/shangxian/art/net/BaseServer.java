@@ -130,6 +130,9 @@ public class BaseServer {
 	protected static final String NET_DELETEADDRESS = HOST + "receiving/delte";//删除收货地址
 	protected static final String NET_DEFAULTADDRESS = HOST + "receiving/default";//设置默认收货地址
 	
+	
+	protected static final String NET_BENQIJIESUAN = HOST + "lhb/timeSettlementEveryOne/";//本期结算
+	protected static final String NET_DINGSHIJIESUAN = HOST + "lhb/timeSettlementAll";//定时结算
 	/**
 	 * 
 	 * ----------------------------------------------------------------
