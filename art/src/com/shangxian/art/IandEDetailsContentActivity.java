@@ -75,7 +75,16 @@ public class IandEDetailsContentActivity extends BaseActivity{
 		tv_price.setText(price);
 		tv_liushuihao.setText(liushuihao);
 		tv_fangxiang.setText(fangxiang);
-		tv_fangshi.setText(fangshi);
+		if ("ALB_ALY".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("爱农币和爱农元混合支付");
+		}else if ("ALY".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("爱农元支付");
+		}else if ("ALB".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("爱农币支付");
+		}else {
+			tv_fangshi.setText(fangshi);
+		}
+		
 		tv_time.setText(time);
 //		tv_beizhu.setText(beizhu);
 		tv_beizhu.setText("无");

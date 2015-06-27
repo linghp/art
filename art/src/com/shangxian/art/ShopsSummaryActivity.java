@@ -20,11 +20,13 @@ import com.ab.http.AbStringHttpResponseListener;
 import com.ab.image.AbImageLoader;
 import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.ShopLocInfo;
 import com.shangxian.art.bean.ShopsModel;
 import com.shangxian.art.bean.ShopsSummaryModel;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.ShopsServer;
 import com.shangxian.art.net.ShopsServer.OnHttpShopsSummaryListener;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
@@ -64,7 +66,8 @@ public class ShopsSummaryActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		topView=(TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
-		topView.setRightBtnDrawable(R.drawable.collection);
+//		topView.setRightBtnDrawable(R.drawable.collection);
+		topView.hideRightBtn();
 		topView.setBack(R.drawable.back);//返回
 		topView.setTitle("商铺简介");
 		topView.showTitle();
@@ -102,7 +105,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
 		refreshTask(url);
-		MyLogger.i(url);
+		MyLogger.i("商铺简介url:"+url);
 	}
 	private void refreshTask(String url) {
 		/*ShopsServer.toGetShopsSummary(url, new OnHttpShopsSummaryListener() {
@@ -137,7 +140,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 
 			@Override
 			public void onSuccess(int arg0, String arg1) {
-				MyLogger.i(arg1);
+				MyLogger.i("商铺简介数据："+arg1);
 				// 解析
 				if (!TextUtils.isEmpty(arg1)) {
 					Gson gson = new Gson();
@@ -152,7 +155,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 							if (model != null) {
 								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getLogo());//图片
 								shopsname.setText(model.getName());//店铺名
-								//								guanzu.setText(model.getConsignee()+"");//关注
+								//								guanzu.setText(model.getConsignee()+"人关注");//关注
 								zhanggui.setText(model.getOwner());//掌柜
 								if (model.getPhoneNumbers() != null) {
 									phone.setText(model.getPhoneNumbers().get(0)+"");//电话
@@ -196,8 +199,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 	}

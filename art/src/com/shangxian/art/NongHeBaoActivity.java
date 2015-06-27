@@ -125,8 +125,9 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 			//交易明细
 			@Override
 			public void onClick(View v) {
-				
-				CommonUtil.gotoActivity(NongHeBaoActivity.this, IandEDetailsActivity.class, false);
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("isjiaoyi", true);
+				CommonUtil.gotoActivityWithData(NongHeBaoActivity.this, IandEDetailsActivity.class, bundle, false);
 			}
 		});
 		qrcode.setOnClickListener(new OnClickListener() {

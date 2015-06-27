@@ -45,6 +45,7 @@
 
     <!-- 爱农谷 -->
     <string name="title_activity_iandedetails">收支明细</string>
+    <string name="title_activity_jiaoyidetails">交易明细</string>
     <string name="title_activity_iandedetailscontent">详情</string>
     <!-- 评论 -->
     <string name="text_all_comment">全部(%d)</string>

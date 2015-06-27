@@ -3,9 +3,14 @@ package com.shangxian.art;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.ab.http.AbHttpClient;
+import com.ab.http.AbHttpUtil;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.BaseServer;
+import com.shangxian.art.net.CallBack;
+import com.shangxian.art.net.HttpClients;
+import com.shangxian.art.net.ShopsServer;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
@@ -25,7 +30,6 @@ public class BenQiJieSuanActivity extends BaseActivity{
 		setContentView(R.layout.activity_benqijiesuan);
 		initView();
 		initData();
-		initListener();
 	}
 
 	private void initView() {
@@ -45,16 +49,29 @@ public class BenQiJieSuanActivity extends BaseActivity{
 
 	private void initData() {
 		String shopid = LocalUserInfo.getInstance(this).getString(Constant.INT_SHOPID);
-		String url = BaseServer.HOST + "lhb/timeSettlementEveryOne/" + shopid;
-		MyLogger.i("本期结算url：" + url);
-		refreshTask(url);
+		MyLogger.i("shopid》》》》》》》》》》："+shopid);
+		if (shopid != "0") {
+			refreshTask(shopid);
+		}else {
+			myToast("数据错误，请重新登录");
+		}
+		
 	}
 
-	private void refreshTask(String url) {
-		
-	}
-	private void initListener() {
-		// TODO Auto-generated method stub
-		
+	private void refreshTask(String shopid) {
+		ShopsServer.toBenQiJieSuan(shopid, new CallBack() {
+			
+			@Override
+			public void onSimpleSuccess(Object res) {
+				MyLogger.i("本期结算数据："+res);
+				
+			}
+			
+			@Override
+			public void onSimpleFailure(int code) {
+				
+				
+			}
+		});
 	}
 }
