@@ -85,8 +85,10 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_cancel:
-			if(shopOperatorBean!=null)
-			ShopOperatorServer.onDeleteOperator_xutils(shopOperatorBean.getId(), this);
+			if(shopOperatorBean!=null){
+				showProgressDialog(true);
+				ShopOperatorServer.onDeleteOperator_xutils(shopOperatorBean.getId(), this);
+			}
 			break;
 		case R.id.tv_ok:
 			// 修改
@@ -96,6 +98,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 			num = et_num.getText().toString().trim();//电话号码
 			pwd = et_pwd.getText().toString().trim();//mima
 			if(match()){
+				showProgressDialog(true);
 				RequestParams params = BaseServer.getParams();
 				MultipartEntity multipartEntity=new MultipartEntity();
 				multipartEntity.setMultipartSubtype("multipart/form-data; boundary=--ling--");//加上这个就不报404了，坑
@@ -105,7 +108,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 				params.addQueryStringParameter("name", name);
 				params.addQueryStringParameter("phoneNumber", num);
 				params.addQueryStringParameter("cardNumber", id);
-				ShopOperatorServer.onAddOperator_xutils(params, OperatorDetailsActivity.this);
+				ShopOperatorServer.onUpdateOperator_xutils(params, OperatorDetailsActivity.this);
 			}
 			break;
 
@@ -136,6 +139,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 	
 	@Override
 	public void onHttpResultAddOperator(String str) {
+		showProgressDialog(false);
 		myToast(str);
 		if(str.equals("修改成功")){
 			setResult(RESULT_OK);
@@ -145,6 +149,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 
 	@Override
 	public void onHttpResultDeleteOperator(CommonBean commonBean) {
+		showProgressDialog(false);
 		if(commonBean!=null){
 			myToast(commonBean.getResult());
 			if(commonBean.getResult_code().equals("200")){

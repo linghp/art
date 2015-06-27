@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
-        android:orientation="vertical" >
+        android:orientation="vertical" android:focusable="true"   
+android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +46,8 @@
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:text="用户名"
+                android:background="@null"
+                
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -84,6 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
+                android:background="@null"
+                
                 android:text="真实姓名"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
@@ -125,6 +130,8 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:text="身份证号"
+                android:background="@null"
+                
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -165,6 +172,8 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:text="联系方式"
+                android:background="@null"
+                
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -205,6 +214,8 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:text=""
+                android:background="@null"
+                
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>

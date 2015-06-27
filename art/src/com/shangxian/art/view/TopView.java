@@ -290,6 +290,7 @@ public class TopView extends RelativeLayout {
 	
 	public void setTitle(String title){
 		tv_title.setText(title);
+		tv_title.setVisibility(View.VISIBLE);
 	}
 	
 	public void setActivity(Activity curActivity){

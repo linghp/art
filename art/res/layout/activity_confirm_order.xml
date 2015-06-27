@@ -17,6 +17,7 @@
         android:layout_above="@+id/rl_bottom"
         android:layout_below="@id/top_title"
         android:cacheColorHint="#00000000"
+        android:divider="@null"
         android:dividerHeight="8dp" android:descendantFocusability="beforeDescendants"
         android:scrollbars="none" />
 

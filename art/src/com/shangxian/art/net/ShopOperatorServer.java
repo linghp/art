@@ -31,7 +31,7 @@ public class ShopOperatorServer extends BaseServer {
 	 * 返回获取操作员列表监听
 	 */
 	public interface OnHttpResultGetOperatorListener {
-		void onHttpResultGetOperator(List<ShopOperatorBean> shopOperatorBeans);
+		void onHttpResultGetOperator(CommonBeanObject<List<ShopOperatorBean>> commonBeanObject);
 	}
 
 	/**
@@ -161,8 +161,7 @@ public class ShopOperatorServer extends BaseServer {
 							e.printStackTrace();
 						}
 						if (commonBeanObject != null) {
-							l.onHttpResultGetOperator(commonBeanObject
-									.getObject());
+							l.onHttpResultGetOperator(commonBeanObject);
 						} else {
 							l.onHttpResultGetOperator(null);
 						}

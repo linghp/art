@@ -46,7 +46,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
     private MyOrderItem myOrderItem;
 	private AbImageLoader mAbImageLoader_logo,mAbImageLoader_goodsImg;
 	private String productid;
-	private static boolean isFromPayActivity;
+	/** 是否是直接付款产生的而不是从我的订单去进入*/
+	private  boolean isDirectPay;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,8 +60,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
+		intent.putExtra("isDirectPay", true);
 		((Activity)context).startActivityForResult(intent, 1);
-		isFromPayActivity=true;
 	}
 	public static void startThisActivity_MyOrder(String ordernumber, Context context,Fragment fragment) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
@@ -71,6 +72,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 
 	private void initData() {
 		String ordernumber=  getIntent().getStringExtra(INTENTDATAKEY);
+		isDirectPay=getIntent().getBooleanExtra("isDirectPay", false);
 		if(!TextUtils.isEmpty(ordernumber)){
 			myOrderItem=new MyOrderItem();
 			myOrderItem.setOrderNumber(ordernumber);
@@ -233,8 +235,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				@Override
 				public void onClick(View v) {
 					if(match()){
-						if(isFromPayActivity){
-							isFromPayActivity=false;
+						if(isDirectPay){
 							ReimburseActivity.startThisActivity(false,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this);
 						}else if(MyOrderActivity.currentFragment!=null){
 							MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);
@@ -276,8 +277,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				@Override
 				public void onClick(View v) {
 					if(match()){
-						if(isFromPayActivity){
-							isFromPayActivity=false;
+						if(isDirectPay){
 							ReimburseActivity.startThisActivity(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this);
 						}else if(MyOrderActivity.currentFragment!=null){
 							MyOrderActivity.currentFragment.setMyOrderItem(myOrderItem);

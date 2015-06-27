@@ -909,7 +909,7 @@ public class HomeActivity extends BaseActivity implements
 		if (!TextUtils.isEmpty(tag)) {
 			switch (tag) {
 			case "PRODUCT_LIST":// 一种商品类型下的商品列表
-				ClassifyCommodityActivity.startThisActivity_url(dataurl,
+				ClassifyCommodityActivity.startThisActivity_url(dataurl,"",
 						HomeActivity.this);
 				break;
 			case "SHOP_LIST":// 一种商品类型下的商铺列表

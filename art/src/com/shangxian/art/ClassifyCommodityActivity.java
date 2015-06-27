@@ -43,7 +43,7 @@ import com.shangxian.art.view.CircleImageView1;
 import com.shangxian.art.view.TopView;
 
 /**
- * 分类/首页---> 商铺展示list
+ * 分类/首页---> 商品商铺展示list
  * 
  * @author Administrator
  *
@@ -56,7 +56,8 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	private ClassityCommodiyAdp1 adapter;
 	private AbHttpUtil httpUtil = null;
 	// 底部选项
-	TextView shaixuan, xiaoliang, jiage, xinpin;
+	private TextView shaixuan, xiaoliang, jiage, xinpin;
+	private View classitycommodity_linear;
 	private String priceSort,dateSort, categoryId,lowprice,upprice;
 
 	private String url="";
@@ -68,6 +69,8 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	 */
 	// DialogScreen dialog;
 	private LinearLayout ll_noData;
+	/** 不为空说明来自店铺的全部商品 上新 优惠*/
+	private String titleFromShop;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -76,8 +79,18 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		initView();
 		initData();
 		listener();
+		updateViews();
 		// initScreenPopupWindow();
 		// initScreenDialog();
+	}
+
+	private void updateViews() {
+		if(!TextUtils.isEmpty(titleFromShop)){
+			topView.hideCenterSearch();
+			topView.showTitle();
+			topView.setTitle(titleFromShop);
+			classitycommodity_linear.setVisibility(View.GONE);
+		}
 	}
 
 	public static void startThisActivity(String id, Context context) {
@@ -86,9 +99,10 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		context.startActivity(intent);
 	}
 
-	public static void startThisActivity_url(String url, Context context) {
+	public static void startThisActivity_url(String url, String titleFromShop,Context context) {
 		Intent intent = new Intent(context, ClassifyCommodityActivity.class);
 		intent.putExtra("url", url);
+		intent.putExtra("titleFromShop", titleFromShop);
 		context.startActivity(intent);
 	}
 
@@ -107,6 +121,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 
 		list = (ListView) findViewById(R.id.classitycommodity);
 		// 底部选项
+		classitycommodity_linear=findViewById(R.id.classitycommodity_linear);
 		shaixuan = (TextView) findViewById(R.id.classitycommodity_saixuan);// 筛选
 		xiaoliang = (TextView) findViewById(R.id.classitycommodity_xiaoliang);// 销量
 		jiage = (TextView) findViewById(R.id.classitycommodity_jiage);// 价格
@@ -121,11 +136,13 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 		categoryId = getIntent().getStringExtra("id");
 		MyLogger.i(categoryId);
 		String geturl = getIntent().getStringExtra("url");
+		titleFromShop = getIntent().getStringExtra("titleFromShop");
 		if (TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/productlist";
 		} else {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
 		}
+		MyLogger.i(url);
 		model = new ArrayList<ClassityCommdityModel>();
 		refreshTask();
 
@@ -199,9 +216,9 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 							ClassityCommdityResultModel classityCommdityResultModel = gson
 									.fromJson(str,
 											ClassityCommdityResultModel.class);
+							MyLogger.i(">>>>>>>>>>商品列表"+classityCommdityResultModel);
 							model = classityCommdityResultModel.getData();
 							//categoryId=model.get(0).getCategoryId()+"";
-							MyLogger.i(">>>>>>>>>>商品列表"+model);
 							if (model.size() != 0) {
 								ll_noData.setVisibility(View.GONE);
 								adapter = new ClassityCommodiyAdp1(

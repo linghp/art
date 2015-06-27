@@ -85,7 +85,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	// 图片下载器
 	private AbImageLoader mAbImageLoader = null;
 
-	private String shopid;
+	private String shopid="-1";
 	private LinearLayout ll_noData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +189,9 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		} else {
 			String[] geturls=geturl.split("/");
 			geturl=geturls[geturls.length-1];
+			if(geturl.endsWith(",")){
+				geturl=geturl.substring(0, geturl.length()-1);
+			}
 			url = Constant.BASEURL + Constant.CONTENT + "/shop/"+geturl;
 		}
 		refreshTask(url);
@@ -204,6 +207,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 		context.startActivity(intent);
 	}
 	private void refreshTask(String url) {
+		MyLogger.i(url);
 		HttpClients.delDo(url, new HttpCilentListener() {
 			
 			@Override
@@ -399,7 +403,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
 				Bundle bundle = new Bundle();
-				bundle.putBoolean("isother", true);
+				bundle.putString("shopid", shopid);
 				CommonUtil.gotoActivityWithData(ShopsActivity.this, ClassificationActivity.class, bundle, false);
 			}
 		});
@@ -423,6 +427,21 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			if(model!=null){
 				CommonUtil.showShare(this, model.getName(), "http://www.peoit.com/",
 						Constant.BASEURL+model.getLogo(),null);
+			}
+			break;
+		case R.id.ll_shops_all:
+			if(model!=null){
+				ClassifyCommodityActivity.startThisActivity_url("/shop/"+shopid+"/products", "全部商品",this);
+			}
+			break;
+		case R.id.ll_shops_up:
+			if(model!=null){
+				ClassifyCommodityActivity.startThisActivity_url("/shop/"+shopid+"/newProduct", "上新商品",this);
+			}
+			break;
+		case R.id.ll_shops_youhui:
+			if(model!=null){
+				ClassifyCommodityActivity.startThisActivity_url("/shop/"+shopid+"/promotionProduct", "优惠商品",this);
 			}
 			break;
 		default:

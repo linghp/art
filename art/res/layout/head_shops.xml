@@ -34,8 +34,7 @@
                 android:layout_width="81dp"
                 android:layout_height="36dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_empty" 
-                />
+                android:src="@drawable/image_empty" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,9 +47,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="新鲜果水果专卖店"
-                    android:maxLines="2"
                     android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="新鲜果水果专卖店"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_title_size" />
 
@@ -60,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:singleLine="true"
-                    android:text="2.0万关注"
+                    android:text="0关注"
                     android:textColor="@color/txt_black2"
                     android:textSize="@dimen/list_summary_size" />
             </LinearLayout>
@@ -99,17 +98,20 @@
             android:paddingBottom="5dp" >
 
             <LinearLayout
+                android:id="@+id/ll_shops_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:gravity="center_horizontal"
+                android:onClick="onClick"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/shops_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="63"
+                    android:text="0"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_price_size" />
 
@@ -127,17 +129,20 @@
                 android:background="@color/txt_black3" />
 
             <LinearLayout
+                android:id="@+id/ll_shops_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:gravity="center_horizontal"
+                android:onClick="onClick"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/shops_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_price_size" />
 
@@ -155,10 +160,13 @@
                 android:background="@color/txt_black3" />
 
             <LinearLayout
+                android:id="@+id/ll_shops_youhui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:gravity="center_horizontal"
+                android:onClick="onClick"
                 android:orientation="vertical" >
 
                 <TextView
@@ -210,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
-                android:text="18696636812" />
+                android:text="" />
         </LinearLayout>
 
         <View
@@ -239,7 +247,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
-                android:text="重庆市沙坪坝区" />
+                android:text="" />
         </LinearLayout>
     </LinearLayout>
 

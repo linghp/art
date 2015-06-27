@@ -67,6 +67,7 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 				num = et_num.getText().toString().trim();//电话号码
 				pwd = et_pwd.getText().toString().trim();//mima
 				if(match()){
+					showProgressDialog(true);
 					RequestParams params = BaseServer.getParams();
 					//params.setContentType("multipart/form-data; boundary=--ling--");
 					//params.addBodyParameter("file", new File(path));
@@ -114,6 +115,7 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 
 	@Override
 	public void onHttpResultAddOperator(String str) {
+		showProgressDialog(false);
 		myToast(str);
 		if(str.equals("添加成功")){
 			setResult(RESULT_OK);

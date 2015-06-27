@@ -47,7 +47,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	private AbHttpUtil httpUtil = null;
 	private LinearLayout ll_noData;
 
-	boolean isother = false;
+	private String shopid;//从店铺页面的商品分类进来
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,26 +60,27 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	//初始化控件
 	private void initView() {
 		Intent intent = getIntent();
-		isother = intent.getBooleanExtra("isother", false);
-		if (isother == true) {
+		shopid = intent.getStringExtra("shopid");
+		if (!TextUtils.isEmpty(shopid)) {
 			topView = (TopView) findViewById(R.id.top_title);
 			topView.setActivity(this);
 			topView.setVisibility(View.VISIBLE);
-			topView.hideLeftBtnz();
-			topView.hideTitle();
-			topView.showRightBtn();
-			topView.setCenterListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
-				}
-			});
-			topView.setRightText("取消",new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					finish();
-				}
-			});
+			topView.setBack(R.drawable.back);
+			topView.hideCenterSearch();
+			topView.setTitle("商品分类");
+			topView.hideRightBtn_invisible();
+//			topView.setCenterListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					CommonUtil.gotoActivity(mAc, SearchsActivity.class, false);
+//				}
+//			});
+//			topView.setRightText("取消",new OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					finish();
+//				}
+//			});
 		}
 
 		listView = (ListView) findViewById(R.id.classify);
@@ -94,6 +95,19 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if(!TextUtils.isEmpty(shopid)){
+		topView = MainActivity.getTopView();
+		topView.setActivity(this);
+		topView.showLeftBtn();
+		topView.showRightBtn();
+		topView.showCenterSearch();
+		topView.hideTitle();
+		MainActivity activity = (MainActivity) getParent();
+		topView.setLeftBtnListener(activity);
+		topView.setRightBtnListener(activity);
+		topView.setRightBtnDrawable(R.drawable.map);
+		topView.setCenterListener(activity);
+		}
 	}
 
 	//添加数据
@@ -116,9 +130,14 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 		//		AbDialogUtil.showLoadDialog(this,
 		//				R.drawable.progress_circular, "数据加载中...");
 		//mAbPullToRefreshView.setVisibility(View.GONE);
-		String url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
+		String url="";
 		AbRequestParams params = new AbRequestParams();
-		params.put("level", "all");
+		if(!TextUtils.isEmpty(shopid)){
+			url = Constant.BASEURL+Constant.CONTENT+"/categorylistByShop/"+shopid;
+		}else{
+			url = Constant.BASEURL+Constant.CONTENT+Constant.CATEGORYS;
+			params.put("level", "all");
+		}
 		//		params.put("code", "88881110344801123456");
 		//		params.put("phone", "15889936624");
 		httpUtil.post(url,params,new AbStringHttpResponseListener() {

@@ -27,6 +27,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.base.DataTools;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.UserInfo;
+import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.utils.MyLogger;
@@ -50,7 +51,7 @@ public class BaseServer {
 	// public static final String HOSTtest=
 	// "http://192.168.0.116:8888/art/api/";
 //	 public static final String HOST = "http://192.168.0.197:8888/art/api/";
-	public static final String HOST = "http://www.ainonggu666.com/api/";
+	public static final String HOST = Constant.BASEURL+Constant.CONTENT+"/";
    // public static final String HOST = "http://192.168.0.170:8888/art/api/";
 
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口

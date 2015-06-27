@@ -108,14 +108,14 @@
             android:id="@+id/notData"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/noshop" />
+            android:src="@drawable/noproduct" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
-            android:text="抱歉，没有找到该分类下的商铺"
+            android:text="抱歉，没有找到相关商品"
             style="@style/nodata_text_attr"/>
     </LinearLayout>
 

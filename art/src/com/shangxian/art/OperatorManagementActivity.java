@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.shangxian.art.adapter.OperatorManagementAdapter;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.CommonBeanObject;
 import com.shangxian.art.bean.ShopOperatorBean;
 import com.shangxian.art.net.ShopOperatorServer;
 import com.shangxian.art.net.ShopOperatorServer.OnHttpResultGetOperatorListener;
@@ -89,13 +90,18 @@ public class OperatorManagementActivity extends BaseActivity implements OnHttpRe
 	}
 
 	@Override
-	public void onHttpResultGetOperator(List<ShopOperatorBean> shopOperatorBeans) {
+	public void onHttpResultGetOperator(CommonBeanObject<List<ShopOperatorBean>> commonBeanObject) {
 		loading_big.setVisibility(View.GONE);
-		if(shopOperatorBeans!=null){
+		if(commonBeanObject!=null&&commonBeanObject.getResult_code().equals("200")){
 			model.clear();
+			List<ShopOperatorBean> shopOperatorBeans=commonBeanObject.getObject();
+			if(shopOperatorBeans!=null){
 			model.addAll(shopOperatorBeans);
 			adapter.notifyDataSetChanged();
-			MyLogger.i(shopOperatorBeans.toString());
+			}else{
+				myToast("还没有操作员");
+			}
+			MyLogger.i(commonBeanObject.toString());
 		}else{
 			myToast("查询失败");
 		}

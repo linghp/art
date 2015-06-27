@@ -39,7 +39,8 @@ public class ReimburseActivity extends BaseActivity implements
 	
 	private boolean isGoods;//是否为退货申请   退款/退货  false/true
 	private boolean isNeed = true;//是否需要退还货物   需要/不需要  true/false
-
+	/** 是否是直接付款而不是从我的订单去付款*/
+	private  boolean isDirectPay;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,6 +70,7 @@ public class ReimburseActivity extends BaseActivity implements
 		intent.putExtra("orderid", orderid);
 		intent.putExtra("productid", productid);
 		intent.putExtra("totalprice", totalprice);
+		intent.putExtra("isDirectPay", true);
 		mAc.startActivityForResult(intent, 111);
 	}
 
@@ -103,6 +105,7 @@ public class ReimburseActivity extends BaseActivity implements
 		orderid = getIntent().getStringExtra("orderid");
 		productid = getIntent().getStringExtra("productid");
 		isGoods = getIntent().getBooleanExtra("isGoods", false);
+		isDirectPay=getIntent().getBooleanExtra("isDirectPay", false);
 		if (isGoods) {
 			topView.setTitle(getString(R.string.text_main_reimburse));//退货申请
 			
@@ -189,8 +192,10 @@ public class ReimburseActivity extends BaseActivity implements
 		if (commonBean != null) {
 			if (commonBean.getResult_code().equals("200")) {
 				myToast("等待卖家审核");
+				if(!isDirectPay){
 				MyOrderActivity.currentFragment
 						.setNeedFresh_Refund(MyOrderActivity.orderReturnStatus[2]);
+				}
 				finish();
 			}
 		} else {
