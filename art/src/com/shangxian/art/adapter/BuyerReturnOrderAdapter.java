@@ -176,6 +176,7 @@ public class BuyerReturnOrderAdapter extends
 			holder.tv_02.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					//退货-填写物流信息
 					LogisticsInformationActivity.startThisActivity(mFragment,
 							buyerReturnOrderProductInfos.get(0).getId() + "",
 							position, buyerReturnOrderInfo.getReturnOrderNum());

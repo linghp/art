@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
         android:padding="10dp"
-        android:text="是否需要退还货物"
+        android:text="填写物流信息"
         android:textColor="@color/txt_black2"
         android:textSize="@dimen/list_summary_size" />
 
@@ -153,6 +153,7 @@
         android:padding="8dp" >
 
         <TextView
+            android:id="@+id/logisticsinfomation_tv2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -165,6 +166,7 @@
             android:textSize="@dimen/list_title_size" />
 
         <TextView
+            android:id="@+id/logisticsinfomation_tv3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

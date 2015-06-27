@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -36,6 +37,7 @@ import com.shangxian.art.view.TopView;
 public class LogisticsInformationActivity extends BaseActivity {
 	private EditText et_expressCompany;
 	private EditText et_expressNum;
+	private TextView tv_quxiao,tv_tijiao;
 	private View popuView;
 	private ListView lv_express;
 	private PopupWindowHelper popuWindowHelper;
@@ -78,6 +80,27 @@ public class LogisticsInformationActivity extends BaseActivity {
 		setContentView(R.layout.activity_logisticsinformation);
 		initData();
 		initView();
+		initlistener();
+	}
+	private void initView() {
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle(getString(R.string.title_activity_logisticsinformation));
+
+		et_expressCompany = (EditText) findViewById(R.id.logiste_et_expressCompany);
+		et_expressNum = (EditText) findViewById(R.id.logiste_et_expressNum);
+		
+		tv_quxiao = (TextView) findViewById(R.id.logisticsinfomation_tv2);
+		tv_tijiao = (TextView) findViewById(R.id.logisticsinfomation_tv3);
+		
+		ll_view = (LinearLayout) findViewById(R.id.logisticsinfomation_linear);
+
+		loadPopupWindowData();
+		initPupowindow();
 	}
 
 	private void initData() {
@@ -89,23 +112,28 @@ public class LogisticsInformationActivity extends BaseActivity {
 			finish();
 		}
 	}
-
-	private void initView() {
-		topView = (TopView) findViewById(R.id.top_title);
-		topView.setActivity(this);
-		topView.setRightBtnDrawable(R.drawable.addto);
-		topView.hideCenterSearch();
-		topView.showTitle();
-		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_logisticsinformation));
-
-		et_expressCompany = (EditText) findViewById(R.id.logiste_et_expressCompany);
-		et_expressNum = (EditText) findViewById(R.id.logiste_et_expressNum);
-		
-		ll_view = (LinearLayout) findViewById(R.id.logisticsinfomation_linear);
-
-		loadPopupWindowData();
-		initPupowindow();
+	private void initlistener() {
+		tv_tijiao.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// 提交
+			/*	if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
+					myToast("请仔细填写物流信息");
+				}else {
+					
+				}*/
+				
+			}
+		});
+		tv_quxiao.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//取消
+				finish();
+			}
+		});
 	}
 
 	/**
@@ -200,7 +228,6 @@ public class LogisticsInformationActivity extends BaseActivity {
 									new Intent().putExtra("res", itemIndex));
 							finish();
 						}
-
 						@Override
 						public void onSimpleFailure(int code) {
 							myToast("提交物流信息失败");
