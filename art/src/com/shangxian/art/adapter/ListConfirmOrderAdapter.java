@@ -112,6 +112,12 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView
 					.findViewById(R.id.car_storename);
+			holder.tv_shippingfee = (TextView) convertView
+					.findViewById(R.id.tv_shippingfee);
+			holder.tv_payment = (TextView) convertView
+					.findViewById(R.id.tv_payment);
+			holder.tv_allquantity = (TextView) convertView
+					.findViewById(R.id.tv_allquantity);
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.et_message = (EditText) convertView
@@ -124,8 +130,11 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 		holder.ll_goodsitem_add.removeAllViews();
 		List<ListCarGoodsBean> listCarGoodsBeans = listCarStoreBean
 				.getItemDtos();
+		float allprice=0;
 		if (listCarGoodsBeans != null && listCarGoodsBeans.size() > 0) {
 			for (ListCarGoodsBean listCarGoodsBean : listCarGoodsBeans) {
+				allprice+=listCarGoodsBean.getPromotionPrice()*listCarGoodsBean.getQuantity();
+				
 				View child = inflater.inflate(R.layout.list_car_goods_item,
 						null);
 				holder.ll_goodsitem_add.addView(child);
@@ -160,6 +169,9 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 			}
 		}
 		holder.storeName.setText(listCarStoreBean.getShopName());
+		holder.tv_shippingfee.setText("￥  "+CommonUtil.priceConversion(listCarStoreBean.getItemDtos().get(0).getShippingFee()));
+		holder.tv_allquantity.setText("共  "+listCarStoreBean.getItemDtos().size()+"  件商品");
+		holder.tv_payment.setText("共计：￥"+CommonUtil.priceConversion(allprice+listCarStoreBean.getItemDtos().get(0).getShippingFee()));
 		mAbImageLoader_logo.display(holder.iv_logo, Constant.BASEURL
 				+ listCarStoreBean.getLogo());
 		holder.et_message.setText(listCarStoreBean.getRecommand());
@@ -250,5 +262,9 @@ public class ListConfirmOrderAdapter extends BaseAdapter {
 		public String goodsid;
 		public String storeid;
 		public LinearLayout ll_goodsitem_add;
+		
+		public TextView tv_shippingfee;
+		public TextView tv_allquantity;
+		public TextView tv_payment;
 	}
 }

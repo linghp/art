@@ -64,7 +64,8 @@ public class ConfirmOrderActivity extends BaseActivity implements
 	private List<ListCarStoreBean> listStoreBean;
 	// private HashMap<String, List<ListCarGoodsBean>> hashmapGoodsBeans;
 	// private Map
-	private String totalprice;
+	//private String totalprice;
+	private float totalprice;
 	private boolean isNowBuy;
 
 	@Override
@@ -80,7 +81,7 @@ public class ConfirmOrderActivity extends BaseActivity implements
 			List<ListCarStoreBean> listStoreBean, float priceAll,
 			boolean isNowBuy) {
 		Intent intent = new Intent(context, ConfirmOrderActivity.class);
-		intent.putExtra("totalprice", CommonUtil.priceConversion(priceAll));
+		//intent.putExtra("totalprice", CommonUtil.priceConversion(priceAll));
 		intent.putExtra("isNowBuy", isNowBuy);
 		intent.putExtra("listCarItem_stores", (Serializable) listStoreBean);
 		((Activity) context).startActivityForResult(intent, 1);
@@ -110,10 +111,18 @@ public class ConfirmOrderActivity extends BaseActivity implements
 
 	private void initdata() {
 		isNowBuy = getIntent().getBooleanExtra("isNowBuy", false);
-		totalprice = getIntent().getStringExtra("totalprice");
-		tv_car_allprice_value.setText("￥" + totalprice + "元");
+		//totalprice = getIntent().getStringExtra("totalprice");
 		listStoreBean = (List<ListCarStoreBean>) getIntent()
 				.getSerializableExtra("listCarItem_stores");
+		if(listStoreBean!=null){//计算总价 包括运费
+		for (ListCarStoreBean listCarStoreBean : listStoreBean) {
+			totalprice+=listCarStoreBean.getItemDtos().get(0).getShippingFee();
+			for (ListCarGoodsBean listCarGoodsBean : listCarStoreBean.getItemDtos()) {
+				totalprice+=listCarGoodsBean.getPromotionPrice()*listCarGoodsBean.getQuantity();
+			}
+		  }
+		}
+		tv_car_allprice_value.setText("￥" + CommonUtil.priceConversion(totalprice) + "元");
 		// hashmapGoodsBeans=(HashMap<String, List<ListCarGoodsBean>>)
 		// getIntent().getSerializableExtra("mapCarItem_goods");
 		// MyLogger.i(hashmapGoodsBeans.toString());
@@ -291,7 +300,7 @@ public class ConfirmOrderActivity extends BaseActivity implements
 							+ "}", Mapbean.class);
 					List<String> ordernumbers = new ArrayList<String>(
 							mapbeans.result.keySet());
-					PayActivity.startThisActivity(ordernumbers, totalprice,listStoreBean.get(0).getItemDtos().get(0).getName(),
+					PayActivity.startThisActivity(ordernumbers, CommonUtil.priceConversion(totalprice),listStoreBean.get(0).getItemDtos().get(0).getName(),
 							this);
 				}
 				// myToast(jsonObject.getString("result"));

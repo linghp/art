@@ -48,6 +48,10 @@ public class ListCarGoodsBean implements Serializable {
 
 	@Expose
 	private float originalPrice; // 商品原价
+	@Expose
+	private float shippingFee; // 运费
+	@Expose
+	private String shippingName; // 
 
 	@SerializedName("new")
 	@Expose
@@ -254,6 +258,22 @@ public class ListCarGoodsBean implements Serializable {
 		this.productName = productName;
 	}
 
+	public float getShippingFee() {
+		return shippingFee;
+	}
+
+	public void setShippingFee(float shippingFee) {
+		this.shippingFee = shippingFee;
+	}
+
+	public String getShippingName() {
+		return shippingName;
+	}
+
+	public void setShippingName(String shippingName) {
+		this.shippingName = shippingName;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof ListCarGoodsBean)) {
@@ -276,10 +296,12 @@ public class ListCarGoodsBean implements Serializable {
 				+ ", shopId=" + shopId + ", specs=" + specs + ", selectedSpec="
 				+ selectedSpec + ", photo=" + photo + ", quantity=" + quantity
 				+ ", promotionPrice=" + promotionPrice + ", reDetails="
-				+ reDetails + ", originalPrice=" + originalPrice + ", _new="
-				+ _new + ", id=" + id + ", shopName=" + shopName + ", logo="
-				+ logo + ", subTitle=" + subTitle + ", price=" + price
-				+ ", productPhoto=" + productPhoto + ", productName="
-				+ productName + "]";
+				+ reDetails + ", originalPrice=" + originalPrice
+				+ ", shippingFee=" + shippingFee + ", shippingName="
+				+ shippingName + ", _new=" + _new + ", id=" + id
+				+ ", shopName=" + shopName + ", logo=" + logo + ", subTitle="
+				+ subTitle + ", price=" + price + ", productPhoto="
+				+ productPhoto + ", productName=" + productName + ", shopLogo="
+				+ shopLogo + "]";
 	}
 }
