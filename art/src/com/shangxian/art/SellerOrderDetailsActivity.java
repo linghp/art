@@ -47,7 +47,7 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 	private MyOrderDetailBean myOrderDetailBean;
 	private MyOrderItem myOrderItem;
 	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
-	private TextView tv_03;
+	private TextView tv_03,tv_dingdan,tv_jiaoyi;
 	private int index;
 
 	@Override
@@ -128,6 +128,8 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 
 		iv_logo = (ImageView) findViewById(R.id.iv_logo);
 		tv_storeName = (TextView) findViewById(R.id.car_storename);
+//		tv_dingdan = (TextView) findViewById(R.id.tv_ordernumber);
+//		tv_jiaoyi = (TextView) findViewById(R.id.tv_nhbnumber);
 		ll_goodsitem_add = (LinearLayout) findViewById(R.id.ll_goodsitem_add);
 		tv_01 = (TextView) findViewById(R.id.tv_01);
 		tv_02 = (TextView) findViewById(R.id.tv_02);
@@ -157,6 +159,12 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 		((TextView) findViewById(R.id.tv_phone)).setText(receiverInfo
 				.getReceiverTel());
 
+		((TextView) findViewById(R.id.tv_ordernumber)).setText(String.format(
+				getString(R.string.text_ordernumber),
+				myOrderDetailBean.getOrderNumber()));
+		((TextView) findViewById(R.id.tv_nhbnumber)).setText(String.format(
+				getString(R.string.text_nhbnumber),
+				myOrderDetailBean.getOrderId()));
 		((TextView) findViewById(R.id.tv_tradetime)).setText(String.format(
 				getString(R.string.text_tradetime),
 				myOrderDetailBean.getOrderedDate()));

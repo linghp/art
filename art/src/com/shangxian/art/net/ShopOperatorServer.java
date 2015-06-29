@@ -12,6 +12,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.CommonBeanObject;
 import com.shangxian.art.bean.ShopOperatorBean;
+import com.shangxian.art.utils.MyLogger;
 
 public class ShopOperatorServer extends BaseServer {
 	/*
@@ -47,6 +48,7 @@ public class ShopOperatorServer extends BaseServer {
 
 			@Override
 			public void onSimpleSuccess(Object res) {
+				MyLogger.i("添加操作员数据:"+res);
 				JSONObject jsonObject;
 				String resultcode = "";
 				try {
