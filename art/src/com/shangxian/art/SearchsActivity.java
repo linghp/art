@@ -2,6 +2,8 @@ package com.shangxian.art;
 
 import java.lang.reflect.Type;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,11 +24,12 @@ import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.SearchServer;
+import com.shangxian.art.net.SearchServer.SearchType_enum;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsActivity extends BaseActivity {
-	private SearchModel curModel = SearchModel.shop;
+	//private SearchModel curModel = SearchModel.shop;
 	private ImageView iv_back;
 	private ImageView iv_search;
 	private EditText et_sreach;
@@ -51,30 +54,38 @@ public class SearchsActivity extends BaseActivity {
 	private TextView tv_sea;
 	private boolean isChangModel;
 	private CircleImageView1 iv_noData;
-
-	public enum SearchModel {
-		product, shop, all,
-	}
-
+/** 店铺内搜索传来的*/
+	private String shopid;
+	
+//	public enum SearchModel {
+//		product, shop, all,
+//	}
+    private SearchType_enum searchType_enum=SearchType_enum.shop;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_searchs);
 		initData();
 		initView();
-
 		listener();
+		updataViews();
 	}
 
-	private void initData() {
-		if (getIntent().getIntExtra(Constant.INT_SEARCH_TO, Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
-			curModel = SearchModel.shop;
-		} else if (getIntent().getIntExtra(Constant.INT_SEARCH_TO,
-				Integer.MIN_VALUE) == Constant.INT_SEARCH_SHOP) {
-			curModel = SearchModel.product;
-		} else {
-			curModel = SearchModel.shop;
+	private void updataViews() {
+		if(!TextUtils.isEmpty(shopid)){
+			ll_group.setVisibility(View.GONE);
+			et_sreach.setHint(R.string.in_shop_search);
 		}
+	}
+
+	public static void startThisActivity(String shopid, Context context) {
+		Intent intent = new Intent(context, SearchsActivity.class);
+		intent.putExtra("shopid", shopid);
+		context.startActivity(intent);
+	}
+	
+	private void initData() {
+		shopid=getIntent().getStringExtra("shopid");
 	}
 
 	private void initView() {
@@ -99,11 +110,7 @@ public class SearchsActivity extends BaseActivity {
 
 		initPopuWindow();
 		changeUi(UiModel.normal);
-		if (curModel == SearchModel.shop) {
-			changeUi(UiModel.shop);
-		} else {
-			changeUi(UiModel.goods);
-		}
+		changeUi(UiModel.shop);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -127,6 +134,7 @@ public class SearchsActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				changeUi(UiModel.goods);
+				searchType_enum=SearchType_enum.product;
 				popu.dismiss();
 			}
 		});
@@ -134,6 +142,7 @@ public class SearchsActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				changeUi(UiModel.shop);
+				searchType_enum=SearchType_enum.shop;
 				popu.dismiss();
 			}
 		});
@@ -178,8 +187,11 @@ public class SearchsActivity extends BaseActivity {
 //						}
 //					}
 //				});
+		if(!TextUtils.isEmpty(shopid)){
+			searchType_enum=SearchType_enum.innershop;
+		}
 		Type type = new TypeToken<SearchProductInfo>(){}.getType();
-		SearchServer.onSearchProduct(scan_info, "0", "10", curModel == SearchModel.shop, type, new CallBack() {	
+		SearchServer.onSearchProduct(scan_info, "0", "10",shopid, searchType_enum, type, new CallBack() {	
 			@Override
 			public void onSimpleSuccess(Object res) {
 				if (res != null) {
@@ -223,7 +235,7 @@ public class SearchsActivity extends BaseActivity {
 //					}
 //				});
 		Type type = new TypeToken<SearchProductInfo>(){}.getType();
-		SearchServer.onSearchProduct(scan_info, (info.getStart() + 1) + "", "10", curModel == SearchModel.shop, type, new CallBack() {	
+		SearchServer.onSearchProduct(scan_info, (info.getStart() + 1) + "", "10", shopid, searchType_enum,  type, new CallBack() {	
 			@Override
 			public void onSimpleSuccess(Object res) {
 				if (res != null) {
@@ -261,12 +273,12 @@ public class SearchsActivity extends BaseActivity {
 				if (TextUtils.isEmpty(scan)) {
 					myToast("请输入搜索条件");
 				} else {
-					if (!scan.equals(scan_info) || isChangModel) {
+					//if (!scan.equals(scan_info) || isChangModel) {
 						isChangModel = !isChangModel;
 						scan_info = scan;
 						changeUi(UiModel.loading);
 						loadSearch();
-					}
+				//	}
 				}
 			}
 		});
@@ -312,9 +324,8 @@ public class SearchsActivity extends BaseActivity {
 			ll_noData.setVisibility(View.VISIBLE);
 			lv_info.setVisibility(View.GONE);
 			iv_noData
-					.setImageResource(SearchModel.shop == curModel ? R.drawable.noshop
-							: SearchModel.product == curModel ? R.drawable.noproduct
-									: R.drawable.nomsg);
+					.setImageResource(SearchType_enum.shop == searchType_enum ? R.drawable.noshop
+							:  R.drawable.noproduct);
 			break;
 		case normal:
 			ll_loading.setVisibility(View.GONE);
@@ -330,7 +341,6 @@ public class SearchsActivity extends BaseActivity {
 			tv_sea.setText("商铺");
 			ll_shop.setSelected(true);
 			ll_goods.setSelected(false);
-			curModel = SearchModel.shop;
 			if (searchsAdapter != null)
 				searchsAdapter.setToSearch(true);
 			isChangModel = true;
@@ -339,7 +349,6 @@ public class SearchsActivity extends BaseActivity {
 			tv_sea.setText("商品");
 			ll_goods.setSelected(true);
 			ll_shop.setSelected(false);
-			curModel = SearchModel.product;
 			if (searchsAdapter != null)
 				searchsAdapter.setToSearch(false);
 			isChangModel = true;

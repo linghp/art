@@ -14,12 +14,10 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.shangxian.art.SearchsActivity.UiModel;
 import com.shangxian.art.bean.CommentLevelAllBean;
 import com.shangxian.art.bean.CommonBeanObject;
 import com.shangxian.art.bean.GoodsCommentBean;
 import com.shangxian.art.bean.MyOrderItem_all;
-import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.utils.MyLogger;
 
 public class CommentServer extends BaseServer {

@@ -600,6 +600,7 @@ public class ShoppingcartActivity extends BaseActivity implements
 						listCarGoodsBean.setSelectedSpec(newListCarGoodsBean.getSelectedSpec());
 						listCarGoodsBean.setQuantity(newListCarGoodsBean.getQuantity());
 						adapter.notifyDataSetChanged();
+						accountCar();
 					}else{
 						myToast("修改失败");
 					}
