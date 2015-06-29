@@ -279,6 +279,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		//订单详情
 		myOrderItem = mOrderItems.get(position);
 		SellerOrderDetailsActivity.startThisActivity_MyOrder(
 				myOrderItem.getOrderId() + "", position, this);

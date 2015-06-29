@@ -24,159 +24,207 @@
         android:textColor="@color/txt_whitetoback"
         android:textSize="@dimen/button_txt_size" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/addsubclass_tv"
         android:layout_below="@id/top_title"
-        android:orientation="vertical" >
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/txt_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/txt_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用  户  名"
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <EditText
+                    android:id="@+id/addsubclass_et1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="请输入用户名"
+                    android:padding="10dp"
+                    android:textColor="@color/txt_black1"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="真实姓名"
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <EditText
+                    android:id="@+id/addsubclass_et2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="请输入用户真实姓名"
+                    android:padding="10dp"
+                    android:textColor="@color/txt_black1"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="身份证号"
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <EditText
+                    android:id="@+id/addsubclass_et3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="请输入用户身份证号码"
+                    android:padding="10dp"
+                    android:textColor="@color/txt_black1"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系方式"
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <EditText
+                    android:id="@+id/addsubclass_et4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="请输入用户手机号码"
+                    android:numeric="integer"
+                    android:padding="10dp"
+                    android:textColor="@color/txt_black1"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="密       码 "
+                    android:textColor="@color/txt_black2"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <EditText
+                    android:id="@+id/addsubclass_et5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/regist_et_bg_sel"
+                    android:hint="请输入用户密码"
+                    android:padding="10dp"
+                    android:textColor="@color/txt_black1"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用  户  名"
+                android:padding="10dp"
+                android:text="是否允许接收交易短信"
                 android:textColor="@color/txt_black2"
                 android:textSize="@dimen/list_summary_size" />
 
-            <EditText
-                android:id="@+id/addsubclass_et1"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/regist_et_bg_sel"
-                android:hint="请输入用户名"
+                android:background="@color/txt_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="10dp"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/addsubclass_tv1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/leftcorner_green"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="否"
+                    android:textColor="@color/txt_white"
+                    android:textSize="@dimen/list_summary_size" />
+
+                <TextView
+                    android:id="@+id/addsubclass_tv2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rightcorner"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="是"
+                    android:textColor="@color/txt_green"
+                    android:textSize="@dimen/list_summary_size" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="真实姓名"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
-
-            <EditText
-                android:id="@+id/addsubclass_et2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/regist_et_bg_sel"
-                android:hint="请输入用户真实姓名"
-                android:padding="10dp"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="身份证号"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
-
-            <EditText
-                android:id="@+id/addsubclass_et3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/regist_et_bg_sel"
-                android:hint="请输入用户身份证号码"
-                android:padding="10dp"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="联系方式"
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
-
-            <EditText
-                android:id="@+id/addsubclass_et4"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/regist_et_bg_sel"
-                android:hint="请输入用户手机号码"
-                android:numeric="integer"
-                android:padding="10dp"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  密    码  "
-                android:textColor="@color/txt_black2"
-                android:textSize="@dimen/list_summary_size" />
-
-            <EditText
-                android:id="@+id/addsubclass_et5"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/regist_et_bg_sel"
-                android:hint="请输入用户密码"
-                android:padding="10dp"
-                android:textColor="@color/txt_black1"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
