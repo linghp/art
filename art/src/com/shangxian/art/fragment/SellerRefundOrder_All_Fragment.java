@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -104,9 +105,11 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 		removeSllerRefoundOrderThread.start();
 	}
 
-	public SellerRefundOrder_All_Fragment(String status) {
+	public SellerRefundOrder_All_Fragment(Activity activity,String status) {
 		super();
 		this.status = status;
+		myOrderListAdapter = new SellerRefoundOrderAdapter(activity,this,
+				R.layout.list_myorder_item, alls);
 	}
 
 	private void initMainView() {
@@ -124,8 +127,6 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		myOrderListAdapter = new SellerRefoundOrderAdapter(getActivity(),
-				R.layout.list_myorder_item, alls);
 		listView.setAdapter(myOrderListAdapter);
 	}
 	

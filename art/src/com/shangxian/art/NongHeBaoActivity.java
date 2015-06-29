@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.dialog.CustomOnlyDisplayDialog;
 import com.shangxian.art.net.AiNongkaServer;
@@ -21,7 +22,8 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrListener{
-	LinearLayout balance,recharge,cash,profit,bankcard,expenses,qrcode,transaction;
+	private LinearLayout balance,recharge,cash,profit,bankcard,expenses,qrcode,transaction;
+	private int userid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -54,8 +56,7 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
-		
+		userid=getUserId();
 	}
 
 	private void changeview() {
@@ -134,20 +135,28 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 			//二维码
 			@Override
 			public void onClick(View v) {
-				AiNongkaServer.onGetQrCode(NongHeBaoActivity.this);
+				if(userid!=Integer.MIN_VALUE){
+				AiNongkaServer.onGetQrCode(userid+"",NongHeBaoActivity.this);
+				}else{
+					myToast("请登录");
+				}
 			}
 		});
 	}
 
 	@Override
-	public void onHttpResultQr(String qrurl) {
-		if(TextUtils.isEmpty(qrurl)){
-			myToast("获取二维码失败");
+	public void onHttpResultQr(CommonBean commonBean) {
+		if(commonBean!=null){
+			if(commonBean.getResult_code().equals("200")){
+				CustomOnlyDisplayDialog customOnlyDisplayDialog=new CustomOnlyDisplayDialog(NongHeBaoActivity.this, 0, R.layout.dialog_customonlydisplay);
+				customOnlyDisplayDialog.show();
+				ImageView imageView=(ImageView) customOnlyDisplayDialog.findViewById(R.id.iv_example);
+				mAbImageLoader.display(imageView, Constant.BASEURL+commonBean.getResult());
+			}else if(commonBean.getResult_code().equals("400")){
+				myToast(commonBean.getResult());
+			}
 		}else{
-			CustomOnlyDisplayDialog customOnlyDisplayDialog=new CustomOnlyDisplayDialog(NongHeBaoActivity.this, 0, R.layout.dialog_customonlydisplay);
-			customOnlyDisplayDialog.show();
-			ImageView imageView=(ImageView) customOnlyDisplayDialog.findViewById(R.id.iv_example);
-			mAbImageLoader.display(imageView, Constant.BASEURL+"/"+qrurl);
+			myToast("请求失败");
 		}
 	}
 

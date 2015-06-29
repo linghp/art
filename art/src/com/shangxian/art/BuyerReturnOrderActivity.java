@@ -89,10 +89,10 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		tv_tab3.setText("待退货");
 		tv_tab4.setText("待退款");
 		topView.setTitle("退款订单管理");
-		fragments.add(0, new BuyerReturnOrderFragment(""));
-		fragments.add(1, new BuyerReturnOrderFragment(orderReturnStatus[2]));
-		fragments.add(2, new BuyerReturnOrderFragment(orderReturnStatus[3]));
-		fragments.add(3, new BuyerReturnOrderFragment(orderReturnStatus[4]));
+		fragments.add(0, new BuyerReturnOrderFragment(this,""));
+		fragments.add(1, new BuyerReturnOrderFragment(this,orderReturnStatus[2]));
+		fragments.add(2, new BuyerReturnOrderFragment(this,orderReturnStatus[3]));
+		fragments.add(3, new BuyerReturnOrderFragment(this,orderReturnStatus[4]));
 		
 		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
 				fragments);

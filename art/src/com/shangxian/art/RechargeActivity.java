@@ -98,7 +98,7 @@ public class RechargeActivity extends BaseActivity implements OnPayListener{
 			public void onClick(View v) {
 				String money=et_money.getText().toString().trim();
 				int userid=getUserId();
-				if(userid>0){
+				if(userid!=Integer.MIN_VALUE){
 					if(!TextUtils.isEmpty(money)&&money.charAt(0)>='0'&&money.charAt(0)<='9'){
 				AliPayServer.toRecharge("充值", userid+"", money, RechargeActivity.this);
 				     }else{

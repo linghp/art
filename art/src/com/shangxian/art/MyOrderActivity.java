@@ -170,11 +170,11 @@ public class MyOrderActivity extends BaseActivity implements OnClickListener,
 		mViewPager = (ViewPager) findViewById(R.id.vp_content);
 
 		fragments = new ArrayList<Fragment>();
-		firstFragment = new MyOrder_All_Fragment("");
+		firstFragment = new MyOrder_All_Fragment(this,"");
 		currentFragment = (MyOrder_All_Fragment) firstFragment;
-		secondFragment = new MyOrder_All_Fragment(orderState[1]);
-		thirdFragment = new MyOrder_All_Fragment(orderState[2]);
-		fourthFragment = new MyOrder_All_Fragment(orderState[3]);
+		secondFragment = new MyOrder_All_Fragment(this,orderState[1]);
+		thirdFragment = new MyOrder_All_Fragment(this,orderState[2]);
+		fourthFragment = new MyOrder_All_Fragment(this,orderState[3]);
 		// thirdFragment = new MyOrder_dfh_Fragment();
 		// fourthFragment = new MyOrder_dsh_Fragment();
 

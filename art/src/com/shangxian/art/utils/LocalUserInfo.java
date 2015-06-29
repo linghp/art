@@ -199,8 +199,7 @@ public class LocalUserInfo {
 				getInt(Constant.PRE_USER_LOGINTYPE, Integer.MIN_VALUE),
 				getString(Constant.PRE_USER_NICKNAME),
 				getString(Constant.PRE_USER_PHONENUMBER),
-				getString(USERPHOTO_FILENAME));
-		info.setPayed(getBoolean("payed", false));
+				getString(USERPHOTO_FILENAME),getString(Constant.INT_SHOPID),getBoolean("payed", false));
 		return info;
 	}
 }

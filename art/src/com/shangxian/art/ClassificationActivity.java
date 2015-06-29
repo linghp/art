@@ -250,7 +250,11 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
+				if (!TextUtils.isEmpty(shopid)) {
+					ClassifyCommodityActivity.startThisActivity(shopid, model.get(position).getId()+"", ClassificationActivity.this);	
+				}else{
+					ClassifyCommodityActivity.startThisActivity(model.get(position).getId()+"", ClassificationActivity.this);
+				}
 			}
 		});
 

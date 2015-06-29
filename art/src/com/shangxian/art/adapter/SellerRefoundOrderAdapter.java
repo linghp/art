@@ -38,19 +38,19 @@ public class SellerRefoundOrderAdapter extends
 	private DisplayImageOptions options;
 	private Fragment mFragment;
 
-	public SellerRefoundOrderAdapter(Activity mAc, int layoutId,
+//	public SellerRefoundOrderAdapter(Activity mAc, int layoutId,
+//			List<SellerRefoundOrderInfo> dates) {
+//		super(mAc, layoutId, dates);
+//		loader = ImageLoader.getInstance();
+//		options = Options.getListOptions(true);
+//	}
+	
+	public SellerRefoundOrderAdapter(Activity mAc, Fragment fragment,int layoutId,
 			List<SellerRefoundOrderInfo> dates) {
 		super(mAc, layoutId, dates);
 		loader = ImageLoader.getInstance();
 		options = Options.getListOptions(true);
-	}
-	
-	public SellerRefoundOrderAdapter(Fragment mAc, int layoutId,
-			List<SellerRefoundOrderInfo> dates) {
-		super(mAc.getActivity(), layoutId, dates);
-		loader = ImageLoader.getInstance();
-		options = Options.getListOptions(true);
-		this.mFragment = mAc;
+		this.mFragment = fragment;
 	}
 
 	public void removeItem(SellerRefoundOrderInfo info) {

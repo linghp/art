@@ -530,7 +530,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	private void toAlipay() {
 		if (isZhi) {
 			int userid=getUserId();
-			if(userid>0){
+			if(userid!=Integer.MIN_VALUE){
 				String form_to=userid+"";
 				if(!TextUtils.isEmpty(storeId)){//扫码支付
 					form_to=form_to+","+storeId;

@@ -71,6 +71,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	private LinearLayout ll_noData;
 	/** 不为空说明来自店铺的全部商品 上新 优惠*/
 	private String titleFromShop;
+	private String shopid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -90,15 +91,34 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 			topView.showTitle();
 			topView.setTitle(titleFromShop);
 			classitycommodity_linear.setVisibility(View.GONE);
+		}else if(!TextUtils.isEmpty(shopid)){
+			classitycommodity_linear.setVisibility(View.GONE);
 		}
 	}
 
 	public static void startThisActivity(String id, Context context) {
 		Intent intent = new Intent(context, ClassifyCommodityActivity.class);
-		intent.putExtra("id", id);
+		intent.putExtra("categoryId", id);
 		context.startActivity(intent);
 	}
-
+	/**
+	 * 从店铺分类进入
+	 * @param shopid
+	 * @param categoryId
+	 * @param context
+	 */
+	public static void startThisActivity(String shopid, String categoryId,Context context) {
+		Intent intent = new Intent(context, ClassifyCommodityActivity.class);
+		intent.putExtra("shopid", shopid);
+		intent.putExtra("categoryId", categoryId);
+		context.startActivity(intent);
+	}
+/**
+ * 从店铺详情的全部商品，上新等点击
+ * @param url
+ * @param titleFromShop
+ * @param context
+ */
 	public static void startThisActivity_url(String url, String titleFromShop,Context context) {
 		Intent intent = new Intent(context, ClassifyCommodityActivity.class);
 		intent.putExtra("url", url);
@@ -133,14 +153,17 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 	private void initData() {
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
-		categoryId = getIntent().getStringExtra("id");
+		categoryId = getIntent().getStringExtra("categoryId");
+		shopid = getIntent().getStringExtra("shopid");
 		MyLogger.i(categoryId);
 		String geturl = getIntent().getStringExtra("url");
 		titleFromShop = getIntent().getStringExtra("titleFromShop");
-		if (TextUtils.isEmpty(geturl)) {
-			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/productlist";
-		} else {
+		if (!TextUtils.isEmpty(geturl)) {
 			url = Constant.BASEURL + Constant.CONTENT + geturl;
+		} else if(!TextUtils.isEmpty(shopid)){
+			url = Constant.BASEURL + Constant.CONTENT + "/categorylistByShop/"+shopid+"/"+categoryId;
+		}else{
+			url = Constant.BASEURL + Constant.CONTENT + "/" + categoryId + "/productlist";
 		}
 		MyLogger.i(url);
 		model = new ArrayList<ClassityCommdityModel>();
@@ -402,7 +425,7 @@ public class ClassifyCommodityActivity extends BaseActivity implements
 
 	@Override
 	public void onHeaderRefresh(AbPullToRefreshView view) {
-		if(url.endsWith("find")){
+		if(url.endsWith("find")){//筛选
 			AbRequestParams params = new AbRequestParams();
 			if(!TextUtils.isEmpty(priceSort)){
 				params.put("priceSort", priceSort);	

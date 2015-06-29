@@ -21,6 +21,7 @@ public class UserInfo implements Serializable {
 	private String phoneNumber;
 	private String scalePhoto;// 头像路径
 	private String shopId;
+	private boolean payed;
     public String getShopId() {
 		return shopId;
 	}
@@ -29,7 +30,6 @@ public class UserInfo implements Serializable {
 		this.shopId = shopId;
 	}
 
-	private boolean payed = false;
 	public boolean isPayed() {
 		return payed;
 	}
@@ -42,25 +42,17 @@ public class UserInfo implements Serializable {
 		super();
 	}
 
-	public UserInfo(int id, int loginType, String nickName, String phoneNumber,
-			String scalePhoto) {
-		super();
-		this.id = id;
-		this.loginType = loginType;
-		this.nickName = nickName;
-		this.phoneNumber = phoneNumber;
-		this.scalePhoto = scalePhoto;
-	}
 
-	public UserInfo(int _id, int id, int loginType, String nickName,
-			String phoneNumber, String scalePhoto) {
+	public UserInfo(int id, int loginType, String nickName, String phoneNumber,
+			String scalePhoto, String shopId, boolean payed) {
 		super();
-		this._id = _id;
 		this.id = id;
 		this.loginType = loginType;
 		this.nickName = nickName;
 		this.phoneNumber = phoneNumber;
 		this.scalePhoto = scalePhoto;
+		this.shopId = shopId;
+		this.payed = payed;
 	}
 
 	public int get_id() {

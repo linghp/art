@@ -14,8 +14,10 @@ import com.ab.http.AbRequestParams;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.http.client.multipart.MultipartEntity;
 import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.constant.Constant;
+import com.shangxian.art.utils.MyLogger;
 
 import android.text.TextUtils;
 
@@ -46,11 +48,17 @@ public class SearchServer extends BaseServer {
 //				}
 //			}
 //		});
-		RequestParams params = getParams();
+		RequestParams params = new RequestParams();
+		MultipartEntity multipartEntity=new MultipartEntity();
+		multipartEntity.setMultipartSubtype("multipart/form-data; boundary=--ling--");//加上这个就不报404了，坑
+		params.setBodyEntity(multipartEntity);
 		params.addBodyParameter("key", key);
 		params.addBodyParameter("skip", skip);
 		params.addBodyParameter("pageSize", pageSize);
-		toXUtils(HttpMethod.POST, isShop ? NET_SEARCH_SHOP : NET_SEARCH_PRODUCT, params, type, back);
+		String url= isShop ? NET_SEARCH_SHOP : NET_SEARCH_PRODUCT;
+		MyLogger.i(key);
+		MyLogger.i(url);
+		toXUtils(HttpMethod.POST, url, params, type, back);
 	}
 	
 //	public interface OnSearchProductListener {

@@ -1,5 +1,6 @@
 package com.shangxian.art.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,9 +48,10 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		super.onCreate(savedInstanceState);
 	}
 
-	public BuyerReturnOrderFragment(String status) {
+	public BuyerReturnOrderFragment(Activity activity,String status) {
 		super();
 		this.status = status;
+		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(activity, R.layout.list_myorder_item, null);
 	}
 
 	private void initMainView() {
@@ -65,7 +67,6 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(this, R.layout.list_myorder_item, null);
 		listView.setAdapter(buyerReturnOrderAdapter);
 	}
 

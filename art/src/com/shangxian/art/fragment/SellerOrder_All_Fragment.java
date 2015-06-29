@@ -3,6 +3,7 @@ package com.shangxian.art.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -75,9 +76,11 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		super.onCreate(savedInstanceState);
 	}
 
-	public SellerOrder_All_Fragment(String status) {
+	public SellerOrder_All_Fragment(Context context,String status) {
 		super();
 		this.status = status;
+		myOrderListAdapter = new MyOrderListAdapter1(context, this,
+				mOrderItems);
 	}
 
 	private void initMainView() {
@@ -95,8 +98,6 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		myOrderListAdapter = new MyOrderListAdapter1(getActivity(), this,
-				mOrderItems);
 		listView.setAdapter(myOrderListAdapter);
 	}
 

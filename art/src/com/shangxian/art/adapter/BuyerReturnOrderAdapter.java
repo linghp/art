@@ -2,6 +2,8 @@ package com.shangxian.art.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,9 +31,9 @@ import com.shangxian.art.utils.Options;
 public class BuyerReturnOrderAdapter extends
 		EntityAdapter<BuyerReturnOrderInfo> {
 
-	public BuyerReturnOrderAdapter(Fragment fragment, int layoutId,
+	public BuyerReturnOrderAdapter(Activity activity, int layoutId,
 			List<BuyerReturnOrderInfo> dates) {
-		super(fragment, layoutId, dates);
+		super(activity, layoutId, dates);
 	}
 
 	@Override

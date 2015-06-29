@@ -281,4 +281,8 @@ public class BaseActivity extends AbActivity{
     	curUserInfo = share.getUser();
     	return curUserInfo.getId();
     }
+    protected String getshopId(){
+    	curUserInfo = share.getUser();
+    	return curUserInfo.getShopId();
+    }
 }

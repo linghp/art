@@ -79,7 +79,7 @@ public class BaseServer {
 	protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
 	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
 	protected static final String NET_COMMENTCOUNT = HOST+"getLevelAll?productId=";//获取商品的评论数量个数的统计
-	protected static final String NET_SHOPQR = HOST+"shop/code/2";//获取商家二维码
+	protected static final String NET_SHOPQR = HOST+"shop/code/";//获取商家二维码
 	protected static final String NET_ADDSHOPOPERATOR = HOST+"createShopOperator";//添加操作员
 	protected static final String NET_UPDATESHOPOPERATOR = HOST+"updateUser";//修改操作员
 	protected static final String NET_DELETESHOPOPERATOR = HOST+"deleteUser?userId=";//删除操作员

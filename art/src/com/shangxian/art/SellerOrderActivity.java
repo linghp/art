@@ -124,19 +124,19 @@ public class SellerOrderActivity extends BaseActivity implements
 			tv_tab3.setText("待发货");
 			tv_tab4.setText("待收货");
 			topView.setTitle("发货订单管理");
-			fragments.add(0, new SellerOrder_All_Fragment(""));
-			fragments.add(1, new SellerOrder_All_Fragment(orderState[1]));
-			fragments.add(2, new SellerOrder_All_Fragment(orderState[2]));
-			fragments.add(3, new SellerOrder_All_Fragment(orderState[3]));
+			fragments.add(0, new SellerOrder_All_Fragment(this,""));
+			fragments.add(1, new SellerOrder_All_Fragment(this,orderState[1]));
+			fragments.add(2, new SellerOrder_All_Fragment(this,orderState[2]));
+			fragments.add(3, new SellerOrder_All_Fragment(this,orderState[3]));
 		} else {
 			tv_tab2.setText("待审核");
 			tv_tab3.setText("待退货");
 			tv_tab4.setText("待退款");
 			topView.setTitle("退货订单管理");
-			fragments.add(0, new SellerRefundOrder_All_Fragment(""));
-			fragments.add(1, new SellerRefundOrder_All_Fragment(orderReturnStatus[2]));
-			fragments.add(2, new SellerRefundOrder_All_Fragment(orderReturnStatus[3]));
-			fragments.add(3, new SellerRefundOrder_All_Fragment(orderReturnStatus[4]));
+			fragments.add(0, new SellerRefundOrder_All_Fragment(this,""));
+			fragments.add(1, new SellerRefundOrder_All_Fragment(this,orderReturnStatus[2]));
+			fragments.add(2, new SellerRefundOrder_All_Fragment(this,orderReturnStatus[3]));
+			fragments.add(3, new SellerRefundOrder_All_Fragment(this,orderReturnStatus[4]));
 		}
 
 		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
