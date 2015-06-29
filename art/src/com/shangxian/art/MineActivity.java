@@ -166,8 +166,9 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 //			CommonUtil.gotoActivity(MineActivity.this,
 //					MerchandiseControlActivity.class, false);
 			//我的商铺
-			String shopid = LocalUserInfo.getInstance(this).getString(Constant.INT_SHOPID);
-			MyLogger.i("shopid："+shopid);
+//			String shopid = LocalUserInfo.getInstance(this).getString(Constant.INT_SHOPID);
+			String shopid = share.getUser().getShopId();
+			MyLogger.i(">>>>>>>>>>>>>>>>shopid："+shopid);
 			if (shopid != "0") {
 				ShopsActivity.startThisActivity(shopid, MineActivity.this);
 			}	

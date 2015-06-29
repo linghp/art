@@ -7,18 +7,21 @@ import com.google.gson.annotations.Expose;
 public class ProductDto implements Serializable{
 
 	private int id;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	@Expose
 	private String photo;
 	@Expose
 	private String name;
 	@Expose
 	private Integer price;
+	@Expose
+	private String productId;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getPhoto() {
 		return photo;
 	}
@@ -37,12 +40,15 @@ public class ProductDto implements Serializable{
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", photo=" + photo + ", name=" + name
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", productId=" + productId + "]";
 	}
-	
-	
-
 }

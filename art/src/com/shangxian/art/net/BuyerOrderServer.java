@@ -94,11 +94,12 @@ public class BuyerOrderServer extends BaseServer {
 	 * @param shippingNum
 	 * @param call
 	 */
-	public void toBuyerReturnOrderExpress(String productId, String orderNum,
+	public static void toBuyerReturnOrderExpress(String productId, String orderNum,
 			String shippingName, String shippingNum, CallBack call) {
 		RequestParams params = getParams();
 		params.addBodyParameter("shippingName", shippingName);
 		params.addBodyParameter("shippingNum", shippingNum);
+		MyLogger.i("买家退货物流信息url"+NET_BUYER_RETURN_EXPRESS + productId+"快递公司："+shippingName+"运单编号："+shippingNum);
 		toXUtils(HttpMethod.POST, NET_BUYER_RETURN_EXPRESS + productId + "/"
 				+ orderNum, params, null, call);
 	}

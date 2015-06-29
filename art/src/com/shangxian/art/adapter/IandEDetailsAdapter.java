@@ -44,9 +44,9 @@ public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 		holder.parice.setText("¥"+CommonUtil.priceConversion(dates.get(position).getTotalPrice()));//金额
 		holder.type.setText(dates.get(position).getDirection());//支出还是收入
 		if ("收入".equals(dates.get(position).getDirection().toString().trim())) {
-			holder.img.setImageResource(R.drawable.agricultural_bao);
+			holder.img.setImageResource(R.drawable.balance_green);
 		}else if ("支出".equals(dates.get(position).getDirection().toString().trim())){
-			holder.img.setImageResource(R.drawable.adddeletemerchandise);
+			holder.img.setImageResource(R.drawable.balance);
 		}
 		//月份
 		if(dates.get(position).isIstitle()){

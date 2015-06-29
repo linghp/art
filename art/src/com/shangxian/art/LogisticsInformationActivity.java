@@ -26,6 +26,7 @@ import com.shangxian.art.bean.ExpressInfo;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.PopupWindowHelper;
 import com.shangxian.art.view.TopView;
 
@@ -63,7 +64,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 		intent.putExtra(INT_itemIndex, index);
 		fragment.startActivityForResult(intent, 1);
 	}
-	
+
 	public static void startThisActivity(Activity mAc, String productId,
 			int index, String orderNum) {
 		Intent intent = new Intent(mAc,
@@ -93,10 +94,10 @@ public class LogisticsInformationActivity extends BaseActivity {
 
 		et_expressCompany = (EditText) findViewById(R.id.logiste_et_expressCompany);
 		et_expressNum = (EditText) findViewById(R.id.logiste_et_expressNum);
-		
+
 		tv_quxiao = (TextView) findViewById(R.id.logisticsinfomation_tv2);
 		tv_tijiao = (TextView) findViewById(R.id.logisticsinfomation_tv3);
-		
+
 		ll_view = (LinearLayout) findViewById(R.id.logisticsinfomation_linear);
 
 		loadPopupWindowData();
@@ -107,6 +108,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 		productId = getIntent().getStringExtra(INT_productId);
 		orderNum = getIntent().getStringExtra(INT_orderNum);
 		itemIndex = getIntent().getIntExtra(INT_itemIndex, Integer.MIN_VALUE);
+		MyLogger.i(">>>>>>>>>退款订单传入数据productId："+productId+"orderNum:"+orderNum+"itemIndex:"+itemIndex);
 		if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
 			myToast("请求参数异常");
 			finish();
@@ -114,20 +116,52 @@ public class LogisticsInformationActivity extends BaseActivity {
 	}
 	private void initlistener() {
 		tv_tijiao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// 提交
-			/*	if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
+				/*	if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
 					myToast("请仔细填写物流信息");
 				}else {
-					
+
 				}*/
 				
+				if (matchData()) {
+					/*BuyerOrderServer.toBuyerReturnOrderExpress(productId,
+							orderNum, expressCompany, expressNum, new CallBack() {
+								
+								@Override
+								public void onSimpleSuccess(Object res) {
+									MyLogger.i("提交物流信息数据："+res);
+									
+								}
+								
+								@Override
+								public void onSimpleFailure(int code) {
+									myToast("提交物流信息失败");
+									
+								}
+							});*/
+					BuyerOrderServer.toBuyerReturnOrderExpress(productId,
+							orderNum, expressCompany, expressNum, new CallBack() {
+						@Override
+						public void onSimpleSuccess(Object res) {
+							MyLogger.i("提交物流信息数据："+res);
+							myToast("提交物流信息成功");
+							setResult(RESULT_OK,
+									new Intent().putExtra("res", itemIndex));
+							finish();
+						}
+						@Override
+						public void onSimpleFailure(int code) {
+							myToast("提交物流信息失败");
+						}
+					});
+				}
 			}
 		});
 		tv_quxiao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				//取消
@@ -167,7 +201,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private void initPupowindow() {
 		popuView = getLayoutInflater().inflate(
 				R.layout.activity_logisticsinformation_popu, null);
-		
+
 		lv_express = (ListView) popuView.findViewById(R.id.logistl_lv_info);
 		expresAdapter = new ExpressPopuAdapter(mAc,
 				R.layout.activity_logisticsinformation_popu_list, expressInfos);
@@ -218,22 +252,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	 * @param v
 	 */
 	public void submitClick(View v) {
-		if (matchData()) {
-			new BuyerOrderServer().toBuyerReturnOrderExpress(productId,
-					orderNum, expressCompany, expressNum, new CallBack() {
-						@Override
-						public void onSimpleSuccess(Object res) {
-							myToast("提交物流信息成功");
-							setResult(RESULT_OK,
-									new Intent().putExtra("res", itemIndex));
-							finish();
-						}
-						@Override
-						public void onSimpleFailure(int code) {
-							myToast("提交物流信息失败");
-						}
-					});
-		}
+
 	}
 
 	private boolean matchData() {

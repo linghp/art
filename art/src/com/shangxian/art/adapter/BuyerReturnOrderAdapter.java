@@ -97,7 +97,7 @@ public class BuyerReturnOrderAdapter extends
 					.findViewById(R.id.car_goodsstatus);
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
-			holder.storeName.setText("退货编号:"+buyerReturnOrderInfo.getReturnOrderNum());          //退货编号
+			holder.storeName.setText("退货编号:"+buyerReturnOrderInfo.getReturnOrderNum());//退货编号
 			holder.tv_1.setText("订单号:"+buyerReturnOrderInfo.getOrderNumber());//订单号
 			holder.tv_2.setText("¥"+(float)buyerReturnOrderInfo.getTotalPrice());//退款金额
 			
@@ -152,7 +152,7 @@ public class BuyerReturnOrderAdapter extends
 				}
 			});
 		} else if (orderReturnStatus[2].equals(status)) {
-			changeTextViewShow(holder, "取消订单", null, "等待买家审核...");
+			changeTextViewShow(holder, "取消订单", null, "等待卖家审核...");
 			holder.tv_01.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

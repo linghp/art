@@ -37,6 +37,7 @@ import com.shangxian.art.view.TopView;
 public class ShopsSummaryActivity extends BaseActivity{
 	ImageView shopsimg,phoneimg,addressimg;//商铺图片、电话图片、地址图片
 	TextView shopsname,guanzu,zhanggui,phone,address,summary;//商铺名字、关注、掌柜名、电话、地址、简介
+	TextView tv_name,tv_phone,tv_address;//退货人，地址，电话
 	//联系电话
 	String phonenum = null;
 	ShopsSummaryModel model;
@@ -83,6 +84,9 @@ public class ShopsSummaryActivity extends BaseActivity{
 		phone = (TextView) findViewById(R.id.shopssummary_phone);
 		address = (TextView) findViewById(R.id.shopssummary_address);
 		summary = (TextView) findViewById(R.id.shopssummary_summary);
+		tv_name = (TextView) findViewById(R.id.shopssummary_tv2);
+		tv_phone = (TextView) findViewById(R.id.shopssummary_tv3);
+		tv_address = (TextView) findViewById(R.id.shopssummary_tv4);
 
 		//图片下载器
 		mAbImageLoader = AbImageLoader.newInstance(mAc);
@@ -160,9 +164,12 @@ public class ShopsSummaryActivity extends BaseActivity{
 								if (model.getPhoneNumbers() != null) {
 									phone.setText(model.getPhoneNumbers().get(0)+"");//电话
 								}
-
 								address.setText(model.getAddress());//地址
 								summary.setText(model.getDetails());//简介
+								
+								tv_name.setText(model.getConsignee()+"");//退货人
+								tv_phone.setText(model.getConPhoneNumber()+"");//电话
+								tv_address.setText(model.getConAddress()+"");//地址
 							}
 						}
 					} catch (JSONException e) {

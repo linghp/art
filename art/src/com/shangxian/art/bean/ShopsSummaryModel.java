@@ -26,6 +26,7 @@ public class ShopsSummaryModel implements Serializable{
 	private Object conPhoneNumber;
 	@Expose
 	private Object conAddress;
+	
 	public String getOwner() {
 		return owner;
 	}
