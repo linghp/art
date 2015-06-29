@@ -43,17 +43,18 @@ public class UserInfo implements Serializable {
 	}
 
 	public UserInfo(int id, int loginType, String nickName, String phoneNumber,
-			String scalePhoto) {
+			 String shopId ,String scalePhoto) {
 		super();
 		this.id = id;
 		this.loginType = loginType;
 		this.nickName = nickName;
 		this.phoneNumber = phoneNumber;
 		this.scalePhoto = scalePhoto;
+		this.shopId = shopId;
 	}
 
 	public UserInfo(int _id, int id, int loginType, String nickName,
-			String phoneNumber, String scalePhoto) {
+			String phoneNumber,String shopId, String scalePhoto ) {
 		super();
 		this._id = _id;
 		this.id = id;
@@ -61,6 +62,7 @@ public class UserInfo implements Serializable {
 		this.nickName = nickName;
 		this.phoneNumber = phoneNumber;
 		this.scalePhoto = scalePhoto;
+		this.shopId = shopId;
 	}
 
 	public int get_id() {

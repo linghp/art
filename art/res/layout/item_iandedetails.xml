@@ -26,7 +26,7 @@
             android:id="@+id/item_iandedetails_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/agricultural_bao"
+            android:src="@drawable/balance"
             android:layout_marginLeft="5dp"
             android:scaleType="fitXY"
             />

@@ -210,7 +210,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	private void refreshTask(String url) {
 		MyLogger.i(url);
 		HttpClients.delDo(url, new HttpCilentListener() {
-			
+
 			@Override
 			public void onResponse(String arg1) {
 				MyLogger.i("商铺详情数据："+arg1);
@@ -265,21 +265,29 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 						e.printStackTrace();
 					}
 
+				}else {
+					myToast("请求数据失败");
 				}
-				
-				
+
+
 			}
 		});
 	}
 	private void initListener() {
 		// TODO Auto-generated method stub
-		/*
-		 * mGridView.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> parent, View view,
-		 * int position, long id) { // TODO Auto-generated method stub
-		 * System.out.println(">>>>>>>>>"+position); } });
-		 */
+
+		mGridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override 
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				//热销商品
+				MyLogger.i(">>>>>>>>>热销商品："+model.getProductDtos().get(position-1).getProductId()); 
+				String productId = model.getProductDtos().get(position-1).getProductId();
+				CommodityContentActivity.startThisActivity(productId, ShopsActivity.this);
+				} 
+		});
+
 		/*
 		 * mGridView.setOnCellClickListener(new OnCellClickListener() {
 		 * 
