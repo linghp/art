@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="实付：" />
+            android:text="实付(含运费)：" />
 
         <TextView
             android:id="@+id/tv_payment"

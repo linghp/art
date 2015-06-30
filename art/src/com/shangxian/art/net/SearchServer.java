@@ -22,8 +22,13 @@ import com.shangxian.art.utils.MyLogger;
 import android.text.TextUtils;
 
 public class SearchServer extends BaseServer {
+	public enum SearchType_enum{
+		product,
+		shop,
+		innershop
+	}
 	public static void onSearchProduct(String key, String skip,
-		String pageSize, /*String sort,*/ boolean isShop, Type type, CallBack back /*final OnSearchProductListener l*/
+		String pageSize, String shopid, SearchType_enum searchType_enum, Type type, CallBack back /*final OnSearchProductListener l*/
 			) {
 //		AbRequestParams params = new AbRequestParams();
 //		params.put("key", key);
@@ -52,11 +57,26 @@ public class SearchServer extends BaseServer {
 		MultipartEntity multipartEntity=new MultipartEntity();
 		multipartEntity.setMultipartSubtype("multipart/form-data; boundary=--ling--");//加上这个就不报404了，坑
 		params.setBodyEntity(multipartEntity);
-		params.addBodyParameter("key", key);
-		params.addBodyParameter("skip", skip);
-		params.addBodyParameter("pageSize", pageSize);
-		String url= isShop ? NET_SEARCH_SHOP : NET_SEARCH_PRODUCT;
-		MyLogger.i(key);
+		params.addHeader("Content-Type", "application/json;charset=UTF-8");
+		params.addQueryStringParameter("key", key);
+		params.addQueryStringParameter("skip", skip);
+		params.addQueryStringParameter("pageSize", pageSize);
+		String url="";
+		switch (searchType_enum) {
+		case product:
+			url= NET_SEARCH_PRODUCT ;
+			break;
+		case shop:
+			url= NET_SEARCH_SHOP ;
+			break;
+		case innershop:
+			url= NET_SEARCH_INNERSHOP +shopid ;
+			break;
+
+		default:
+			break;
+		}
+		MyLogger.i(params.getQueryStringParams().toString());
 		MyLogger.i(url);
 		toXUtils(HttpMethod.POST, url, params, type, back);
 	}
