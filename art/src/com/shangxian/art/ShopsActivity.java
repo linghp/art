@@ -282,10 +282,13 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				//热销商品
-				MyLogger.i(">>>>>>>>>热销商品："+model.getProductDtos().get(position-1).getProductId()); 
-				String productId = model.getProductDtos().get(position-1).getProductId();
-				CommodityContentActivity.startThisActivity(productId, ShopsActivity.this);
-				} 
+				if (position != 0) {
+					MyLogger.i(">>>>>>>>>热销商品："+model.getProductDtos().get(position-1).getProductId()); 
+					String productId = model.getProductDtos().get(position-1).getProductId();
+					CommodityContentActivity.startThisActivity(productId, ShopsActivity.this);
+				}
+
+			} 
 		});
 
 		/*
