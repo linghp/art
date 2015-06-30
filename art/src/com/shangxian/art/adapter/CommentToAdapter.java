@@ -34,8 +34,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 
 public class CommentToAdapter extends BaseAdapter implements
-		OnHttpResultCancelOrderListener, OnHttpResultDelOrderListener,
-		OnHttpResultConfirmGoodsListener {
+		OnHttpResultDelOrderListener {
 	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
 	private Context context;
 	private LayoutInflater inflater;
@@ -106,7 +105,7 @@ public class CommentToAdapter extends BaseAdapter implements
 		holder.ll_goodsitem_add.removeAllViews();
 		List<ProductItemDto> listCarGoodsBeans = myOrderItem
 				.getProductItemDtos();
-		boolean isRefundStatus = false;// 是否是normal
+//		boolean isRefundStatus = false;// 是否是normal
 		for (ProductItemDto productItemDto : listCarGoodsBeans) {
 			View child = inflater.inflate(R.layout.list_car_goods_item, null);
 			holder.ll_goodsitem_add.addView(child);
@@ -129,18 +128,18 @@ public class CommentToAdapter extends BaseAdapter implements
 					+ CommonUtil.priceConversion(productItemDto.getPrice()));
 			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 			String status = productItemDto.getOrderItemStatus();
-			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
-				isRefundStatus = true;
-				car_goodsstatus.setVisibility(View.VISIBLE);
-				car_goodsstatus
-						.setText(String.format(context.getResources()
-								.getString(R.string.text_refundstatus),
-								MyOrderActivity.map_orderReturnStatusValue
-										.get(status)));
-			} else {
-				isRefundStatus = false;
-				car_goodsstatus.setVisibility(View.GONE);
-			}
+//			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
+//				isRefundStatus = true;
+//				car_goodsstatus.setVisibility(View.VISIBLE);
+//				car_goodsstatus
+//						.setText(String.format(context.getResources()
+//								.getString(R.string.text_refundstatus),
+//								MyOrderActivity.map_orderReturnStatusValue
+//										.get(status)));
+//			} else {
+//				isRefundStatus = false;
+//				car_goodsstatus.setVisibility(View.GONE);
+//			}
 			mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
 					+ productItemDto.getProductSacle());
 			if (myOrderItem != null) {
@@ -155,11 +154,20 @@ public class CommentToAdapter extends BaseAdapter implements
 				mAbImageLoader_logo.display(holder.iv_logo, Constant.BASEURL
 						+ myOrderItem.getShopLogo());
 
+				holder.tv_01.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// CommonUtil.toast("click", context);
+						MyOrderServer.toDelOrder(myOrderItem,
+								CommentToAdapter.this);
+					}
+				});
 				// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
 				 if (myOrderItem.getStatus().equals(
 						MyOrderActivity.orderState[6])) {// 待评价
+					 holder.tv_01.setText("删除订单");
 					holder.tv_02.setText("评价");
-					holder.tv_01.setVisibility(View.GONE);
 					holder.tv_02.setVisibility(View.VISIBLE);
 					holder.tv_02.setOnClickListener(new View.OnClickListener() {
 
@@ -170,10 +178,9 @@ public class CommentToAdapter extends BaseAdapter implements
 					});
 				} else if (myOrderItem.getStatus().equals(
 						MyOrderActivity.orderState[8])) {// 已评价
-					holder.tv_02.setEnabled(false);
-					holder.tv_02.setText("已评价");
-					holder.tv_01.setVisibility(View.GONE);
-					holder.tv_02.setVisibility(View.VISIBLE);
+					holder.tv_01.setText("删除订单");
+					holder.tv_02.setVisibility(View.GONE);
+					//holder.tv_02.setText("已评价");
 				} 
 			}
 		}
@@ -199,16 +206,6 @@ public class CommentToAdapter extends BaseAdapter implements
 	}
 
 	@Override
-	public void onHttpResultCancelOrder(MyOrderItem myOrderItem) {
-		if (myOrderItem != null) {
-			this.notifyDataSetChanged();
-			CommonUtil.toast("取消成功", context);
-		} else {
-			CommonUtil.toast("取消失败", context);
-		}
-	}
-
-	@Override
 	public void onHttpResultDelOrder(MyOrderItem myOrderItem) {
 		if (myOrderItem != null) {
 			myOrderItems.remove(myOrderItem);
@@ -219,13 +216,4 @@ public class CommentToAdapter extends BaseAdapter implements
 		}
 	}
 
-	@Override
-	public void onHttpResultConfirmGoods(MyOrderItem myOrderItem) {
-		if (myOrderItem != null) {
-			CommonUtil.toast("确认收货完成", context);
-			this.notifyDataSetChanged();
-		} else {
-			CommonUtil.toast("确认收货完成失败", context);
-		}
-	}
 }

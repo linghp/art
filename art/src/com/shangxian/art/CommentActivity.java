@@ -90,10 +90,10 @@ public class CommentActivity extends BaseActivity implements OnClickListener,OnH
 		txt_bad_comment_count = (TextView) findViewById(R.id.txt_bad_comment_count);
 		txt_all_comment_count.setSelected(true);
 		
-		firstFragment=new CommentFragment(url_parts[0]);
-		secondFragment=new CommentFragment(url_parts[1]);
-		thirdFragment=new CommentFragment(url_parts[2]);
-		fourthFragment=new CommentFragment(url_parts[3]);
+		firstFragment=new CommentFragment(this,url_parts[0]);
+		secondFragment=new CommentFragment(this,url_parts[1]);
+		thirdFragment=new CommentFragment(this,url_parts[2]);
+		fourthFragment=new CommentFragment(this,url_parts[3]);
 		getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, firstFragment,"firstFragment").commit();
 		//firstFragment.getData();
 		

@@ -5,9 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -162,7 +159,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 			@Override
 			public void onRatingChanged(RatingBar ratingBar, float rating,
 					boolean fromUser) {
-				myToast(""+rating);
+				//myToast(""+rating);
 				ratingValue=(int) rating-3;
 			}
 		});
@@ -226,12 +223,12 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 	}
 	
     void uploadComment() {
-    	RequestParams params = new RequestParams();
+    	RequestParams params = new RequestParams("utf-8");
         for (PhotoData item : mData) {
         	  File file = new File(Global.getPath(this, item.uri));
               params.addBodyParameter("files", file);
         }
-        
+      //  params.setHeader("Content-Type", "application/text;charset=UTF-8");
         params.addQueryStringParameter("comment", comment);
         params.addQueryStringParameter("anonymous", isAnonymous+"");
         params.addQueryStringParameter("salesOrderId", ordernumber);
@@ -241,6 +238,19 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
         //params.addQueryStringParameter("isPublic", isAnonymous+"");
         MyLogger.i(params.getQueryStringParams().toString());
         CommentServer.toAddComment(params, this);
+//    	RequestParams params = new RequestParams();
+//    	 final String contentType = RequestParams.APPLICATION_OCTET_STREAM;
+//      for (PhotoData item : mData) {
+//  	  File file = new File(Global.getPath(this, item.uri));
+//        params.p"files", file);
+//  }
+//    	params.put("comment", comment);
+//    	params.put("anonymous", isAnonymous+"");
+//    	params.put("salesOrderId", ordernumber);
+//    	params.put("productId", productId);
+//    	params.put("userId", userid);
+//    	params.put("level", ratingValue+"");
+//    	params.put("isPublic", isAnonymous+"");
     }
 
 

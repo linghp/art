@@ -3,6 +3,7 @@ package com.shangxian.art.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -59,9 +60,11 @@ public class CommentFragment extends BaseFragment implements
 		super.onCreate(savedInstanceState);
 	}
 
-	public CommentFragment(String url_part) {
+	public CommentFragment(Activity activity,String url_part) {
 		super();
 		this.url_part = url_part;
+		commentListAdapter = new CommentListAdapter(activity,
+				goodsCommentBeans, R.layout.item_commentlist);
 	}
 
 	private void initMainView() {
@@ -82,8 +85,6 @@ public class CommentFragment extends BaseFragment implements
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		commentListAdapter = new CommentListAdapter(getActivity(),
-				goodsCommentBeans, R.layout.item_commentlist);
 		listView.setAdapter(commentListAdapter);
 	}
 

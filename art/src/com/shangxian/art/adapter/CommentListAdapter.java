@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.Telephony.Mms.Rate;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,7 @@ public class CommentListAdapter extends BaseAdapter{
           ll_itemsImage.removeAllViews();
           List<String> images=goodsCommentBean.getPhotos();
           for (int i = 0; i < images.size(); i++) {
+        	  if(!TextUtils.isEmpty(images.get(i))){
             LayoutParams layoutParams=new LayoutParams(CommonUtil.dip2px(mContext, 40), CommonUtil.dip2px(mContext, 40));
 			ImageView imageView=new ImageView(mContext);
 			imageView.setLayoutParams(layoutParams);
@@ -122,6 +124,7 @@ public class CommentListAdapter extends BaseAdapter{
 			mAbImageLoader.display(imageView,Constant.BASEURL+images.get(i));
 			ll_itemsImage.addView(imageView);
 			CommonUtil.setMargins(imageView, 0, 0, CommonUtil.dip2px(mContext, 9), 0);
+        	  }
 		}
           return convertView;
     }
