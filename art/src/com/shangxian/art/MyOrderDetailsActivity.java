@@ -35,6 +35,11 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 订单详情
+ * @author Administrator
+ *
+ */
 public class MyOrderDetailsActivity extends BaseActivity implements OnHttpResultOrderDetailsListener,OnHttpResultCancelOrderListener,
 OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	private TopView topView;

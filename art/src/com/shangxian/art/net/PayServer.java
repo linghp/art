@@ -103,7 +103,7 @@ public class PayServer extends BaseServer {
 		RequestParams params = getParams();
 		params.addBodyParameter("from", curUser.getId() + "");
 		params.addBodyParameter("to", toid);
-		params.addBodyParameter("amount", (int)amount*100+"");
+		params.addBodyParameter("amount", (int)(amount*100)+"");
 		params.addBodyParameter("payPassword", pass);
 		params.addBodyParameter("payType", type);
 		MyLogger.i("请求地址"+NET_PAYMENT);

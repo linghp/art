@@ -50,7 +50,7 @@
                 android:background="@drawable/addshoppingcart_btn"
                 android:clickable="true"
                 android:onClick="onClick"
-                android:text="加入购物车"
+                android:text="加入购物篮"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/list_summary_size" />
 

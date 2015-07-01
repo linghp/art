@@ -154,6 +154,7 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 					.get(myOrderItem.getStatus()));
 			holder.tv_allquantity.setText("共" + myOrderItem.getTotalQuantity()
 					+ "件商品");
+//			((TextView)convertView.findViewById(R.id.tv_txt1)).setText("实付(含运费):");
 			holder.tv_payment.setText("￥"
 					+ CommonUtil.priceConversion(myOrderItem.getTotalPrice()));
 			mAbImageLoader_logo.display(holder.iv_logo, Constant.BASEURL

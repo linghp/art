@@ -99,7 +99,7 @@ public class BuyerReturnOrderAdapter extends
 					.findViewById(R.id.car_goodsimg);
 			holder.storeName.setText("退货编号:"+buyerReturnOrderInfo.getReturnOrderNum());//退货编号
 			holder.tv_1.setText("订单号:"+buyerReturnOrderInfo.getOrderNumber());//订单号
-			holder.tv_2.setText("¥"+(float)buyerReturnOrderInfo.getTotalPrice());//退款金额
+			holder.tv_2.setText("¥"+CommonUtil.priceConversion(buyerReturnOrderInfo.getTotalPrice()));//退款金额
 			
 			goodsNum.setText("x" + buyerReturnOrderProductInfo.getQuantity());
 			goodsPrice.setText("￥"
