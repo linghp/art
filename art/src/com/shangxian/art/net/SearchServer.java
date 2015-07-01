@@ -55,9 +55,9 @@ public class SearchServer extends BaseServer {
 //		});
 		RequestParams params = new RequestParams();
 		MultipartEntity multipartEntity=new MultipartEntity();
-		multipartEntity.setMultipartSubtype("multipart/form-data; boundary=--ling--");//加上这个就不报404了，坑
+		multipartEntity.setMultipartSubtype("multipart/form-data; boundary=--erwewewewerling--");//加上这个就不报404了，坑
 		params.setBodyEntity(multipartEntity);
-		params.addHeader("Content-Type", "application/json;charset=UTF-8");
+		//params.addHeader("Content-Type", "multipart/form-data; boundary=--erwewewewerling--");
 		params.addQueryStringParameter("key", key);
 		params.addQueryStringParameter("skip", skip);
 		params.addQueryStringParameter("pageSize", pageSize);

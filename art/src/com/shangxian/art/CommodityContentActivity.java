@@ -285,7 +285,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 						// else {
 						// viewPager.setVisibility(View.GONE);
 						// }
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
