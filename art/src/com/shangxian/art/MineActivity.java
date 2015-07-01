@@ -160,6 +160,13 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 
 	public void doClick(View view) {
 		switch (view.getId()) {
+		case R.id.user_head:
+			// 头像
+			if (isLoginAndToLogin()) {
+				startActivityForResult((new Intent(this,
+						AccountSecurityActivity.class)), 2);
+			}
+			break;
 
 		case R.id.ll_tab1:
 			// 商品管理
@@ -212,7 +219,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		case R.id.ll_my_item4:
 			// 我的消息
 //			if (isLoginAndToLogin())
-//				startActivity(new Intent(this, MyMessageActivity.class));
+				startActivity(new Intent(this, MyMessageActivity.class));
 			break;
 		case R.id.ll_my_item5:
 			// 我的预付
