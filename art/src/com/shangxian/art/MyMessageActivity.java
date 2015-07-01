@@ -60,6 +60,7 @@ public class MyMessageActivity extends BaseActivity{
 		}
 		adapter = new MyMessageAdapter(this, R.layout.item_mymessage, list);
 		listview.setAdapter(adapter);
+		ll_refresh_empty.setVisibility(View.VISIBLE);
 		loading_big.setVisibility(View.GONE);
 	}
 	private void initListener() {

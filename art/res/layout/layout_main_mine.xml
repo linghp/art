@@ -79,6 +79,7 @@
                             android:layout_height="80dp"
                             android:layout_centerHorizontal="true"
                             android:scaleType="fitXY"
+                            android:onClick="doClick"
                             android:src="@drawable/defaultloginheader"
                             app:shape="circle" />
 
