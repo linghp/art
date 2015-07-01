@@ -184,8 +184,7 @@
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="请输入退款金额"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:numeric="decimal"
+                    android:inputType="numberDecimal"
                     android:padding="5dp"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_title_size" />

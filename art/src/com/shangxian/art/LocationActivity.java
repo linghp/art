@@ -154,6 +154,7 @@ public class LocationActivity extends BaseActivity implements
 					.direction(100).latitude(ll.latitude).longitude(ll.longitude)
 					.build();
 			lng = ll.longitude + "," + ll.latitude;
+			MyLogger.i(lng);
 		} catch (Exception e) {
 			myToast("获取位置失败");
 			finish();
@@ -166,7 +167,12 @@ public class LocationActivity extends BaseActivity implements
 		curType = type;
 		switch (type) {
 		case MAP_SHOPS:
-			shops();
+			try {
+				shops();
+			} catch (Exception e) {
+				myToast("获取地理位置错误");
+				e.printStackTrace();
+			}
 			break;
 		case MAP_NEARLY:
 			nearly();
@@ -277,6 +283,7 @@ public class LocationActivity extends BaseActivity implements
 		locInfo = (ShopLocInfo) getIntent().getSerializableExtra(
 				Constant.INT_SHOPS_2_LOC);
 		if (locInfo == null) {
+			return;
 			//throw new NullPointerException("ShopLocInfo is null");
 		}
 		mShopLatlng = locInfo.getLatLng();
@@ -357,6 +364,7 @@ public class LocationActivity extends BaseActivity implements
 	private void initOverlay() {
 		switch (curType) {
 		case MAP_SHOPS:
+			if(getLat()!=null)
 			overShop();
 			break;
 		case MAP_NEARLY:

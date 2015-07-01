@@ -2,6 +2,7 @@ package com.shangxian.art.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -273,7 +274,7 @@ public Integer getOrderId() {
 		@Expose
 		private String id;
 		@Expose
-		private Object specs;
+		private HashMap<String, String> specs;
 		@Expose
 		private Integer quantity;
 		@Expose
@@ -316,10 +317,10 @@ public Integer getOrderId() {
 		public void setId(String id) {
 			this.id = id;
 		}
-		public Object getSpecs() {
+		public HashMap<String, String> getSpecs() {
 			return specs;
 		}
-		public void setSpecs(Object specs) {
+		public void setSpecs(HashMap<String, String> specs) {
 			this.specs = specs;
 		}
 		public Integer getQuantity() {

@@ -2,6 +2,8 @@ package com.shangxian.art;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
+import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderDetailBean;
@@ -148,18 +151,26 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		ll_goodsitem_add.removeAllViews();
 		List<OrderItem> orderItems=myOrderDetailBean.getOrderItems();
 		final List<CheckBox> checkBoxs=new ArrayList<CheckBox>();
+		boolean isHaveProduct = false;// 是否有可以退款的商品
 		for (final OrderItem orderItem : orderItems) {
+			isHaveProduct=true;
 			View child = inflater.inflate(
 					R.layout.list_car_goods_item, null);
 			ll_goodsitem_add.addView(child);
 			((TextView) child.findViewById(R.id.car_goodsname)).setText(orderItem.getName());
 			//holder.goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
-			//holder.goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
+			TextView goodsAttr = (TextView) child.findViewById(R.id.car_goodsattr);
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child.findViewById(R.id.car_goods_price);
 			//final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child.findViewById(R.id.car_goodsimg);
 			CheckBox checkBox =  (CheckBox) child.findViewById(R.id.check_goods);
+			Map<String, String> selectedspec = orderItem.getSpecs();
+			String specs = "";
+			for (Entry<String, String> entry : selectedspec.entrySet()) {
+				specs = specs + entry.getValue() + "  ";
+			}
+			goodsAttr.setText(specs);
 			goodsNum.setText("x"+orderItem.getQuantity());
 			goodsPrice.setText("￥"+CommonUtil.priceConversion(orderItem.getUnitPrice()));
 			if(!((myOrderItem.getStatus().equals(orderState[2])||myOrderItem.getStatus().equals(orderState[4]))&&orderItem.getOrderItemStatus().equals(orderReturnStatus[0]))){
@@ -186,7 +197,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		//根据状态显示按钮
 		String status=myOrderDetailBean.getStatus();
 		if(status.equals(orderState[1])){
-			tv_01.setOnClickListener(new View.OnClickListener() {
+			tv_01.setOnClickListener(new View.OnClickListener() {// 待付款   -----------------------------------1
 				
 				@Override
 				public void onClick(View v) {
@@ -204,7 +215,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()),myOrderItem.getProductItemDtos().get(0).getName(), MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(myOrderItem.getStatus().equals(orderState[7])){//已取消交易
+		}else if(myOrderItem.getStatus().equals(orderState[7])||myOrderItem.getStatus().equals(
+				MyOrderActivity.orderState[9])){// 已取消交易/交易关闭 ------------------------------------------7 9
 			tv_01.setText("删除订单");
 			tv_02.setVisibility(View.GONE);
 			tv_01.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +227,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					MyOrderServer.toDelOrder(myOrderItem, MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(status.equals(orderState[2])){//待发货
+		}else if(status.equals(orderState[2])){// 待发货    ------------------------------------------------------------2
 			List<OrderItem> orderItems2=myOrderDetailBean.getOrderItems();
 			if(orderItems2!=null&&orderItems2.size()>0){
 			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
@@ -248,7 +260,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				tv_01.setVisibility(View.GONE);
 				tv_02.setVisibility(View.GONE);
 			}
-		}else if(myOrderItem.getStatus().equals(orderState[3])){//已取消交易
+		}else if(myOrderItem.getStatus().equals(orderState[3])){// 待收货   ---------------------------------------------------3
 			tv_01.setVisibility(View.GONE);
 			tv_02.setText("确认收货");
 			tv_02.setOnClickListener(new View.OnClickListener() {
@@ -259,19 +271,31 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					MyOrderServer.toConfirmGoods(myOrderItem, MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(status.equals(orderState[4])||status.equals(orderState[6])){//已完成交易
+		}else if(status.equals(orderState[4])||status.equals(orderState[6])){// 已完成交易或者待评价    ----------------------------4 6
+			((TextView)findViewById(R.id.tv_header_01)).setText(MyOrderActivity.orderStateValue[4]);
 			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
 			MyLogger.i(status_temp);
 			if(TextUtils.isEmpty(status_temp)){
 				status_temp=orderReturnStatus[0];
 			}
-			if(status_temp.equals(orderReturnStatus[0])){
-			tv_02.setText("退货");
-			}else{
-			tv_02.setText("退货中");
-			tv_02.setEnabled(false);
+			if (!isHaveProduct) {
+				tv_01.setVisibility(View.GONE);
+				tv_02.setVisibility(View.GONE);
+			} else {
+				tv_01.setVisibility(View.VISIBLE);
+				tv_01.setText("删除订单");
+				tv_02.setText("退款/退货");
+				tv_02.setEnabled(true);
 			}
-			tv_01.setVisibility(View.GONE);
+			tv_01.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// CommonUtil.toast("click", context);
+					MyOrderServer.toDelOrder(myOrderItem,
+							MyOrderDetailsActivity.this);
+				}
+			});
 			tv_02.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -284,6 +308,20 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 							ReimburseActivity.startThisActivity_Fragment(true,myOrderDetailBean.getOrderNumber(), productid,0f, MyOrderDetailsActivity.this, MyOrderActivity.currentFragment);
 					   }
 					}
+				}
+			});
+		}else if (myOrderItem.getStatus().equals(
+				MyOrderActivity.orderState[5])) {// 退款失败   --------------------------------------------------------5
+			tv_01.setText("取消订单");
+			tv_01.setVisibility(View.VISIBLE);
+			tv_02.setVisibility(View.GONE);
+			tv_01.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// CommonUtil.toast("click", context);
+					MyOrderServer.toCancelOrder(myOrderItem,
+							MyOrderDetailsActivity.this);
 				}
 			});
 		}

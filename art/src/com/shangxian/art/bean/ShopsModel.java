@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.annotations.Expose;
+import com.shangxian.art.utils.MyLogger;
 
 public class ShopsModel implements Serializable {
 	@Expose
@@ -38,7 +39,11 @@ public class ShopsModel implements Serializable {
 	private Boolean attened;
 	
 	public MyLatLng getLat(){
-		MyLatLng lng = new MyLatLng(lag.get(1), lag.get(0));
+		MyLatLng lng=null;
+		MyLogger.i(lag.toString());
+		if(lag.size()==2){
+		lng = new MyLatLng(lag.get(1), lag.get(0));
+		}
 		return lng;
 	}
  

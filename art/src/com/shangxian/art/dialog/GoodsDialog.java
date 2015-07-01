@@ -473,6 +473,7 @@ public class GoodsDialog extends Dialog implements
 							listCarGoodsBean.setPromotionPrice(commodityContentModel.getPromotionPrice());
 							listCarGoodsBean.setOriginalPrice(commodityContentModel.getOriginalPrice());
 							listCarGoodsBean.setName(commodityContentModel.getName());
+							listCarGoodsBean.setShippingFee(commodityContentModel.getShippingPrice());
 							List<String> photos=commodityContentModel.getPhotos();
 							if(photos!=null&&photos.size()>0){
 							listCarGoodsBean.setPhoto(photos.get(0));

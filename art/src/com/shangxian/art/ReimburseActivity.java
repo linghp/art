@@ -22,7 +22,7 @@ import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
- * 退款申请
+ * 退款/货申请
  * 
  * @author zyz
  *
@@ -33,7 +33,8 @@ public class ReimburseActivity extends BaseActivity implements
 	private TextView tv_need, tv_notneed, tv_quxiao, tv_tijiao,tv_txt1;// 需要、不需要、取消、提交
 	private ImageView img1,img2,img3;
 	private EditText et_cause, et_money, et_explain;// 原因、金额、说明
-	private String cause, money, explain;
+	private String cause, explain;
+	private String money;
 	private String orderid, productid, totalprice;
 	private LinearLayout ll_linear1,ll_linear8,ll_linear9;
 	
@@ -175,14 +176,25 @@ public class ReimburseActivity extends BaseActivity implements
 
 	private boolean match() {
 		cause = et_cause.getText().toString().trim();
-		money = et_money.getText().toString().trim();
+		String money_str = et_money.getText().toString().trim();
 		explain = et_explain.getText().toString().trim();
 		if (TextUtils.isEmpty(cause)) {
 			myToast("退款原因不能为空");
 			return false;
-		} else if (TextUtils.isEmpty(money)) {
+		} else if (TextUtils.isEmpty(money_str)) {
 			myToast("退款金额不能为空");
 			return false;
+		}else {
+			try {
+				double money_temp=Double.parseDouble(money_str);
+				money=(int)(money_temp*100)+"";
+				MyLogger.i(money);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				myToast("退款金额格式错误");
+				return false;
+			}
 		}
 		return true;
 	}

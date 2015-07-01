@@ -2,6 +2,8 @@ package com.shangxian.art.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -105,11 +107,13 @@ public class MyOrderListAdapter extends BaseAdapter implements
 		}
 		// 恢复状态
 		holder.tv_02.setEnabled(true);
-
+		holder.tv_02.setClickable(true);
+		
 		holder.ll_goodsitem_add.removeAllViews();
+		if (myOrderItem != null) {
 		List<ProductItemDto> listCarGoodsBeans = myOrderItem
 				.getProductItemDtos();
-		boolean isRefundStatus = false;// 是否是normal
+		boolean isRefundStatus = true;// 是否是normal(false)
 		for (ProductItemDto productItemDto : listCarGoodsBeans) {
 			View child = inflater.inflate(R.layout.list_car_goods_item, null);
 			holder.ll_goodsitem_add.addView(child);
@@ -117,8 +121,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 					.setText(productItemDto.getName());
 			// holder.goodsImg = (ImageView)
 			// child.findViewById(R.id.car_goodsimg);
-			// holder.goodsAttr = (TextView)
-			// child.findViewById(R.id.car_goodsattr);
+			TextView goodsAttr = (TextView)
+			 child.findViewById(R.id.car_goodsattr);
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child
 					.findViewById(R.id.car_goods_price);
@@ -127,26 +131,35 @@ public class MyOrderListAdapter extends BaseAdapter implements
 			// final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
+			
+			Map<String, String> selectedspec = productItemDto
+					.getSpecs();
+			String specs = "";
+			for (Entry<String, String> entry : selectedspec.entrySet()) {
+				specs = specs + entry.getValue() + "  ";
+			}
+			goodsAttr.setText(specs);
 			goodsNum.setText("x" + productItemDto.getQuantity());
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(productItemDto.getPrice()));
 			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 			String status = productItemDto.getOrderItemStatus();
-			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {
-				isRefundStatus = true;
+			if (!status.equals(MyOrderActivity.orderReturnStatus[0])) {//退款了
+				//isRefundStatus = true;
 				car_goodsstatus.setVisibility(View.VISIBLE);
 				car_goodsstatus
 						.setText(String.format(context.getResources()
 								.getString(R.string.text_refundstatus),
 								MyOrderActivity.map_orderReturnStatusValue
 										.get(status)));
-			} else {
+			} else {//没有退款
 				isRefundStatus = false;
 				car_goodsstatus.setVisibility(View.GONE);
 			}
 			mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
 					+ productItemDto.getProductSacle());
-			if (myOrderItem != null) {
+		}
+			
 				holder.storeName.setText(myOrderItem.getShopName());
 				holder.tv_state.setText(MyOrderActivity.map_orderStateValue
 						.get(myOrderItem.getStatus()));
@@ -160,7 +173,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 
 				// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
 				if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[1])) {// 待付款
+						MyOrderActivity.orderState[1])) {// 待付款   -----------------------------------1
 					holder.tv_01.setText("取消订单");
 					holder.tv_02.setText("付款");
 					holder.tv_01.setVisibility(View.VISIBLE);
@@ -190,7 +203,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[7])) {// 已取消交易
+						MyOrderActivity.orderState[7])||myOrderItem.getStatus().equals(
+								MyOrderActivity.orderState[9])) {// 已取消交易/交易关闭 ---------------------7 9
 					holder.tv_01.setText("删除订单");
 					holder.tv_01.setVisibility(View.VISIBLE);
 					holder.tv_02.setVisibility(View.GONE);
@@ -204,7 +218,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[2])) {// 待发货
+						MyOrderActivity.orderState[2])) {// 待发货    --------------------------------------------2
 					if (isRefundStatus) {
 						holder.tv_02.setText("退款中");
 						holder.tv_02.setEnabled(false);
@@ -218,7 +232,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 
 						@Override
 						public void onClick(View v) {
-							// CommonUtil.toast("click", context);
+							 CommonUtil.toast("click", context);
 							((MyOrder_All_Fragment) fragment)
 									.setMyOrderItem(myOrderItem);
 							ReimburseActivity.startThisActivity_Fragment(false,
@@ -228,7 +242,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[3])) {// 待收货
+						MyOrderActivity.orderState[3])) {// 待收货   ---------------------------------------------------3
 					holder.tv_02.setText("确认收货");
 					holder.tv_01.setVisibility(View.GONE);
 					holder.tv_02.setVisibility(View.VISIBLE);
@@ -242,7 +256,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 					});
 				} else if (myOrderItem.getStatus().equals(
 						MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
-								MyOrderActivity.orderState[6])) {// 已完成交易或者待评价
+								MyOrderActivity.orderState[6])) {// 已完成交易或者待评价    ----------------------------4 6
 					holder.tv_state.setText(MyOrderActivity.orderStateValue[4]);
 					if (isRefundStatus) {
 						holder.tv_02.setText("退货中");
@@ -276,9 +290,21 @@ public class MyOrderListAdapter extends BaseAdapter implements
 											.getId(), 0f, context, fragment);
 						}
 					});
-				} 
+				}else if (myOrderItem.getStatus().equals(
+						MyOrderActivity.orderState[5])) {// 退款失败   --------------------------------------------------------5
+					holder.tv_01.setText("取消订单");
+					holder.tv_01.setVisibility(View.VISIBLE);
+					holder.tv_02.setVisibility(View.GONE);
+					holder.tv_01.setOnClickListener(new View.OnClickListener() {
 
-			}
+						@Override
+						public void onClick(View v) {
+							// CommonUtil.toast("click", context);
+							MyOrderServer.toCancelOrder(myOrderItem,
+									MyOrderListAdapter.this);
+						}
+					});
+				}
 
 			// 为了点击退款/退货进入详情界面
 			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])

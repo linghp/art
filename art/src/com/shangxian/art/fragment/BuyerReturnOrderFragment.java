@@ -1,5 +1,8 @@
 package com.shangxian.art.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import com.shangxian.art.BuyerReturnOrderActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.ReturnOrderDetailsActivity;
 import com.shangxian.art.adapter.BuyerReturnOrderAdapter;
+import com.shangxian.art.bean.BuyerReturnOrderInfo;
 import com.shangxian.art.bean.BuyerReturnOrderStat;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
@@ -38,6 +42,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	private String status;
 	private BuyerReturnOrderStat buyerReturnOrderStat;
 	private BuyerOrderServer server;
+	private List<BuyerReturnOrderInfo> dates=new ArrayList<BuyerReturnOrderInfo>();
 
 	public void setNeedFresh(boolean isNeedFresh) {
 	}
@@ -51,7 +56,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	public BuyerReturnOrderFragment(Activity activity,String status) {
 		super();
 		this.status = status;
-		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(activity, R.layout.list_myorder_item, null);
+		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(activity, R.layout.list_myorder_item, dates);
 	}
 
 	private void initMainView() {

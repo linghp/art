@@ -26,6 +26,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.Options;
 
 public class BuyerReturnOrderAdapter extends
@@ -41,6 +42,7 @@ public class BuyerReturnOrderAdapter extends
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater();
+			MyLogger.i(convertView+"");
 			holder = new ViewHolder();
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
 			holder.storeName = (TextView) convertView
@@ -77,9 +79,9 @@ public class BuyerReturnOrderAdapter extends
 
 		holder.ll_goodsitem_add.removeAllViews();
 		final BuyerReturnOrderInfo buyerReturnOrderInfo = getItem(position);
-		if (buyerReturnOrderInfo.isNull()) {
-			return null;
-		}
+//		if (buyerReturnOrderInfo.isNull()) {
+//			return null;
+//		}
 		final String status = buyerReturnOrderInfo.getStatus();
 		final List<BuyerReturnOrderProductInfo> buyerReturnOrderProductInfos = buyerReturnOrderInfo
 				.getReturnOrderItemDtos();
@@ -219,6 +221,7 @@ public class BuyerReturnOrderAdapter extends
 						}
 					});
 		}
+		MyLogger.i(convertView+"");
 		return convertView;
 	}
 

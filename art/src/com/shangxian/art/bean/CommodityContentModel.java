@@ -57,7 +57,16 @@ public class CommodityContentModel implements Serializable {
 
 	@Expose
 	private List<Double> lag = new ArrayList<Double>();
+	private float shippingPrice;
 	
+	public float getShippingPrice() {
+		return shippingPrice;
+	}
+
+	public void setShippingPrice(float shippingPrice) {
+		this.shippingPrice = shippingPrice;
+	}
+
 	//选择规格时要保存的数据
 	public Map<String, String> selectedSpec=new LinkedHashMap<String, String>();
 	public int buyProductCount;

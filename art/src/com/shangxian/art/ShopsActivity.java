@@ -378,7 +378,14 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 				info.setId(model.getId());
 				info.setTitle(model.getName());
 				info.setPhoto(model.getLogo());
-				info.setLng(model.getLat());
+				try {
+					info.setLng(model.getLat());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					myToast("获取地理位置失败");
+					//return;
+				}
 				info.setAddress(model.getShopAddress());
 				bundle.putSerializable(Constant.INT_SHOPS_2_LOC, info);
 				bundle.putInt(Constant.INT_LOC_TOTYPE, Constant.MAP_SHOPS_2_LOC);

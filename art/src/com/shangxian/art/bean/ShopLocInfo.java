@@ -67,7 +67,7 @@ public class ShopLocInfo implements Serializable {
 	}
 
 	public LatLng getLatLng() {
-		if (lng.getLat() == Double.MIN_VALUE
+		if (lng==null||lng.getLat() == Double.MIN_VALUE
 				|| lng.getLng() == Double.MIN_VALUE)
 			throw new IllegalStateException("lat and lng is null");
 		return new LatLng(lng.getLat(), lng.getLng());
