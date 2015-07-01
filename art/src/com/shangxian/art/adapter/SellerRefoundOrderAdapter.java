@@ -80,6 +80,7 @@ public class SellerRefoundOrderAdapter extends
 					.findViewById(R.id.tv_state);
 			holder.tv_allquantity = (TextView) convertView
 					.findViewById(R.id.tv_allquantity);
+			holder.tv_txt1 = (TextView) convertView.findViewById(R.id.tv_txt1);
 			holder.tv_payment = (TextView) convertView
 					.findViewById(R.id.tv_payment);
 			holder.tv_01 = (TextView) convertView.findViewById(R.id.tv_01);
@@ -118,6 +119,7 @@ public class SellerRefoundOrderAdapter extends
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
 			goodsNum.setText("x" + sellerRefoundOrderProductInfo.getQuantity());
+			
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(sellerRefoundOrderProductInfo
 							.getProductPrice()));
@@ -158,10 +160,12 @@ public class SellerRefoundOrderAdapter extends
 							.get(sellerRefoundOrderInfo.getStatus()));
 			holder.tv_allquantity.setText("共"
 					+ sellerRefoundOrderInfo.getTotalQuantity() + "件商品");
+			holder.tv_txt1.setText("退款金额:");
 			holder.tv_payment.setText("￥"
 					+ CommonUtil.priceConversion(sellerRefoundOrderInfo
 							.getTotalPrice()));
-
+//			holder.tv_ordernumber.setText("订单编号:"+sellerRefoundOrderInfo.getOrderNumber());//订单编号
+//			holder.tv_nhbnumber.setText("退货订单编号:"+sellerRefoundOrderInfo.getReturnOrderNum());//退货订单编号
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
 			String status = sellerRefoundOrderInfo.getStatus();
 			if (status.equals(SellerOrderActivity.orderReturnStatus[2])) { // 待审核
@@ -256,6 +260,7 @@ public class SellerRefoundOrderAdapter extends
 		public TextView tv_01;
 		public TextView tv_02;
 		public TextView tv_03;
+		public TextView tv_txt1;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
 	}

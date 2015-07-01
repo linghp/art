@@ -289,14 +289,14 @@ public class MyOrderServer extends BaseServer {
 	 * @param l
 	 */
 	public static void toRequestRefund(String isGoods, String productid,
-			String orderNumber, String totalPrice, String returnReason,
+			String orderNumber, int totalPrice, String returnReason,
 			String buyerMessege, final OnHttpResultRefundListener l) {
 //		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 //		pairs.add(new BasicNameValuePair("isGoods", isGoods));
 //		pairs.add(new BasicNameValuePair("totalPrice", totalPrice));
 //		pairs.add(new BasicNameValuePair("returnReason", returnReason));
 //		pairs.add(new BasicNameValuePair("buyerMessege", buyerMessege));
-		String json="{\"isGoods\":"+isGoods+",\"totalPrice\":"+totalPrice+",\"returnReason\":\""+returnReason+"\",\"buyerMessege\":\""+buyerMessege+"\"}";
+		String json="{\"isGoods\":"+isGoods+",\"totalPrice\":"+(totalPrice*100)+""+",\"returnReason\":\""+returnReason+"\",\"buyerMessege\":\""+buyerMessege+"\"}";
 		toPostJson2(NET_REFUND + productid + "/" + orderNumber, json,
 				new OnHttpListener() {
 					@Override

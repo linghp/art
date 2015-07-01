@@ -62,6 +62,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	private LinearLayout ll_goodsitem_add;
 	private ImageView iv_logo;
 	private TextView tv_storeName, tv_01, tv_02;
+	private TextView tv_ordernumber;//订单编号
+	private TextView tv_nhbnumber;//退货编号
 	private SellerRefoundOrderInfo sellerRefundOrder;
 	private static final String INT_SELLER_RETURN = "int_seller_return";
 	private static final String INT_SELLER_INDEX = "int_seller_index";
@@ -152,6 +154,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		tv_01 = (TextView) findViewById(R.id.tv_01);
 		tv_02 = (TextView) findViewById(R.id.tv_02);
 		tv_03 = (TextView) findViewById(R.id.tv_03);
+		tv_ordernumber = (TextView) findViewById(R.id.tv_ordernumber);
+		tv_nhbnumber = (TextView) findViewById(R.id.tv_nhbnumber);
 		findViewById(R.id.tv_noaddress).setVisibility(View.GONE);
 
 		updateViews();
@@ -174,7 +178,9 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 				sellerRefundOrder.getBuyerAddress()));
 		((TextView) findViewById(R.id.tv_phone)).setText(sellerRefundOrder
 				.getBuyerName());
-
+		tv_ordernumber.setText("订单编号:"+sellerRefundOrder.getOrderNumber());//订单编号
+		tv_nhbnumber.setText("退货订单编号:"+sellerRefundOrder.getReturnOrderNum());//退货订单编号
+		findViewById(R.id.tv_ordernumber);
 		((TextView) findViewById(R.id.tv_tradetime)).setText(
 				"退货时间:"+ sellerRefundOrder.getReturnOrderTime());
 
