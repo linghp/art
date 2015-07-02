@@ -55,8 +55,8 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 	private String status;
 
 	private boolean isScrollListViewFresh;// 旋转进度条显示与否
-	// private int skip = 0; // 从第skip+1条开始查询
-	// private final int pageSize = 10;
+    private int skip = 0; // 从第skip+1条开始查询
+	private final int pageSize = 10;
 
 	private String returnStatus;// 当从订单详情继续点击处理再返回状态更新，onactivityresult难实现，故产生之。
 	private String returnRefundStatus;// 退款状态
@@ -133,11 +133,13 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		SellerOrderServer.toGetSellerOrder(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				skip = 0;
 				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				if (res != null) {
 					all = (MyOrderItem_all) res;
 					if (!all.isNull()) {
 						changeUi(UiModel.showData);
+						mOrderItems.clear();
 						mOrderItems.addAll(all.getData());
 						// MyLogger.i(myOrderItemAll.getData().toString());
 						myOrderListAdapter.notifyDataSetChanged();
@@ -151,6 +153,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 
 			@Override
 			public void onSimpleFailure(int code) {
+				//skip = 0;
 				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				changeUi(UiModel.noData_noProduct);
 			}
@@ -245,8 +248,9 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 	}
 
 	private void loadMore() {
+		skip += pageSize;
 		SellerOrderServer.toGetSellerOrder(status,
-				all == null ? "0" : all.getStart() + "", new CallBack() {
+				skip+"", new CallBack() {
 					@Override
 					public void onSimpleSuccess(Object res) {
 						mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
@@ -262,6 +266,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 								CommonUtil.toast("已是最后一页", getActivity());
 							}
 						} else {
+							skip -= pageSize;
 							// changeUi(UiModel.noData_noProduct);
 							CommonUtil.toast("已是最后一页", getActivity());
 						}
@@ -269,6 +274,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 
 					@Override
 					public void onSimpleFailure(int code) {
+						skip -= pageSize;
 						mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 						CommonUtil.toast("加载失败");
 //						changeUi(UiModel.noData_noProduct);

@@ -88,6 +88,8 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 										.getOrderNumber());
 								myOrderItem.setTotalPrice(myOrderDetailBean
 										.getTotalPrice());
+								myOrderItem.setOrderId(myOrderDetailBean
+										.getOrderId());
 								myOrderItem.setStatus(myOrderDetailBean
 										.getStatus());
 								updateViews();
@@ -134,6 +136,8 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 		tv_01 = (TextView) findViewById(R.id.tv_01);
 		tv_02 = (TextView) findViewById(R.id.tv_02);
 		tv_03 = (TextView) findViewById(R.id.tv_03);
+		tv_01.setVisibility(View.GONE);
+		tv_02.setVisibility(View.GONE);
 		findViewById(R.id.tv_noaddress).setVisibility(View.GONE);
 	}
 
@@ -234,33 +238,8 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 			changeTextViewShow(null, null, "已完成交易");
 		} else if (status.equals(orderState[6])) {
 			changeTextViewShow(null, null, "等待买家评价...");
-		} else if (status.equals(orderState[7])) {
-			changeTextViewShow("删除订单", null, null);
-			tv_03.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					SellerOrderServer.toDelSellerOrder(myOrderItem,
-							new CallBack() {
-								@Override
-								public void onSimpleSuccess(Object res) {
-									String r = (String) res;
-									boolean isSuccess = Boolean.valueOf(r);
-									if (isSuccess) {
-										myToast("删除成功");
-										setResult(RESULT_OK, new Intent().putExtra("res", index));
-										finish();	
-									} else {
-										myToast("删除失败");
-									}
-								}
-
-								@Override
-								public void onSimpleFailure(int code) {
-									myToast("删除失败");
-								}
-							});
-				}
-			});
+		} else{
+			changeTextViewShow(null, null, null);
 		}
 	}
 

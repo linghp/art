@@ -95,7 +95,7 @@ public class ClassificationActivity extends BaseActivity implements OnClickListe
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if(!TextUtils.isEmpty(shopid)){
+		if(TextUtils.isEmpty(shopid)){//主页面的
 		topView = MainActivity.getTopView();
 		topView.setActivity(this);
 		topView.showLeftBtn();

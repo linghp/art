@@ -258,16 +258,16 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
 								MyOrderActivity.orderState[6])) {// 已完成交易或者待评价    ----------------------------4 6
 					holder.tv_state.setText(MyOrderActivity.orderStateValue[4]);
-					if (isRefundStatus) {
-						holder.tv_02.setText("退货中");
-						holder.tv_01.setVisibility(View.GONE);
-						holder.tv_02.setEnabled(false);
-					} else {
+//					if (isRefundStatus) {
+//						holder.tv_02.setText("退货中");
+//						holder.tv_01.setVisibility(View.GONE);
+//						holder.tv_02.setEnabled(false);
+//					} else {
 						holder.tv_01.setVisibility(View.VISIBLE);
 						holder.tv_01.setText("删除订单");
 						holder.tv_02.setText("退款/退货");
 						holder.tv_02.setEnabled(true);
-					}
+				//	}
 					holder.tv_01.setOnClickListener(new View.OnClickListener() {
 
 						@Override
@@ -291,7 +291,7 @@ public class MyOrderListAdapter extends BaseAdapter implements
 						}
 					});
 				}else if (myOrderItem.getStatus().equals(
-						MyOrderActivity.orderState[5])) {// 退款失败   --------------------------------------------------------5
+						MyOrderActivity.orderState[5])) {// 退款中   --------------------------------------------------------5
 					holder.tv_01.setText("取消订单");
 					holder.tv_01.setVisibility(View.VISIBLE);
 					holder.tv_02.setVisibility(View.GONE);
@@ -308,8 +308,8 @@ public class MyOrderListAdapter extends BaseAdapter implements
 
 			// 为了点击退款/退货进入详情界面
 			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[2])
-					|| myOrderItem.getStatus().equals(
-							MyOrderActivity.orderState[4])) {
+					|| myOrderItem.getStatus().equals(MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
+							MyOrderActivity.orderState[6])) {
 				holder.tv_02.setClickable(false);
 			} else {
 				holder.tv_02.setClickable(true);

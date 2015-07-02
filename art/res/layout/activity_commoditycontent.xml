@@ -196,7 +196,7 @@
                         android:isIndicator="true"
                         android:numStars="5"
                         android:rating="5"
-                        android:stepSize="0.5" />
+                        android:stepSize="1" />
 
                     <ImageView
                         android:id="@+id/commoditycontent_next3"

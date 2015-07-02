@@ -76,8 +76,8 @@ public class BaseServer {
 	protected static final String NET_SELLER_ORDERDETAILS = HOST + "sellerorderdails/";// 订单详情 
 	protected static final String NET_REFUND = HOST + "orderBuyerReturn/";// 退款/退货申请
 	protected static final String NET_FILTER = HOST+"product/find";//分类筛选
-	//protected static final String NET_COMMENTTO = HOST+"searchBuyerOrderEvaluateAndEVALUATE_COMPLETED";//去获取我的评论
-	protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
+	protected static final String NET_COMMENTTO = HOST+"searchBuyerOrderEvaluateAndEVALUATE_COMPLETED";//去获取我的评论
+	//protected static final String NET_COMMENTTO = HOST+"orderEvaluateList";//去获取我的评论
 	protected static final String NET_COMMENTADD = HOST+"saveProductComment";//去评论
 	protected static final String NET_COMMENTCOUNT = HOST+"getLevelAll?productId=";//获取商品的评论数量个数的统计
 	protected static final String NET_SHOPQR = HOST+"shop/code/";//获取商家二维码

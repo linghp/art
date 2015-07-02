@@ -312,7 +312,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		// System.out.println("**************"+(float)model.getEvaluateScore());
 		// System.out.println("**************"+ (float)
 		// ((float)model.getEvaluateScore()/100*5));
-		rating = (float) ((float) model.getEvaluateScore() / 100 * 5);
+		rating = (float) (model.getEvaluateScore()* 5);
 		commoditycontent_shoucang.setSelected(model.getAttened());
 
 		//		//关注

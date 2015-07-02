@@ -433,7 +433,8 @@ public class NearlyActivity extends BaseActivity implements
 		topView.setTitle("附近");
 		topView.showTitle();
 		topView.setRightBtnDrawable(R.drawable.map);
-		topView.setCenterListener((MainActivity) getParent());
+		topView.setRightBtnListener((MainActivity) getParent());
+		//topView.setCenterListener((MainActivity) getParent());
 		MyLogger.i(isMainClick + "");
 		if (isMainClick) {
 			ll_loading_big.setVisibility(View.VISIBLE);

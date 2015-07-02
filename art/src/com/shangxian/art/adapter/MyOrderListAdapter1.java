@@ -2,6 +2,8 @@ package com.shangxian.art.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,7 +37,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.zxing.view.ViewfinderView;
 
 public class MyOrderListAdapter1 extends BaseAdapter {
-	private AbImageLoader mAbImageLoader_logo, mAbImageLoader_goodsImg;
+	private AbImageLoader mAbImageLoader_goodsImg;
 	private Context context;
 	private Fragment fragment;
 	private LayoutInflater inflater;
@@ -47,14 +49,14 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		this.fragment = fragment;
 		this.myOrderItems = myOrderItems;
 		inflater = LayoutInflater.from(contex);
-		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
+//		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
 		mAbImageLoader_goodsImg = AbImageLoader.newInstance(contex);
-
-		mAbImageLoader_logo.setMaxWidth(100);
-		mAbImageLoader_logo.setMaxHeight(100);
-		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
-		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
-		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
+//
+//		mAbImageLoader_logo.setMaxWidth(100);
+//		mAbImageLoader_logo.setMaxHeight(100);
+//		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
+//		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
+//		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
 		mAbImageLoader_goodsImg.setMaxWidth(100);
 		mAbImageLoader_goodsImg.setMaxHeight(100);
 		mAbImageLoader_goodsImg.setLoadingImage(R.drawable.image_loading);
@@ -84,6 +86,7 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_myorder_item, null);
 			holder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
+			holder.iv_logo.setVisibility(View.GONE);
 			holder.storeName = (TextView) convertView
 					.findViewById(R.id.car_storename);
 			holder.tv_state = (TextView) convertView
@@ -92,10 +95,11 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 					.findViewById(R.id.tv_allquantity);
 			holder.tv_payment = (TextView) convertView
 					.findViewById(R.id.tv_payment);
+			holder.tv_00 = (TextView) convertView.findViewById(R.id.tv_00);
 			holder.tv_01 = (TextView) convertView.findViewById(R.id.tv_01);
 			holder.tv_01.setVisibility(View.GONE);
 			holder.tv_02 = (TextView) convertView.findViewById(R.id.tv_02);
-			holder.tv_03 = (TextView) convertView.findViewById(R.id.tv_03);
+			//holder.tv_03 = (TextView) convertView.findViewById(R.id.tv_03);
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
@@ -103,9 +107,12 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
 		// 恢复状态
+		holder.tv_00.setVisibility(View.GONE);
 		// holder.tv_02.setEnabled(true);
-
+		
+		holder.storeName.setText("订单编号："+myOrderItem.getOrderNumber());
 		holder.ll_goodsitem_add.removeAllViews();
 		List<ProductItemDto> listCarGoodsBeans = myOrderItem
 				.getProductItemDtos();
@@ -117,8 +124,8 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 					.setText(productItemDto.getName());
 			// holder.goodsImg = (ImageView)
 			// child.findViewById(R.id.car_goodsimg);
-			// holder.goodsAttr = (TextView)
-			// child.findViewById(R.id.car_goodsattr);
+			TextView goodsAttr = (TextView)
+			 child.findViewById(R.id.car_goodsattr);
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child
 					.findViewById(R.id.car_goods_price);
@@ -127,6 +134,15 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 			// final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
+			
+			Map<String, String> selectedspec = productItemDto
+					.getSpecs();
+			String specs = "";
+			for (Entry<String, String> entry : selectedspec.entrySet()) {
+				specs = specs + entry.getValue() + "  ";
+			}
+			goodsAttr.setText(specs);
+			
 			goodsNum.setText("x" + productItemDto.getQuantity());
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(productItemDto.getPrice()));
@@ -149,7 +165,7 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		}
 
 		if (myOrderItem != null) {
-			holder.storeName.setText(myOrderItem.getShopName());
+			//holder.storeName.setText(myOrderItem.getShopName());
 			holder.tv_state.setText(MyOrderActivity.map_orderStateValue
 					.get(myOrderItem.getStatus()));
 			holder.tv_allquantity.setText("共" + myOrderItem.getTotalQuantity()
@@ -157,21 +173,22 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 //			((TextView)convertView.findViewById(R.id.tv_txt1)).setText("实付(含运费):");
 			holder.tv_payment.setText("￥"
 					+ CommonUtil.priceConversion(myOrderItem.getTotalPrice()));
-			mAbImageLoader_logo.display(holder.iv_logo, Constant.BASEURL
-					+ myOrderItem.getShopLogo());
+//			mAbImageLoader_logo.display(holder.iv_logo, Constant.BASEURL
+//					+ myOrderItem.getShopLogo());
 
 			// 根据订单状态显示下面一排按钮 //根据status显示item下面的按钮
-			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])) {// 待付款
+			if (myOrderItem.getStatus().equals(MyOrderActivity.orderState[1])) {// 待付款   -----------------------------------1
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.VISIBLE);
-				holder.tv_03.setText("等待买家付款...");
+//				holder.tv_03.setVisibility(View.VISIBLE);
+//				holder.tv_03.setText("等待买家付款...");
 			} else if (myOrderItem.getStatus().equals(
-					MyOrderActivity.orderState[7])) {// 已取消交易
+					MyOrderActivity.orderState[7])||myOrderItem.getStatus().equals(
+							MyOrderActivity.orderState[9])) {// 已取消交易/交易关闭 --------------------------------------------7 9
 				holder.tv_01.setText("删除订单");
-				holder.tv_01.setVisibility(View.VISIBLE);
+				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.GONE);
+//				holder.tv_03.setVisibility(View.GONE);
 				holder.tv_01.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -199,10 +216,10 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(
-					MyOrderActivity.orderState[2])) {// 待发货
+					MyOrderActivity.orderState[2])) {//  --------------------------------------------待发货--------2
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.VISIBLE);
-				holder.tv_03.setVisibility(View.GONE);
+				//holder.tv_03.setVisibility(View.GONE);
 				
 				holder.tv_02.setText("发货");
 				
@@ -226,15 +243,15 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(
-					MyOrderActivity.orderState[3])) {// 待收货
+					MyOrderActivity.orderState[3])) {// 待收货 ---------------------------------------------------3
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
-				holder.tv_03.setVisibility(View.VISIBLE);
-				holder.tv_03.setText("等待买家收货...");
+//				holder.tv_03.setVisibility(View.VISIBLE);
+//				holder.tv_03.setText("等待买家收货...");
 			} else if (myOrderItem.getStatus().equals(
-					MyOrderActivity.orderState[4])) {// 已完成交易
-				holder.tv_03.setVisibility(View.VISIBLE);
-				holder.tv_03.setText("完成交易");
+					MyOrderActivity.orderState[4])) {// 已完成交易 ----------------------------------------------4
+//				holder.tv_03.setVisibility(View.VISIBLE);
+//				holder.tv_03.setText("完成交易");
 				holder.tv_01.setVisibility(View.GONE);
 				holder.tv_02.setVisibility(View.GONE);
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
@@ -249,8 +266,20 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 								0f, context, fragment);
 					}
 				});
+			}else if (myOrderItem.getStatus().equals(
+					MyOrderActivity.orderState[6])) {// 待评价（已完成交易）--------------------------------------6
+				holder.tv_state.setText(MyOrderActivity.orderStateValue[4]);
+//				holder.tv_03.setVisibility(View.VISIBLE);
+//				holder.tv_03.setText("完成交易");
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.GONE);
+				holder.tv_00.setVisibility(View.VISIBLE);
+				holder.tv_00.setText("已完成交易，等待买家评论");
+			}else if (myOrderItem.getStatus().equals(
+					MyOrderActivity.orderState[5])) {// 退款中   --------------------------------------------------------5
+				holder.tv_01.setVisibility(View.GONE);
+				holder.tv_02.setVisibility(View.GONE);
 			}
-
 		}
 		return convertView;
 	}
@@ -267,9 +296,10 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		public TextView tv_payment;
 		public TextView goodsNum;
 		public TextView goodsPrice;
+		public TextView tv_00;
 		public TextView tv_01;
 		public TextView tv_02;
-		public TextView tv_03;
+		//public TextView tv_03;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
 	}

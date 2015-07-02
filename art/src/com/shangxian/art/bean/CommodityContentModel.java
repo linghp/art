@@ -50,7 +50,7 @@ public class CommodityContentModel implements Serializable {
 	@Expose
 	private List<String> photos;
 	@Expose
-	private Integer evaluateScore;
+	private double evaluateScore;
 	@SerializedName("new")
 	@Expose
 	private Boolean _new;
@@ -259,7 +259,7 @@ public class CommodityContentModel implements Serializable {
 		this.photos = photos;
 	}
 
-	public Integer getEvaluateScore() {
+	public Double getEvaluateScore() {
 		return evaluateScore;
 	}
 

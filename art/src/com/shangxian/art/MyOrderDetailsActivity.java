@@ -155,9 +155,10 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		String[] orderReturnStatus=MyOrderActivity.orderReturnStatus;
 		ll_goodsitem_add.removeAllViews();
 		List<OrderItem> orderItems=myOrderDetailBean.getOrderItems();
-		final List<CheckBox> checkBoxs=new ArrayList<CheckBox>();
 		boolean isHaveProduct = false;// 是否有可以退款的商品
-		for (final OrderItem orderItem : orderItems) {
+		if(orderItems.size()>0){
+			final List<CheckBox> checkBoxs=new ArrayList<CheckBox>();
+			for (final OrderItem orderItem : orderItems) {
 			isHaveProduct=true;
 			View child = inflater.inflate(
 					R.layout.list_car_goods_item, null);
@@ -178,7 +179,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 			goodsAttr.setText(specs);
 			goodsNum.setText("x"+orderItem.getQuantity());
 			goodsPrice.setText("￥"+CommonUtil.priceConversion(orderItem.getUnitPrice()));
-			if(!((myOrderItem.getStatus().equals(orderState[2])||myOrderItem.getStatus().equals(orderState[4]))&&orderItem.getOrderItemStatus().equals(orderReturnStatus[0]))){
+			if(!((myOrderItem.getStatus().equals(orderState[2])||myOrderItem.getStatus().equals(orderState[4])||myOrderItem.getStatus().equals(orderState[6]))&&orderItem.getOrderItemStatus().equals(orderReturnStatus[0]))){
 				checkBox.setVisibility(View.GONE);
 			}else{
 				checkBoxs.add(checkBox);
@@ -197,8 +198,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 			}
 			mAbImageLoader_goodsImg.display(goodsImg,Constant.BASEURL
 					+ orderItem.getProductSacle());
+			}
 		}
-		
 		//根据状态显示按钮
 		String status=myOrderDetailBean.getStatus();
 		if(status.equals(orderState[1])){
@@ -233,19 +234,14 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 				}
 			});
 		}else if(status.equals(orderState[2])){// 待发货    ------------------------------------------------------------2
-			List<OrderItem> orderItems2=myOrderDetailBean.getOrderItems();
-			if(orderItems2!=null&&orderItems2.size()>0){
-			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
-			MyLogger.i(status_temp);
-			if(TextUtils.isEmpty(status_temp)){
-				status_temp=orderReturnStatus[0];
-			}
-			if(status_temp.equals(orderReturnStatus[0])){
+			//List<OrderItem> orderItems2=myOrderDetailBean.getOrderItems();
+			if(isHaveProduct){
+//			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
+//			MyLogger.i(status_temp);
+//			if(TextUtils.isEmpty(status_temp)){
+//				status_temp=orderReturnStatus[0];
+//			}
 			tv_02.setText("退款");
-			}else{
-			tv_02.setText("退款中");
-			tv_02.setEnabled(false);
-			}
 			tv_01.setVisibility(View.GONE);
 			tv_02.setOnClickListener(new View.OnClickListener() {
 				
@@ -278,13 +274,14 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 			});
 		}else if(status.equals(orderState[4])||status.equals(orderState[6])){// 已完成交易或者待评价    ----------------------------4 6
 			((TextView)findViewById(R.id.tv_header_01)).setText(MyOrderActivity.orderStateValue[4]);
-			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
-			MyLogger.i(status_temp);
-			if(TextUtils.isEmpty(status_temp)){
-				status_temp=orderReturnStatus[0];
-			}
+//			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
+//			MyLogger.i(status_temp);
+//			if(TextUtils.isEmpty(status_temp)){
+//				status_temp=orderReturnStatus[0];
+//			}
 			if (!isHaveProduct) {
-				tv_01.setVisibility(View.GONE);
+				tv_01.setVisibility(View.VISIBLE);
+				tv_01.setText("删除订单");
 				tv_02.setVisibility(View.GONE);
 			} else {
 				tv_01.setVisibility(View.VISIBLE);

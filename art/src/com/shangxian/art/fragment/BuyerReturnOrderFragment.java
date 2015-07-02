@@ -113,7 +113,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 					, buyerReturnOrderStat.getData().get(position).getStatus()//退款状态
 					, buyerReturnOrderStat.getData().get(position).getStatus()//货物状态
 					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//是否需要退还货物
-					, "¥"+buyerReturnOrderStat.getData().get(position).getTotalPrice()//退还金额
+					, "¥"+CommonUtil.priceConversion(buyerReturnOrderStat.getData().get(position).getTotalPrice())//退还金额
 					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款原因
 					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款说明
 					, getActivity());

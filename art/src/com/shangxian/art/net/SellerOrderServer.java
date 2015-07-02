@@ -9,6 +9,7 @@ import com.shangxian.art.bean.MyOrderDetailBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.bean.SellerRefoundstat;
+import com.shangxian.art.utils.MyLogger;
 
 /**
  * 卖家订单
@@ -36,7 +37,9 @@ public class SellerOrderServer extends BaseServer {
 	 * @param back
 	 */
 	public static void toSellerSendOrder(String orderId, CallBack back) {
-		toXUtils(HttpMethod.POST, NET_SENDORDER + orderId, getParams(), null,
+		String url=NET_SENDORDER + orderId;
+		MyLogger.i(url);
+		toXUtils(HttpMethod.POST, url, getParams(), null,
 				back);
 	}
 

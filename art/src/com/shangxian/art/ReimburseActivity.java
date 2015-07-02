@@ -160,13 +160,13 @@ public class ReimburseActivity extends BaseActivity implements
 					if (isGoods) {
 						//退货
 						MyOrderServer.toRequestRefund("true", productid,
-								orderid, Integer.valueOf(money), cause, explain,
+								orderid, money, cause, explain,
 								ReimburseActivity.this);
 						
 					} else {
 						//退款
 						MyOrderServer.toRequestRefund("false", productid,
-								orderid, Integer.valueOf(money), cause, explain,
+								orderid,money, cause, explain,
 								ReimburseActivity.this);
 					}
 				}
