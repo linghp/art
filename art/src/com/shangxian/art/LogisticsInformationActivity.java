@@ -46,6 +46,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private List<ExpressInfo> expressInfos;
 	private String expressCompany;
 	private String expressNum;
+	private String shippingId;
 	private String productId;
 	private String orderNum;
 	private int itemIndex;
@@ -143,7 +144,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 								}
 							});*/
 					BuyerOrderServer.toBuyerReturnOrderExpress(productId,
-							orderNum, expressCompany, expressNum, new CallBack() {
+							orderNum, expressCompany, expressNum, shippingId,new CallBack() {
 						@Override
 						public void onSimpleSuccess(Object res) {
 							MyLogger.i("提交物流信息数据："+res);
@@ -214,6 +215,9 @@ public class LogisticsInformationActivity extends BaseActivity {
 					expresAdapter.changeIndex(position);
 					et_expressCompany.setText(expressInfos.get(position)
 							.getName());
+					shippingId = expressInfos.get(position)
+							.getId()+"";
+					MyLogger.i("shippingId："+shippingId);
 					popuWindowHelper.dismiss();
 				}
 			}

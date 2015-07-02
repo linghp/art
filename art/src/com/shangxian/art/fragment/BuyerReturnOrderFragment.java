@@ -56,7 +56,7 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	public BuyerReturnOrderFragment(Activity activity,String status) {
 		super();
 		this.status = status;
-		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(activity, R.layout.list_myorder_item, dates);
+		buyerReturnOrderAdapter = new BuyerReturnOrderAdapter(activity,this,R.layout.list_myorder_item, dates);
 	}
 
 	private void initMainView() {
@@ -177,16 +177,29 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 			public void onSimpleSuccess(Object res) {
 				mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 				MyLogger.i("退款订单>>>>>>>>"+res);
+//				if (res != null) {
+//					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
+//					if (!buyerReturnOrderStat.isNull()) {
+//						if (buyerReturnOrderAdapter != null) {
+//							changeUi(UiModel.showData);
+//							buyerReturnOrderAdapter.addFootDataList(buyerReturnOrderStat.getData());
+//						}
+//					} else {
+//						CommonUtil.toast("已是最后一页");
+//
+//					}
+//				} else {
+//					CommonUtil.toast("已是最后一页");
+//				}
 				if (res != null) {
 					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
 					if (!buyerReturnOrderStat.isNull()) {
 						if (buyerReturnOrderAdapter != null) {
 							changeUi(UiModel.showData);
-							buyerReturnOrderAdapter.addFootDataList(buyerReturnOrderStat.getData());
+							buyerReturnOrderAdapter.upDateList(buyerReturnOrderStat.getData());
 						}
 					} else {
 						CommonUtil.toast("已是最后一页");
-
 					}
 				} else {
 					CommonUtil.toast("已是最后一页");
