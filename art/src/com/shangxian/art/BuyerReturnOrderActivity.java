@@ -96,7 +96,7 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		
 		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
 				fragments);
-		vp_content.setAdapter(adapter);
+		vp_content.setAdapter(adapter); 
 	}
 
 	private void initViews() {

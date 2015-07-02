@@ -436,7 +436,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				ShopsSummaryActivity.startThisActivity(shopid,
+				ShopsSummaryActivity.startThisActivity(shopid, model.getNoticeCount()+"",
 						ShopsActivity.this);
 				// CommonUtil.gotoActivity(ShopsActivity.this,
 				// ShopsSummaryActivity.class, false);

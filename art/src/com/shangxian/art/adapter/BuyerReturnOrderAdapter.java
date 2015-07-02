@@ -30,11 +30,11 @@ import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.Options;
 
 public class BuyerReturnOrderAdapter extends
-		EntityAdapter<BuyerReturnOrderInfo> {
+EntityAdapter<BuyerReturnOrderInfo> {
 
-	public BuyerReturnOrderAdapter(Activity activity, int layoutId,
+	public BuyerReturnOrderAdapter(Activity activity,Fragment fragment, int layoutId,
 			List<BuyerReturnOrderInfo> dates) {
-		super(activity, layoutId, dates);
+		super(activity,fragment, layoutId, dates);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class BuyerReturnOrderAdapter extends
 			holder.tv_03 = (TextView) convertView.findViewById(R.id.tv_03);
 			holder.tv_1 = (TextView) convertView.findViewById(R.id.tv1);
 			holder.tv_2 = (TextView) convertView.findViewById(R.id.tv2);
-			
+
 			//显示的布局
 			convertView.findViewById(R.id.linear1).setVisibility(View.VISIBLE);
 			convertView.findViewById(R.id.view1).setVisibility(View.VISIBLE);
@@ -68,7 +68,7 @@ public class BuyerReturnOrderAdapter extends
 			convertView.findViewById(R.id.rl_delivery).setVisibility(View.GONE);
 			convertView.findViewById(R.id.linear2).setVisibility(View.VISIBLE);
 			convertView.findViewById(R.id.view2).setVisibility(View.VISIBLE);
-			
+
 			holder.ll_goodsitem_add = (LinearLayout) convertView
 					.findViewById(R.id.ll_goodsitem_add);
 			holder.ll_goodsitem_add.setBackgroundResource(R.drawable.shape_top);
@@ -79,19 +79,20 @@ public class BuyerReturnOrderAdapter extends
 
 		holder.ll_goodsitem_add.removeAllViews();
 		final BuyerReturnOrderInfo buyerReturnOrderInfo = getItem(position);
-//		if (buyerReturnOrderInfo.isNull()) {
-//			return null;
-//		}
+		//		if (buyerReturnOrderInfo.isNull()) {
+		//			return null;
+		//		}
 		final String status = buyerReturnOrderInfo.getStatus();
 		final List<BuyerReturnOrderProductInfo> buyerReturnOrderProductInfos = buyerReturnOrderInfo
 				.getReturnOrderItemDtos();
+
 		for (BuyerReturnOrderProductInfo buyerReturnOrderProductInfo : buyerReturnOrderProductInfos) {
 			View child = LayoutInflater.from(mAc).inflate(
 					R.layout.list_car_goods_item, null);
 			holder.ll_goodsitem_add.addView(child);
-			
+
 			((TextView) child.findViewById(R.id.car_goodsname))
-					.setText(buyerReturnOrderProductInfo.getName());
+			.setText(buyerReturnOrderProductInfo.getName());
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child
 					.findViewById(R.id.car_goods_price);
@@ -102,7 +103,7 @@ public class BuyerReturnOrderAdapter extends
 			holder.storeName.setText("退货编号:"+buyerReturnOrderInfo.getReturnOrderNum());//退货编号
 			holder.tv_1.setText("订单号:"+buyerReturnOrderInfo.getOrderNumber());//订单号
 			holder.tv_2.setText("¥"+CommonUtil.priceConversion(buyerReturnOrderInfo.getTotalPrice()));//退款金额
-			
+
 			goodsNum.setText("x" + buyerReturnOrderProductInfo.getQuantity());
 			goodsPrice.setText("￥"
 					+ CommonUtil.priceConversion(buyerReturnOrderProductInfo
@@ -128,8 +129,43 @@ public class BuyerReturnOrderAdapter extends
 
 		// TODO: 跳转界面
 		// -----------------------------------------------------------------------
+		if (orderReturnStatus[0].equals(status)) {
+			//NORMAL,//正常，不退货
+			changeTextViewShow(holder, "取消退款", null, "正常，不退货");
+			if (buyerReturnOrderProductInfos.size() != 0) {
+				holder.tv_01.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						MyLogger.i(">>>>买家取消退货订单>>>>"+buyerReturnOrderProductInfos.get(0).getId() +">>>>>>"+
+								buyerReturnOrderInfo.getReturnOrderNum());
+						new BuyerOrderServer().toBuyerCancelReturnOrder(
+								buyerReturnOrderProductInfos.get(0).getId() + "",
+								buyerReturnOrderInfo.getReturnOrderNum(),
+								new CallBack() {
+									@Override
+									public void onSimpleSuccess(Object res) {
+										CommonUtil.toast("取消退款成功");
+										removeDataItem(position);
+									}
 
-		if (orderReturnStatus[1].equals(status)
+									@Override
+									public void onSimpleFailure(int code) {
+										CommonUtil.toast("取消退款失败");
+									}
+								});
+					}
+				});
+			}else {
+				holder.tv_01.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						CommonUtil.toast("数据错误，取消退款失败");
+					}
+
+				});
+			}
+		}else if (orderReturnStatus[1].equals(status)
 				|| orderReturnStatus[8].equals(status)
 				|| orderReturnStatus[6].equals(status)) {
 			changeTextViewShow(holder, "删除订单", null,
@@ -154,41 +190,54 @@ public class BuyerReturnOrderAdapter extends
 				}
 			});
 		} else if (orderReturnStatus[2].equals(status)) {
-			changeTextViewShow(holder, "取消订单", null, "等待卖家审核...");
-			holder.tv_01.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					new BuyerOrderServer().toBuyerCancelReturnOrder(
-							buyerReturnOrderProductInfos.get(0).getId() + "",
-							buyerReturnOrderInfo.getReturnOrderNum(),
-							new CallBack() {
-								@Override
-								public void onSimpleSuccess(Object res) {
-									CommonUtil.toast("取消订单成功");
-									removeDataItem(position);
-								}
+			//WAIT_SELLER_APPROVAL ,  //等待卖家审核
+			changeTextViewShow(holder, "取消退款", null, "等待卖家审核");
 
-								@Override
-								public void onSimpleFailure(int code) {
-									CommonUtil.toast("取消订单失败");
-								}
-							});
-				}
-			});
+			if (buyerReturnOrderProductInfos.size() != 0) {
+				holder.tv_01.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						MyLogger.i(">>>>买家取消退货订单>>>>"+buyerReturnOrderProductInfos.get(0).getId() +">>>>>>"+
+								buyerReturnOrderInfo.getReturnOrderNum());
+						new BuyerOrderServer().toBuyerCancelReturnOrder(
+								buyerReturnOrderProductInfos.get(0).getId() + "",
+								buyerReturnOrderInfo.getReturnOrderNum(),
+								new CallBack() {
+									@Override
+									public void onSimpleSuccess(Object res) {
+										CommonUtil.toast("取消退款成功");
+										removeDataItem(position);
+									}
+
+									@Override
+									public void onSimpleFailure(int code) {
+										CommonUtil.toast("取消退款失败");
+									}
+								});
+					}
+				});
+			}
+
 		} else if (orderReturnStatus[3].equals(status)) {
-			changeTextViewShow(holder, null, "退货", "卖家审核通过");
+			// WAIT_BUYER_DELIVERY,   //等待买家退货
+			changeTextViewShow(holder, null, "填写物流信息", "等待买家退货");
+			MyLogger.i(">>>>买家退货>>>>"+buyerReturnOrderProductInfos.get(0).getId() + ">>>>>>"+
+					position+">>>>>>>"+buyerReturnOrderInfo.getOrderNumber());
 			holder.tv_02.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					//退货-填写物流信息
 					LogisticsInformationActivity.startThisActivity(mFragment,
 							buyerReturnOrderProductInfos.get(0).getId() + "",
-							position, buyerReturnOrderInfo.getReturnOrderNum());
+							position, buyerReturnOrderInfo.getOrderNumber());
+
 				}
 			});
 		} else if (orderReturnStatus[4].equals(status)) {
-			changeTextViewShow(holder, null, null, "已发货,等待卖家签收...");
-		} else if (orderReturnStatus[5].equals(status)) { // TODO: 卖家拒绝签收 ----------
+			//WAIT_COMPLETED,//买家已发货,等待卖家签收
+			changeTextViewShow(holder, null, null, "已发货,等待卖家签收");
+		} else if (orderReturnStatus[5].equals(status)) { 
+			// COMPLETED_REFUSE,  //卖家拒绝签收
 			changeTextViewShow(holder, "删除订单", null, "卖家拒绝签收");
 			new BuyerOrderServer().toBuyerDeleteReturnOrder(
 					buyerReturnOrderInfo.getReturnOrderNum(),
@@ -205,6 +254,7 @@ public class BuyerReturnOrderAdapter extends
 						}
 					});
 		} else if (orderReturnStatus[7].equals(status)) {
+			//CANCELLED,   //取消
 			changeTextViewShow(holder, "删除订单", null, "订单已取消");
 			new BuyerOrderServer().toBuyerDeleteReturnOrder(
 					buyerReturnOrderInfo.getReturnOrderNum(),
@@ -232,14 +282,14 @@ public class BuyerReturnOrderAdapter extends
 		holder.tv_03.setText(tv_03_title);
 
 		holder.tv_01
-				.setVisibility(!TextUtils.isEmpty(tv_01_title) ? View.VISIBLE
-						: View.GONE);
+		.setVisibility(!TextUtils.isEmpty(tv_01_title) ? View.VISIBLE
+				: View.GONE);
 		holder.tv_02
-				.setVisibility(!TextUtils.isEmpty(tv_02_title) ? View.VISIBLE
-						: View.GONE);
+		.setVisibility(!TextUtils.isEmpty(tv_02_title) ? View.VISIBLE
+				: View.GONE);
 		holder.tv_03
-				.setVisibility(!TextUtils.isEmpty(tv_03_title) ? View.VISIBLE
-						: View.GONE);
+		.setVisibility(!TextUtils.isEmpty(tv_03_title) ? View.VISIBLE
+				: View.GONE);
 	}
 
 	private class ViewHolder {
@@ -259,7 +309,7 @@ public class BuyerReturnOrderAdapter extends
 		public TextView tv_03;
 		public ImageView goodsDelete;
 		public LinearLayout ll_goodsitem_add;
-		
+
 		public TextView tv_1,tv_2;
 	}
 }

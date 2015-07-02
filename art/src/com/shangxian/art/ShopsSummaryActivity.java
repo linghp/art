@@ -41,7 +41,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 	//联系电话
 	String phonenum = null;
 	ShopsSummaryModel model;
-
+	String noticeCount;
 	//图片下载器
 	private AbImageLoader mAbImageLoader = null;
 	@Override
@@ -53,9 +53,10 @@ public class ShopsSummaryActivity extends BaseActivity{
 		initData();
 		initListener();
 	}
-	public static void startThisActivity(String id, Context context) {
+	public static void startThisActivity(String id,String noticeCount, Context context) {
 		Intent intent = new Intent(context, ShopsSummaryActivity.class);
 		intent.putExtra("id", id);
+		intent.putExtra("noticeCount", noticeCount);
 		context.startActivity(intent);
 	}
 	public static void startThisActivity_url(String url, Context context) {
@@ -101,6 +102,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 		httpUtil = AbHttpUtil.getInstance(this);
 		httpUtil.setTimeout(Constant.timeOut);
 		String id = getIntent().getStringExtra("id");
+		noticeCount = getIntent().getStringExtra("noticeCount");
 		String geturl = getIntent().getStringExtra("url");
 		String url = "";
 		if (TextUtils.isEmpty(geturl)) {
@@ -159,7 +161,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 							if (model != null) {
 								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getLogo());//图片
 								shopsname.setText(model.getName());//店铺名
-								//								guanzu.setText(model.getConsignee()+"人关注");//关注
+								guanzu.setText(noticeCount+"人关注");//关注
 								zhanggui.setText(model.getOwner());//掌柜
 								if (model.getPhoneNumbers() != null) {
 									phone.setText(model.getPhoneNumbers().get(0)+"");//电话

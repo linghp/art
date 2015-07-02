@@ -1,16 +1,21 @@
 package com.shangxian.art.net;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.shangxian.art.bean.BuyerReturnOrderInfo;
 import com.shangxian.art.bean.BuyerReturnOrderStat;
 import com.shangxian.art.bean.ExpressInfo;
+import com.shangxian.art.net.HttpClients.HttpCilentListener;
 import com.shangxian.art.utils.MyLogger;
 
 /**
@@ -69,6 +74,7 @@ public class BuyerOrderServer extends BaseServer {
 	 */
 	public void toBuyerCancelReturnOrder(String productId,
 			String returnOrderNum, CallBack call) {
+
 		toXUtils(HttpMethod.POST, NET_BUYER_CANCEL_RETURN_ORDER + productId
 				+ "/" + returnOrderNum, getParams(), null, call);
 	}
@@ -92,15 +98,42 @@ public class BuyerOrderServer extends BaseServer {
 	 * @param orderNum
 	 * @param shippingName
 	 * @param shippingNum
+	 * @param shippingid
 	 * @param call
 	 */
 	public static void toBuyerReturnOrderExpress(String productId, String orderNum,
-			String shippingName, String shippingNum, CallBack call) {
-		RequestParams params = getParams();
+			String shippingName, String shippingNum, String shippingId, CallBack call) {
+		/*RequestParams params = getParams();
 		params.addBodyParameter("shippingName", shippingName);
 		params.addBodyParameter("shippingNum", shippingNum);
+		params.addBodyParameter("shippingId", shippingId);
+		MyLogger.i("买家退货物流url："+NET_BUYER_RETURN_EXPRESS + productId + "/"+ orderNum);
 		MyLogger.i("买家退货物流信息url"+NET_BUYER_RETURN_EXPRESS + productId+"快递公司："+shippingName+"运单编号："+shippingNum);
 		toXUtils(HttpMethod.POST, NET_BUYER_RETURN_EXPRESS + productId + "/"
-				+ orderNum, params, null, call);
+				+ orderNum, params, null, call);*/
+		BuyerReturnOrderInfo model = new BuyerReturnOrderInfo();
+		model.setShippingName(shippingName);
+		model.setShippingNum(shippingNum);
+		MyLogger.i("买家退货物流信息传入数据"+model.toString());
+		Gson gson = new Gson();
+		String json = gson.toJson(model);
+		/*HttpClients.postDo(NET_BUYER_RETURN_EXPRESS + productId + "/"
+				+ orderNum, json, new HttpCilentListener() {
+					
+					@Override
+					public void onResponse(String res) {
+						MyLogger.i(""+);
+						
+					}
+				});*/
+		RequestParams params = getJsonParams();
+		try {
+			params.setBodyEntity(new StringEntity(json, "UTF_8"));
+			toXUtils(HttpMethod.POST, NET_BUYER_RETURN_EXPRESS + productId + "/"
+					+ orderNum, params, null, call);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
