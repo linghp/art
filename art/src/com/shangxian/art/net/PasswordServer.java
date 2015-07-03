@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.ab.http.AbRequestParams;
 import com.google.gson.JsonObject;
+import com.shangxian.art.base.DataTools;
 
 public class PasswordServer extends BaseServer {
 	public static void toSendCode(boolean isLogin, final OnSendCodeListener l) {
@@ -33,6 +34,10 @@ public class PasswordServer extends BaseServer {
 			String reNewPassword, boolean isLogin, final OnNewSafeCodeListener l) {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("captcha", code));
+		if(!isLogin){
+			newPassword=DataTools.generatePassword(newPassword);
+			reNewPassword=DataTools.generatePassword(reNewPassword);
+		}
 		pairs.add(new BasicNameValuePair("newPassword", newPassword));
 		pairs.add(new BasicNameValuePair("reNewPassword", reNewPassword));
 		toPostWithToken2(isLogin ? NET_NEW_LOGIN_PASSWORD : NET_NEW_PAYPASSWORD , pairs, new OnHttpListener() {
@@ -61,6 +66,11 @@ public class PasswordServer extends BaseServer {
 	
 	public static final void toUpPassword(String old, String _new, String reNew, boolean isLogin, final OnNewSafeCodeListener l){
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+		if(!isLogin){
+			old=DataTools.generatePassword(old);
+			_new=DataTools.generatePassword(_new);
+			reNew=DataTools.generatePassword(reNew);
+		}
 		pairs.add(new BasicNameValuePair("oldPassword", old));
 		pairs.add(new BasicNameValuePair("newPassword", _new));
 		pairs.add(new BasicNameValuePair("reNewPassword", reNew));

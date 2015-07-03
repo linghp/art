@@ -1,6 +1,8 @@
 package com.shangxian.art;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +22,14 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.shangxian.art.adapter.SearchsAdapter;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.bean.ListCarGoodsBean;
 import com.shangxian.art.bean.SearchProductInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.SearchServer;
 import com.shangxian.art.net.SearchServer.SearchType_enum;
 import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsActivity extends BaseActivity {
@@ -38,6 +42,7 @@ public class SearchsActivity extends BaseActivity {
 	private SearchsAdapter searchsAdapter;
 
 	private SearchProductInfo info;
+	private List<ListCarGoodsBean> data = new ArrayList<ListCarGoodsBean>();
 
 	private String scan_info;
 	private LinearLayout footLayout;
@@ -57,6 +62,9 @@ public class SearchsActivity extends BaseActivity {
 /** 店铺内搜索传来的*/
 	private String shopid;
 	
+	private int skip = 0; // 从第skip+1条开始查询
+	private final int pageSize = 10;
+	
 //	public enum SearchModel {
 //		product, shop, all,
 //	}
@@ -75,6 +83,7 @@ public class SearchsActivity extends BaseActivity {
 		if(!TextUtils.isEmpty(shopid)){
 			ll_group.setVisibility(View.GONE);
 			et_sreach.setHint(R.string.in_shop_search);
+			searchsAdapter.setToSearch(false);
 		}
 	}
 
@@ -105,7 +114,7 @@ public class SearchsActivity extends BaseActivity {
 		lv_info = (ListView) findViewById(R.id.lv_info);
 		addFoot();
 		searchsAdapter = new SearchsAdapter(mAc, R.layout.item_searchs,
-				info == null ? null : info.getData());
+				data);
 		lv_info.setAdapter(searchsAdapter);
 
 		initPopuWindow();
@@ -195,9 +204,13 @@ public class SearchsActivity extends BaseActivity {
 			@Override
 			public void onSimpleSuccess(Object res) {
 				if (res != null) {
+					skip = 0;
 					info = (SearchProductInfo) res;
 					if (!info.isNull()) {
-						searchsAdapter.upDateList(info.getData());
+						MyLogger.i(info.toString());
+						data.clear();
+						data.addAll(info.getData());
+						searchsAdapter.upDateList(data);
 						changeUi(UiModel.showData);
 						if (info != null && info.isMore()) {
 							changeUi(UiModel.footerToLoad);
@@ -234,27 +247,34 @@ public class SearchsActivity extends BaseActivity {
 //						}
 //					}
 //				});
+		skip += pageSize;
 		Type type = new TypeToken<SearchProductInfo>(){}.getType();
-		SearchServer.onSearchProduct(scan_info, (info.getStart() + 1) + "", "10", shopid, searchType_enum,  type, new CallBack() {	
+		SearchServer.onSearchProduct(scan_info, skip+ "", "10", shopid, searchType_enum,  type, new CallBack() {	
 			@Override
 			public void onSimpleSuccess(Object res) {
 				if (res != null) {
 					info = (SearchProductInfo) res;
 					if (!info.isNull()) {
-						searchsAdapter.upDateList(info.getData());
+						data.addAll(info.getData());
+						searchsAdapter.upDateList(data);
 						changeUi(UiModel.showData);
 						if (info != null && info.isMore()) {
 							changeUi(UiModel.footerToLoad);
 						} else {
 							changeUi(UiModel.footerNoMore);
 						}
+					}else{
+						changeUi(UiModel.footerNoMore);
 					}
+				}else{
+					skip -= pageSize;
 				}
 			}
 			
 			@Override
 			public void onSimpleFailure(int code) {
 				changeUi(UiModel.noData);
+				skip -= pageSize;
 			}
 		});
 	}

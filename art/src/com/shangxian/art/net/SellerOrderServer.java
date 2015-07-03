@@ -53,7 +53,9 @@ public class SellerOrderServer extends BaseServer {
 	public static void toGetSellerOrderDetails(String ordernumber, CallBack call) {
 		Type type = new TypeToken<MyOrderDetailBean>() {
 		}.getType();
-		toXUtils(HttpMethod.POST, NET_SELLER_ORDERDETAILS + ordernumber,
+		String url=NET_SELLER_ORDERDETAILS + ordernumber;
+		MyLogger.i(url);
+		toXUtils(HttpMethod.POST, url,
 				getParams(), type, call);
 	}
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -70,17 +71,19 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	private TextView tv_03;
 	private List<SellerRefoundOrderProductInfo> sellerRefoundOrderProductInfos;
 	private static boolean isToFinish = false;
+	private  boolean isfinishthread = false;
 
 	Handler Handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			finish();
 			setResult(RESULT_OK, new Intent().putExtra("res", index));
+			isfinishthread=true;
+			finish();
 		};
 	};
 
 	Thread finishThread = new Thread() {
 		public void run() {
-			while (true) {
+			while (!isfinishthread) {
 				if (isToFinish) {
 					Handler.sendEmptyMessage(0);
 				} else {
@@ -94,7 +97,6 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		};
 	};
 
-	private static ProgressDialog dialog;
 	private static int index;
 
 	@Override
@@ -256,7 +258,7 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		} else if (status.equals(orderState[3])) {// CURRENT: 等待买家发货...
 			changeTextViewShow(null, null, "等待买家发货...");
 		} else if (orderState[4].equals(status)) {// CURRENT: 买家已发货,等待卖家签收...
-			changeTextViewShow("拒绝签收", "签收", null);
+			changeTextViewShow("拒绝签收", "确认签收", null);
 			tv_01.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -303,21 +305,18 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * @param operation
 	 */
 	private void toSellerRefoundOperation(Operation operation) {
-		dialog = new ProgressDialog(mAc);
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.setMessage("正在保存...");
-		dialog.show();
+        showProgressDialog(true);
 		String productId = sellerRefoundOrderProductInfos.get(0).getId() + "";
 		switch (operation) {
 		case seller_check_fialure:
-			check_fialure(sellerRefundOrder, productId);
+			check_fialure(sellerRefundOrder, productId,refreshDialog);
 			break;
 		case seller_completed_refuse:
-			competed_refuse(sellerRefundOrder, productId);
+			competed_refuse(sellerRefundOrder, productId,refreshDialog);
 			break;
 		case seller_check_success:
 		case seller_completed:
-			seller_operation(sellerRefundOrder, productId);
+			seller_operation(sellerRefundOrder, productId,refreshDialog);
 			break;
 		}
 	}
@@ -329,7 +328,7 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * @param productId
 	 */
 	public static void competed_refuse(
-			final SellerRefoundOrderInfo sellerRefundOrder, String productId) {
+			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderCompletedRefuse(
 				sellerRefundOrder.getOrderNumber(), productId,
 				sellerRefundOrder.getReturnOrderNum(), new CallBack() {
@@ -338,9 +337,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 						CommonUtil.toast("拒绝签收信息已上传");
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						Global.sellerReFundOrder = sellerRefundOrder;
 					}
@@ -349,9 +347,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 					public void onSimpleFailure(int code) {
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							// isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						CommonUtil.toast("拒绝签收信息上传失败");
 					}
@@ -365,8 +362,7 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * 
 	 * @param productId
 	 */
-	public static void seller_operation(
-			final SellerRefoundOrderInfo sellerRefundOrder, String productId) {
+	public static void seller_operation(final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderOperation(
 				sellerRefundOrder.getStatus(),
 				sellerRefundOrder.getOrderNumber(), productId,
@@ -375,9 +371,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 					public void onSimpleSuccess(Object res) {
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						Global.sellerReFundOrder = sellerRefundOrder;
 						CommonUtil.toast("信息上传成功");
@@ -387,9 +382,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 					public void onSimpleFailure(int code) {
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							// isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						CommonUtil.toast("操作失败，请稍后再试");
 					}
@@ -403,8 +397,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	 * 
 	 * @param productId
 	 */
-	public static void check_fialure(
-			final SellerRefoundOrderInfo sellerRefundOrder, String productId) {
+	public  static void check_fialure(
+			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderFialure(
 				sellerRefundOrder.getOrderNumber(), productId,
 				sellerRefundOrder.getReturnOrderNum(), new CallBack() {
@@ -412,9 +406,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 					public void onSimpleSuccess(Object res) {
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						Global.sellerReFundOrder = sellerRefundOrder;
 						CommonUtil.toast("审核信息上传成功");
@@ -424,9 +417,8 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 					public void onSimpleFailure(int code) {
 						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
 							// isToFinish = true;
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							if(dialog!=null)
+							dialog.dismiss();
 						}
 						CommonUtil.toast("操作失败，请稍后再试");
 					}

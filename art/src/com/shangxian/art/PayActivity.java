@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.shangxian.art.alipays.AliPayServer;
 import com.shangxian.art.base.BaseActivity;
+import com.shangxian.art.base.DataTools;
 import com.shangxian.art.bean.AccountSumInfo;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderItem;
@@ -365,7 +366,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 			break;
 		case R.id.payt_tv_ok:
 			// myToast("确定");
-			if (isPayed(true)) {
+			if (isPayed(true)) {//设置支付密码
 				if(price>=0.01){
 //					if(price_str.startsWith("0")){
 //					}
@@ -407,7 +408,9 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 			}
 			dialog.setOnScanedListener(new OnScanedListener() {
 				@Override
-				public void onScan(String pass) {
+				public void onScan(String pass1) {
+					String pass=DataTools.generatePassword(pass1);
+					MyLogger.i(pass);
 					// myToast(pass);
 					if (isOrder) {
 						PayOrderInfo info = new PayOrderInfo();

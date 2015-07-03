@@ -48,14 +48,17 @@ public class SellerOrderActivity extends BaseActivity implements
 	
 	public static String[] orderStateValue = { "未提交", "待付款", "待发货", "待收货",
 			"已完成交易", "退款中", "待评价", "已取消交易" };
-	
+    
 	public static String[] orderReturnStatus = { "NORMAL", "SUCCESS",
 		"WAIT_SELLER_APPROVAL", "WAIT_BUYER_DELIVERY", "WAIT_COMPLETED",
 		"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
 
 	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
-		"等待卖家审核", "等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消",
+		"待审核", "待退货", "待退款", "卖家拒绝签收", "已签收，退款成功", "取消",
 		"退货失败" };
+//	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
+//		"等待卖家审核", "等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消",
+//	"退货失败" };
 
 	public static Map<String, String> map_orderStateValue = new HashMap<String, String>();
 	public static Map<String, String> map_orderReturnStatusValue = new HashMap<String, String>();

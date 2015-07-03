@@ -173,7 +173,8 @@ public class SafetyVerificationActivity extends BaseActivity {
 		curToPass = getIntent().getIntExtra(Constant.INT_SAFE_PAY_NEW,
 				Integer.MIN_VALUE);
 		if (curToPass == Integer.MIN_VALUE) {
-			throw new NullPointerException("请传入标示码！用于密码类型...");
+			myToast("请传入标示码！用于密码类型...");
+			return;
 		}
 		if (!matchCurrent(USER_PASS_FINDWORD)) {
 			phone = curUserInfo.getPhoneNumber();

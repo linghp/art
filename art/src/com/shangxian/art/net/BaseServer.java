@@ -65,7 +65,7 @@ public class BaseServer {
 	protected static final String NET_REGIST = HOST + "regist/buyer";// 注册
 	protected static final String NET_ORDERS = HOST + "orders/";// 我的订单
 	protected static final String NET_SELLER_ORDERS = HOST + "orderList/";// 卖家的订单
-	protected static final String NET_SELLER_RETURN_ORDERS = HOST + "orderReturn/";// 卖家的退款订单
+	protected static final String NET_SELLER_RETURN_ORDERS = HOST + "orderReturn/";// 卖家的退款/货订单
 	protected static final String NET_CANCELORDER = HOST + "order/cancel/";// 取消订单
 	protected static final String NET_SENDORDER = HOST + "sendOrder/";// 卖家发货
 	protected static final String NET_SELLERORDER_RETURN = HOST + "orderSellerReturn/"; //卖家退货处理
@@ -115,12 +115,12 @@ public class BaseServer {
 	protected static final String NET_SOGO_REGIST = HOST + "regist/shop"; // 商铺入驻
 	protected static final String NET_NEARLY = HOST + "nearbyGeosearch";//
 
-	public static final String NET_MYORDER_BACK_LIST = HOST
-			+ "orderReturnList/";// 通过状态获取退货订单
+//	public static final String NET_MYORDER_BACK_LIST = HOST
+//			+ "orderReturnList/";// 通过状态获取退货订单
 	protected static final String NET_CANCEL_REFUND = HOST
 			+ "orderCancelReturnList/"; // 取消退货订单
 	
-	protected static final String NET_BUYER_RETURN_LIST = HOST + "orderReturnList/";
+	protected static final String NET_BUYER_RETURN_LIST = HOST + "orderReturnList/";//买家退款订单
 	protected static final String NET_BUYER_DELETE_REUTRN_ORDER = HOST + "deleteBuyerOrder/"; //买家删除订单
 	protected static final String NET_BUYER_CANCEL_RETURN_ORDER = HOST + "orderCancelReturnList/"; //买家删除订单
 	protected static final String NET_BUYER_GET_EXPRESS = HOST + "order/distribution"; //获取快递信息

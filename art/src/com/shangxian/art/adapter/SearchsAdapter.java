@@ -19,7 +19,7 @@ import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.CircleImageView1;
 
 public class SearchsAdapter extends EntityAdapter<ListCarGoodsBean> {
-	private boolean isShop = true;
+	private boolean isShop = false;
 	
 	public SearchsAdapter(Activity mAc, int layoutId,
 			List<ListCarGoodsBean> dates) {
@@ -52,7 +52,7 @@ public class SearchsAdapter extends EntityAdapter<ListCarGoodsBean> {
 				if (isShop) {
 					ShopsActivity.startThisActivity(bean.getShopId(), mAc);
 				} else {
-					CommodityContentActivity.startThisActivity(bean.getCategoryId() + "", mAc);
+					CommodityContentActivity.startThisActivity(bean.getId()+ "", mAc);
 				}
 			}
 		});

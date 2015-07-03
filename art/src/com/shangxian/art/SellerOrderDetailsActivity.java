@@ -2,6 +2,8 @@ package com.shangxian.art;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -180,27 +182,34 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 		// + myOrderItem.getShopLogo());
 		ll_goodsitem_add.removeAllViews();
 		List<OrderItem> orderItems = myOrderDetailBean.getOrderItems();
-		for (OrderItem OrderItem : orderItems) {
+		for (OrderItem orderItem : orderItems) {
 			View child = inflater.inflate(R.layout.list_car_goods_item, null);
 			ll_goodsitem_add.addView(child);
 			((TextView) child.findViewById(R.id.car_goodsname))
-					.setText(OrderItem.getName());
+					.setText(orderItem.getName());
 			// holder.goodsImg = (ImageView)
 			// child.findViewById(R.id.car_goodsimg);
-			// holder.goodsAttr = (TextView)
-			// child.findViewById(R.id.car_goodsattr);
+			TextView goodsAttr = (TextView)child.findViewById(R.id.car_goodsattr);
 			TextView goodsNum = (TextView) child.findViewById(R.id.car_num);
 			TextView goodsPrice = (TextView) child
 					.findViewById(R.id.car_goods_price);
 			// final ViewHolder holder1 = new ViewHolder();
 			ImageView goodsImg = (ImageView) child
 					.findViewById(R.id.car_goodsimg);
-			goodsNum.setText("x" + OrderItem.getQuantity());
+			
+			Map<String, String> selectedspec = orderItem.getSpecs();
+			String specs = "";
+			for (Entry<String, String> entry : selectedspec.entrySet()) {
+				specs = specs + entry.getValue() + "  ";
+			}
+			goodsAttr.setText(specs);
+			
+			goodsNum.setText("x" + orderItem.getQuantity());
 			goodsPrice.setText("￥"
-					+ CommonUtil.priceConversion(OrderItem.getPrice()));
+					+ CommonUtil.priceConversion(orderItem.getPrice()));
 			child.findViewById(R.id.check_goods).setVisibility(View.GONE);
 			mAbImageLoader_goodsImg.display(goodsImg, Constant.BASEURL
-					+ OrderItem.getProductSacle());
+					+ orderItem.getProductSacle());
 		}
 
 		// 根据状态显示按钮

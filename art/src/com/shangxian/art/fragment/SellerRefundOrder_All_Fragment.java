@@ -70,6 +70,9 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	protected SellerRefoundstat refoundstat;
 	private SellerRefoundstat myOrderItem;
 	
+	private int skip = 0; // 从第skip+1条开始查询
+	private final int pageSize = 10;
+	
 	Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (myOrderListAdapter != null) {
@@ -168,8 +171,10 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 					changeUi(UiModel.showData);
 					refoundstat = (SellerRefoundstat) res;
 					if (refoundstat != null && !refoundstat.isNull()) {
+						skip = 0;
 						if (!refoundstat.isNull() && myOrderListAdapter != null) {
-							myOrderListAdapter.upDateList(refoundstat.getData());
+							alls.addAll(refoundstat.getData());
+							myOrderListAdapter.notifyDataSetChanged();
 						}
 					} else {
 						changeUi(UiModel.noData_noProduct);
@@ -246,26 +251,31 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	}
 
 	private void loadMore() {
-		SellerOrderServer.toGetSellerReturnOrder(status, refoundstat.getStart()
+		skip += pageSize;
+		SellerOrderServer.toGetSellerReturnOrder(status, skip
 				+ "", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
-				mAbPullToRefreshView.onHeaderRefreshFinish();
-				alls.clear();
-				changeUi(UiModel.showData);
+				mAbPullToRefreshView.onFooterLoadFinish();
+				//changeUi(UiModel.showData);
 				if (res != null) {
 					refoundstat = (SellerRefoundstat) res;
 					if (refoundstat != null && !refoundstat.isNull()
 							&& myOrderListAdapter != null) {
-						myOrderListAdapter.addFootDataList(alls);
+						alls.addAll(refoundstat.getData());
+						myOrderListAdapter.notifyDataSetChanged();
+					}else{
+						CommonUtil.toast("已到最后一页", getActivity());
 					}
 				}
+				MyLogger.i(alls.size()+"");
 			}
 
 			@Override
 			public void onSimpleFailure(int code) {
+				skip -= pageSize;
 				// changeUi(UiModel.);
-				mAbPullToRefreshView.onHeaderRefreshFinish();
+				mAbPullToRefreshView.onFooterLoadFinish();
 				MyLogger.i("failure >>>>> " + code + " ,res >>>>> ");
 			}
 		});
