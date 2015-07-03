@@ -34,7 +34,7 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_returnorderdetails));
-		
+
 		tv_time = (TextView) findViewById(R.id.returnorderdetails_tv1);//退款时间
 		tv_return = (TextView) findViewById(R.id.returnorderdetails_tv2);//退款状态
 		tv_goods = (TextView) findViewById(R.id.returnorderdetails_tv3);//货物状态
@@ -55,7 +55,7 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 		intent.putExtra("explain", explain);
 		context.startActivity(intent);
 	}
-	
+
 	private void initData() {
 		String time = getIntent().getStringExtra("time");
 		tv_time.setText(time);//退款时间
@@ -68,7 +68,7 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 			tv_return.setText("等待卖家审核");
 			break;
 		case "WAIT_BUYER_DELIVERY":
-			tv_return.setText("卖家审核通过");
+			tv_return.setText("等待买家退货");
 			break;
 		case "WAIT_COMPLETED":
 			tv_return.setText("买家已发货,等待卖家签收");
@@ -76,7 +76,7 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 		case "CANCELLED":
 			tv_return.setText("订单已取消");
 			break;
-		///////////////////////////////////////////////
+			///////////////////////////////////////////////
 		case "NORMAL":
 			tv_return.setText("正常，不退货");
 			break;
@@ -105,21 +105,34 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 		}else {
 			tv_return.setText("订单正常");
 		}*/
-//		String goods = getIntent().getStringExtra("goods");
-//		tv_goods.setText(goods);//货物状态
-//		String istrue = getIntent().getStringExtra("istrue");
-		tv_istrue.setText("是");//是否需要退还货物
+		String goods = getIntent().getStringExtra("goods");
+
+		if (goods.equals("COMPLETED") ||
+				goods.equals("EVALUATE") ||
+				goods.equals("EVALUATE_COMPLETED")) {
+			tv_goods.setText("已收到货");//货物状态
+		}else {
+			tv_goods.setText("未收到货");//货物状态
+		}
+
+		String istrue = getIntent().getStringExtra("istrue");
+		if (istrue.equals("true")) {
+			tv_istrue.setText("是");//是否需要退还货物
+		}else {
+			tv_istrue.setText("否");//是否需要退还货物
+		}
+
 		String money = getIntent().getStringExtra("money");
 		tv_money.setText(money);//退还金额
-//		String reason = getIntent().getStringExtra("reason");
-//		tv_reason.setText(reason);//退款原因
-//		String explain = getIntent().getStringExtra("explain");
-//		tv_explain.setText(explain);//退款说明	
+		String reason = getIntent().getStringExtra("reason");
+		tv_reason.setText(reason);//退款原因
+		String explain = getIntent().getStringExtra("explain");
+		tv_explain.setText(explain);//退款说明	
 	}
 
 	private void initListener() {
-		
-		
+
+
 	}
 
 	public static void startThisActivity(String returnOrderTime,
@@ -128,6 +141,6 @@ public class ReturnOrderDetailsActivity extends BaseActivity{
 			String returnOrderTime6, String returnOrderTime7,
 			BuyerReturnOrderFragment buyerReturnOrderFragment) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

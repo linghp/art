@@ -79,20 +79,15 @@ public class BuyerReturnOrderActivity extends BaseActivity implements
 		});
 	}
 
-	//正常、成功、等待卖方批准、等待买方交付、等待已完成、已完成REFUSE、顺序返回、已取消、失败
-	public static String[] orderReturnStatus = { "NORMAL", "SUCCESS",
-			"WAIT_SELLER_APPROVAL", "WAIT_BUYER_DELIVERY", "WAIT_COMPLETED",
-			"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
-
 	private void initDatas() {
 		tv_tab2.setText("待审核");
 		tv_tab3.setText("待退货");
 		tv_tab4.setText("待退款");
 		topView.setTitle("退款订单管理");
 		fragments.add(0, new BuyerReturnOrderFragment(this,""));
-		fragments.add(1, new BuyerReturnOrderFragment(this,orderReturnStatus[2]));
-		fragments.add(2, new BuyerReturnOrderFragment(this,orderReturnStatus[3]));
-		fragments.add(3, new BuyerReturnOrderFragment(this,orderReturnStatus[4]));
+		fragments.add(1, new BuyerReturnOrderFragment(this,SellerOrderActivity.orderReturnStatus[2]));
+		fragments.add(2, new BuyerReturnOrderFragment(this,SellerOrderActivity.orderReturnStatus[3]));
+		fragments.add(3, new BuyerReturnOrderFragment(this,SellerOrderActivity.orderReturnStatus[4]));
 		
 		adapter = new FragmentViewPagerAdp(getSupportFragmentManager(),
 				fragments);

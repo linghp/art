@@ -18,6 +18,9 @@ public class BuyerReturnOrderInfo implements Serializable {
 	private String status;
 	
 	@Expose
+	private String orderStatus;
+	
+	@Expose
 	private String returnOrderNum;
 	
 	@Expose
@@ -89,6 +92,14 @@ public class BuyerReturnOrderInfo implements Serializable {
 		this.status = status;
 	}
 
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	
 	public String getReturnOrderNum() {
 		return returnOrderNum;
 	}
@@ -252,14 +263,15 @@ public class BuyerReturnOrderInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BuyerReturnOrderInfo [status=" + status + ", returnOrderNum="
-				+ returnOrderNum + ", orderNumber=" + orderNumber
-				+ ", orderTime=" + orderTime + ", returnOrderTime="
-				+ returnOrderTime + ", handleOrderTime=" + handleOrderTime
-				+ ", buyerId=" + buyerId + ", receiverName=" + receiverName
-				+ ", buyerName=" + buyerName + ", returnOrderItemDtos="
-				+ returnOrderItemDtos + ", totalPrice=" + totalPrice
-				+ ", buyerAddress=" + buyerAddress + ", orderType=" + orderType
+		return "BuyerReturnOrderInfo [status=" + status + ", orderStatus="
+				+ orderStatus + ", returnOrderNum=" + returnOrderNum
+				+ ", orderNumber=" + orderNumber + ", orderTime=" + orderTime
+				+ ", returnOrderTime=" + returnOrderTime + ", handleOrderTime="
+				+ handleOrderTime + ", buyerId=" + buyerId + ", receiverName="
+				+ receiverName + ", buyerName=" + buyerName
+				+ ", returnOrderItemDtos=" + returnOrderItemDtos
+				+ ", totalPrice=" + totalPrice + ", buyerAddress="
+				+ buyerAddress + ", orderType=" + orderType
 				+ ", totalQuantity=" + totalQuantity + ", returnReason="
 				+ returnReason + ", returnAttch=" + returnAttch
 				+ ", buyerMessege=" + buyerMessege + ", sellerReason="
