@@ -99,7 +99,7 @@ public class BaseServer {
 	protected static final String NET_UPDATA_LOGIN_PASSWORD = HOST
 			+ "user/updatePassword"; // 修改新的登录密码
 	protected static final String NET_UPDATA_PAYPASSWORD = HOST
-			+ "user/password"; // 修改新的登录密码
+			+ "user/payPassword"; // 修改支付密码
 
 	protected static final String NET_FOLLOW_PRODUCT = HOST + "aat/product"; // 添加商品关注
 	protected static final String NET_FOLLOW_SHOP = HOST + "aat/shop"; // 添加商铺关注
