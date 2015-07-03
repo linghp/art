@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.shangxian.art.LogisticsInformationActivity;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.SellerOrderActivity;
 import com.shangxian.art.bean.BuyerReturnOrderInfo;
 import com.shangxian.art.bean.BuyerReturnOrderProductInfo;
 import com.shangxian.art.bean.SellerRefoundOrderInfo;
@@ -131,7 +132,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 		// -----------------------------------------------------------------------
 		if (orderReturnStatus[0].equals(status)) {
 			//NORMAL,//正常，不退货
-			changeTextViewShow(holder, "取消退款", null, "正常，不退货");
+			changeTextViewShow(holder, "取消退款", null, SellerOrderActivity.orderReturnStatusValue[0]);
 			if (buyerReturnOrderProductInfos.size() != 0) {
 				holder.tv_01.setOnClickListener(new OnClickListener() {
 					@Override
@@ -169,7 +170,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 				|| orderReturnStatus[8].equals(status)
 				|| orderReturnStatus[6].equals(status)) {
 			changeTextViewShow(holder, "删除订单", null,
-					orderReturnStatus[8].equals(status) ? "退货失败" : "退款成功");
+					orderReturnStatus[8].equals(status) ? SellerOrderActivity.orderReturnStatusValue[8] : SellerOrderActivity.orderReturnStatusValue[1]);
 			holder.tv_01.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -191,7 +192,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 			});
 		} else if (orderReturnStatus[2].equals(status)) {
 			//WAIT_SELLER_APPROVAL ,  //等待卖家审核
-			changeTextViewShow(holder, "取消退款", null, "等待卖家审核");
+			changeTextViewShow(holder, "取消退款", null, SellerOrderActivity.orderReturnStatusValue[2]);
 
 			if (buyerReturnOrderProductInfos.size() != 0) {
 				holder.tv_01.setOnClickListener(new OnClickListener() {
@@ -220,7 +221,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 
 		} else if (orderReturnStatus[3].equals(status)) {
 			// WAIT_BUYER_DELIVERY,   //等待买家退货
-			changeTextViewShow(holder, null, "填写物流信息", "等待买家退货");
+			changeTextViewShow(holder, null, "填写物流信息", SellerOrderActivity.orderReturnStatusValue[3]);
 			MyLogger.i(">>>>买家退货>>>>"+buyerReturnOrderProductInfos.get(0).getId() + ">>>>>>"+
 					position+">>>>>>>"+buyerReturnOrderInfo.getOrderNumber());
 			holder.tv_02.setOnClickListener(new OnClickListener() {
@@ -235,7 +236,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 			});
 		} else if (orderReturnStatus[4].equals(status)) {
 			//WAIT_COMPLETED,//买家已发货,等待卖家签收
-			changeTextViewShow(holder, null, null, "已发货,等待卖家签收");
+			changeTextViewShow(holder, null, null, SellerOrderActivity.orderReturnStatusValue[4]);
 		} else if (orderReturnStatus[5].equals(status)) { 
 			// COMPLETED_REFUSE,  //卖家拒绝签收
 			changeTextViewShow(holder, "删除订单", null, "卖家拒绝签收");
@@ -255,7 +256,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 					});
 		} else if (orderReturnStatus[7].equals(status)) {
 			//CANCELLED,   //取消
-			changeTextViewShow(holder, "删除订单", null, "订单已取消");
+			changeTextViewShow(holder, "删除订单", null, SellerOrderActivity.orderReturnStatusValue[7]);
 			new BuyerOrderServer().toBuyerDeleteReturnOrder(
 					buyerReturnOrderInfo.getReturnOrderNum(),
 					new CallBack() {
@@ -274,7 +275,6 @@ EntityAdapter<BuyerReturnOrderInfo> {
 		MyLogger.i(convertView+"");
 		return convertView;
 	}
-
 	private void changeTextViewShow(ViewHolder holder, String tv_01_title,
 			String tv_02_title, String tv_03_title) {
 		holder.tv_01.setText(tv_01_title);

@@ -111,11 +111,11 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 //				 CommonUtil.gotoActivityWithData(BuyerReturnOrderFragment.this, ReturnOrderDetailsActivity.class, bundle, false);
 			ReturnOrderDetailsActivity.startThisActivity(buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款时间
 					, buyerReturnOrderStat.getData().get(position).getStatus()//退款状态
-					, buyerReturnOrderStat.getData().get(position).getStatus()//货物状态
-					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//是否需要退还货物
+					, buyerReturnOrderStat.getData().get(position).getOrderStatus()//货物状态
+					, buyerReturnOrderStat.getData().get(position).getIsGoods()//是否需要退还货物
 					, "¥"+CommonUtil.priceConversion(buyerReturnOrderStat.getData().get(position).getTotalPrice())//退还金额
-					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款原因
-					, buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款说明
+					, buyerReturnOrderStat.getData().get(position).getReturnReason()//退款原因
+					, buyerReturnOrderStat.getData().get(position).getBuyerMessege()//退款说明
 					, getActivity());
 			MyLogger.i("退款订单》》》》》》》》"+buyerReturnOrderStat.getData().get(position).getReturnOrderTime());
 			}
@@ -172,38 +172,53 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 	}
 
 	private void loadMore() {
-		server.toBuyerReturnList(status, buyerReturnOrderStat.getStart() + "", new CallBack() {
+		server.toBuyerReturnList(status, buyerReturnOrderStat.getStart() + "10", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
 				mAbPullToRefreshView.onFooterLoadFinish();//隐藏上拉加载更多
 				MyLogger.i("退款订单>>>>>>>>"+res);
-//				if (res != null) {
-//					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
-//					if (!buyerReturnOrderStat.isNull()) {
-//						if (buyerReturnOrderAdapter != null) {
-//							changeUi(UiModel.showData);
-//							buyerReturnOrderAdapter.addFootDataList(buyerReturnOrderStat.getData());
-//						}
-//					} else {
-//						CommonUtil.toast("已是最后一页");
-//
-//					}
-//				} else {
-//					CommonUtil.toast("已是最后一页");
-//				}
 				if (res != null) {
 					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
 					if (!buyerReturnOrderStat.isNull()) {
 						if (buyerReturnOrderAdapter != null) {
 							changeUi(UiModel.showData);
-							buyerReturnOrderAdapter.upDateList(buyerReturnOrderStat.getData());
+							buyerReturnOrderAdapter.addFootDataList(buyerReturnOrderStat.getData());
 						}
 					} else {
 						CommonUtil.toast("已是最后一页");
+
 					}
 				} else {
 					CommonUtil.toast("已是最后一页");
 				}
+				/*if (res != null) {
+//					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
+					List<BuyerReturnOrderInfo> buyerReturnOrderInfos = buyerReturnOrderStat.getData();
+					if (buyerReturnOrderInfos != null && buyerReturnOrderInfos.size() > 0) {
+						changeUi(UiModel.showData);
+						buyerReturnOrderAdapter.notifyDataSetChanged();
+						buyerReturnOrderInfos.addAll(buyerReturnOrderInfos);
+						
+					}else {
+						CommonUtil.toast("已到最后一页", getActivity());
+					}
+				} else {
+					CommonUtil.toast("已是最后一页");
+				}*/
+				/*if (res != null) {
+					buyerReturnOrderStat = (BuyerReturnOrderStat) res;
+					if (!buyerReturnOrderStat.isNull()) {
+						if (buyerReturnOrderAdapter != null) {
+							changeUi(UiModel.showData);
+							buyerReturnOrderAdapter.notifyDataSetChanged();
+							buyerReturnOrderAdapter.upDateList(buyerReturnOrderStat.getData());
+						}
+					} else {
+						CommonUtil.toast("已到最后一页", getActivity());
+					}
+				} else {
+					CommonUtil.toast("已到最后一页", getActivity());
+				}*/
 			}
 			@Override
 			public void onSimpleFailure(int code) {
