@@ -147,11 +147,13 @@ public class ShopOperatorServer extends BaseServer {
 	public static void onGetOperator_xutils(
 			final OnHttpResultGetOperatorListener l) {
 		RequestParams params = getParams();
+		MyLogger.i("》》》》》》》》操作员管理url："+NET_FINDSHOPOPERATOR);
 		toXUtils2(HttpMethod.POST, NET_FINDSHOPOPERATOR, params,
 				new CallBack() {
 
 					@Override
 					public void onSimpleSuccess(Object res) {
+						MyLogger.i(" 操作员管理数据："+res.toString());
 						CommonBeanObject<List<ShopOperatorBean>> commonBeanObject = null;
 						try {
 							commonBeanObject = gson.fromJson(

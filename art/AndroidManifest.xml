@@ -305,6 +305,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".DingShiJieSuanActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_classification" >
             <intent-filter>

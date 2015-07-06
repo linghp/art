@@ -36,4 +36,10 @@ public class ShopsServer extends BaseServer{
 		MyLogger.i("本期结算url：" + NET_BENQIJIESUAN+shopid);
 		toXUtils(HttpMethod.POST, NET_BENQIJIESUAN+shopid, params, null, call);
 	}
+	//定时结算
+	public static void toDingShiJieSuan(String shopid, CallBack call){
+		RequestParams params = getParams();
+		MyLogger.i("定时结算url：" + NET_DINGSHIJIESUAN+shopid);
+		toXUtils(HttpMethod.POST, NET_DINGSHIJIESUAN+shopid, params, null, call);
+	}
 }

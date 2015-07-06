@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
-            android:text="520.10"
+            android:text="数据加载中"
             android:textColor="@color/txt_red"
             android:textSize="40dp" />
     </LinearLayout>
@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/txt_white"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:padding="10dp"
-                android:text="2015-4-29"
+                android:text="数据加载中"
                 android:textColor="@color/txt_black2"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:padding="10dp"
-                android:text="定期结算"
+                android:text="数据加载中"
                 android:textColor="@color/txt_black2"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>

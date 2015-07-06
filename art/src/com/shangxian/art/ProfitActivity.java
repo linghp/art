@@ -35,12 +35,10 @@ public class ProfitActivity extends BaseActivity{
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	private void initListener() {
-		// TODO Auto-generated method stub
 		
 	}
 }

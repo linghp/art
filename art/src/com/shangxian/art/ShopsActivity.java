@@ -60,6 +60,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	TextView shopsname, guanzu, all, up, youhui, summary1, price1, summary2,
 	price2;
 	LinearLayout call, dingwei;
+	
+	int coollectnum = 0;
 
 	// 判断是否收藏
 	boolean iscollection = false;
@@ -241,7 +243,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								.display(shopsimg, Constant.BASEURL
 										+ model.getIndexLogo());// 商铺图标
 								shopsname.setText("" + model.getName());// 商铺名
-								guanzu.setText(model.getNoticeCount() + "人关注");// 关注
+								coollectnum = model.getNoticeCount();
+								guanzu.setText(coollectnum + "人关注");// 关注
 								all.setText("" + model.getProductCount());// 全部商品
 								up.setText("" + model.getNewCount());// 上新
 								youhui.setText("" + model.getSpecialCount());// 优惠
@@ -324,6 +327,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 								@Override
 								public void onSimpleSuccess(Object res) {
 									myToast("取消关注成功");
+									coollectnum --;
+									guanzu.setText(coollectnum + "人关注");// 关注
 								}
 								@Override
 								public void onSimpleFailure(int code) {
@@ -345,6 +350,8 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 												.isSelected());
 									} else {
 										myToast("关注成功");
+										coollectnum ++;
+										guanzu.setText(coollectnum + "人关注");// 关注
 									}
 								}
 							});
@@ -436,7 +443,7 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				popupWindow.dismiss();
-				ShopsSummaryActivity.startThisActivity(shopid, model.getNoticeCount()+"",
+				ShopsSummaryActivity.startThisActivity(shopid, coollectnum+"",
 						ShopsActivity.this);
 				// CommonUtil.gotoActivity(ShopsActivity.this,
 				// ShopsSummaryActivity.class, false);

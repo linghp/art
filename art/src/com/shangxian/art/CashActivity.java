@@ -43,8 +43,6 @@ public class CashActivity extends BaseActivity{
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void initListener() {
@@ -53,7 +51,6 @@ public class CashActivity extends BaseActivity{
 			//取消
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				finish();
 			}
 		});

@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shangxian.art.R;
+import com.shangxian.art.bean.BenQiJieSuanModel;
 import com.shangxian.art.bean.JieSuanLiShiModel;
+import com.shangxian.art.utils.CommonUtil;
 
-public class JieSuanLiShiAdapter extends EntityAdapter<JieSuanLiShiModel>{
+public class JieSuanLiShiAdapter extends EntityAdapter<BenQiJieSuanModel>{
 
 	public JieSuanLiShiAdapter(Activity mAc, int layoutId,
-			List<JieSuanLiShiModel> dates) {
+			List<BenQiJieSuanModel> dates) {
 		super(mAc, layoutId, dates);
 		// TODO Auto-generated constructor stub
 	}
@@ -33,9 +35,14 @@ public class JieSuanLiShiAdapter extends EntityAdapter<JieSuanLiShiModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.type.setText(dates.get(position).getType());
-		holder.time.setText(dates.get(position).getTime());
-		holder.parice.setText(dates.get(position).getSprice());
+		holder.type.setText(dates.get(position).getSettlementType());
+		if (dates.get(position).getSettlementType().equals("NORMAL")) {
+			holder.type.setText("定时结算");
+		}else {
+			holder.type.setText("紧急结算");
+		}
+		holder.time.setText(dates.get(position).getSettlementTime());
+		holder.parice.setText(CommonUtil.priceConversion(dates.get(position).getAmount()));
 		return convertView;
 	}
 
