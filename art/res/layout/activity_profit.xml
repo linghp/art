@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
-            android:text="4520.10"
+            android:text="0.00"
             android:textColor="@color/txt_black"
             android:textSize="40sp" />
     </LinearLayout>
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:gravity="right"
             android:padding="10dp"
-            android:text="11.2%"
+            android:text="0.00%"
             android:textColor="@color/txt_red"
             android:textSize="@dimen/list_title_size" />
     </LinearLayout>
@@ -93,7 +93,7 @@
                 android:id="@+id/profit_today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.02"
+                android:text="0.00"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/list_title_size" />
 
@@ -115,7 +115,7 @@
                 android:id="@+id/profit_yesterday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.08"
+                android:text="0.00"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/list_title_size" />
         </LinearLayout>
@@ -145,7 +145,7 @@
                 android:id="@+id/profit_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50.02"
+                android:text="0.00"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/list_price_size" />
         </LinearLayout>

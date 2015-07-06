@@ -93,6 +93,7 @@ public class OperatorManagementActivity extends BaseActivity implements OnHttpRe
 	public void onHttpResultGetOperator(CommonBeanObject<List<ShopOperatorBean>> commonBeanObject) {
 		loading_big.setVisibility(View.GONE);
 		if(commonBeanObject!=null&&commonBeanObject.getResult_code().equals("200")){
+			MyLogger.i(" 操作员管理数据："+commonBeanObject.toString());
 			model.clear();
 			List<ShopOperatorBean> shopOperatorBeans=commonBeanObject.getObject();
 			if(shopOperatorBeans!=null){
