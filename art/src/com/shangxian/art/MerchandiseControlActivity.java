@@ -102,7 +102,8 @@ public class MerchandiseControlActivity extends BaseActivity{
 			break;
 		case R.id.lishichaxun:
 			//结算历史查询
-			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
+//			CommonUtil.gotoActivity(MerchandiseControlActivity.this, JieSuanLiShiActivity.class, false);
+			CommonUtil.gotoActivity(MerchandiseControlActivity.this, DingShiJieSuanActivity.class, false);
 			break;
 		case R.id.shangpuxinxi:
 			//商铺信息
