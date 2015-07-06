@@ -173,7 +173,7 @@ public class CommentToAdapter extends BaseAdapter implements
 
 						@Override
 						public void onClick(View v) {
-							ReviewsProductActivity.startThisActivity(myOrderItem.getOrderId()+"",myOrderItem.getBuyerId()+"",myOrderItem.getProductItemDtos(), context);
+							ReviewsProductActivity.startThisActivity(position,myOrderItem.getOrderId()+"",myOrderItem.getBuyerId()+"",myOrderItem.getProductItemDtos(), context);
 						}
 					});
 				} else if (myOrderItem.getStatus().equals(

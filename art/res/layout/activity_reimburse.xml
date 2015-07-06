@@ -235,7 +235,7 @@
                 android:background="@color/txt_white2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:padding="10dp"  android:visibility="gone">
 
                 <TextView
                     android:id="@+id/reimburse_txt2"
@@ -254,7 +254,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:padding="10dp"  android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/reimburse_img1"

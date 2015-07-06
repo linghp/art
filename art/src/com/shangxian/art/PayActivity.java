@@ -504,17 +504,17 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 			myToast("请选择支付方式(注:在线支付暂只支持支付宝)");
 			return false;
 		}else if(isBi&&!isYuan){
-			if(mAccount.getAlb()<price){
+			if(mAccount!=null&&mAccount.getAlb()<price){
 				myToast("爱农币余额不足");	
 				return false;
 			}
 		}else if(!isBi&&isYuan){
-			if(mAccount.getAly()<price){
+			if(mAccount!=null&&mAccount.getAly()<price){
 				myToast("爱农元余额不足");	
 				return false;
 			}
 		}else if(isBi&&isYuan){
-			if(mAccount.getAly_Alb()<price){
+			if(mAccount!=null&&mAccount.getAly_Alb()<price){
 				myToast("余额不足");	
 				return false;
 			}

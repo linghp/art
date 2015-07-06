@@ -125,6 +125,8 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 			myOrderItem.setOrderNumber(myOrderDetailBean.getOrderNumber());
 			myOrderItem.setTotalPrice(myOrderDetailBean.getTotalPrice());
 			myOrderItem.setStatus(myOrderDetailBean.getStatus());
+			myOrderItem.setStatus(myOrderDetailBean.getStatus());
+			myOrderItem.setShopName(myOrderDetailBean.getOrderItems().get(0).getName());
 			updateViews();
 		}else if(commonBean!=null){
 			myToast(commonBean.getResult());
@@ -218,7 +220,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					//CommonUtil.toast("click", context);
 					List<String> ordernumber=new ArrayList<String>();
 					ordernumber.add(myOrderItem.getOrderNumber());
-					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()),myOrderItem.getProductItemDtos().get(0).getName(), MyOrderDetailsActivity.this);
+					PayActivity.startThisActivity(ordernumber, CommonUtil.priceConversion(myOrderItem.getTotalPrice()),myOrderItem.getShopName(), MyOrderDetailsActivity.this);
 				}
 			});
 		}else if(myOrderItem.getStatus().equals(orderState[7])||myOrderItem.getStatus().equals(
@@ -272,7 +274,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 					MyOrderServer.toConfirmGoods(myOrderItem, MyOrderDetailsActivity.this);
 				}
 			});
-		}else if(status.equals(orderState[4])||status.equals(orderState[6])){// 已完成交易或者待评价    ----------------------------4 6
+		}else if(status.equals(orderState[4])||status.equals(orderState[6])||status.equals(orderState[8])){// 已完成交易  待评价   已评价  -----------------4 6 8
 			((TextView)findViewById(R.id.tv_header_01)).setText(MyOrderActivity.orderStateValue[4]);
 //			String status_temp=myOrderDetailBean.getOrderItems().get(0).getOrderItemStatus();
 //			MyLogger.i(status_temp);

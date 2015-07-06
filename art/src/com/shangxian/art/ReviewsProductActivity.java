@@ -1,12 +1,16 @@
 package com.shangxian.art;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Header;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -27,7 +31,8 @@ import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
-import com.lidroid.xutils.http.RequestParams;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -35,12 +40,11 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ProductItemDto;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
-import com.shangxian.art.net.CommentServer;
 import com.shangxian.art.net.CommentServer.OnHttpResultAddCommentListener;
+import com.shangxian.art.net.UploadfilesServer;
 import com.shangxian.art.photochooser.ImagePagerActivity;
 import com.shangxian.art.photochooser.PhotoOperate;
 import com.shangxian.art.photochooser.PhotoPickActivity;
-import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 /**
  * 评价商品           现只能对单个商品评论
@@ -48,6 +52,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class ReviewsProductActivity extends BaseActivity implements OnHttpResultAddCommentListener{
+	private static final String LOG_TAG = "ReviewsProductActivity";
 	private TextView tv_quxiao,tv_tijiao,tv_gongkai,tv_niming;
 	private EditText et_comment;
 	private RatingBar ratingbar;
@@ -58,6 +63,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 
 	private int ratingValue=Integer.MIN_VALUE;
 	private boolean isAnonymous=false;
+	private int position=-1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,11 +73,12 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 		initListener();
 	}
 
-	public static void startThisActivity(String ordernumber,String userid, List<ProductItemDto> productItemDtos,Context context) {
+	public static void startThisActivity(int position,String ordernumber,String userid, List<ProductItemDto> productItemDtos,Context context) {
 		Intent intent = new Intent(context, ReviewsProductActivity.class);
 		intent.putExtra("ordernumber", ordernumber);
 		intent.putExtra("userid", userid);
 		intent.putExtra("productItemDtos", (Serializable)productItemDtos);
+		intent.putExtra("position", position);
 		((Activity)context).startActivityForResult(intent, 1);
 	}
 	
@@ -145,6 +152,7 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 
 	private void initData() {
 		Intent intent=getIntent();
+		position=intent.getIntExtra("position", -1);
 		ordernumber=intent.getStringExtra("ordernumber");
 		userid=intent.getStringExtra("userid");
 		productItemDtos=(List<ProductItemDto>) intent.getSerializableExtra("productItemDtos");
@@ -175,7 +183,6 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 			@Override
 			public void onClick(View v) {
              if(match()){
-            	 showProgressDialog(true);
             	 uploadComment();
              }
 			}
@@ -223,34 +230,66 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 	}
 	
     void uploadComment() {
-    	RequestParams params = new RequestParams("utf-8");
-        for (PhotoData item : mData) {
-        	  File file = new File(Global.getPath(this, item.uri));
-              params.addBodyParameter("files", file);
-        }
-      //  params.setHeader("Content-Type", "application/text;charset=UTF-8");
-        params.addQueryStringParameter("comment", comment);
-        params.addQueryStringParameter("anonymous", isAnonymous+"");
-        params.addQueryStringParameter("salesOrderId", ordernumber);
-        params.addQueryStringParameter("productId", productId);
-        params.addQueryStringParameter("userId", userid);
-        params.addQueryStringParameter("level", ratingValue+"");
-        //params.addQueryStringParameter("isPublic", isAnonymous+"");
-        MyLogger.i(params.getQueryStringParams().toString());
-        CommentServer.toAddComment(params, this);
-//    	RequestParams params = new RequestParams();
-//    	 final String contentType = RequestParams.APPLICATION_OCTET_STREAM;
-//      for (PhotoData item : mData) {
-//  	  File file = new File(Global.getPath(this, item.uri));
-//        params.p"files", file);
-//  }
-//    	params.put("comment", comment);
-//    	params.put("anonymous", isAnonymous+"");
-//    	params.put("salesOrderId", ordernumber);
-//    	params.put("productId", productId);
-//    	params.put("userId", userid);
-//    	params.put("level", ratingValue+"");
-//    	params.put("isPublic", isAnonymous+"");
+//    	RequestParams params = new RequestParams("utf-8");
+//        for (PhotoData item : mData) {
+//        	  File file = new File(Global.getPath(this, item.uri));
+//              params.addBodyParameter("files", file);
+//        }
+//      //  params.setHeader("Content-Type", "application/text;charset=UTF-8");
+//        params.addQueryStringParameter("comment", comment);
+//        params.addQueryStringParameter("anonymous", isAnonymous+"");
+//        params.addQueryStringParameter("salesOrderId", ordernumber);
+//        params.addQueryStringParameter("productId", productId);
+//        params.addQueryStringParameter("userId", userid);
+//        params.addQueryStringParameter("level", ratingValue+"");
+//        //params.addQueryStringParameter("isPublic", isAnonymous+"");
+//        MyLogger.i(params.getQueryStringParams().toString());
+//        CommentServer.toAddComment(params, this);
+    	RequestParams params = new RequestParams();
+    	params.setContentEncoding("utf-8");
+    	 final String contentType = RequestParams.APPLICATION_OCTET_STREAM;
+    	 List<File> files=new ArrayList<File>();
+         for (PhotoData item : mData) {
+    	  File file = new File(Global.getPath(this, item.uri));
+  	      files.add(file);
+      	 }
+      if(files.size()>0){
+    	  File[] files_array=(File[]) files.toArray(new File[files.size()]);
+    	  try {
+			params.put("files", files_array);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+      }
+    	params.put("comment", comment);
+    	params.put("anonymous", isAnonymous+"");
+    	params.put("salesOrderId", ordernumber);
+    	params.put("productId", productId);
+    	params.put("userId", userid);
+    	params.put("level", ratingValue+"");
+    	params.put("isPublic", isAnonymous+"");
+    	UploadfilesServer.toUploadFile(this,params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+            	showProgressDialog(true);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+            	showProgressDialog(false);
+            	myToast("评论成功");
+            	setResult(RESULT_OK, new Intent().putExtra("position", position));
+            	finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+            	showProgressDialog(false);
+            	myToast("评论失败");
+            }
+        });
     }
 
 
@@ -416,29 +455,29 @@ public class ReviewsProductActivity extends BaseActivity implements OnHttpResult
 
 	}
 	
-	@Override
-	public void onBackPressed() {
-		if (et_comment.getText().toString().isEmpty()) {
-			finish();
-		} else {
+//	@Override
+//	public void onBackPressed() {
+//		if (et_comment.getText().toString().isEmpty()) {
+//			finish();
+//		} else {
 //			showDialog("冒泡", "放弃此次冒泡机会？",
 //					new DialogInterface.OnClickListener() {
 //						@Override
 //						public void onClick(DialogInterface dialog, int which) {
-//							finishWithoutSave();
+//							finish();
 //						}
 //					});
-		}
-	}
+//		}
+//	}
 
 	@Override
 	public void onHttpResultAddComment(Boolean issuccess) {
-		showProgressDialog(false);
-		if(issuccess){
-			myToast("评论成功");
-			finish();
-		}else{
-			myToast("评论失败");
-		}
+//		showProgressDialog(false);
+//		if(issuccess){
+//			myToast("评论成功");
+//			finish();
+//		}else{
+//			myToast("评论失败");
+//		}
 	}
 }

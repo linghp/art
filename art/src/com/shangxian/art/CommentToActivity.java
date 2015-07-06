@@ -3,6 +3,7 @@ package com.shangxian.art;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -212,6 +213,19 @@ public class CommentToActivity extends BaseActivity implements
 		} else {
 			CommonUtil.toast("网络错误", this);
 			//changeUi(UiModel.noData_noProduct);
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode==RESULT_OK){
+			int position=data.getIntExtra("position", -1);
+			if(position!=-1){
+			mOrderItems.get(position).setStatus(MyOrderActivity.orderState[8]);
+			myListViewAdapter.notifyDataSetChanged();
+			}
 		}
 	}
 

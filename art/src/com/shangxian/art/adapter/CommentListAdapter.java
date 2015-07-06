@@ -4,15 +4,12 @@ package com.shangxian.art.adapter;
 
 
 import java.util.List;
-import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.provider.Telephony.Mms.Rate;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
@@ -20,17 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ab.image.AbImageLoader;
 import com.ab.util.AbViewHolder;
-import com.shangxian.art.LocationActivity;
-import com.shangxian.art.NearlyActivity;
+import com.shangxian.art.CommodityContentActivity;
+import com.shangxian.art.PhotoViewPagerActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.GoodsCommentBean;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.MyLogger;
 
 
 public class CommentListAdapter extends BaseAdapter{
@@ -114,8 +109,9 @@ public class CommentListAdapter extends BaseAdapter{
           mAbImageLoader.display(itemsIcon,Constant.BASEURL+photoUrl);
           ll_itemsImage.setVisibility(View.VISIBLE);
           ll_itemsImage.removeAllViews();
-          List<String> images=goodsCommentBean.getPhotos();
+          final List<String> images=goodsCommentBean.getPhotos();
           for (int i = 0; i < images.size(); i++) {
+        	  final int j=i;
         	  if(!TextUtils.isEmpty(images.get(i))){
             LayoutParams layoutParams=new LayoutParams(CommonUtil.dip2px(mContext, 40), CommonUtil.dip2px(mContext, 40));
 			ImageView imageView=new ImageView(mContext);
@@ -124,6 +120,13 @@ public class CommentListAdapter extends BaseAdapter{
 			mAbImageLoader.display(imageView,Constant.BASEURL+images.get(i));
 			ll_itemsImage.addView(imageView);
 			CommonUtil.setMargins(imageView, 0, 0, CommonUtil.dip2px(mContext, 9), 0);
+			imageView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PhotoViewPagerActivity.startThisActivity(mContext, images,j);
+				}
+			});
         	  }
 		}
           return convertView;
