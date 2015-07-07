@@ -49,7 +49,6 @@
                     android:layout_marginLeft="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="新鲜果水果专卖店"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/list_title_size" />
 

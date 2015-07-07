@@ -160,18 +160,29 @@ public class ShopsSummaryActivity extends BaseActivity{
 							model=gson.fromJson(resultObject.toString(),ShopsSummaryModel.class);
 							if (model != null) {
 								mAbImageLoader.display(shopsimg, Constant.BASEURL+ model.getLogo());//图片
-								shopsname.setText(model.getName());//店铺名
+								if (model.getName() != null) {
+									shopsname.setText(model.getName());//店铺名
+								}
 								guanzu.setText(noticeCount+"人关注");//关注
 								zhanggui.setText(model.getOwner());//掌柜
 								if (model.getPhoneNumbers() != null) {
 									phone.setText(model.getPhoneNumbers().get(0)+"");//电话
 								}
-								address.setText(model.getAddress());//地址
-								summary.setText(model.getDetails());//简介
-								
-								tv_name.setText(model.getConsignee()+"");//退货人
-								tv_phone.setText(model.getConPhoneNumber()+"");//电话
-								tv_address.setText(model.getConAddress()+"");//地址
+								if (model.getAddress() != null) {
+									address.setText(model.getAddress());//地址
+								}
+								if (model.getDetails() != null) {
+									summary.setText(model.getDetails());//简介
+								}
+								if (model.getConsignee() != null) {
+									tv_name.setText(model.getConsignee()+"");//退货人
+								}
+								if (model.getConPhoneNumber() != null) {
+									tv_phone.setText(model.getConPhoneNumber()+"");//电话
+								}
+								if (model.getConAddress() != null) {
+									tv_address.setText(model.getConAddress()+"");//地址
+								}
 							}
 						}
 					} catch (JSONException e) {
