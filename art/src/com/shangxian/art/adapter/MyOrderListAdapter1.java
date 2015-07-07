@@ -249,7 +249,8 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 //				holder.tv_03.setVisibility(View.VISIBLE);
 //				holder.tv_03.setText("等待买家收货...");
 			} else if (myOrderItem.getStatus().equals(
-					MyOrderActivity.orderState[4])) {// 已完成交易 ----------------------------------------------4
+					MyOrderActivity.orderState[4])||myOrderItem.getStatus().equals(
+							MyOrderActivity.orderState[8])) {// 已完成交易 已评价----------------------------------------------4 8
 //				holder.tv_03.setVisibility(View.VISIBLE);
 //				holder.tv_03.setText("完成交易");
 				holder.tv_01.setVisibility(View.GONE);
