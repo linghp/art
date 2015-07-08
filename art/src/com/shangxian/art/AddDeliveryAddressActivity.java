@@ -175,7 +175,22 @@ public class AddDeliveryAddressActivity extends BaseActivity {
 			// 取消
 			@Override
 			public void onClick(View v) {
-				finish();
+				//设为默认地址
+				if (id != "-1") {
+					AccountSecurityServer.toGetDefaultAddress(id, new OnHttpDeleteListener() {
+
+						@Override
+						public void onHttpDelete(String res) {
+							MyLogger.i("设为默认地址》》》》》》》》》》》》："+res);
+							myToast(res);
+							finish();
+						}
+					});
+				}else {
+					myToast("请先保存");
+				}
+				
+				
 			}
 		});
 	}

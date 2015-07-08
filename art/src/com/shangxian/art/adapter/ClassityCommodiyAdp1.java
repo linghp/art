@@ -3,7 +3,8 @@ package com.shangxian.art.adapter;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.Handler;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import com.ab.image.AbImageLoader;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.ClassityCommdityModel;
-import com.shangxian.art.cache.Imageloader_homePager;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
 /**
@@ -42,6 +42,8 @@ public class ClassityCommodiyAdp1 extends EntityAdapter<ClassityCommdityModel>{
 			holder.summary = (TextView) convertView.findViewById(R.id.item_commodity_summary);
 			holder.img = (ImageView) convertView.findViewById(R.id.item_commodity_img);
 			holder.price = (TextView) convertView.findViewById(R.id.item_commodity_price);
+			holder.priceold = (TextView) convertView.findViewById(R.id.item_commodity_priceold);
+			holder.priceold.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			//			holder.shop = (ImageView) convertView.findViewById(R.id.item_commodity_shop);
 			convertView.setTag(holder);
 		}else {
@@ -50,13 +52,18 @@ public class ClassityCommodiyAdp1 extends EntityAdapter<ClassityCommdityModel>{
 		holder.title.setText(dates.get(position).getName());
 		holder.summary.setText(dates.get(position).getReDetails());
 //		holder.price.setText(dates.get(position).getPromotionPrice()+"");
-		holder.price.setText(CommonUtil.priceConversion((float)dates.get(position).getPromotionPrice())+"");
+		holder.price.setText("¥"+CommonUtil.priceConversion((float)dates.get(position).getPromotionPrice()));
+
+		if (dates.get(position).getOriginalPrice() > dates.get(position).getPromotionPrice()) {
+			holder.priceold.setText("¥"+CommonUtil.priceConversion((float)dates.get(position).getOriginalPrice()));
+		}
+		
         mAbImageLoader.display(holder.img,Constant.BASEURL
 				+ dates.get(position).getPhoto());
 		return convertView;
 	}
 	public static class ViewHolder{
-		TextView title,summary,price;
+		TextView title,summary,price,priceold;
 		ImageView img;
 		//		ImageView shop;
 	}

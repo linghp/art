@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -151,7 +152,7 @@ public class DeliveryAddressActivity extends BaseActivity{
 			}
 		});
 
-		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+		/*listview.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -200,6 +201,32 @@ public class DeliveryAddressActivity extends BaseActivity{
 				});
 				multiDia.setNegativeButton("取消", null);
 				multiDia.show(); 
+				return true;
+			}
+		});*/
+		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				AlertDialog.Builder multiDia=new AlertDialog.Builder(DeliveryAddressActivity.this);
+				multiDia.setTitle("删除");//标题
+				multiDia.setMessage("确定要删除吗？");
+				multiDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						AccountSecurityServer.toGetDeleteAddress(list.get(position).getId(), new OnHttpDeleteListener() {								
+							@Override
+							public void onHttpDelete(String res) {
+								myToast(res);
+								onResume();
+							}
+						});
+					}
+				});
+				multiDia.setNegativeButton("取消", null);
+				multiDia.show();
 				return true;
 			}
 		});

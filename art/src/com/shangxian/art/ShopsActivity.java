@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -237,14 +238,15 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 							if (model != null) {
 								shopid = model.getId() + "";
 								mAbImageLoader.display(img, Constant.BASEURL
-										+ model.getLogo());// 图片
+										+ model.getIndexLogo());// 图片
 
 								mAbImageLoader
 								.display(shopsimg, Constant.BASEURL
-										+ model.getIndexLogo());// 商铺图标
+										+ model.getLogo());// 商铺图标
 								shopsname.setText("" + model.getName());// 商铺名
 								coollectnum = model.getNoticeCount();
 								guanzu.setText(coollectnum + "人关注");// 关注
+								
 								all.setText("" + model.getProductCount());// 全部商品
 								up.setText("" + model.getNewCount());// 上新
 								youhui.setText("" + model.getSpecialCount());// 优惠

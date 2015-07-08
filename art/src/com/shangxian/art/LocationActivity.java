@@ -46,6 +46,7 @@ import com.shangxian.art.net.NearlyServer.OnNearlyShopListener;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.CircleImageView1;
+import com.shangxian.art.view.TopView;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -290,6 +291,14 @@ public class LocationActivity extends BaseActivity implements
 	}
 
 	private void initView() {
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn_invisible();
+		topView.hideCenterSearch();
+		topView.hideRightBtn();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);// 返回
+		topView.setTitle("附近商铺");// title文字
 		mp_loc = (MapView) findViewById(R.id.locb_bm_loc);
 		mp_loc.showZoomControls(false);
 		mp_loc.showScaleControl(false);

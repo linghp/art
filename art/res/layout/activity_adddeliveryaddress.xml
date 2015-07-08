@@ -232,24 +232,25 @@
         android:layout_below="@id/adddeliveryaddress_linear1"
         android:layout_marginTop="50dp"
         android:orientation="horizontal"
+        android:weightSum="2"
         android:padding="10dp" >
 
         <TextView
             android:id="@+id/adddeliveryaddress_quxiao"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/soge_not_bg_sel"
             android:gravity="center_horizontal"
             android:onClick="doClick"
             android:padding="8dp"
-            android:text="取消"
+            android:text="设为默认地址"
             android:textColor="@color/txt_whitetoback"
             android:textSize="@dimen/button_txt_size" />
 
         <TextView
             android:id="@+id/adddeliveryaddress_baocun"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"

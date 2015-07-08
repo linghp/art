@@ -261,7 +261,8 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 											.getLayoutParams();
 									layoutParams.width = CommonUtil
 											.getScreenWidth(CommodityContentActivity.this);
-									layoutParams.height = layoutParams.width * 2 / 3;
+//									layoutParams.height = layoutParams.width * 2 / 3;
+									layoutParams.height = layoutParams.width;
 									iv.setLayoutParams(layoutParams);
 
 									// 图片的下载
