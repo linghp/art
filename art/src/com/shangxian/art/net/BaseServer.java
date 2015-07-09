@@ -135,6 +135,9 @@ public class BaseServer {
 	
 	protected static final String NET_BENQIJIESUAN = HOST + "lhb/timeSettlementdjs/";//本期结算
 	protected static final String NET_DINGSHIJIESUAN = HOST + "lhb/timeSettlementEveryOne/";//定时结算
+	protected static final String NET_JINJIJIESUAN = HOST + "clear/emergencyTimeSettlementCurent";//紧急结算
+	protected static final String NET_CHEXIAOJIESUAN = HOST + "clear/emergencyTimeSettlementCancell/";//撤销结算
+	protected static final String NET_SHENGQINGJIESUAN = HOST + "clear/emergencyTimeSettlementSave/";//申请结算
 	/**
 	 * 
 	 * ----------------------------------------------------------------

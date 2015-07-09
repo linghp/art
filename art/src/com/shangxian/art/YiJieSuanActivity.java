@@ -47,7 +47,7 @@ public class YiJieSuanActivity extends BaseActivity{
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

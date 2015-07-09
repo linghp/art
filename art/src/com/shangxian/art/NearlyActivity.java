@@ -42,6 +42,7 @@ import com.shangxian.art.adapter.NearlyAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.base.MyApplication;
 import com.shangxian.art.bean.ListCarStoreBean;
+import com.shangxian.art.bean.NearlyShopInfo;
 import com.shangxian.art.bean.NearlyShopStat;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpUtils;
@@ -77,7 +78,7 @@ public class NearlyActivity extends BaseActivity implements
 	private LatLng ll;
 
 	private TextView tv_reload;
-
+	
 	public static boolean isMainClick;
 
 	@Override
@@ -123,7 +124,8 @@ public class NearlyActivity extends BaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
+				System.out.println(">>>>>>>>附近："+ stat.getContents().get(position).getShopId());
+				ShopsActivity.startThisActivity(stat.getContents().get(position).getShopId(), NearlyActivity.this);
 			}
 		});
 			refreshTask();

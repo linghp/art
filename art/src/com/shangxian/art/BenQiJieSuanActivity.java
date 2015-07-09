@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ab.http.AbHttpClient;
@@ -31,6 +32,7 @@ public class BenQiJieSuanActivity extends BaseActivity{
 
 	private TextView tv_parice,tv_remainder,tv_time,tv_type;
 	private BenQiJieSuanModel model;
+	private View loading_big;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -53,6 +55,7 @@ public class BenQiJieSuanActivity extends BaseActivity{
 		tv_remainder = (TextView) findViewById(R.id.benqijiesuan_parice);//账户余额
 		tv_time = (TextView) findViewById(R.id.benqijiesuan_time);//结算时间
 		tv_type = (TextView) findViewById(R.id.benqijiesuan_type);//结算类型
+//		loading_big=findViewById(R.id.loading_big);
 	}
 
 	private void initData() {
@@ -68,11 +71,14 @@ public class BenQiJieSuanActivity extends BaseActivity{
 	}
 
 	private void refreshTask(String shopid) {
+//		loading_big.setVisibility(View.GONE);
 		ShopsServer.toBenQiJieSuan(shopid, new CallBack() {
 
 			@Override
 			public void onSimpleSuccess(Object res) {
+				
 				MyLogger.i("本期结算数据："+res);
+				System.out.println("本期结算数据："+res);
 				if (res != null) {
 					try {
 						Gson gson = new Gson();
