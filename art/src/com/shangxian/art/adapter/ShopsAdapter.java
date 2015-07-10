@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
 import com.ab.util.AbToastUtil;
+import com.shangxian.art.CommodityContentActivity;
 import com.shangxian.art.HomeActivity;
 import com.shangxian.art.R;
+import com.shangxian.art.ShopsActivity;
 import com.shangxian.art.bean.ProductDto;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.CommonUtil;
@@ -78,8 +80,7 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			holder.price.setText("¥"+CommonUtil.priceConversion(getListData().get(position * 2).getPrice()));//金额
 		if (!TextUtils.isEmpty(getListData().get(position * 2).getName()))
 			holder.title.setText(getListData().get(position * 2).getName());//name
-		//		holder.ll_first.setOnClickListener(new OnClick(getListData().get(position * 2)
-		//				.getId()));//左边的点击
+				holder.ll_first.setOnClickListener(new OnClick(position * 2));//左边的点击
 		if (getListData().size() > (position * 2 + 1)) {
 			holder.ll_second.setVisibility(View.VISIBLE);
 
@@ -91,8 +92,7 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			if (!TextUtils.isEmpty(getListData().get(position * 2 + 1).getName()))
 				holder.title1.setText(getListData().get(position * 2 + 1)
 						.getName());
-			//			holder.ll_second.setOnClickListener(new OnClick(getListData().get(
-			//					position * 2 + 1).getId()));
+						holder.ll_second.setOnClickListener(new OnClick(position*2+1));
 		} else {
 			holder.ll_second.setVisibility(View.INVISIBLE);
 		}
@@ -119,7 +119,13 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 			// bundle.putInt("id", id);
 			// CommonUtil.gotoActivityWithData(Global.mContext, ??.class,
 			// bundle, false);
-			AbToastUtil.showToast(mContext, "再点我一下"+mContext+">>"+id);
+//			AbToastUtil.showToast(mContext, "再点我一下"+mContext+">>"+id);
+			//热销商品
+
+				MyLogger.i(">>>>>>>>>热销商品："+getListData().get(id).getProductId()); 
+				String productId = getListData().get(id).getProductId();
+				CommodityContentActivity.startThisActivity(productId, mContext);
+			
 		}
 
 	}

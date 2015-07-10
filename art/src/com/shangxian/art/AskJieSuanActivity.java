@@ -30,6 +30,7 @@ public class AskJieSuanActivity extends BaseActivity{
 	private EditText et_name,et_phone,et_num,et_price,et_content;
 	private TextView huoqu,time,quxiao,baocun;
 	private String name,phone,num,price,content,date;
+	private boolean isokey = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -65,14 +66,21 @@ public class AskJieSuanActivity extends BaseActivity{
 	private void upDataView() {
 		if ("".equals(name)) {
 			myToast("请输入申请人姓名");
+			isokey = false;
 		}else if ("".equals(phone)) {
 			myToast("请输入申请人手机");
+			isokey = false;
 		}else if ("".equals(price)) {
 			myToast("请输入申请金额");
+			isokey = false;
 		}else if ("".equals(content)) {
 			myToast("请输入情况说明");
+			isokey = false;
 		}else if ("".equals(date)) {
 			myToast("请输入日期");
+			isokey = false;
+		}else {
+			isokey = true;
 		}
 	}
 	private void initData() {
@@ -135,17 +143,19 @@ public class AskJieSuanActivity extends BaseActivity{
 				content = et_content.getText().toString().trim();
 				date = time.getText().toString().trim();
 				upDataView();
-				
-//				CommonUtil.gotoActivity(AskJieSuanActivity.this, YiJieSuanActivity.class, false);
-				ShopsServer.toShenQingJieSuan(date, name, phone, price, content, new OnHttpShengQingJieSuanListener() {
-					@Override
-					public void onHttpShengQingJieSuan(String res) {
-						myToast(res);
-						if ("申请成功".equals(res)) {
-							finish();
+				if (isokey) {
+					ShopsServer.toShenQingJieSuan(date, name, phone, price, content, new OnHttpShengQingJieSuanListener() {
+						@Override
+						public void onHttpShengQingJieSuan(String res) {
+							myToast(res);
+							if ("申请成功".equals(res)) {
+								finish();
+							}
 						}
-					}
-				});
+					});
+				}
+//				CommonUtil.gotoActivity(AskJieSuanActivity.this, YiJieSuanActivity.class, false);
+				
 			}
 		});
 

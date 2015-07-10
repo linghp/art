@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.BenQiJieSuanModel;
 import com.shangxian.art.bean.JinJiJieSuanModel;
+import com.shangxian.art.bean.ShengQingJieSuanModel;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.ShopsServer;
 import com.shangxian.art.utils.CommonUtil;
@@ -109,7 +110,11 @@ public class JinJiJieSuanActivity extends BaseActivity{
 										public void onSimpleSuccess(Object res) {
 											System.out.println("撤销结算数据："+res);
 											myToast("撤销成功");
-											
+											topView.hideRightBtn();//隐藏右按钮
+											shenqing.setText("申请紧急结算");
+											shenqing.setVisibility(View.VISIBLE);
+											findViewById(R.id.yisheniqng_linear2).setVisibility(View.VISIBLE);
+											findViewById(R.id.yisheniqng_linear).setVisibility(View.GONE);
 										}
 										
 										@Override

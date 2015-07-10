@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -69,7 +70,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 
 	private ImageView call, next, shopsimg,img_dingwei;
 	private ImageView commoditycontent_shoucang;
-	private TextView commoditycontent_jieshao, commoditycontent_jiage,address, guige, dianpu,tt_dianhua;
+	private TextView commoditycontent_jieshao, commoditycontent_jiage,commoditycontent_jiage1,address, guige, dianpu,tt_dianhua;
 	private View rl_footer;
 	//	private TextView tv_first, tv_second;
 	//	private ImageView img_first, img_second;
@@ -85,7 +86,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 	private AbImageLoader mAbImageLoader;
 
 	RatingBar ratingbar;
-	float rating = 0;
+	float rating = 5; 
 
 	// private StarRatingView ratingbar;
 
@@ -219,6 +220,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 			@Override
 			public void onResponse(String content) {
 				MyLogger.i("商品详情数据:"+content);
+				System.out.println("商品详情数据:"+content);
 				if (!TextUtils.isEmpty(content)) {
 					Gson gson = new Gson();
 					try {
@@ -303,6 +305,10 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		commoditycontent_jieshao.setText(model.getName().toString().trim());
 		commoditycontent_jiage.setText("￥"
 				+ CommonUtil.priceConversion(model.getPromotionPrice()));
+		if (model.getOriginalPrice() > model.getPromotionPrice()) {
+			commoditycontent_jiage1.setText("￥"
+					+ CommonUtil.priceConversion(model.getOriginalPrice()));
+		}
 		//		 guige.setText(model.getSpecs().get("房间"));//规格
 		dianpu.setText(model.getShopName());
 		address.setText(model.getShopAddress());// 地址
@@ -350,7 +356,8 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 		commoditycontent_shoucang = (ImageView) findViewById(R.id.commoditycontent_shoucang);
 		commoditycontent_jieshao = (TextView) findViewById(R.id.commoditycontent_jieshao);
 		commoditycontent_jiage = (TextView) findViewById(R.id.commoditycontent_jiage);
-
+		commoditycontent_jiage1 = (TextView) findViewById(R.id.commoditycontent_jiage1);
+		commoditycontent_jiage1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		ratingbar = (RatingBar) findViewById(R.id.commoditycontent_starRating);
 
 		guige = (TextView) findViewById(R.id.commoditycontent_guige);

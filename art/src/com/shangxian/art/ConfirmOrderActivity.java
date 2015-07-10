@@ -139,6 +139,18 @@ public class ConfirmOrderActivity extends BaseActivity implements
 			public void onHttpAddress(List<DeliveryAddressModel> list) {
 				if (list != null) {
 					for (int i = 0; i < list.size(); i++) {
+						if (list.size() == 1) {
+							tv_noaddress.setVisibility(View.GONE);
+							deliveryAddressId = list.get(0).getId();
+							((TextView) findViewById(R.id.tv_receiver)).setText(String
+									.format(getString(R.string.text_receiver),
+											list.get(0).getReceiverName()));
+							((TextView) findViewById(R.id.tv_address)).setText(String
+									.format(getString(R.string.text_receiver_address),
+											list.get(0).getDeliveryAddress()));
+							((TextView) findViewById(R.id.tv_phone))
+									.setText(list.get(0).getReceiverTel());
+						}
 						if (list.get(i).get_default() == true) {
 							tv_noaddress.setVisibility(View.GONE);
 							deliveryAddressId = list.get(i).getId();

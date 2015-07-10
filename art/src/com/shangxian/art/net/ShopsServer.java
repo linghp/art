@@ -67,12 +67,13 @@ public class ShopsServer extends BaseServer{
 		ShengQingJieSuanModel shengQingModel = new ShengQingJieSuanModel();
 		shengQingModel.setPersoname(name);
 		shengQingModel.setPhoneNum(phone);
-		shengQingModel.setAmount(price);
+		shengQingModel.setAmount((Integer.valueOf(price)*100)+"");
 		shengQingModel.setRemarks(content);
 		Gson gson = new Gson();
 		String json = gson.toJson(shengQingModel);
 		System.out.println("申请结算url：" + NET_SHENGQINGJIESUAN+date+"传入json数据："+json);
-		toPostJson(NET_CHEXIAOJIESUAN+date, json, new OnHttpListener() {
+//		System.out.println("申请结算url：" + NET_SHENGQINGJIESUAN+date+"传入json数据："+shengQingModel);
+		toPostJson(NET_SHENGQINGJIESUAN+date, json, new OnHttpListener() {
 			
 			@Override
 			public void onHttp(String res) {
