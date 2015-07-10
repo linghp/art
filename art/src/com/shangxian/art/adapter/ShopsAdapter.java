@@ -84,7 +84,6 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 		//		holder.ll_first.setOnClickListener(new OnClick(getListData().get(position * 2)
 		//				.getId()));//左边的点击
 		holder.ll_first.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				String productId = getListData().get(position * 2).getProductId();
@@ -103,7 +102,6 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 				holder.title1.setText(getListData().get(position * 2 + 1)
 						.getName());
 			holder.ll_second.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
 					String productId = getListData().get(position * 2+1).getProductId();
