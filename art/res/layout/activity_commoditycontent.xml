@@ -110,7 +110,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginRight="40dp"
-                        android:text="新鲜菠萝/葡萄/香"
                         android:textColor="@color/txt_black"
                         android:textSize="@dimen/list_summary_size" />
 
@@ -120,8 +119,16 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/commoditycontent_jieshao"
                         android:layout_marginTop="5dp"
-                        android:text="￥320"
                         android:textColor="@color/red300"
+                        android:textSize="@dimen/list_price_size" />
+                    <TextView
+                        android:id="@+id/commoditycontent_jiage1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/commoditycontent_jieshao"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/commoditycontent_jiage"
+                        android:textColor="@color/txt_black2"
                         android:textSize="@dimen/list_price_size" />
                 </RelativeLayout>
 
@@ -236,7 +243,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="新鲜果水果专卖店"
                             android:textColor="@color/txt_black"
                             android:textSize="@dimen/list_summary_size" />
 
@@ -267,7 +273,7 @@
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
                                     android:layout_marginLeft="5dp"
-                                    android:text="重庆市沙坪坝区沙中路11号2楼3单元5栋7户8门" />
+                                     />
                             </LinearLayout>
 
                             <LinearLayout
@@ -290,7 +296,7 @@
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
                                     android:layout_marginLeft="5dp"
-                                    android:text="023-45879542" />
+                                     />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

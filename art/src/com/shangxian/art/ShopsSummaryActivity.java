@@ -165,7 +165,7 @@ public class ShopsSummaryActivity extends BaseActivity{
 								}
 								guanzu.setText(noticeCount+"人关注");//关注
 								zhanggui.setText(model.getOwner());//掌柜
-								if (model.getPhoneNumbers() != null) {
+								if (model.getPhoneNumbers().get(0) != null) {
 									phone.setText(model.getPhoneNumbers().get(0)+"");//电话
 								}
 								if (model.getAddress() != null) {

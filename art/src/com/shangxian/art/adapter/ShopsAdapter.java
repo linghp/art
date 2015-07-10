@@ -122,24 +122,7 @@ public class ShopsAdapter extends AdapterBase<ProductDto>{
 		// TODO Auto-generated method stub
 
 	}
-	private class OnClick implements OnClickListener {
-
-		int id;
-
-		public OnClick(int id) {
-			this.id = id;
-		}
-
-		@Override
-		public void onClick(View v) {
-			// Bundle bundle = new Bundle();
-			// bundle.putInt("id", id);
-			// CommonUtil.gotoActivityWithData(Global.mContext, ??.class,
-			// bundle, false);
-			AbToastUtil.showToast(mContext, "再点我一下"+mContext+">>"+id);
-		}
-
-	}
+	
 	@Override
 	public int getCount() {
 		BigDecimal bigDecimal = new BigDecimal(getListData().size() / 2).setScale(0,
