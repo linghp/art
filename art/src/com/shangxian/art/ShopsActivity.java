@@ -284,20 +284,20 @@ public class ShopsActivity extends BaseActivity implements OnClickListener {
 	private void initListener() {
 		// TODO Auto-generated method stub
 
-		mGridView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override 
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				//热销商品
-				if (position != 0) {
-					MyLogger.i(">>>>>>>>>热销商品："+model.getProductDtos().get(position-1).getProductId()); 
-					String productId = model.getProductDtos().get(position-1).getProductId();
-					CommodityContentActivity.startThisActivity(productId, ShopsActivity.this);
-				}
-
-			} 
-		});
+//		mGridView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override 
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				//热销商品
+//				if (position != 0) {
+//					MyLogger.i(">>>>>>>>>热销商品："+model.getProductDtos().get(position-1).getProductId()); 
+//					String productId = model.getProductDtos().get(position-1).getProductId();
+//					CommodityContentActivity.startThisActivity(productId, ShopsActivity.this);
+//				}
+//
+//			} 
+//		});
 
 		/*
 		 * mGridView.setOnCellClickListener(new OnCellClickListener() {
