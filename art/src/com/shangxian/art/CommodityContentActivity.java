@@ -258,7 +258,7 @@ OnClickListener, HttpCilentListener, GoodsDialogConfirmListener ,GoodsDialogConf
 												PhotoViewPagerActivity.startThisActivity(CommodityContentActivity.this, imgList,position);
 										}
 									});
-									iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+									iv.setScaleType(ImageView.ScaleType.FIT_XY);
 									LayoutParams layoutParams = viewPager
 											.getLayoutParams();
 									layoutParams.width = CommonUtil

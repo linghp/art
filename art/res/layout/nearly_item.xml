@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/itemsImage"
         android:layout_width="120dip"
-        android:layout_height="100dip"
+        android:layout_height="120dip"
         android:layout_centerVertical="true"
         android:gravity="center" >
 
