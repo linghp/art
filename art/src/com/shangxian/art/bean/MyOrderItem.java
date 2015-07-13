@@ -23,7 +23,7 @@ public class MyOrderItem implements Serializable {
 	@Expose
 	public String shopId="";
 	@Expose
-	private String shopName;
+	private String shopName="";
 	@Expose
 	private String shopLogo;
 	@Expose
