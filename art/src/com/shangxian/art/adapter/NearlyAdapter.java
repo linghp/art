@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.shangxian.art.HomeActivity;
 import com.shangxian.art.LocationActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.bean.NearlyShopInfo;
@@ -64,6 +66,15 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 			convertView = inflater();
 			holder = new ViewHolder();
 			holder.icon = (ImageView) convertView.findViewById(R.id.itemsIcon);
+			holder.icon.setScaleType(ImageView.ScaleType.FIT_XY);
+			LayoutParams layoutParams = holder.icon
+					.getLayoutParams();
+			layoutParams.width = (CommonUtil
+					.getScreenWidth(mAc) - CommonUtil
+					.dip2px(mAc,10));
+			layoutParams.height = layoutParams.width;
+			holder.icon.setLayoutParams(layoutParams);
+			
 			holder.title = (TextView) convertView.findViewById(R.id.itemsTitle);
 			holder.context = (TextView) convertView.findViewById(R.id.itemsText);
 			holder.distance = (TextView) convertView.findViewById(R.id.items_bottom);
