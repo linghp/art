@@ -33,7 +33,7 @@
                 android:id="@+id/shops_shopsimg"
                 android:layout_width="81dp"
                 android:layout_height="36dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/image_empty" />
 
             <LinearLayout
