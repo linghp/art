@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="新鲜水果全国包邮"
             android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_summary_size" />
 
@@ -73,7 +72,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="新鲜水果全国包邮"
             android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_summary_size" />
 

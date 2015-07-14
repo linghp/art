@@ -41,7 +41,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="农夫果园水果专卖店"
             android:textColor="@color/black"
             android:textSize="@dimen/list_title_size"
             android:textStyle="bold" />
@@ -53,7 +52,6 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="农夫果园水果专卖店，专卖各种水果，欢迎来选购"
             android:textSize="@dimen/list_summary_size" />
 
         <TextView
@@ -64,7 +62,7 @@
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/distance"
             android:gravity="right"
-            android:text="距离我：50m"
+            android:text="距离我："
             android:textColor="@color/black"
             android:textSize="@dimen/list_summary_size" />
     </LinearLayout>

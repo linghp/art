@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="新鲜菠萝\葡萄\香蕉\苹果果篮特价出售"
             android:textSize="@dimen/list_summary_size" />
 
         <TextView
@@ -32,7 +31,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="新鲜水果上市，欢迎选购"
             android:textColor="@color/txt_black2"
             android:textSize="@dimen/list_min_size" />
 
