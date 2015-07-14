@@ -152,7 +152,7 @@ public class MyOrderServer extends BaseServer {
 				new OnHttpListener() {
 					@Override
 					public void onHttp(String res) {
-						// MyLogger.i(res);
+						MyLogger.i(res);
 						if (l != null) {
 							if (TextUtils.isEmpty(res)) {
 								l.onHttpResultOrderDetails(null, null);

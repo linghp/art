@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/image_loading" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/image_loading" />
 
         <TextView

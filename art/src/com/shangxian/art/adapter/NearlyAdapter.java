@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -67,13 +68,12 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 			holder = new ViewHolder();
 			holder.icon = (ImageView) convertView.findViewById(R.id.itemsIcon);
 			holder.icon.setScaleType(ImageView.ScaleType.FIT_XY);
-			LayoutParams layoutParams = holder.icon
-					.getLayoutParams();
-			layoutParams.width = (CommonUtil
-					.getScreenWidth(mAc) - CommonUtil
-					.dip2px(mAc,10));
-			layoutParams.height = layoutParams.width;
-			holder.icon.setLayoutParams(layoutParams);
+//			LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+//			layoutParams.width = (CommonUtil
+//					.getScreenWidth(mAc) - CommonUtil
+//					.dip2px(mAc,10));
+//			layoutParams.height = layoutParams.width;
+//			holder.icon.setLayoutParams(layoutParams);
 			
 			holder.title = (TextView) convertView.findViewById(R.id.itemsTitle);
 			holder.context = (TextView) convertView.findViewById(R.id.itemsText);

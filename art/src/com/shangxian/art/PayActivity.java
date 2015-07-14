@@ -58,6 +58,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	private boolean isYin = false;
 	private CheckBox cb_zhi;
 	private CheckBox cb_yin;
+	private View payl_ll_zhi;
 	AccountSumInfo mAccount;
 	private LinearLayout ll_money;
 	private LinearLayout ll_scan;
@@ -165,17 +166,26 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		price_str=price_temp;
 		}
 		productName=getIntent().getStringExtra("productName");
-		if (price != 0) {
+//		if (price != 0) {
+//			isOrder = true;
+//			orderids = (List<String>) getIntent().getSerializableExtra(
+//					"orderids");
+//			if (orderids != null) {
+//				MyLogger.i(orderids.toString());
+//			}
+//		} else {
+//			isOrder = false;
+//		}
+		storeId=getIntent().getStringExtra("storeId");
+		if(!TextUtils.isEmpty(storeId)){
+			isOrder = false;
+		}else{
 			isOrder = true;
-			orderids = (List<String>) getIntent().getSerializableExtra(
-					"orderids");
+			orderids = (List<String>) getIntent().getSerializableExtra("orderids");
 			if (orderids != null) {
 				MyLogger.i(orderids.toString());
 			}
-		} else {
-			isOrder = false;
 		}
-		storeId=getIntent().getStringExtra("storeId");
 	}
 
 	private void initViews() {
@@ -189,6 +199,10 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 
 		cb_zhi = (CheckBox) findViewById(R.id.payc_cb_zhi);
 		cb_yin = (CheckBox) findViewById(R.id.payc_cb_yin);
+		payl_ll_zhi=findViewById(R.id.payl_ll_zhi);
+		if(isOrder&&price==0){
+			payl_ll_zhi.setClickable(false);
+		}
 
 		ll_money = (LinearLayout) findViewById(R.id.payl_ll_money);
 		ll_scan = (LinearLayout) findViewById(R.id.payl_ll_scan);
@@ -367,12 +381,12 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 		case R.id.payt_tv_ok:
 			// myToast("确定");
 			if (isPayed(true)) {//设置支付密码
-				if(price>=0.01){
+				if(price>=0){
 //					if(price_str.startsWith("0")){
 //					}
 				    okToPay();
 				}else{
-					myToast("支付金额错误");
+					myToast("支付金额格式错误");
 				}
 			}
 			break;
@@ -449,7 +463,12 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 										myToast("支付成功");
 										finish();
 									}
-
+									
+									@Override
+									public void onDetailFailure(String msg) {
+										myToast(msg);
+									};
+									
 									@Override
 									public void onSimpleFailure(int code) {
 										myToast("支付失败");
@@ -490,7 +509,7 @@ public class PayActivity extends BaseActivity implements OnPayNoticeListener{
 	}
 	
 	private boolean match() {
-		if (price == 0) {
+		if (price == 0&&!isOrder) {
 			myToast("请输入支付金额");
 			return false;
 		}else if (isZhi) {

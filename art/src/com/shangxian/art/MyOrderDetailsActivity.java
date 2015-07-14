@@ -126,7 +126,9 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 			myOrderItem.setTotalPrice(myOrderDetailBean.getTotalPrice());
 			myOrderItem.setStatus(myOrderDetailBean.getStatus());
 			myOrderItem.setStatus(myOrderDetailBean.getStatus());
+			if(myOrderDetailBean.getOrderItems()!=null&&myOrderDetailBean.getOrderItems().size()>0){
 			myOrderItem.setShopName(myOrderDetailBean.getOrderItems().get(0).getName());
+			}
 			updateViews();
 		}else if(commonBean!=null){
 			myToast(commonBean.getResult());
