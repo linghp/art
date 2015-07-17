@@ -71,15 +71,18 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		intent.putExtra("isDirectPay", true);
 		((Activity)context).startActivityForResult(intent, 1);
 	}
-	public static void startThisActivity_MyOrder(String ordernumber, Context context,Fragment fragment) {
+	public static void startThisActivity_MyOrder(String ordernumber,String shopLogo,String shopName, Context context,Fragment fragment) {
 		Intent intent = new Intent(context, MyOrderDetailsActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
+		intent.putExtra("Logo", shopLogo);
+		intent.putExtra("Name", shopName);
 		fragment.startActivityForResult(intent, 1);
 	}
 
 	private void initData() {
 		String ordernumber=  getIntent().getStringExtra(INTENTDATAKEY);
+		
 		isDirectPay=getIntent().getBooleanExtra("isDirectPay", false);
 		if(!TextUtils.isEmpty(ordernumber)){
 			myOrderItem=new MyOrderItem();
@@ -150,11 +153,12 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 		((TextView)findViewById(R.id.tv_ordernumber)).setText(String.format(getString(R.string.text_ordernumber), myOrderDetailBean.getOrderNumber()));
 		((TextView)findViewById(R.id.tv_nhbnumber)).setText(String.format(getString(R.string.text_nhbnumber), myOrderDetailBean.getOrderId()));
 		((TextView)findViewById(R.id.tv_tradetime)).setText(String.format(getString(R.string.text_tradetime), myOrderDetailBean.getOrderedDate()));
-		
+		System.out.println(">>>>>>>>>图标："+getIntent().getStringExtra("Logo")+"名字："+getIntent().getStringExtra("Name"));
+		mAbImageLoader_logo.display(iv_logo,Constant.BASEURL + getIntent().getStringExtra("Logo"));
+		tv_storeName.setText(""+getIntent().getStringExtra("Name"));
+        
 		//动态添加商品
-		((TextView)findViewById(R.id.car_storename)).setText(myOrderDetailBean.getSellerName());
-//        mAbImageLoader_logo.display(holder.iv_logo,Constant.BASEURL
-//				+ myOrderItem.getShopLogo());
+		//((TextView)findViewById(R.id.car_storename)).setText(myOrderDetailBean.getSellerName());
 		String[] orderState=MyOrderActivity.orderState;
 		String[] orderReturnStatus=MyOrderActivity.orderReturnStatus;
 		ll_goodsitem_add.removeAllViews();

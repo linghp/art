@@ -270,7 +270,7 @@ public class MyOrder_All_Fragment extends BaseFragment implements
 		// myOrderItem.getOrderNumber());
 		// startActivityForResult(intent, 1);
 		MyOrderDetailsActivity.startThisActivity_MyOrder(
-				myOrderItem.getOrderNumber(), getActivity(), this);
+				myOrderItem.getOrderNumber(),myOrderItem.getShopLogo(),myOrderItem.getShopName(), getActivity(), this);
 	}
 
 	@Override

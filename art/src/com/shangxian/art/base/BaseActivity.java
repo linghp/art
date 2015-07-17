@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
@@ -284,5 +285,18 @@ public class BaseActivity extends AbActivity{
     protected String getshopId(){
     	curUserInfo = share.getUser();
     	return curUserInfo.getShopId();
+    }
+    
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+    	// TODO Auto-generated method stub
+    	super.onPause();
+    	JPushInterface.onPause(this);
     }
 }
