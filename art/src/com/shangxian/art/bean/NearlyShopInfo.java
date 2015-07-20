@@ -21,67 +21,78 @@ public class NearlyShopInfo implements Serializable {
 
 	@Expose
 	private String title;
-	
+
 	@Expose
 	private List<String> location = new ArrayList<String>();
 	
 	@Expose
-	private String city;
+	private String logo;
 	
+	@Expose
+	private String city;
+
 	@SerializedName("create_time")
 	@Expose
 	private String createTime;
-	
+
 	@SerializedName("geotable_id")
 	@Expose
 	private String geotableId;
-	
+
 	@Expose
 	private String address;
-	
+
 	@Expose
 	private String tags;
-	
+
 	@Expose
 	private String province;
-	
+
 	@Expose
 	private String serviceDesc;
-	
+
 	@Expose
 	private String officeTel;
-	
+
 	@Expose
 	private String mobile;
-	
+
 	@Expose
 	private String shopName;
-	
+
 	@Expose
 	private Integer uid;
-	
+
 	@Expose
 	private String id;
-	
+
 	@SerializedName("coord_type")
 	@Expose
 	private String coordType;
-	
+
 	@Expose
 	private String type;
-	
+
 	@Expose
 	private String distance;
-	
+
 	@Expose
 	private String weight;
-	
+
 	@Expose
 	private String shopId;
-	
+
 	@Expose
 	private String indexLogo;
-	
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -101,7 +112,7 @@ public class NearlyShopInfo implements Serializable {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * 获取纬度
 	 * @return
@@ -113,7 +124,7 @@ public class NearlyShopInfo implements Serializable {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * 获取经纬度
 	 * @return

@@ -35,6 +35,7 @@ public class NearlyServer extends BaseServer {
 						try {
 							String res = getRes(result.result);
 							MyLogger.i(res);
+							System.out.println(">>>>>>>>>>附近数据："+res);
 							Type type = new TypeToken<NearlyShopStat>(){}.getType();
 							NearlyShopStat stat = gson.fromJson(res, type);
 							l.onNearly(stat);

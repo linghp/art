@@ -86,7 +86,7 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 		holder.title.setText(info.getTitle());
 		holder.context.setText(info.getServiceDesc());
 		holder.distance.setText("距离我:" + info.getDistance() + "米");
-		ImageLoader.getInstance().displayImage(Constant.BASEURL  + info.getIndexLogo(), holder.icon, options);		
+		ImageLoader.getInstance().displayImage(Constant.BASEURL  + info.getLogo(), holder.icon, options);		
 		holder.distance.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
