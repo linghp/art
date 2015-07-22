@@ -107,7 +107,14 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			findViewById(R.id.ll_seller).setVisibility(View.VISIBLE);
 			tv_username = (TextView) findViewById(R.id.tv_username);
 			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
-		}else {//未登录
+		}else if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 3) {//操作员
+			ll_loginbefore.setVisibility(View.GONE);
+			ll_loginafter.setVisibility(View.VISIBLE);
+			findViewById(R.id.ll_seller).setVisibility(View.VISIBLE);
+			tv_username = (TextView) findViewById(R.id.tv_username);
+			tv_username.setText(share.getString(Constant.PRE_USER_NICKNAME, ""));
+		}
+		else {//未登录
 			ll_loginbefore.setVisibility(View.VISIBLE);
 			ll_loginafter.setVisibility(View.GONE);
 		}
@@ -187,18 +194,27 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 					SellerOrderManageActivity.class, false);
 			break;
 		case R.id.ll_tab3:
-			// 商铺管理
-			Bundle bundle1 = new Bundle();
-			bundle1.putBoolean("isshangpu", true);
-			CommonUtil.gotoActivityWithData(MineActivity.this,
-					MerchandiseControlActivity.class, bundle1, false);
+			if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0) == 3) {
+				myToast("对不起，操作员没有该权限");
+			}else {
+				// 商铺管理
+				Bundle bundle1 = new Bundle();
+				bundle1.putBoolean("isshangpu", true);
+				CommonUtil.gotoActivityWithData(MineActivity.this,
+						MerchandiseControlActivity.class, bundle1, false);
+			}
+			
 			break;
 		case R.id.ll_tab4:
+			if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0) == 3) {
+				myToast("对不起，操作员没有该权限");
+			}else {
 			// 结算中心224592
 			Bundle bundle = new Bundle();
 			bundle.putBoolean("isjiesuan", true);
 			CommonUtil.gotoActivityWithData(MineActivity.this,
 					MerchandiseControlActivity.class, bundle, false);
+			}
 			break;
 		case R.id.ll_my_item1:
 			// 我的订单
@@ -207,7 +223,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.ll_my_item2:
-			// 爱农卡
+			// 我的钱包
 			if (isLoginAndToLogin())
 				startActivity(new Intent(this, NongHeBaoActivity.class));
 			break;

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.multipart.MultipartEntity;
@@ -19,11 +20,18 @@ import com.shangxian.art.net.ShopOperatorServer.OnHttpResultAddOperatorListener;
 import com.shangxian.art.net.ShopOperatorServer.OnHttpResultDeleteOperatorListener;
 import com.shangxian.art.view.TopView;
 
+/**
+ * 操作员管理详情
+ * @author Administrator
+ *
+ */
 public class OperatorDetailsActivity extends BaseActivity implements OnClickListener,OnHttpResultAddOperatorListener,OnHttpResultDeleteOperatorListener{
 
 	private EditText et_user,et_name,et_id,et_num,et_pwd;
 	private ShopOperatorBean shopOperatorBean;
 	private String user,name,id,num,pwd;
+	private String ismessage = "false";
+	private TextView tv_false,tv_true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -31,10 +39,10 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		setContentView(R.layout.activity_operatordetails);
 		initView();
 		initData();
-		//initListener();
+		initListener();
 		//requestTask();
 	}
-	
+
 	public static void startThisActivity(Activity context, ShopOperatorBean shopOperatorBean) {
 		Intent intent = new Intent(context,
 				OperatorDetailsActivity.class);
@@ -50,15 +58,17 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
 		topView.setTitle(getString(R.string.title_operatordetails));
-		
+
 		et_user = (EditText) findViewById(R.id.operatordetails_tv1);
 		et_name = (EditText) findViewById(R.id.operatordetails_tv2);
 		et_id = (EditText) findViewById(R.id.operatordetails_tv3);
 		et_num = (EditText) findViewById(R.id.operatordetails_tv4);
 		et_pwd = (EditText) findViewById(R.id.operatordetails_tv5);
-//		tv_role = (TextView) findViewById(R.id.operatordetails_tv5);//定义角色
-//		tv_purview = (TextView) findViewById(R.id.operatordetails_tv6);//权限
-		
+		tv_false = (TextView) findViewById(R.id.addsubclass_tv1);
+		tv_true = (TextView) findViewById(R.id.addsubclass_tv2);
+		//		tv_role = (TextView) findViewById(R.id.operatordetails_tv5);//定义角色
+		//		tv_purview = (TextView) findViewById(R.id.operatordetails_tv6);//权限
+
 	}
 
 	private void initData() {
@@ -76,13 +86,40 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		et_pwd.setText(shopOperatorBean.getPassword());
 	}
 
-//	private void initListener() {
-//		
-//		
-//	}
+	private void initListener() {
+		tv_false.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 否
+				tv_false.setBackgroundResource(R.drawable.leftcorner_green);
+				tv_false.setTextColor(getResources().getColor(R.color.txt_white));
+				tv_true.setBackgroundResource(R.drawable.rightcorner);
+				tv_true.setTextColor(getResources().getColor(R.color.txt_green));
+				//				ismessage = false;
+				ismessage = "false";
+
+			}
+		});
+		tv_true.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				//是
+				tv_false.setBackgroundResource(R.drawable.leftcorner);
+				tv_false.setTextColor(getResources().getColor(R.color.txt_green));
+				tv_true.setBackgroundResource(R.drawable.rightcorner_green);
+				tv_true.setTextColor(getResources().getColor(R.color.txt_white));
+				//				ismessage = true;
+				ismessage = "true";
+			}
+		});
+
+	}
 
 	@Override
 	public void onClick(View v) {
+
 		switch (v.getId()) {
 		case R.id.tv_cancel:
 			if(shopOperatorBean!=null){
@@ -115,8 +152,9 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		default:
 			break;
 		}
+
 	}
-	
+
 	private boolean match() {
 		if(TextUtils.isEmpty(user)){
 			myToast("用户名不能为空");
@@ -136,7 +174,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onHttpResultAddOperator(String str) {
 		showProgressDialog(false);

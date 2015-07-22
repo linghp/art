@@ -105,18 +105,24 @@ OnHeaderRefreshListener, OnFooterLoadListener{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				MyLogger.i("退款订单》》》》》》》》"+buyerReturnOrderStat.getData().get(position).getBuyerId());
+				MyLogger.i("退款订单》》》》》》》》"+buyerReturnOrderStat.getData().size());
 //				 Bundle bundle = new Bundle();
 //				 bundle.putString("time", buyerReturnOrderStat.getData().get(position).getReturnOrderTime());
 //				 CommonUtil.gotoActivityWithData(BuyerReturnOrderFragment.this, ReturnOrderDetailsActivity.class, bundle, false);
-			ReturnOrderDetailsActivity.startThisActivity(buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款时间
-					, buyerReturnOrderStat.getData().get(position).getStatus()//退款状态
-					, buyerReturnOrderStat.getData().get(position).getOrderStatus()//货物状态
-					, buyerReturnOrderStat.getData().get(position).getIsGoods()//是否需要退还货物
-					, "¥"+CommonUtil.priceConversion(buyerReturnOrderStat.getData().get(position).getTotalPrice())//退还金额
-					, buyerReturnOrderStat.getData().get(position).getReturnReason()//退款原因
-					, buyerReturnOrderStat.getData().get(position).getBuyerMessege()//退款说明
-					, getActivity());
+			if (buyerReturnOrderStat.getData().get(position).getReturnOrderItemDtos().size() != 0) {
+				ReturnOrderDetailsActivity.startThisActivity(buyerReturnOrderStat.getData().get(position).getReturnOrderTime()//退款时间
+						, buyerReturnOrderStat.getData().get(position).getStatus()//退款状态
+						, buyerReturnOrderStat.getData().get(position).getOrderStatus()//货物状态
+						, buyerReturnOrderStat.getData().get(position).getIsGoods()//是否需要退还货物
+						, "¥"+CommonUtil.priceConversion(buyerReturnOrderStat.getData().get(position).getTotalPrice())//退还金额
+						, buyerReturnOrderStat.getData().get(position).getReturnReason()//退款原因
+						, buyerReturnOrderStat.getData().get(position).getBuyerMessege()//退款说明
+						, getActivity());
+			}else {
+				CommonUtil.toast("查询失败，请稍后再试");
+			}
+			
+				
 			MyLogger.i("退款订单》》》》》》》》"+buyerReturnOrderStat.getData().get(position).getReturnOrderTime());
 			}
 		});

@@ -111,7 +111,7 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 	public SellerRefundOrder_All_Fragment(Activity activity,String status) {
 		super();
 		this.status = status;
-		myOrderListAdapter = new SellerRefoundOrderAdapter(activity,this,
+		myOrderListAdapter = new SellerRefoundOrderAdapter(activity,
 				R.layout.list_myorder_item, alls);
 	}
 
@@ -165,6 +165,8 @@ public class SellerRefundOrder_All_Fragment extends BaseFragment implements
 		SellerOrderServer.toGetSellerReturnOrder(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				System.out.println(">>>>>>退货订单数据："+res.toString());
+				
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 				alls.clear();
 				if (res != null) {

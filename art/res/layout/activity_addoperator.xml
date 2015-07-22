@@ -179,6 +179,7 @@
                     android:background="@drawable/regist_et_bg_sel"
                     android:hint="请输入用户密码"
                     android:padding="10dp"
+                    android:password="true"
                     android:textColor="@color/txt_black1"
                     android:textSize="@dimen/list_summary_size" />
             </LinearLayout>

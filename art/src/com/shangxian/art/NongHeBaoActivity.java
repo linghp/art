@@ -17,7 +17,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 /**
- * 爱农卡
+ * 我的钱包
  * @author zyz
  *
  */
@@ -42,7 +42,7 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 		topView.hideCenterSearch();//隐藏搜索框
 		topView.hideRightBtn_invisible();//隐藏右按钮
 		topView.showTitle();//显示title
-		topView.setTitle("爱农卡");
+		topView.setTitle("我的钱包");
 		topView.setBack(R.drawable.back);//返回
 		
 		balance = (LinearLayout) findViewById(R.id.nonghebao_linear1);//余额

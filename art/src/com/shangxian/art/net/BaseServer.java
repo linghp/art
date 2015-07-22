@@ -89,6 +89,8 @@ public class BaseServer {
 	protected static final String NET_SEARCH_PRODUCT = HOST + "product"; // 搜索商品信息.
 	protected static final String NET_SEARCH_SHOP = HOST + "shop"; // 搜索商品信息.
 	protected static final String NET_SEARCH_INNERSHOP = HOST + "shopSearchProduct/"; // 店铺内搜索.
+	protected static final String NET_SEARCH_FAHUO = HOST + "orderList"; // 发货订单搜索
+	protected static final String NET_SEARCH_TUIHUO = HOST + "orderReturn"; // 退货订单搜索
 	protected static final String NET_NEW_PAYPASSWORD_SENDCODE = HOST
 			+ "user/password/captcha"; // 发送验证码
 	protected static final String NET_LOGIN_PASSWORD_SENDCODE = HOST + "send"; // 发送支付密码验证码

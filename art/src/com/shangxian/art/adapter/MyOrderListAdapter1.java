@@ -10,6 +10,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -22,6 +23,7 @@ import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
 import com.shangxian.art.ReimburseActivity;
+import com.shangxian.art.SellerOrderDetailsActivity;
 import com.shangxian.art.bean.CommonBean;
 import com.shangxian.art.bean.MyOrderItem;
 import com.shangxian.art.bean.ProductItemDto;
@@ -63,6 +65,27 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		mAbImageLoader_goodsImg.setErrorImage(R.drawable.image_error);
 		mAbImageLoader_goodsImg.setEmptyImage(R.drawable.image_empty);
 	}
+	
+	public MyOrderListAdapter1(Context contex,
+			List<MyOrderItem> myOrderItems) {
+		this.context = contex;
+		this.myOrderItems = myOrderItems;
+		inflater = LayoutInflater.from(contex);
+//		mAbImageLoader_logo = AbImageLoader.newInstance(contex);
+		mAbImageLoader_goodsImg = AbImageLoader.newInstance(contex);
+//
+//		mAbImageLoader_logo.setMaxWidth(100);
+//		mAbImageLoader_logo.setMaxHeight(100);
+//		mAbImageLoader_logo.setLoadingImage(R.drawable.businessman);
+//		mAbImageLoader_logo.setErrorImage(R.drawable.businessman);
+//		mAbImageLoader_logo.setEmptyImage(R.drawable.businessman);
+		mAbImageLoader_goodsImg.setMaxWidth(100);
+		mAbImageLoader_goodsImg.setMaxHeight(100);
+		mAbImageLoader_goodsImg.setLoadingImage(R.drawable.image_loading);
+		mAbImageLoader_goodsImg.setErrorImage(R.drawable.image_error);
+		mAbImageLoader_goodsImg.setEmptyImage(R.drawable.image_empty);
+	}
+
 
 	public int getCount() {
 		return myOrderItems.size();
@@ -78,6 +101,13 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		return position;
 	}
 
+	/* public void upDateList(List<MyOrderItem> dates) {
+	        if (dates == null){
+	            dates = new ArrayList<MyOrderItem>();
+	        }
+	        this.myOrderItems = dates;
+	        notifyDataSetChanged();
+	    }*/
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
@@ -285,6 +315,8 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 		return convertView;
 	}
 
+	
+	
 	public class ViewHolder {
 		public CheckBox check_store;
 		public ImageView iv_logo;

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,11 +22,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.shangxian.art.adapter.MyOrderListAdapter1;
 import com.shangxian.art.adapter.SearchsAdapter;
+import com.shangxian.art.adapter.SellerRefoundOrderAdapter;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ListCarGoodsBean;
+import com.shangxian.art.bean.MyOrderItem;
+import com.shangxian.art.bean.MyOrderItem_all;
 import com.shangxian.art.bean.SearchProductInfo;
-import com.shangxian.art.constant.Constant;
+import com.shangxian.art.bean.SellerRefoundOrderInfo;
+import com.shangxian.art.bean.SellerRefoundstat;
 import com.shangxian.art.net.CallBack;
 import com.shangxian.art.net.SearchServer;
 import com.shangxian.art.net.SearchServer.SearchType_enum;
@@ -44,6 +51,14 @@ public class SearchsActivity extends BaseActivity {
 	private SearchProductInfo info;
 	private List<ListCarGoodsBean> data = new ArrayList<ListCarGoodsBean>();
 
+	private MyOrderItem_all all;
+	private List<MyOrderItem> mOrderItems = new ArrayList<MyOrderItem>();
+	private MyOrderListAdapter1 myOrderListAdapter1;
+	
+	protected SellerRefoundstat refoundstat;
+	private List<SellerRefoundOrderInfo> mOrderItem = new ArrayList<SellerRefoundOrderInfo>();
+	private SellerRefoundOrderAdapter myOrderListAdapter;
+
 	private String scan_info;
 	private LinearLayout footLayout;
 	private LinearLayout l_laoding;
@@ -59,16 +74,19 @@ public class SearchsActivity extends BaseActivity {
 	private TextView tv_sea;
 	private boolean isChangModel;
 	private CircleImageView1 iv_noData;
-/** 店铺内搜索传来的*/
+	/** 店铺内搜索传来的*/
 	private String shopid;
-	
+
+	//是否为发货/退货订单
+	private String isorder;
+
 	private int skip = 0; // 从第skip+1条开始查询
 	private final int pageSize = 10;
-	
-//	public enum SearchModel {
-//		product, shop, all,
-//	}
-    private SearchType_enum searchType_enum=SearchType_enum.shop;
+
+	//	public enum SearchModel {
+	//		product, shop, all,
+	//	}
+	private SearchType_enum searchType_enum=SearchType_enum.shop;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,6 +103,16 @@ public class SearchsActivity extends BaseActivity {
 			et_sreach.setHint(R.string.in_shop_search);
 			searchsAdapter.setToSearch(false);
 		}
+
+		if ("fahuo".equals(isorder)) {
+			ll_group.setVisibility(View.GONE);
+			et_sreach.setHint(R.string.in_shop_fahuo);
+			//			searchsAdapter.setToSearch(false);
+		}else if ("tuihuo".equals(isorder)) {
+			ll_group.setVisibility(View.GONE);
+			et_sreach.setHint(R.string.in_shop_tuihuo);
+			//			searchsAdapter.setToSearch(false);
+		}
 	}
 
 	public static void startThisActivity(String shopid, Context context) {
@@ -92,9 +120,17 @@ public class SearchsActivity extends BaseActivity {
 		intent.putExtra("shopid", shopid);
 		context.startActivity(intent);
 	}
-	
+	public static void startThisActivity1(String isorder, Context context) {
+		Intent intent = new Intent(context, SearchsActivity.class);
+		intent.putExtra("isorder", isorder);
+		context.startActivity(intent);
+	}
+
 	private void initData() {
 		shopid=getIntent().getStringExtra("shopid");
+
+		isorder = getIntent().getStringExtra("isorder");
+
 	}
 
 	private void initView() {
@@ -115,8 +151,16 @@ public class SearchsActivity extends BaseActivity {
 		addFoot();
 		searchsAdapter = new SearchsAdapter(mAc, R.layout.item_searchs,
 				data);
-		lv_info.setAdapter(searchsAdapter);
+		myOrderListAdapter1 = new MyOrderListAdapter1(mAc, mOrderItems);
+		myOrderListAdapter = new SellerRefoundOrderAdapter(mAc,R.layout.list_myorder_item, mOrderItem);
 
+		if ("fahuo".equals(isorder)) {
+			lv_info.setAdapter(myOrderListAdapter1);
+		}else if ("tuihuo".equals(isorder)) {
+			lv_info.setAdapter(myOrderListAdapter);
+		}else {
+			lv_info.setAdapter(searchsAdapter);
+		}
 		initPopuWindow();
 		changeUi(UiModel.normal);
 		changeUi(UiModel.shop);
@@ -171,112 +215,240 @@ public class SearchsActivity extends BaseActivity {
 				if (info != null && info.isMore()) {
 					changeUi(UiModel.footerLoading);
 					loadMore();
+				}else if (all != null) {
+					changeUi(UiModel.footerLoading);
+					loadMore();
+				}else if (refoundstat != null) {
+					changeUi(UiModel.footerLoading);
+					loadMore();
 				}
+				
 			}
 		});
 		lv_info.addFooterView(footLayout);
 	}
 
 	private void loadSearch() {
-//		SearchServer.onSearchProduct(scan_info, "0", "10",
-//				curModel == SearchModel.shop, null, new OnSearchProductListener() {
-//					@Override
-//					public void onSearch(SearchProductInfo product) {
-//						if (product != null && !product.isNull()) {
-//							changeUi(UiModel.showData);
-//							info = product;
-//							searchsAdapter.upDateList(info.getData());
-//							if (info != null && info.isMore()) {
-//								changeUi(UiModel.footerToLoad);
-//							} else {
-//								changeUi(UiModel.footerNoMore);
-//							}
-//						} else {
-//							changeUi(UiModel.noData);
-//						}
-//					}
-//				});
 		if(!TextUtils.isEmpty(shopid)){
 			searchType_enum=SearchType_enum.innershop;
-		}
-		Type type = new TypeToken<SearchProductInfo>(){}.getType();
-		SearchServer.onSearchProduct(scan_info, "0", "10",shopid, searchType_enum, type, new CallBack() {	
-			@Override
-			public void onSimpleSuccess(Object res) {
-				if (res != null) {
-					skip = 0;
-					info = (SearchProductInfo) res;
-					if (!info.isNull()) {
-						MyLogger.i(info.toString());
-						data.clear();
-						data.addAll(info.getData());
-						searchsAdapter.upDateList(data);
-						changeUi(UiModel.showData);
-						if (info != null && info.isMore()) {
-							changeUi(UiModel.footerToLoad);
-						} else {
-							changeUi(UiModel.footerNoMore);
+			Type type = new TypeToken<SearchProductInfo>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, "0", "10",shopid, searchType_enum, type, new CallBack() {	
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索数据>>>>>>>>"+res);
+					if (res != null) {
+						if (!TextUtils.isEmpty(shopid)) {
+							skip = 0;
+							info = (SearchProductInfo) res;
+							if (!info.isNull()) {
+								data.clear();
+								data.addAll(info.getData());
+								searchsAdapter.upDateList(data);
+								changeUi(UiModel.showData);
+								if (info != null && info.isMore()) {
+									changeUi(UiModel.footerToLoad);
+								} else {
+									changeUi(UiModel.footerNoMore);
+								}
+							}
 						}
 					}else {
 						changeUi(UiModel.noData);
 					}
 				}
-			}
-			
-			@Override
-			public void onSimpleFailure(int code) {
-				changeUi(UiModel.noData);
-			}
-		});
-	}
 
-	private void loadMore() {
-//		SearchServer.onSearchProduct(scan_info, info.getStart() + "",
-//				info.getPageSize() + "", curModel == SearchModel.shop,
-//				new OnSearchProductListener() {
-//					@Override
-//					public void onSearch(SearchProductInfo product) {
-//						info = product;
-//						if (info != null)
-//							searchsAdapter.addFootDataList(info.getData());
-//						// changeUi(UiModel.showData);
-//						if (info != null && info.isMore()) {
-//							changeUi(UiModel.footerToLoad);
-//						} else {
-//							changeUi(UiModel.footerNoMore);
-//						}
-//					}
-//				});
-		skip += pageSize;
-		Type type = new TypeToken<SearchProductInfo>(){}.getType();
-		SearchServer.onSearchProduct(scan_info, skip+ "", "10", shopid, searchType_enum,  type, new CallBack() {	
-			@Override
-			public void onSimpleSuccess(Object res) {
-				if (res != null) {
-					info = (SearchProductInfo) res;
-					if (!info.isNull()) {
-						data.addAll(info.getData());
-						searchsAdapter.upDateList(data);
-						changeUi(UiModel.showData);
-						if (info != null && info.isMore()) {
-							changeUi(UiModel.footerToLoad);
+				@Override
+				public void onSimpleFailure(int code) {
+					changeUi(UiModel.noData);
+				}
+			});
+
+		}
+		if ("fahuo".equals(isorder)) {
+			searchType_enum=SearchType_enum.fahuo;
+			Type type = new TypeToken<MyOrderItem_all>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, "0", "10",shopid, searchType_enum, type, new CallBack() {
+
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索数据>>>>>>>>"+res);
+					if (res != null) {
+						all = (MyOrderItem_all) res;
+						if (!all.isNull()) {
+							mOrderItems.clear();
+							mOrderItems.addAll(all.getData());
+							changeUi(UiModel.showData);
+							myOrderListAdapter1.notifyDataSetChanged();
+							if (all != null) {
+								changeUi(UiModel.footerToLoad);
+							} else {
+								changeUi(UiModel.footerNoMore);
+							}
 						} else {
 							changeUi(UiModel.footerNoMore);
 						}
-					}else{
+					} else {
 						changeUi(UiModel.footerNoMore);
 					}
-				}else{
+				}
+
+				@Override
+				public void onSimpleFailure(int code) {
+					changeUi(UiModel.noData);
+				}
+
+			});
+
+		}else if ("tuihuo".equals(isorder)) {
+			//退货搜索
+			searchType_enum=SearchType_enum.tuihuo;
+			Type type = new TypeToken<SellerRefoundstat>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, "0", "10",shopid, searchType_enum, type, new CallBack() {
+
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索数据>>>>>>>>"+res);
+					if (res != null) {
+						refoundstat = (SellerRefoundstat) res;
+						if (!refoundstat.isNull()) {
+							mOrderItem.clear();
+							mOrderItem.addAll(refoundstat.getData());
+							changeUi(UiModel.showData);
+							myOrderListAdapter.notifyDataSetChanged();
+							if (refoundstat != null) {
+								changeUi(UiModel.footerToLoad);
+							} else {
+								changeUi(UiModel.footerNoMore);
+							}
+						} else {
+							changeUi(UiModel.footerNoMore);
+						}
+					} else {
+						changeUi(UiModel.footerNoMore);
+					}
+					
+				}
+
+				@Override
+				public void onSimpleFailure(int code) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
+
+	}
+
+	private void loadMore() {
+		if(!TextUtils.isEmpty(shopid)){
+			System.out.println("搜索更多数据>>>>>>>>");
+			skip += pageSize;
+			Type type = new TypeToken<SearchProductInfo>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, skip+ "", "10", shopid, searchType_enum,  type, new CallBack() {	
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索更多数据>>>>>>>>"+res);
+					if (res != null) {
+						info = (SearchProductInfo) res;
+						if (!info.isNull()) {
+							data.addAll(info.getData());
+							searchsAdapter.upDateList(data);
+							changeUi(UiModel.showData);
+							if (info != null && info.isMore()) {
+								changeUi(UiModel.footerToLoad);
+							} else {
+								changeUi(UiModel.footerNoMore);
+							}
+						}else{
+							changeUi(UiModel.footerNoMore);
+						}
+					}else{
+						skip -= pageSize;
+					}
+				}
+
+				@Override
+				public void onSimpleFailure(int code) {
+					changeUi(UiModel.noData);
 					skip -= pageSize;
 				}
-			}
-			
-			@Override
-			public void onSimpleFailure(int code) {
-				changeUi(UiModel.noData);
-				skip -= pageSize;
-			}
-		});
+			});
+		}else if ("fahuo".equals(isorder)) {
+			System.out.println("搜索更多数据>>>>>>>>");
+			skip += pageSize;
+			searchType_enum=SearchType_enum.fahuo;
+			Type type = new TypeToken<MyOrderItem_all>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, skip+ "", "10",shopid, searchType_enum, type, new CallBack() {
+
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索更多数据>>>>>>>>"+res);
+					if (res != null) {
+						all = (MyOrderItem_all) res;
+						if (!all.isNull()) {
+							mOrderItems.addAll(all.getData());
+							myOrderListAdapter1.notifyDataSetChanged();
+							changeUi(UiModel.showData);
+							if (all != null) {
+								changeUi(UiModel.footerToLoad);
+							} else {
+								changeUi(UiModel.footerNoMore);
+							}
+						} else {
+							changeUi(UiModel.footerNoMore);
+						}
+					} else {
+						skip -= pageSize;
+					}
+				}
+
+				@Override
+				public void onSimpleFailure(int code) {
+					changeUi(UiModel.noData);
+					skip -= pageSize;
+				}
+
+			});
+		}else if ("tuihuo".equals(isorder)) {
+			//退货搜索
+			searchType_enum=SearchType_enum.tuihuo;
+			skip += pageSize;
+			Type type = new TypeToken<SellerRefoundstat>(){}.getType();
+			SearchServer.onSearchProduct(scan_info, skip+ "", "10",shopid, searchType_enum, type, new CallBack() {
+
+				@Override
+				public void onSimpleSuccess(Object res) {
+					MyLogger.i("搜索数据>>>>>>>>"+res);
+					if (res != null) {
+						refoundstat = (SellerRefoundstat) res;
+						if (!refoundstat.isNull()) {
+							mOrderItem.addAll(refoundstat.getData());
+							changeUi(UiModel.showData);
+							myOrderListAdapter.notifyDataSetChanged();
+							if (refoundstat != null) {
+								changeUi(UiModel.footerToLoad);
+							} else {
+								changeUi(UiModel.footerNoMore);
+							}
+						} else {
+							changeUi(UiModel.footerNoMore);
+						}
+					} else {
+						skip -= pageSize;
+					}
+					
+				}
+
+				@Override
+				public void onSimpleFailure(int code) {
+					changeUi(UiModel.noData);
+					skip -= pageSize;
+				}
+				
+			});
+		}
+		
 	}
 
 	private void listener() {
@@ -294,11 +466,11 @@ public class SearchsActivity extends BaseActivity {
 					myToast("请输入搜索条件");
 				} else {
 					//if (!scan.equals(scan_info) || isChangModel) {
-						isChangModel = !isChangModel;
-						scan_info = scan;
-						changeUi(UiModel.loading);
-						loadSearch();
-				//	}
+					isChangModel = !isChangModel;
+					scan_info = scan;
+					changeUi(UiModel.loading);
+					loadSearch();
+					//	}
 				}
 			}
 		});
@@ -308,6 +480,21 @@ public class SearchsActivity extends BaseActivity {
 				popu.showAsDropDown(ll_scan, -CommonUtil.dip2px(mAc, 8), 0);
 			}
 		});
+		
+			lv_info.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					//订单详情
+					if ("fahuo".equals(isorder)) {
+					SellerOrderDetailsActivity.startThisActivity_MyOrder(
+							mOrderItems.get(position).getOrderId() + "", position, mAc);
+					}
+				}
+			});
+		
 	}
 
 	public enum UiModel {
@@ -344,8 +531,8 @@ public class SearchsActivity extends BaseActivity {
 			ll_noData.setVisibility(View.VISIBLE);
 			lv_info.setVisibility(View.GONE);
 			iv_noData
-					.setImageResource(SearchType_enum.shop == searchType_enum ? R.drawable.noshop
-							:  R.drawable.noproduct);
+			.setImageResource(SearchType_enum.shop == searchType_enum ? R.drawable.noshop
+					:  R.drawable.noproduct);
 			break;
 		case normal:
 			ll_loading.setVisibility(View.GONE);

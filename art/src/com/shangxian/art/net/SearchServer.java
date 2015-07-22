@@ -1,31 +1,19 @@
 package com.shangxian.art.net;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Type;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.protocol.RequestExpectContinue;
-
-import com.ab.http.AbRequestParams;
-import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.http.client.multipart.MultipartEntity;
-import com.shangxian.art.bean.SearchProductInfo;
-import com.shangxian.art.constant.Constant;
 import com.shangxian.art.utils.MyLogger;
-
-import android.text.TextUtils;
 
 public class SearchServer extends BaseServer {
 	public enum SearchType_enum{
 		product,
 		shop,
-		innershop
+		innershop,
+		fahuo,
+		tuihuo
 	}
 	public static void onSearchProduct(String key, String skip,
 		String pageSize, String shopid, SearchType_enum searchType_enum, Type type, CallBack back /*final OnSearchProductListener l*/
@@ -72,7 +60,12 @@ public class SearchServer extends BaseServer {
 		case innershop:
 			url= NET_SEARCH_INNERSHOP +shopid ;
 			break;
-
+		case fahuo:
+			url= NET_SEARCH_FAHUO ;
+			break;
+		case tuihuo:
+			url= NET_SEARCH_TUIHUO ;
+			break;
 		default:
 			break;
 		}

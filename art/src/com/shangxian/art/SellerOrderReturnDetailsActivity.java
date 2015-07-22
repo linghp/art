@@ -1,16 +1,11 @@
 package com.shangxian.art;
 
-import java.io.ObjectOutputStream.PutField;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -18,39 +13,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.ab.image.AbImageLoader;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.shangxian.art.adapter.MyOrderListAdapter;
 import com.shangxian.art.base.BaseActivity;
-import com.shangxian.art.bean.MyOrderDetailBean;
-import com.shangxian.art.bean.MyOrderDetailBean.ReceiverInfo;
-import com.shangxian.art.bean.MyOrderItem;
-import com.shangxian.art.bean.ProductItemDto;
-import com.shangxian.art.bean.MyOrderDetailBean.OrderItem;
 import com.shangxian.art.bean.SellerRefoundOrderInfo;
 import com.shangxian.art.bean.SellerRefoundOrderProductInfo;
 import com.shangxian.art.constant.Constant;
 import com.shangxian.art.constant.Global;
-import com.shangxian.art.fragment.MyOrder_All_Fragment;
+import com.shangxian.art.fragment.BuyerReturnOrderFragment;
 import com.shangxian.art.net.CallBack;
-import com.shangxian.art.net.MyOrderServer;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultCancelOrderListener;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultDelOrderListener;
-import com.shangxian.art.net.MyOrderServer.OnHttpResultOrderDetailsListener;
 import com.shangxian.art.net.SellerOrderServer;
 import com.shangxian.art.utils.CommonUtil;
-import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.Options;
 import com.shangxian.art.view.TopView;
-import com.shangxian.art.zxing.decoding.FinishListener;
 
 /**
  * 退货详情类
@@ -59,6 +37,269 @@ import com.shangxian.art.zxing.decoding.FinishListener;
  *
  */
 public class SellerOrderReturnDetailsActivity extends BaseActivity {
+	private TextView tv_time,tv_return,tv_goods,tv_istrue,tv_money,tv_reason,tv_explain;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_returnorderdetails);
+		initView();
+		initData();
+		initListener();
+	}
+	private void initView() {
+		topView = (TopView) findViewById(R.id.top_title);
+		topView.setActivity(this);
+		topView.hideRightBtn();
+		topView.hideCenterSearch();
+		topView.showTitle();
+		topView.setBack(R.drawable.back);
+		topView.setTitle(getString(R.string.title_returnorderdetails));
+
+		tv_time = (TextView) findViewById(R.id.returnorderdetails_tv1);//退款时间
+		tv_return = (TextView) findViewById(R.id.returnorderdetails_tv2);//退款状态
+		tv_goods = (TextView) findViewById(R.id.returnorderdetails_tv3);//货物状态
+		tv_istrue = (TextView) findViewById(R.id.returnorderdetails_tv4);//是否需要退还货物
+		tv_money = (TextView) findViewById(R.id.returnorderdetails_tv5);//退还金额
+		tv_reason = (TextView) findViewById(R.id.returnorderdetails_tv6);//退款原因
+		tv_explain = (TextView) findViewById(R.id.returnorderdetails_tv7);//退款说明
+	}
+
+	public static void startThisActivity(String time,String returns,String istrue,String money, String reason,String explain,Activity mAc) {
+		Intent intent = new Intent(mAc, SellerOrderReturnDetailsActivity.class);
+		intent.putExtra("time", time);
+		intent.putExtra("returns", returns);
+		intent.putExtra("istrue", istrue);
+		intent.putExtra("money", money);
+		intent.putExtra("reason", reason);
+		intent.putExtra("explain", explain);
+		mAc.startActivity(intent);
+	}
+	
+
+	private void initData() {
+		String time = getIntent().getStringExtra("time");
+		tv_time.setText(time);//退款时间
+		String returns = getIntent().getStringExtra("returns");
+		switch (returns) {
+		case "SUCCESS":
+			tv_return.setText("退款成功");
+			tv_goods.setText("未收到货");//货物状态
+			break;
+		case "WAIT_SELLER_APPROVAL":
+			tv_return.setText("等待卖家审核");
+			tv_goods.setText("未收到货");//货物状态
+			break;
+		case "WAIT_BUYER_DELIVERY":
+			tv_return.setText("等待买家退货");
+			tv_goods.setText("买家已收到货");//货物状态
+			break;
+		case "WAIT_COMPLETED":
+			tv_return.setText("买家已发货,等待卖家签收");
+			tv_goods.setText("卖家未收到货");//货物状态
+			break;
+		case "CANCELLED":
+			tv_return.setText("订单已取消");
+			tv_goods.setText("已收到货");//货物状态
+			break;
+			///////////////////////////////////////////////
+		case "NORMAL":
+			tv_return.setText("正常，不退货");
+			tv_goods.setText("买家已收到货");//货物状态
+			break;
+		case "COMPLETED_REFUSE":
+			tv_return.setText("卖家拒绝签收");
+			tv_goods.setText("卖家拒绝收货");//货物状态
+			break;
+		case "ORDER_RETURNING":
+			tv_return.setText("已签收，退款成功");
+			tv_goods.setText("卖家已收到货");//货物状态
+			break;
+		case "FAILURE":
+			tv_return.setText("退货失败");
+			tv_goods.setText("未收到货");//货物状态
+			break;
+		default:
+			break;
+		}
+		/*if (returns == "SUCCESS") {
+			tv_return.setText("退款成功");
+		}else if (returns == "WAIT_SELLER_APPROVAL") {
+			tv_return.setText("等待卖家审核");
+		}else if (returns == "WAIT_BUYER_DELIVERY") {
+			tv_return.setText("卖家审核通过");
+		}else if (returns == "WAIT_COMPLETED") {
+			tv_return.setText("买家已发货,等待卖家签收");
+		}else if (returns == "CANCELLED") {
+			tv_return.setText("订单已取消");
+		}else {
+			tv_return.setText("订单正常");
+		}*/
+
+		String istrue = getIntent().getStringExtra("istrue");
+		if (istrue.equals("true")) {
+			tv_istrue.setText("是");//是否需要退还货物
+		}else {
+			tv_istrue.setText("否");//是否需要退还货物
+		}
+
+		String money = getIntent().getStringExtra("money");
+		tv_money.setText(money);//退还金额
+		String reason = getIntent().getStringExtra("reason");
+		tv_reason.setText(reason);//退款原因
+		String explain = getIntent().getStringExtra("explain");
+		tv_explain.setText(explain);//退款说明	
+	}
+
+	private void initListener() {
+
+
+	}
+
+	public static void startThisActivity(String returnOrderTime,
+			String returnOrderTime2, String returnOrderTime3,
+			String returnOrderTime4, String returnOrderTime5,
+			String returnOrderTime6, String returnOrderTime7,
+			BuyerReturnOrderFragment buyerReturnOrderFragment) {
+		// TODO Auto-generated method stub
+
+	}
+	/**
+	 * 卖家退货操作
+	 * 
+	 * @param operation
+	 */
+	private List<SellerRefoundOrderProductInfo> sellerRefoundOrderProductInfos;
+	private SellerRefoundOrderInfo sellerRefundOrder;
+	private void toSellerRefoundOperation(Operation operation) {
+       showProgressDialog(true);
+		String productId = sellerRefoundOrderProductInfos.get(0).getId() + "";
+		switch (operation) {
+		case seller_check_fialure:
+			check_fialure(sellerRefundOrder, productId,refreshDialog);
+			break;
+		case seller_completed_refuse:
+			competed_refuse(sellerRefundOrder, productId,refreshDialog);
+			break;
+		case seller_check_success:
+		case seller_completed:
+			seller_operation(sellerRefundOrder, productId,refreshDialog);
+			break;
+		}
+	}
+
+	/**
+	 * 卖家拒绝签收
+	 * 
+	 * @param sellerRefundOrder2
+	 * @param productId
+	 */
+	public static void competed_refuse(
+			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
+		SellerOrderServer.toSellerReturnOrderCompletedRefuse(
+				sellerRefundOrder.getOrderNumber(), productId,
+				sellerRefundOrder.getReturnOrderNum(), new CallBack() {
+					@Override
+					public void onSimpleSuccess(Object res) {
+						CommonUtil.toast("拒绝签收信息已上传");
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+//							isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						Global.sellerReFundOrder = sellerRefundOrder;
+					}
+
+					@Override
+					public void onSimpleFailure(int code) {
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+							// isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						CommonUtil.toast("拒绝签收信息上传失败");
+					}
+				});
+	}
+
+	/**
+	 * 卖家操作
+	 * 
+	 * @param sellerRefundOrder
+	 * 
+	 * @param productId
+	 */
+	public static void seller_operation(final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
+		SellerOrderServer.toSellerReturnOrderOperation(
+				sellerRefundOrder.getStatus(),
+				sellerRefundOrder.getOrderNumber(), productId,
+				sellerRefundOrder.getReturnOrderNum(), new CallBack() {
+					@Override
+					public void onSimpleSuccess(Object res) {
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+//							isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						Global.sellerReFundOrder = sellerRefundOrder;
+						CommonUtil.toast("信息上传成功");
+					}
+
+					@Override
+					public void onSimpleFailure(int code) {
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+							// isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						CommonUtil.toast("操作失败，请稍后再试");
+					}
+				});
+	}
+
+	/**
+	 * 审核不通过
+	 * 
+	 * @param sellerRefundOrder
+	 * 
+	 * @param productId
+	 */
+	public  static void check_fialure(
+			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
+		SellerOrderServer.toSellerReturnOrderFialure(
+				sellerRefundOrder.getOrderNumber(), productId,
+				sellerRefundOrder.getReturnOrderNum(), new CallBack() {
+					@Override
+					public void onSimpleSuccess(Object res) {
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+//							isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						Global.sellerReFundOrder = sellerRefundOrder;
+						CommonUtil.toast("审核信息上传成功");
+					}
+
+					@Override
+					public void onSimpleFailure(int code) {
+						if (Global.isSellerOrderReturnDetailsActivityIsShow) {
+							// isToFinish = true;
+							if(dialog!=null)
+							dialog.dismiss();
+						}
+						CommonUtil.toast("操作失败，请稍后再试");
+					}
+				});
+	}
+
+	private enum Operation {
+		seller_check_fialure, // 卖家审核失败
+		seller_check_success, // 卖家审核成功
+		seller_completed_refuse, // 卖家拒绝签收
+		seller_completed // 卖家签收
+	}
+}
+/*public class SellerOrderReturnDetailsActivity extends BaseActivity {
 	private TopView topView;
 	private LinearLayout ll_goodsitem_add;
 	private ImageView iv_logo;
@@ -115,12 +356,12 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		Global.isSellerOrderReturnDetailsActivityIsShow = false;
 	}
 
-	/**
+	*//**
 	 * 跳转本页的方法
 	 * 
 	 * @param sellerRefoundOrderInfo
 	 * @param mAc
-	 */
+	 *//*
 	public static void startThisActivity(int position,
 			SellerRefoundOrderInfo sellerRefoundOrderInfo, Fragment mAc) {
 		Intent intent = new Intent(mAc.getActivity(), SellerOrderReturnDetailsActivity.class);
@@ -148,7 +389,7 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		topView.hideCenterSearch();
 		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		topView.setTitle(getString(R.string.title_activity_my_order_details));
+		topView.setTitle("退货订单详情");
 
 		iv_logo = (ImageView) findViewById(R.id.iv_logo);
 		tv_storeName = (TextView) findViewById(R.id.car_storename);
@@ -278,13 +519,13 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		}
 	}
 
-	/**
+	*//**
 	 * 设置tv_01、tv_02、tv_03显示文本，如果文本为空，默认设置不显示...
 	 * 
 	 * @param tv_01_title
 	 * @param tv_02_title
 	 * @param tv_03_title
-	 */
+	 *//*
 	private void changeTextViewShow(String tv_01_title, String tv_02_title,
 			String tv_03_title) {
 		tv_01.setText(tv_01_title);
@@ -299,11 +540,11 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 				: View.GONE);
 	}
 
-	/**
+	*//**
 	 * 卖家退货操作
 	 * 
 	 * @param operation
-	 */
+	 *//*
 	private void toSellerRefoundOperation(Operation operation) {
         showProgressDialog(true);
 		String productId = sellerRefoundOrderProductInfos.get(0).getId() + "";
@@ -321,12 +562,12 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		}
 	}
 
-	/**
+	*//**
 	 * 卖家拒绝签收
 	 * 
 	 * @param sellerRefundOrder2
 	 * @param productId
-	 */
+	 *//*
 	public static void competed_refuse(
 			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderCompletedRefuse(
@@ -355,13 +596,13 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 				});
 	}
 
-	/**
+	*//**
 	 * 卖家操作
 	 * 
 	 * @param sellerRefundOrder
 	 * 
 	 * @param productId
-	 */
+	 *//*
 	public static void seller_operation(final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderOperation(
 				sellerRefundOrder.getStatus(),
@@ -390,13 +631,13 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 				});
 	}
 
-	/**
+	*//**
 	 * 审核不通过
 	 * 
 	 * @param sellerRefundOrder
 	 * 
 	 * @param productId
-	 */
+	 *//*
 	public  static void check_fialure(
 			final SellerRefoundOrderInfo sellerRefundOrder, String productId,final Dialog dialog) {
 		SellerOrderServer.toSellerReturnOrderFialure(
@@ -431,4 +672,4 @@ public class SellerOrderReturnDetailsActivity extends BaseActivity {
 		seller_completed_refuse, // 卖家拒绝签收
 		seller_completed // 卖家签收
 	}
-}
+}*/

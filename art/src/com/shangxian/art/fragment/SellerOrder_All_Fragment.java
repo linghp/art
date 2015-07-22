@@ -133,6 +133,7 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 		SellerOrderServer.toGetSellerOrder(status, "0", new CallBack() {
 			@Override
 			public void onSimpleSuccess(Object res) {
+				MyLogger.i(">>>>>>>>>发货订单"+res);
 				skip = 0;
 				mAbPullToRefreshView.onHeaderRefreshFinish();//隐藏刷新控件
 				if (res != null) {
@@ -286,9 +287,8 @@ public class SellerOrder_All_Fragment extends BaseFragment implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		//订单详情
-		myOrderItem = mOrderItems.get(position);
 		SellerOrderDetailsActivity.startThisActivity_MyOrder(
-				myOrderItem.getOrderId() + "", position, this);
+				mOrderItems.get(position).getOrderId() + "", position,getActivity());
 	}
 
 	@Override

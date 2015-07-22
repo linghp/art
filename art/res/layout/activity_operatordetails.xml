@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_title"
-        android:orientation="vertical" android:focusable="true"   
-android:focusableInTouchMode="true">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,11 +44,9 @@ android:focusableInTouchMode="true">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@null"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="用户名"
-                android:background="@null"
-                
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -86,10 +85,8 @@ android:focusableInTouchMode="true">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:background="@null"
-                
-                android:text="真实姓名"
+                android:singleLine="true"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -128,10 +125,8 @@ android:focusableInTouchMode="true">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
-                android:text="身份证号"
                 android:background="@null"
-                
+                android:singleLine="true"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -170,10 +165,8 @@ android:focusableInTouchMode="true">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
-                android:text="联系方式"
                 android:background="@null"
-                
+                android:singleLine="true"
                 android:textColor="@color/txt_black1"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
@@ -212,11 +205,61 @@ android:focusableInTouchMode="true">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@null"
+                android:password="true"
                 android:singleLine="true"
                 android:text=""
-                android:background="@null"
-                
                 android:textColor="@color/txt_black1"
+                android:textSize="@dimen/list_summary_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/txt_black3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:padding="10dp"
+            android:text="是否允许接收交易短信"
+            android:textColor="@color/txt_black2"
+            android:textSize="@dimen/list_summary_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="2" >
+
+            <TextView
+                android:id="@+id/addsubclass_tv1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/leftcorner_green"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="否"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/addsubclass_tv2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rightcorner"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="是"
+                android:textColor="@color/txt_green"
                 android:textSize="@dimen/list_summary_size" />
         </LinearLayout>
         <!--
@@ -304,41 +347,42 @@ android:focusableInTouchMode="true">
             android:layout_height="0.5dp"
             android:background="@color/txt_black3" />
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="72dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="16dp"
-             >
 
-            <TextView
-                android:id="@+id/tv_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/soge_next_bg_sel"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="删除"
-                android:textColor="@color/white"
-                android:textSize="@dimen/list_summary_size" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="16dp" >
 
-            <TextView
-                android:id="@+id/tv_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/soge_next_bg_sel"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:text="确定"
-                android:textColor="@color/white"
-                android:textSize="@dimen/list_summary_size" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/soge_next_bg_sel"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="@dimen/list_summary_size" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/soge_next_bg_sel"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="修改"
+            android:textColor="@color/white"
+            android:textSize="@dimen/list_summary_size" />
+    </LinearLayout>
+
 </RelativeLayout>

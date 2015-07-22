@@ -67,11 +67,11 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 //	}
 
 	public static void startThisActivity_MyOrder(String ordernumber, int index,
-			Fragment fragment) {
-		Intent intent = new Intent(fragment.getActivity(), SellerOrderDetailsActivity.class);
+			Activity mAc) {
+		Intent intent = new Intent(mAc, SellerOrderDetailsActivity.class);
 		intent.putExtra(INTENTDATAKEY, ordernumber);
 		intent.putExtra(INT_INDEX, index);
-		fragment.startActivityForResult(intent, 1);
+		mAc.startActivityForResult(intent, 1);
 	}
 
 	private void initData() {

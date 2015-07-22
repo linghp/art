@@ -20,6 +20,8 @@ import com.shangxian.art.adapter.FragmentViewPagerAdp;
 import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.fragment.SellerOrder_All_Fragment;
 import com.shangxian.art.fragment.SellerRefundOrder_All_Fragment;
+import com.shangxian.art.utils.CommonUtil;
+import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.view.TopView;
 
 /**
@@ -28,7 +30,7 @@ import com.shangxian.art.view.TopView;
  *
  */
 public class SellerOrderActivity extends BaseActivity implements
-		OnClickListener {
+OnClickListener {
 	private LinearLayout ll_tab1;
 	private LinearLayout ll_tab2;
 	private LinearLayout ll_tab3;
@@ -44,21 +46,21 @@ public class SellerOrderActivity extends BaseActivity implements
 	private TextView tv_tab4;
 
 	public static String[] orderState = { "PENDING", "SUBMITTED", "PAID",
-			"SHIPPING", "COMPLETED", "ORDER_RETURNING", "EVALUATE", "CANCELLED" };
-	
+		"SHIPPING", "COMPLETED", "ORDER_RETURNING", "EVALUATE", "CANCELLED" };
+
 	public static String[] orderStateValue = { "未提交", "待付款", "待发货", "待收货",
-			"已完成交易", "退款中", "待评价", "已取消交易" };
-    
+		"已完成交易", "退款中", "待评价", "已取消交易" };
+
 	public static String[] orderReturnStatus = { "NORMAL", "SUCCESS",
 		"WAIT_SELLER_APPROVAL", "WAIT_BUYER_DELIVERY", "WAIT_COMPLETED",
 		"COMPLETED_REFUSE", "ORDER_RETURNING", "CANCELLED", "FAILURE" };
 
 	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
 		"待审核", "待退货", "待退款", "卖家拒绝签收", "已签收，退款成功", "取消",
-		"退货失败" };
-//	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
-//		"等待卖家审核", "等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消",
-//	"退货失败" };
+	"退货失败" };
+	//	public static String[] orderReturnStatusValue = { "正常，不退货", "退款成功",
+	//		"等待卖家审核", "等待买家退货", "买家已发货,等待卖家签收", "卖家拒绝签收", "已签收，退款成功", "取消",
+	//	"退货失败" };
 
 	public static Map<String, String> map_orderStateValue = new HashMap<String, String>();
 	public static Map<String, String> map_orderReturnStatusValue = new HashMap<String, String>();
@@ -80,11 +82,11 @@ public class SellerOrderActivity extends BaseActivity implements
 		initDatas();
 		Listener();
 	}
-	
+
 	private static final String ISORDERSEND = "isOrderSend";
 	private static final int ORDER_SEND = 0x00000001;
 	private static final int ORDER_RETURN = 0x00000002;
-	
+
 	public static void startThisActivity(Activity mAc, Boolean isOrderSend){
 		Bundle bundle = new Bundle();
 		bundle.putInt(ISORDERSEND, isOrderSend ? ORDER_SEND : ORDER_RETURN);
@@ -97,20 +99,18 @@ public class SellerOrderActivity extends BaseActivity implements
 		topView = (TopView) findViewById(R.id.top_title);
 		topView.setActivity(this);
 		topView.hideRightBtn_invisible();
-		topView.hideCenterSearch();
-		topView.showTitle();
 		topView.setBack(R.drawable.back);
-		
+
 
 		ll_tab1 = (LinearLayout) findViewById(R.id.ll_tab1);
 		ll_tab2 = (LinearLayout) findViewById(R.id.ll_tab2);
 		ll_tab3 = (LinearLayout) findViewById(R.id.ll_tab3);
 		ll_tab4 = (LinearLayout) findViewById(R.id.ll_tab4);
-		
+
 		tv_tab2 = (TextView) findViewById(R.id.tv_tab2);
 		tv_tab3 = (TextView) findViewById(R.id.tv_tab3);
 		tv_tab4 = (TextView) findViewById(R.id.tv_tab4);
-		
+
 		vp_content = (ViewPager) findViewById(R.id.vp_content);
 	}
 
@@ -121,12 +121,20 @@ public class SellerOrderActivity extends BaseActivity implements
 			finish();
 		}
 		curOrderType = toOrder;
-			
+
 		if (isSendOrder()) {
 			tv_tab2.setText("待付款");
 			tv_tab3.setText("待发货");
 			tv_tab4.setText("待收货");
-			topView.setTitle("发货订单管理");
+			topView.setCenterListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					SearchsActivity.startThisActivity1("fahuo", SellerOrderActivity.this);
+
+				}
+			});
 			fragments.add(0, new SellerOrder_All_Fragment(this,""));
 			fragments.add(1, new SellerOrder_All_Fragment(this,orderState[1]));
 			fragments.add(2, new SellerOrder_All_Fragment(this,orderState[2]));
@@ -135,7 +143,16 @@ public class SellerOrderActivity extends BaseActivity implements
 			tv_tab2.setText("待审核");
 			tv_tab3.setText("待退货");
 			tv_tab4.setText("待退款");
-			topView.setTitle("退货订单管理");
+			topView.setCenterListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					SearchsActivity.startThisActivity1("tuihuo", SellerOrderActivity.this);
+					/*Bundle bundle = new Bundle();
+					bundle.putBoolean("isorder", false);
+					CommonUtil.gotoActivityWithData(SellerOrderActivity.this, SearchsActivity.class, bundle, false);*/
+				}
+			});
 			fragments.add(0, new SellerRefundOrder_All_Fragment(this,""));
 			fragments.add(1, new SellerRefundOrder_All_Fragment(this,orderReturnStatus[2]));
 			fragments.add(2, new SellerRefundOrder_All_Fragment(this,orderReturnStatus[3]));
@@ -150,7 +167,7 @@ public class SellerOrderActivity extends BaseActivity implements
 	private boolean isSendOrder(){
 		return curOrderType == ORDER_SEND;
 	}
-	
+
 	private void Listener() {
 		ll_tab1.setOnClickListener(this);
 		ll_tab2.setOnClickListener(this);
@@ -175,6 +192,7 @@ public class SellerOrderActivity extends BaseActivity implements
 
 			}
 		});
+
 	}
 
 	@Override

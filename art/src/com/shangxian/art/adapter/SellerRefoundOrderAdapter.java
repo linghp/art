@@ -45,12 +45,18 @@ public class SellerRefoundOrderAdapter extends
 //		options = Options.getListOptions(true);
 //	}
 	
-	public SellerRefoundOrderAdapter(Activity mAc, Fragment fragment,int layoutId,
+	public SellerRefoundOrderAdapter(Fragment fragment,int layoutId,
+			List<SellerRefoundOrderInfo> dates) {
+		super(fragment.getActivity(), layoutId, dates);
+		loader = ImageLoader.getInstance();
+		options = Options.getListOptions(true);
+		this.mFragment = fragment;
+	}
+	public SellerRefoundOrderAdapter(Activity mAc, int layoutId,
 			List<SellerRefoundOrderInfo> dates) {
 		super(mAc, layoutId, dates);
 		loader = ImageLoader.getInstance();
 		options = Options.getListOptions(true);
-		this.mFragment = fragment;
 	}
 
 	public void removeItem(SellerRefoundOrderInfo info) {
@@ -147,8 +153,17 @@ public class SellerRefoundOrderAdapter extends
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SellerOrderReturnDetailsActivity.startThisActivity(position, sellerRefoundOrderInfo,
-						mFragment);
+				if (sellerRefoundOrderInfo.getReturnOrderItemDtos().size() != 0) {
+					SellerOrderReturnDetailsActivity.startThisActivity(sellerRefoundOrderInfo.getReturnOrderTime(),
+							sellerRefoundOrderInfo.getStatus(),
+							sellerRefoundOrderInfo.getIsGoods(),
+							"¥"+CommonUtil.priceConversion(sellerRefoundOrderInfo.getTotalPrice()),
+							sellerRefoundOrderInfo.getReturnReason(),
+							sellerRefoundOrderInfo.getBuyerMessege(),
+							mAc);
+				}else {
+					CommonUtil.toast("查询失败，请稍后再试");
+				}
 			}
 		});
 		

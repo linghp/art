@@ -61,8 +61,6 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 	}
 
 	private void initData() {
-
-
 	}
 
 	private void initListener() {
