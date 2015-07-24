@@ -30,7 +30,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 	private EditText et_user,et_name,et_id,et_num,et_pwd;
 	private ShopOperatorBean shopOperatorBean;
 	private String user,name,id,num,pwd;
-	private String ismessage = "false";
+	private String ismessage;
 	private TextView tv_false,tv_true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,19 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 		et_id.setText(shopOperatorBean.getCardNumber());
 		et_num.setText(shopOperatorBean.getMobile());
 		et_pwd.setText(shopOperatorBean.getPassword());
+		ismessage = shopOperatorBean.getReceiveSms();
+		System.out.println(">>>>>>>>>>>>>>是否接收短信<<<<<<<<<<<<"+ismessage);
+		if ("true".equals(ismessage)) {
+			tv_false.setBackgroundResource(R.drawable.leftcorner);
+			tv_false.setTextColor(getResources().getColor(R.color.txt_green));
+			tv_true.setBackgroundResource(R.drawable.rightcorner_green);
+			tv_true.setTextColor(getResources().getColor(R.color.txt_white));
+		}else {
+			tv_false.setBackgroundResource(R.drawable.leftcorner_green);
+			tv_false.setTextColor(getResources().getColor(R.color.txt_white));
+			tv_true.setBackgroundResource(R.drawable.rightcorner);
+			tv_true.setTextColor(getResources().getColor(R.color.txt_green));
+		}
 	}
 
 	private void initListener() {
@@ -133,7 +146,8 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 			name = et_name.getText().toString().trim();//真实姓名
 			id = et_id.getText().toString().trim();//身份证
 			num = et_num.getText().toString().trim();//电话号码
-			pwd = et_pwd.getText().toString().trim();//mima
+			pwd = et_pwd.getText().toString().trim();//密码
+			System.out.println(">>>>>>>>>>>>>>是否接收短信<<<<<<<<<<<<"+ismessage);
 			if(match()){
 				showProgressDialog(true);
 				RequestParams params = BaseServer.getParams();
@@ -145,6 +159,7 @@ public class OperatorDetailsActivity extends BaseActivity implements OnClickList
 				params.addQueryStringParameter("name", name);
 				params.addQueryStringParameter("phoneNumber", num);
 				params.addQueryStringParameter("cardNumber", id);
+				params.addQueryStringParameter("receiveSms", ismessage);
 				ShopOperatorServer.onUpdateOperator_xutils(params, OperatorDetailsActivity.this);
 			}
 			break;

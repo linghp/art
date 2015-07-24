@@ -89,6 +89,7 @@ public class OperatorManagementActivity extends BaseActivity implements OnHttpRe
 		});
 	}
 
+	
 	@Override
 	public void onHttpResultGetOperator(CommonBeanObject<List<ShopOperatorBean>> commonBeanObject) {
 		loading_big.setVisibility(View.GONE);

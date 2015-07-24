@@ -88,8 +88,8 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 					params.addQueryStringParameter("name", name);
 					params.addQueryStringParameter("phoneNumber", num);
 					params.addQueryStringParameter("cardNumber", id);
-//					params.addQueryStringParameter("", ismessage+"");
-					
+//					params.addQueryStringParameter("receiveSms", ismessage);
+					System.out.println(">>>>>>>>>>>>>>是否接收短信<<<<<<<<<<<<"+ismessage);
 					ShopOperatorServer.onAddOperator_xutils(params, AddOperatorActivity.this);
 					//					List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 					//					pairs.add(new BasicNameValuePair("username", user));
@@ -110,7 +110,6 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 				tv_false.setTextColor(getResources().getColor(R.color.txt_white));
 				tv_true.setBackgroundResource(R.drawable.rightcorner);
 				tv_true.setTextColor(getResources().getColor(R.color.txt_green));
-//				ismessage = false;
 				ismessage = "false";
 				
 			}
@@ -124,7 +123,6 @@ public class AddOperatorActivity extends BaseActivity implements OnHttpResultAdd
 				tv_false.setTextColor(getResources().getColor(R.color.txt_green));
 				tv_true.setBackgroundResource(R.drawable.rightcorner_green);
 				tv_true.setTextColor(getResources().getColor(R.color.txt_white));
-//				ismessage = true;
 				ismessage = "true";
 			}
 		});

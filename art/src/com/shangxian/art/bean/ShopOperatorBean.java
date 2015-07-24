@@ -56,6 +56,15 @@ public class ShopOperatorBean implements Serializable {
 	private String reversePhoto;
 	@Expose
 	private String shopId;
+	private  String  receiveSms;// true :接收  false不接收
+
+	
+	public String getReceiveSms() {
+		return receiveSms;
+	}
+	public void setReceiveSms(String receiveSms) {
+		this.receiveSms = receiveSms;
+	}
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -194,7 +203,7 @@ public class ShopOperatorBean implements Serializable {
 				+ ", description=" + description + ", details=" + details
 				+ ", receiverName=" + receiverName + ", receiverTel="
 				+ receiverTel + ", frontPhoto=" + frontPhoto
-				+ ", reversePhoto=" + reversePhoto + ", shopId=" + shopId + "]";
+				+ ", reversePhoto=" + reversePhoto + ", shopId=" + shopId
+				+ ", receiveSms=" + receiveSms + "]";
 	}
-
 }
