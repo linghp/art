@@ -119,7 +119,7 @@ public class IandEDetailsActivity extends BaseActivity{
 								}
 								month = spStr[1];
 							}
-							MyLogger.i("收支明细列表数据："+list);
+							System.out.println("收支明细列表数据："+list);
 							if (list != null) {
 								hideNoData();
 								adapter = new IandEDetailsAdapter(IandEDetailsActivity.this, R.layout.item_iandedetails, list);

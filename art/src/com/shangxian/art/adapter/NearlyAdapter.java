@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.net.NetworkInfo.State;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,7 +86,17 @@ public class NearlyAdapter extends EntityAdapter<NearlyShopInfo> {
 		final NearlyShopInfo info = getItem(position);
 		holder.title.setText(info.getTitle());
 		holder.context.setText(info.getServiceDesc());
-		holder.distance.setText("距离我:" + info.getDistance() + "米");
+		float distance = Float.parseFloat(info.getDistance());
+		if (distance >= 1000.0) {
+			distance = distance/1000;
+//			System.out.println(">>>>>>>>>>>距离<<<<<<<<<<<<"+distance);
+//			System.out.println(">>>>>>>>>>>距离<<<<<<<<<<<<"+String.format("%.2f", distance));
+			holder.distance.setText("距离我:"+  String.format("%.1f", distance)  + "千米");
+		}else {
+			holder.distance.setText("距离我:" + info.getDistance() + "米");
+		}
+		
+		
 		ImageLoader.getInstance().displayImage(Constant.BASEURL  + info.getLogo(), holder.icon, options);		
 		holder.distance.setOnClickListener(new OnClickListener() {
 			@Override

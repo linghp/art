@@ -81,6 +81,14 @@ public class IandEDetailsContentActivity extends BaseActivity{
 			tv_fangshi.setText("爱农元支付");
 		}else if ("ALB".equals(fangshi.toString().trim())) {
 			tv_fangshi.setText("爱农币支付");
+		}else if ("ALIPAY".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("支付宝支付");
+		}else if ("BANK".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("银行支付");
+		}else if ("ALL".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("混合支付");
+		}else if ("UNLINE".equals(fangshi.toString().trim())) {
+			tv_fangshi.setText("线下支付");
 		}else {
 			tv_fangshi.setText(fangshi);
 		}

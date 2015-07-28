@@ -60,7 +60,7 @@ public class NongHeBaoActivity extends BaseActivity implements OnHttpResultQrLis
 	}
 
 	private void changeview() {
-		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 1) {//买家
+		if (isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 1&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 3) {//买家、操作员
 			qrcode.setVisibility(View.GONE);
 			transaction.setVisibility(View.GONE);
 		} else if(isLogin()&&share.getInt(Constant.PRE_USER_LOGINTYPE,0)== 2){//卖家
