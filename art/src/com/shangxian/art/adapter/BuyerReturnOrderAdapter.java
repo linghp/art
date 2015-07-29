@@ -230,7 +230,7 @@ EntityAdapter<BuyerReturnOrderInfo> {
 					//退货-填写物流信息
 					LogisticsInformationActivity.startThisActivity(mFragment,
 							buyerReturnOrderProductInfos.get(0).getId() + "",
-							position, buyerReturnOrderInfo.getOrderNumber());
+							position, buyerReturnOrderInfo.getOrderNumber(),false);
 
 				}
 			});

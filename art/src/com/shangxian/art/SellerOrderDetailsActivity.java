@@ -226,7 +226,10 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 			tv_02.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					SellerOrderServer.toSellerSendOrder(myOrderItem.getOrderId() + "", new CallBack() {
+//					myToast("卖家发货");
+					//跳转到填写物流信息
+					LogisticsInformationActivity.startThisActivity(mAc, myOrderItem.getOrderId() + "", -1, myOrderItem.getOrderNumber()+"",true);
+					/*SellerOrderServer.toSellerSendOrder(myOrderItem.getOrderId() + "", new CallBack() {
 						@Override
 						public void onSimpleSuccess(Object res) {
 							myToast("发货成功");
@@ -238,7 +241,7 @@ public class SellerOrderDetailsActivity extends BaseActivity {
 						public void onSimpleFailure(int code) {
 							myToast("发货失败");
 						}
-					});
+					});*/
 				}
 			});
 		} else if (status.equals(orderState[3])) {

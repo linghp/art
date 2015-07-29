@@ -159,7 +159,7 @@ public class IandEDetailsActivity extends BaseActivity{
 						list.get(position).getDirection(),
 						list.get(position).getPayType(),
 						list.get(position).getTransDate(),
-						list.get(position).getMonth(),
+						list.get(position).getTradeTitle(),
 						IandEDetailsActivity.this);
 			}
 		});

@@ -36,11 +36,21 @@ public class SellerOrderServer extends BaseServer {
 	 * @param orderId
 	 * @param back
 	 */
-	public static void toSellerSendOrder(String orderId, CallBack back) {
+/*	public static void toSellerSendOrder(String orderId, CallBack back) {
 		String url=NET_SENDORDER + orderId;
 		MyLogger.i(url);
 		toXUtils(HttpMethod.POST, url, getParams(), null,
 				back);
+	}*/
+	//快递单号，快递名称，快递id
+	public static void toSellerSendOrder(String orderId,String shippingName, String shippingNum, String shippingId, CallBack back) {
+		String url=NET_SENDORDER + orderId;
+		RequestParams params = getParams();
+		params.addBodyParameter("shippingName", shippingName);
+		params.addBodyParameter("shippingNum", shippingNum);
+		params.addBodyParameter("shippingId", shippingId);
+		System.out.println("请求地址"+url+"快递名称"+shippingName+"快递单号："+shippingNum+"快递id："+shippingId);
+		toXUtils(HttpMethod.POST, url, params, null, back);
 	}
 
 	/**

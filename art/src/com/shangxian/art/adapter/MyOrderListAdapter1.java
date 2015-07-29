@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ab.image.AbImageLoader;
+import com.shangxian.art.LogisticsInformationActivity;
 import com.shangxian.art.MyOrderActivity;
 import com.shangxian.art.PayActivity;
 import com.shangxian.art.R;
@@ -256,20 +257,10 @@ public class MyOrderListAdapter1 extends BaseAdapter {
 				holder.tv_02.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						SellerOrderServer.toSellerSendOrder(myOrderItem.getOrderId() + "", new CallBack() {
-							@Override
-							public void onSimpleSuccess(Object res) {
-								myOrderItems.remove(myOrderItem);
-								MyOrderListAdapter1.this
-										.notifyDataSetChanged();
-								CommonUtil.toast("发货成功", context);
-							}
-							
-							@Override
-							public void onSimpleFailure(int code) {
-								CommonUtil.toast("发货失败", context);
-							}
-						});
+						
+						//跳转到填写物流信息
+						LogisticsInformationActivity.startThisActivity(fragment, myOrderItem.getOrderId() + "", position, myOrderItem.getOrderNumber()+"",true);
+						
 					}
 				});
 			} else if (myOrderItem.getStatus().equals(

@@ -25,6 +25,7 @@ import com.shangxian.art.base.BaseActivity;
 import com.shangxian.art.bean.ExpressInfo;
 import com.shangxian.art.net.BuyerOrderServer;
 import com.shangxian.art.net.CallBack;
+import com.shangxian.art.net.SellerOrderServer;
 import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.MyLogger;
 import com.shangxian.art.utils.PopupWindowHelper;
@@ -49,6 +50,9 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private String shippingId;
 	private String productId;
 	private String orderNum;
+
+	private boolean ismaijia;
+
 	private int itemIndex;
 	private LinearLayout ll_view;
 
@@ -57,22 +61,24 @@ public class LogisticsInformationActivity extends BaseActivity {
 	private static final String INT_itemIndex = "int_itemIndex";
 
 	public static void startThisActivity(Fragment fragment, String productId,
-			int index, String orderNum) {
+			int index, String orderNum, boolean ismaijia) {
 		Intent intent = new Intent(fragment.getActivity(),
 				LogisticsInformationActivity.class);
 		intent.putExtra(INT_productId, productId);
 		intent.putExtra(INT_orderNum, orderNum);
 		intent.putExtra(INT_itemIndex, index);
+		intent.putExtra("ismaijia", ismaijia);
 		fragment.startActivityForResult(intent, 1);
 	}
 
 	public static void startThisActivity(Activity mAc, String productId,
-			int index, String orderNum) {
+			int index, String orderNum,boolean ismaijia) {
 		Intent intent = new Intent(mAc,
 				LogisticsInformationActivity.class);
 		intent.putExtra(INT_productId, productId);
 		intent.putExtra(INT_orderNum, orderNum);
 		intent.putExtra(INT_itemIndex, index);
+		intent.putExtra("ismaijia", ismaijia);
 		mAc.startActivityForResult(intent, 1);
 	}
 
@@ -109,6 +115,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 		productId = getIntent().getStringExtra(INT_productId);
 		orderNum = getIntent().getStringExtra(INT_orderNum);
 		itemIndex = getIntent().getIntExtra(INT_itemIndex, Integer.MIN_VALUE);
+		ismaijia = getIntent().getBooleanExtra("ismaijia", false);
 		MyLogger.i(">>>>>>>>>退款订单传入数据productId："+productId+"orderNum:"+orderNum+"itemIndex:"+itemIndex);
 		if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
 			myToast("请求参数异常");
@@ -116,48 +123,50 @@ public class LogisticsInformationActivity extends BaseActivity {
 		}
 	}
 	private void initlistener() {
+		
 		tv_tijiao.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				expressCompany = et_expressCompany.getText().toString();
+				expressNum = et_expressNum.getText().toString();
 				// 提交
-				/*	if (TextUtils.isEmpty(productId) || TextUtils.isEmpty(INT_orderNum)) {
-					myToast("请仔细填写物流信息");
-				}else {
-
-				}*/
-				
-				if (matchData()) {
-					/*BuyerOrderServer.toBuyerReturnOrderExpress(productId,
-							orderNum, expressCompany, expressNum, new CallBack() {
-								
-								@Override
-								public void onSimpleSuccess(Object res) {
-									MyLogger.i("提交物流信息数据："+res);
-									
-								}
-								
-								@Override
-								public void onSimpleFailure(int code) {
-									myToast("提交物流信息失败");
-									
-								}
-							});*/
-					BuyerOrderServer.toBuyerReturnOrderExpress(productId,
-							orderNum, expressCompany, expressNum, shippingId,new CallBack() {
+				if (ismaijia == true) {
+//					myToast("卖家发货");
+					SellerOrderServer.toSellerSendOrder(productId + "", expressCompany, expressNum, shippingId, new CallBack() {
 						@Override
 						public void onSimpleSuccess(Object res) {
 							MyLogger.i("提交物流信息数据："+res);
-							myToast("提交物流信息成功");
+							myToast("发货成功");
 							setResult(RESULT_OK,
 									new Intent().putExtra("res", itemIndex));
 							finish();
 						}
+						
 						@Override
 						public void onSimpleFailure(int code) {
-							myToast("提交物流信息失败");
+							myToast("发货失败");
 						}
 					});
+				}else {
+					if (matchData()) {
+						BuyerOrderServer.toBuyerReturnOrderExpress(productId,
+								orderNum, expressCompany, expressNum, shippingId,new CallBack() {
+							@Override
+							public void onSimpleSuccess(Object res) {
+								MyLogger.i("提交物流信息数据："+res);
+								myToast("提交物流信息成功");
+								setResult(RESULT_OK,
+										new Intent().putExtra("res", itemIndex));
+								finish();
+							}
+							@Override
+							public void onSimpleFailure(int code) {
+								myToast("提交物流信息失败");
+							}
+						});
+					}
+
 				}
 			}
 		});
@@ -260,8 +269,7 @@ public class LogisticsInformationActivity extends BaseActivity {
 	}
 
 	private boolean matchData() {
-		expressCompany = et_expressCompany.getText().toString();
-		expressNum = et_expressNum.getText().toString();
+		
 		if (TextUtils.isEmpty(expressCompany)) {
 			myToast("请填写快递公司名称");
 			return false;

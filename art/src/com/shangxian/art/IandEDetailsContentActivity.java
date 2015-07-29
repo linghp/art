@@ -94,8 +94,8 @@ public class IandEDetailsContentActivity extends BaseActivity{
 		}
 		
 		tv_time.setText(time);
-//		tv_beizhu.setText(beizhu);
-		tv_beizhu.setText("无");
+		tv_beizhu.setText(beizhu);
+//		tv_beizhu.setText("无");
 		
 		/*String url = "";
 		if (TextUtils.isEmpty(geturl)) {

@@ -39,7 +39,22 @@ public class IandEDetailsAdapter extends EntityAdapter<IandEDetailsModel>{
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText(dates.get(position).getTradeTitle());//购买商品
+		//标题
+		String title = dates.get(position).getTradeType().toString().trim();
+		if ("RETURN_ORDER".equals(title) ){
+			holder.title.setText("订单退款");
+		}else if ("SHOP_ORDER".equals(title)){
+			holder.title.setText("订单付款");
+		}else if ("PAYMENT_SHOP".equals(title) ){
+			holder.title.setText("直接付款给商家");
+		}else if ("RECHARGE".equals(title) ){
+			holder.title.setText("充值到平台");
+		}else if ("UNLINE_RECHARGE".equals(title) ){
+			holder.title.setText("线下充值");
+		}else {
+			holder.title.setText(title);
+		}
+		
 		holder.time.setText(dates.get(position).getTransDate());//时间
 		holder.parice.setText("¥"+CommonUtil.priceConversion(dates.get(position).getTotalPrice()));//金额
 		holder.type.setText(dates.get(position).getDirection());//支出还是收入

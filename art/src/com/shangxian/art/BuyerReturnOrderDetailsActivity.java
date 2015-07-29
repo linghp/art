@@ -211,7 +211,7 @@ public class BuyerReturnOrderDetailsActivity extends BaseActivity {
 				public void onClick(View v) {
 					LogisticsInformationActivity.startThisActivity(mAc,
 							buyerReturnOrderProductInfos.get(0).getId() + "",
-							index, buyerReturnOrderInfo.getReturnOrderNum());
+							index, buyerReturnOrderInfo.getReturnOrderNum(),false);
 				}
 			});
 		} else if (orderState[4].equals(status)) {// CURRENT: 买家已发货,等待卖家签收...
