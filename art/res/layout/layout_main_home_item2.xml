@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    android:paddingBottom="@dimen/home_itemmargin1"
     android:gravity="center"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/home_itemmargin1" >
 
     <ImageView
         android:id="@+id/iv_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY" android:background="@drawable/shape_all"/>
+        android:background="@drawable/shape_all"
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,13 +23,15 @@
             android:id="@+id/iv_02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" android:background="@drawable/shape_all"/>
+            android:background="@drawable/shape_all"
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/iv_03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" android:background="@drawable/shape_all"/>
+            android:background="@drawable/shape_all"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
 </LinearLayout>

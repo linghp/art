@@ -285,6 +285,10 @@
             android:label="@string/title_activity_mine" >
         </activity>
         <activity
+            android:name=".ReadActivity"
+            android:label="@string/title_activity_mine" >
+        </activity>
+        <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_mine" >
         </activity>

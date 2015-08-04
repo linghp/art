@@ -194,7 +194,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/home_itemmargin1"
         android:layout_marginRight="@dimen/home_itemmargin1"
-        android:layout_marginTop="@dimen/home_itemmargin"
+        android:layout_marginTop="@dimen/home_itemmargin1"
         android:orientation="vertical" >
     </LinearLayout>
 

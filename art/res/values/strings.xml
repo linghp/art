@@ -10,9 +10,10 @@
     <string name="title_activity_shoppingcart">ShoppingcartActivity</string>
     <string name="title_activity_nearly">NearlyActivity</string>
     <string name="title_activity_mine">MineActivity</string>
-    <string name="searchhint_home">搜索商铺/店铺</string>
+    <string name="searchhint_home">搜索商品/店铺</string>
     <string name="pay">充值</string>
     <string name="title_activity_regist">注册</string>
+    <string name="regist_readed">爱农谷注册协议</string>
     <string name="regist_readed_pro">我已阅读并同意《爱农宝用户协议》</string>
     <string name="title_activity_accountsecurity">账户与安全</string>
     <string name="title_activity_location">LocationActivity</string>

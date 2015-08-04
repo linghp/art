@@ -7,6 +7,7 @@ import com.shangxian.art.constant.Constant;
 import com.shangxian.art.net.HttpUtils;
 import com.shangxian.art.net.RegisterServer;
 import com.shangxian.art.net.RegisterServer.OnHttpResultListener;
+import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.view.TopView;
 
 import android.support.v7.app.ActionBarActivity;
@@ -164,10 +165,12 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 						RegisterServer.toRegidter1(phone, this);
 					}
 				} else {
-					myToast("请阅读爱农宝用户协议");
+					myToast("请阅读爱农谷用户协议");
 				}
 			}
 		} else if (v == tv_read) {
+			//爱农谷注册协议
+			CommonUtil.gotoActivity(mAc, ReadActivity.class, false);
 
 		} else if (v == tv_toyan) {
 			if (matchsCaptcha()) {
@@ -187,7 +190,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	private boolean isCheck = true;
+	private boolean isCheck = false;
 
 	private void check() {
 		isCheck = !isCheck;

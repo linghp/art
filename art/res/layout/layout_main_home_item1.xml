@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_gravity="top"
     android:onClick="true"
-    android:paddingBottom="@dimen/home_itemmargin" >
+    android:paddingBottom="@dimen/home_itemmargin1" >
 
     <ImageView
         android:id="@+id/iv_01"

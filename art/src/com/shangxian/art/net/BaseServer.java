@@ -52,7 +52,6 @@ public class BaseServer {
 	// "http://192.168.0.116:8888/art/api/";
 //	 public static final String HOST = "http://192.168.0.197:8888/art/api/";
 	public static final String HOST = Constant.BASEURL+Constant.CONTENT+"/";
-//    public static final String HOST = "http://192.168.0.188:8888/art/api/";
 
 	protected static final String NET_LOGIN = HOST + "user/login";// 登录接口
 	protected static final String NET_ADS = HOST + "abs";// 首页广告列表

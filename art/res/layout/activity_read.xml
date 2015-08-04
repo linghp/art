@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.shangxian.art.view.TopView
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_below="@id/top_title" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/read_tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="爱农谷注册协议"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/list_summary_size" />
+
+            <TextView
+                android:id="@+id/read_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1、爱农谷的所有权与运作权归属重庆爱农谷信息科技有限公司（以下简称“爱农谷”）所有，本服务条款具有法律约束力。一旦您点选“注册”并通过注册程序，即表示您自愿接受本协议之所有条款，并已成为爱农谷会员。
+\n2、爱农谷向其会员提供的服务根据具体实际情况提供。
+\n3、您注册会员成功后，无论您是商户还是用户都将得到一个账号和密码，您应该妥善保管账号和密码，并对以该账号进行的所有活动及事件负法律责任。因黑客行为或会员保管疏忽致使账号、密码被他人非法使用，爱农谷不承担任何责任。若您发现任何使用会员账号或安全漏洞的情况，请立即与爱农谷联系。
+\n4、会员权责
+\n4.1会员有权按照爱农谷规定的程序和要求使用爱农谷向会员提供的各项网络服务，如果会员对该服务有异议，可以与爱农谷联系以便得到及时解决。
+\n4.2用户在申请使用爱农谷服务时，必须向爱农谷提供准确的个人资料或企业资料，若资料有任何变更，必须及时更新。
+\n4.3会员同意接受爱农谷通过电子邮件、短信或其他方式向会员发送的预定、订购确认信息以及其他预定或订购产品或服务的信息。会员接受爱农谷通过邮件、短信或其他方式向会员发送的促销或其他商业信息，若会员不同意接受促销或其他商业信息，会员可以自行退订或电话联系商户退订。
+\n4.4商户会员注册后，须用得到的账号和密码登录网上后台，在后台传送与商户经营相关的信息，以便于其他会员能够在线预定后订购，若传送的相关信息不符合要求，爱农谷会与您联系，要求重新上传，必要时爱农谷工作人员会为您做出简单美观上的修改。
+\n4.5会员承诺不得以任何方式干扰爱农谷App平台的服务。
+\n4.6会员承诺遵守爱农谷App的所有其他的规定和程序。
+\n4.7爱农谷会员不得利用本App从事以下活动：
+\n未经允许，进入计算机信息网络或者使用计算机信息网络资源。
+\n未经允许，对计算机网络信息功能进行删除、修改或者增加。
+\n未经允许，对计算机信息网络中储存、处理或者传输的数据和应用程序进行删除、修改或增加。
+\n未经允许，故意制作、传播计算机病毒等破坏性程序。
+\n未经允许，从事其他危害网络安全的行为。
+\n4.8如果会员违反上述规定，爱农谷有权要求其改正或直接采取一切必要措施（包括但不限于更改或删除会员发布的信息、中断或终止会员使用网络的权利等），以减轻会员不当行为所造成的影响。
+\n5、爱农谷有权在必要时修改本服务条款或APP的服务内容而无需事先通知用户，爱农谷行使修改权，无需对会员或第三方承担责任，会员不同意修改，可以主动选择取消会员资格，若会员继续使用爱农谷APP服务，将被视为接受修改后的服务条款和服务。
+\n6、鉴于网络服务的特殊性，爱农谷保留随时修改或中断其部分或全部网络服务的权利，并无需通知会员或为此对会员及第三方负责。
+\n7、爱农谷尊重会员的隐私权，不会公开、编辑或泄露会员在爱农谷的非公开的个人资料。
+\n8、爱农谷保留服务条款以及APP服务的解释权。
+\n9、爱农谷对任何因不正当或非法使用服务、在网上进行交易、或会员传送信息变动而产生的直接、间接、偶然、特殊及后续的损害不承担责任。"
+                android:textColor="@color/txt_black2"
+                android:textSize="@dimen/list_min_size" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -83,12 +83,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp" >
+                    android:padding="10dp" >
 
                     <ImageView
                         android:id="@+id/iv_logo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/car_storename"
@@ -96,7 +97,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:text="" />
+                        android:textSize="16sp"
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <View

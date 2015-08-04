@@ -56,6 +56,7 @@ OnHttpResultDelOrderListener,OnHttpResultConfirmGoodsListener{
 	private String productid;
 	/** 是否是直接付款产生的而不是从我的订单去进入*/
 	private  boolean isDirectPay;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -137,8 +137,8 @@
                         android:id="@+id/regt_tv_read"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="《爱农宝用户协议》"
-                        android:textColor="@color/col_ma500toma700"
+                        android:text="《爱农谷注册协议》"
+                        android:textColor="#f69531"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
