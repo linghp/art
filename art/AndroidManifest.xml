@@ -59,6 +59,15 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 推送 -->
+    <!-- 检测app是否更新 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <!--
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    -->
 
 
     <!-- Required 自定义用来收发消息的相关权限 -->
@@ -82,16 +91,33 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <!-- 友盟app更新 -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <meta-data android:value="55c42aad67e58e61e600124d" android:name="UMENG_APPKEY"/>
+		<meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+        
         <!-- 测试key -->
 
-<!--         <meta-data
+
+        <!--
+             <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="wVx47v9LtmNLozGme6VnGfwZ" /> -->
+            android:value="wVx47v9LtmNLozGme6VnGfwZ" />
+        -->
+
 
         <!-- 共用key -->
 
-
-        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="dGHcYKhKixnFGtAp9yHwR2lY" />
 
         <service
             android:name="com.baidu.location.f"
@@ -103,12 +129,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
-         <activity
+        <activity
             android:name=".WelcomeActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

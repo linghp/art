@@ -190,7 +190,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	private boolean isCheck = false;
+	private boolean isCheck = true;
 
 	private void check() {
 		isCheck = !isCheck;

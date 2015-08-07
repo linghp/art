@@ -25,6 +25,7 @@ import com.shangxian.art.utils.CommonUtil;
 import com.shangxian.art.utils.LocalUserInfo;
 import com.shangxian.art.view.TopView;
 import com.shangxian.art.zxing.CaptureActivity;
+import com.umeng.update.UmengUpdateAgent;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements OnClickListener{
@@ -41,6 +42,8 @@ public class MainActivity extends TabActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		UmengUpdateAgent.update(this);
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
 		setContentView(R.layout.layout_main);
 		initScreenData();
 		init();
